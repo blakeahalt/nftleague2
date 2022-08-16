@@ -1,34 +1,58 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom'
-import './App.css';
-import './index.css'
-import App from '../client/src/App';
-// import { AuthProvider } from './components/context/AuthProvider';
+const path = require('path');
+const express = require("express");
+
+const PORT = process.env.PORT || 3001;
+const cors = require("cors");
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 
-// const root = ReactDOM.createRoot(
-//   );
-//   ReactDOM.render(
-//     <React.StrictMode>
-//     <BrowserRouter>
-//       <App />
-//     </BrowserRouter>
-//   </React.StrictMode>,
-//   document.getElementById("root")
-// );
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-     <BrowserRouter>
-       <App />
-     </BrowserRouter>
-   </React.StrictMode>,
-);
+app.get("/api", (req, res) => {
+  res.json({ message: "Hello from server!" });
+});
 
-// # ReactDOM.render(
-// #   <React.StrictMode>
-// #     <App />
-// #   </React.StrictMode>,
-// #   document.getElementById('root')
-// # );
+app.get("/test", (req, res) => {
+  res.json({ message:"WORKING" });
+});
+
+app.post("/test", (req, res) => {
+  res.json({ message:"WORKING" });
+});
+
+app.get("/GoogleApp", (req, res) => {
+  res.json({ message:"WORKING" });
+});
+
+app.get("/add", (req, res) => {
+  // res.send(res.data.user)
+  res.json({ message: "WORKING" });
+});
+
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+// });
+
+app.get("/login", (req, res) => {
+  res.json({ res });
+});
+
+
+
+app.post('/register', (req, res) => {
+  // console.log("user: ", req.body.user);   //prints to the terminal not console
+  // console.log("pwd: ", req.body.pwd); 
+  res.json({ message: 'WORKING' });
+});
+
+// app.get("/register", (req, res) => {
+//   res.json({ user: {} });
+// });
+// app.get('/', (req, res) => res.sendFile(path.resolve(__dirname, "build", "index.html")));
+
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
+});
