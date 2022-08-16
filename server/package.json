@@ -14,6 +14,7 @@
     "bcryptjs": "^2.4.3",
     "cli-ux": "^6.0.9",
     "concurrently": "^7.3.0",
+    "cors": "^2.8.5",
     "crypto-browserify": "^3.12.0",
     "font-awesome": "^4.7.0",
     "gapi-script": "^1.2.0",
