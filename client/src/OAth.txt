@@ -1,0 +1,7 @@
+Client_ID:
+1077671935526-e6mu705tptsm57l6p1ajpom0umt43a1p.apps.googleusercontent.com
+
+Client_Secret:
+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
+
+test
