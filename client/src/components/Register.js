@@ -34,7 +34,7 @@ const Register = () => {
 	const [notification, setNotification] = useState("")
 
 	useEffect((req, res) => {
-		axios.get("/register")  //"http://localhost:3001/register"
+		axios.get("http://localhost:3001/register")  //"http://localhost:3001/register"
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
