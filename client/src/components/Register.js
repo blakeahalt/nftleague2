@@ -210,7 +210,8 @@ const Register = () => {
 					<p>
 						Notification Test<br />
 						<span className="line">
-							<Link to="/notification">Click Me to get notification message</Link>
+							<Link to="/notification">Click Me to get wnotification message</Link>
+							<br/>
 							<Link to="/test">Click Me to get test posts</Link>
 						</span>
 					</p>
