@@ -6,7 +6,7 @@ const [added, setAdded] = useState("")
 const [notification, setNotification] = useState("")
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/add")
+		axios.get("http://localhost:3001/added")
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)

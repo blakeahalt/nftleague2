@@ -81,7 +81,7 @@ function App() {
 
 	useEffect(() => {
 		if (localStorage.getItem('user-info')) {
-			navigate.push("http://localhost:3001/add")
+			navigate.push("http://localhost:3001/added")
 		}
 	})
 
