@@ -2,7 +2,7 @@ import LoginButton from "./GoogleLogin"
 // import LogoutButton from "./GoogleLogout"
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef, useContext } from 'react'
-// import { gapi } from 'gapi-script'
+import { gapi } from 'gapi-script'
 import axios from 'axios'
 import AuthContext from "../context/AuthProvider";
 // import GoogleLogin from "react-google-login";
@@ -43,16 +43,16 @@ function App() {
 		// 	{ theme: "outline", size: "large"}
 		// )
 	}, [])
-	// useEffect(() => {
-	// 	function start() {
-	// 		gapi.client.init({
-	// 			clientId: clientId,
-	// 			scope: "API"
-	// 		})
-	// 	}
+	useEffect(() => {
+		function start() {
+			gapi.client.init({
+				clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+				scope: "API"
+			})
+		}
 
-	// 	gapi.load('client:auth2', start)
-	// })
+		gapi.load('client:auth2', start)
+	}, [])
 
 	// var accessToken = gapi.auth.getToken().access_token
 
