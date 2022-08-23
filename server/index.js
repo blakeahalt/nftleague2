@@ -27,6 +27,10 @@ app.get("/GoogleApp", (req, res) => {
   res.json({ message:"WORKING" });
 });
 
+app.get("/notification", (req, res) => {
+  res.json({ message:"WORKING" });
+});
+
 app.get("/add", (req, res) => {
   // res.send(res.data.user)
   res.json({ message: "WORKING" });
