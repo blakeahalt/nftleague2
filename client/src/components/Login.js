@@ -69,7 +69,7 @@ const Login = () => {
         const password = pwdRef.current.value
         // const hashedPassword = bcrypt.hashSync(password, '$2a$10$CwTycUXWue0Thq9StjUM0u') // hash created previously created upon sign up
     
-        fetch('http://localhost:3001/login', {
+        fetch('/login', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
