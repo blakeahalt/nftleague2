@@ -19,7 +19,7 @@ function App() {
 	const [notification, setNotification] = useState("")
 
 	useEffect((req, res) => {
-		axios.get("/GoogleApp")
+		axios.get("http://localhost:3001/GoogleApp")
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
