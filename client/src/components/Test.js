@@ -7,11 +7,11 @@ const Test = () => {
   const [data, setData] = useState("")
 
     useEffect((req, res) => {
-      axios.get("http://localhost:3000/test")
+      axios.get("http://localhost:3001/test")
       .then(res => {
         console.log(res)
         setNotification(res.data.message)
-        setData(res.data)
+        // setData(res.data)
       })
     }, [])
 
