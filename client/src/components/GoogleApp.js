@@ -182,12 +182,6 @@ return (
 					/>
 					<button>Sign In</button>
 				</form>
-				{/* <div className="App">
-	<p>Or Login with your Google Account</p>
-	<LoginButton />
-	<LogoutButton />
-	</div> */}
-	<br/>
 				<div className="App">
 					{/* <Link to='/googleapp'>Google Login</Link> */}
 					Log in with your Google Account
@@ -210,7 +204,7 @@ return (
 						Save this Salt, UPON sign up <br /> if you refresh it will generate a new SALT!!!
 					</span> */}
 				</p>
-				<p>axios.get('/googleapp') status: {notification}</p>
+				<h5>axios.get('/googleapp') status: {notification}</h5>
 				<br />
 				
 			</section>
