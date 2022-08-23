@@ -79,7 +79,7 @@ const Register = () => {
 			// 	}
 			// );
 			const response = 
-			await axios.post("/register", {
+			await axios.post("http://localhost:3000/register", {
 				user: user,
 				pwd: pwd
 			});
