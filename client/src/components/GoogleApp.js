@@ -19,7 +19,7 @@ function App() {
 	const [notification, setNotification] = useState("")
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/GoogleApp")
+		axios.get("/GoogleApp")
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -87,7 +87,7 @@ function App() {
 
 	useEffect(() => {
 		if (localStorage.getItem('user-info')) {
-			navigate.push("http://localhost:3001/added")
+			navigate.push("/added")
 		}
 	})
 
