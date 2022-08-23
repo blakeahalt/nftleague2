@@ -47,7 +47,7 @@ function App() {
 		function start() {
 			gapi.client.init({
 				clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-				scope: "API"
+				scope: "email"
 			})
 		}
 
@@ -57,7 +57,7 @@ function App() {
 	window.gapi.load('client:auth2', () => {
 		window.gapi.client.init({
 		    clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-		    plugin_name: "chat"
+		    scope: "email"
 		})
 	})
 	// var accessToken = gapi.auth.getToken().access_token
