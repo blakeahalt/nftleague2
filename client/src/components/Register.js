@@ -208,11 +208,12 @@ const Register = () => {
 					</p>
 					<br />
 					<p>
-						Notification Test<br />
+						Notification Test
+						<br />
 						<span className="line">
-							<Link to="/notification">Click Me to get wnotification message</Link>
+							<Link to="/notification">Get notification message</Link>
 							<br/>
-							<Link to="/test">Click Me to get test posts</Link>
+							<Link to="/test">Get test message</Link>
 						</span>
 					</p>
 				</section>
