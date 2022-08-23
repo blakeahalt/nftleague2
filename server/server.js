@@ -31,6 +31,10 @@ app.get("/notification", (req, res) => {
   res.json({ message:"WORKING" });
 });
 
+app.get("/register", (req, res) => {
+  res.json({ message:"WORKING" });
+});
+
 app.get("/add", (req, res) => {
   // res.send(res.data.user)
   res.json({ message: "WORKING" });
@@ -46,7 +50,7 @@ app.get("/login", (req, res) => {
 
 
 
-app.post('/register', (req, res) => {
+app.post("/register", (req, res) => {
   // console.log("user: ", req.body.user);   //prints to the terminal not console
   // console.log("pwd: ", req.body.pwd); 
   res.json({ message: 'WORKING' });
