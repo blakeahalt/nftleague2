@@ -31,7 +31,15 @@ const Register = () => {
 	const [success, setSuccess] = useState(false);
 
 	const [catchUser, setCatchUser] = useState('')
-	// const [notification, setNotification] = useState("")
+	const [notification, setNotification] = useState("")
+
+	useEffect((req, res) => {
+		axios.get("http://localhost:3001/register")
+			.then(res => {
+				console.log(res)
+				setNotification(res.data.message)
+			})
+	}, [])
 
 	useEffect(() => {
 		userRef.current.focus();
@@ -79,7 +87,7 @@ const Register = () => {
 			// 	}
 			// );
 			const response = 
-			await axios.post("http://localhost:3000/register", {
+			await axios.post("http://localhost:3001/register", {  //remove URL and only use "/register" when deploying a build to heroku
 				user: user,
 				pwd: pwd
 			});
@@ -216,6 +224,9 @@ const Register = () => {
 							<Link to="/test">Get test message</Link>
 						</span>
 					</p>
+					<br />
+					<p>axios.get('/googleapp') status: {notification}</p>
+
 				</section>
 			)}
 		</>
