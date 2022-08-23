@@ -54,6 +54,12 @@ function App() {
 		gapi.load('client:auth2', start)
 	}, [])
 
+	window.gapi.load('client:auth2', () => {
+		window.gapi.client.init({
+		    clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+		    plugin_name: "chat"
+		})
+	})
 	// var accessToken = gapi.auth.getToken().access_token
 
 	// From Login.js ========================================================================================
