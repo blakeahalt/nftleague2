@@ -11,7 +11,7 @@ const Test = () => {
       .then(res => {
         console.log(res)
         setNotification(res.data.message)
-        // setData(res.data)
+        setData(res.data)
       })
     }, [])
 
