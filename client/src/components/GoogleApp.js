@@ -31,18 +31,18 @@ function App() {
 		var userObject = jwt_decode(response.credential)
 		console.log(userObject);
 	}
-	// useEffect(() => {
-	// 	/* global google */
-	// 	google.accounts.id.initialize ({
-	// 		client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-	// 		callback: handleCallbackResponse
-	// 	})
+	useEffect(() => {
+		/* global google */
+		google.accounts.id.initialize ({
+			client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+			callback: handleCallbackResponse
+		})
 
-	// 	// google.accounts.id.renderButton(
-	// 	// 	document.getElementById("signInDiv"),
-	// 	// 	{ theme: "outline", size: "large"}
-	// 	// )
-	// }, [])
+		// google.accounts.id.renderButton(
+		// 	document.getElementById("signInDiv"),
+		// 	{ theme: "outline", size: "large"}
+		// )
+	}, [])
 	useEffect(() => {
 		function start() {
 			gapi.client.init({
@@ -54,12 +54,12 @@ function App() {
 		gapi.load('client:auth2', start)
 	}, [])
 
-	// window.gapi.load('client:auth2', () => {
-	// 	window.gapi.client.init({
-	// 	    clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-	// 	    scope: "email"
-	// 	})
-	// })
+	window.gapi.load('client:auth2', () => {
+		window.gapi.client.init({
+		    clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+		    scope: "email"
+		})
+	})
 	// var accessToken = gapi.auth.getToken().access_token
 
 	// From Login.js ========================================================================================
