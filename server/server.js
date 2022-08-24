@@ -35,8 +35,8 @@ app.get("/register", (req, res) => {
   res.json({ message:"WORKING" });
 });
 
-app.get("/add", (req, res) => {
-  // res.send(res.data.user)
+app.get("/added", (req, res) => {
+  res.send(res.data.user)
   res.json({ message: "WORKING" });
 });
 
