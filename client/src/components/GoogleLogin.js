@@ -34,6 +34,13 @@ function GLogin() {
 
 	const navigate = useNavigate();
 
+	useEffect((req, res) => {
+		axios.get("http://localhost:3001/GoogleApp")
+			.then(res => {
+				console.log(res)
+				setNotification(res.data.message)
+			})
+	}, [])
 	
 	useEffect(() => {
 		userRef.current.focus();
