@@ -60,7 +60,7 @@ function App() {
 		    scope: "email"
 		})
 	})
-	var accessToken = gapi.auth.getToken().access_token
+	// var accessToken = gapi.auth.getToken().access_token
 
 	// From Login.js ========================================================================================
 	// const Login = () => {
