@@ -37,11 +37,6 @@ function App() {
 			client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
 			callback: handleCallbackResponse
 		})
-
-		// google.accounts.id.renderButton(
-		// 	document.getElementById("signInDiv"),
-		// 	{ theme: "outline", size: "large"}
-		// )
 	}, [])
 	useEffect(() => {
 		function start() {
