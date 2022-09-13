@@ -30,6 +30,8 @@ const Login = () => {
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
+
+    const [notification, setNotification] = useState("")
     
     const navigate = useNavigate();
 
@@ -46,6 +48,14 @@ const Login = () => {
             navigate.push("http://localhost:3001/add")
         }
     })
+
+    useEffect((req, res) => {
+		axios.get("http://localhost:3001/login")  //"http://localhost:3001/login"
+			.then(res => {
+				console.log(res)
+				setNotification(res.data.message)
+			})
+	}, [])
 
     // function App() {
 
@@ -191,7 +201,9 @@ const Login = () => {
                 <div>
                 <Link to='/googleapp'>Google Login</Link>
                 </div>
+                <p>axios.get('/login') status: <i>{notification}</i></p>
                 </section>
+
             )}
         </>
     )

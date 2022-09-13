@@ -87,7 +87,7 @@ const Register = () => {
 			// 	}
 			// );
 			const response = 
-			await axios.post("/register", {  //remove URL and only use "/register" when deploying a build to heroku
+			await axios.post("http://localhost:3001/register", {  //remove URL and only use "/register" when deploying a build to heroku
 				user: user,
 				pwd: pwd
 			});
@@ -124,6 +124,9 @@ const Register = () => {
 						<Link to="/">Home</Link>
 					</p>
 					<p>Added User: {catchUser}</p>
+
+					<p>axios.get('/register') status: <i>{notification}</i></p>
+
 				</section>
 			) : (
 				<section>
@@ -221,11 +224,11 @@ const Register = () => {
 						<span className="line">
 							<Link to="/notification">Get notification message</Link>
 							<br/>
-							<Link to="/test">Get test message</Link>
+							{/* <Link to="/test">Get test message</Link> */}
 						</span>
 					</p>
 					<br />
-					<p>axios.get('/register') status: {notification}</p>
+					<p>axios.get('/register') status: <i>{notification}</i></p>
 
 				</section>
 			)}

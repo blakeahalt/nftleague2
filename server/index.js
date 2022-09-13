@@ -44,6 +44,10 @@ app.get("/login", (req, res) => {
   res.json({ res });
 });
 
+app.get("/login", (req, res) => {
+  res.json({ message:"WORKING" });
+});
+
 app.get("/register", (req, res) => {
   res.json({ message:"WORKING" });
 });

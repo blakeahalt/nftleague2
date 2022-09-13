@@ -17,8 +17,8 @@ const Notification = () => {
 	}, [])
 	return (
 		// < div className = {`message ${type}`}>{ message }</div >
-		<div className="notification">Holup
-			<h3>Under Construction</h3>
+		<div className="notification">
+			<h3>Notification Test</h3>
 			<Link to="/register">
 				<button className="primary-button" id="reg_btn"><span>Back to Registration</span></button>
 			</Link>
@@ -31,7 +31,7 @@ const Notification = () => {
 		<br />
 		<br />
 		<br />
-		<p>axios.get('/notification') status: {notification}</p>
+		<p>axios.get('/notification') status: <i>{notification}</i></p>
 
 		</div >
 	)

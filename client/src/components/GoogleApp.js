@@ -60,7 +60,15 @@ function App() {
 		    scope: "email"
 		})
 	})
-	var accessToken = gapi.auth.getToken().access_token
+
+	useEffect((req, res) => {
+		axios.get("http://localhost:3001/GoogleApp")  //"http://localhost:3001/login"
+			.then(res => {
+				console.log(res)
+				setNotification(res.data.message)
+			})
+	}, [])
+	// var accessToken = gapi.auth.getToken().access_token
 
 	// From Login.js ========================================================================================
 	// const Login = () => {
@@ -205,7 +213,7 @@ return (
 						Save this Salt, UPON sign up <br /> if you refresh it will generate a new SALT!!!
 					</span> */}
 				</p>
-				<p>axios.get('/googleapp') status: {notification}</p>
+				<p>axios.get('/googleapp') status: <i>{notification}</i></p>
 				<br />
 				
 			</section>

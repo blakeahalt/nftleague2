@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import './App.css';
 import Notification from './components/Notification'
 import Register from './components/Register';
-import Test from './components/Test';
+// import Test from './components/Test';
 import GoogleLogin from './components/GoogleLogin'
 import GoogleLogout from './components/GoogleLogout'
 import GoogleApp from './components/GoogleApp'
@@ -21,7 +21,7 @@ function App() {
             {/* <Route exact path="/api" element={<Api/>}/> */}
             <Route exact path="/register" element={<Register/>}/>
             <Route exact path="/notification" element={<Notification/>}/>
-            <Route exact path="/test" element={<Test/>}/>
+            {/* <Route exact path="/test" element={<Test/>}/> */}
             <Route exact path="/GoogleLogin" element={<GoogleLogin/>}/>
             <Route exact path="/GoogleLogout" element={<GoogleLogout/>}/>
             <Route exact path="/" element={<GoogleApp/>}/>
