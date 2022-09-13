@@ -6,8 +6,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from "../context/AuthProvider";
 import axios from 'axios';
 // import GoogleApp from './components/GoogleApp'
-import LoginButton from "./GoogleLogin"
-import LogoutButton from "./GoogleLogout"
+// import LoginButton from "./GoogleLogin"
+// import LogoutButton from "./GoogleLogout"
 // import { gapi } from 'gapi-script'
 
 // const clientId="1077671935526-e6mu705tptsm57l6p1ajpom0umt43a1p.apps.googleusercontent.com"
@@ -180,14 +180,11 @@ const Login = () => {
                             />
                         <button>Sign In</button>
                     </form>
-                    <div>
-					{/* <Link to='/googleapp'>Google Login</Link> */}
-					Log in with your Google Account
-					{/* <div id="signInDiv"></div> */}
-					<LoginButton />
-					<LogoutButton />
-					<br />
-				</div>
+                    {/* <div className="App">
+                    <p>Or Login with your Google Account</p>
+                    <LoginButton />
+                    <LogoutButton />
+                </div> */}
                     <p>
                         Need an Account?<br />
                         <span className="line">
