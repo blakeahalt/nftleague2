@@ -1,5 +1,5 @@
 import LoginButton from "./GoogleLogin"
-import LogoutButton from "./GoogleLogout"
+// import LogoutButton from "./GoogleLogout"
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef, useContext } from 'react'
 import { gapi } from 'gapi-script'
@@ -196,7 +196,7 @@ return (
 					Log in with your Google Account
 					{/* <div id="signInDiv"></div> */}
 					<LoginButton />
-					<LogoutButton />
+					{/* <LogoutButton /> */}
 					<br />
 				</div>
 				<p>
