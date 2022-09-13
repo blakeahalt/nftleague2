@@ -8,7 +8,7 @@ function GLogin() {
 
 	const onSuccess = (res) => {
 		console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
-		<Link to="/profile"></Link>
+		<Link to="/profile">Go to your profile</Link>
 
 	}
 

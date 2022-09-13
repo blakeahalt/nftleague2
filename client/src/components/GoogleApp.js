@@ -161,7 +161,7 @@ return (
 				<h1>You are logged in!</h1>
 				<br />
 				<p>
-					<Link to='/added'>Go to Home</Link>
+				  <Link to='/Profile'>Go to your Profile</Link>
 				</p>
 			</section>
 		) : (

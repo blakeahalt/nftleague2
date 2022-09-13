@@ -23,7 +23,7 @@ function App() {
             <Route exact path="/register" element={<Register/>}/>
             <Route exact path="/notification" element={<Notification/>}/>
             {/* <Route exact path="/test" element={<Test/>}/> */}
-            <Route exact path="/Profile" element={<Profile/>}/>
+            <Route exact path="/profile" element={<Profile/>}/>
             <Route exact path="/GoogleLogin" element={<GoogleLogin/>}/>
             <Route exact path="/GoogleLogout" element={<GoogleLogout/>}/>
             <Route exact path="/" element={<GoogleApp/>}/>

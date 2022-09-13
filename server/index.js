@@ -36,6 +36,10 @@ app.get("/added", (req, res) => {
   res.json({ message: "WORKING" });
 });
 
+app.get("/profile", (req, res) => {
+  res.json({ message:"WORKING" });
+});
+
 // app.get('*', (req, res) => {
 //   res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 // });
