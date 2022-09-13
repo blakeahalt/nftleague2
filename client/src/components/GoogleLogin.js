@@ -1,4 +1,6 @@
 import { GoogleLogin } from 'react-google-login'
+import { Link } from 'react-router-dom';
+
 
 const clientId = "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
 
@@ -6,6 +8,8 @@ function GLogin() {
 
 	const onSuccess = (res) => {
 		console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
+		<Link to="/profile"></Link>
+
 	}
 
 	const onFailure = (res) => {

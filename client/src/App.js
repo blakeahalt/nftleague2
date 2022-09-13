@@ -9,6 +9,7 @@ import GoogleLogout from './components/GoogleLogout'
 import GoogleApp from './components/GoogleApp'
 import Login from './components/Login'
 import Added from './components/Added'
+import Profile from './components/Profile'
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
             <Route exact path="/register" element={<Register/>}/>
             <Route exact path="/notification" element={<Notification/>}/>
             {/* <Route exact path="/test" element={<Test/>}/> */}
+            <Route exact path="/Profile" element={<Profile/>}/>
             <Route exact path="/GoogleLogin" element={<GoogleLogin/>}/>
             <Route exact path="/GoogleLogout" element={<GoogleLogout/>}/>
             <Route exact path="/" element={<GoogleApp/>}/>
