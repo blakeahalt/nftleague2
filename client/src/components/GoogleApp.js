@@ -195,6 +195,8 @@ return (
 					Need an Account?
 					<br />
 					<span className="line">
+						{/*put router link here*/}
+						{/* <a href="/register">Sign Up</a> */}
 						<Link to='/register'>Sign Up</Link>
 					</span>
 					{/* <span>Your new SALT: {salt}</span> */}
