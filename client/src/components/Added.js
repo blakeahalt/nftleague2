@@ -18,6 +18,8 @@ const [notification, setNotification] = useState("")
 		<div>
 			<p>axios.get('/add') message status: {notification}</p>
 			{/* <p>axios.get('/add') user added: {added}</p> */}
+		<br/>
+			<p>axios.get('/notification') status: {notification}</p>
 		</div>
 
 )

@@ -13,13 +13,13 @@ import jwt_decode from "jwt-decode"
 
 // const clientId = "1077671935526-e6mu705tptsm57l6p1ajpom0umt43a1p.apps.googleusercontent.com"
 
-const LOGIN_URL = 'http://localhost:3001/GoogleApp';
+const LOGIN_URL = 'http://localhost:3001/GoogleApp'; //'http://localhost:3001/GoogleApp'
 
 function App() {
 	const [notification, setNotification] = useState("")
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/GoogleApp")
+		axios.get("/GoogleApp")
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -82,7 +82,7 @@ function App() {
 
 	useEffect(() => {
 		if (localStorage.getItem('user-info')) {
-			navigate.push("http://localhost:3001/added")
+			navigate.push("/added")
 		}
 	})
 
@@ -177,13 +177,8 @@ return (
 					/>
 					<button>Sign In</button>
 				</form>
-				{/* <div className="App">
-	<p>Or Login with your Google Account</p>
-	<LoginButton />
-	<LogoutButton />
-	</div> */}
-	<br/>
-				<div className="App">
+				<br />
+				<div>
 					{/* <Link to='/googleapp'>Google Login</Link> */}
 					Log in with your Google Account
 					{/* <div id="signInDiv"></div> */}
@@ -195,8 +190,6 @@ return (
 					Need an Account?
 					<br />
 					<span className="line">
-						{/*put router link here*/}
-						{/* <a href="/register">Sign Up</a> */}
 						<Link to='/register'>Sign Up</Link>
 					</span>
 					{/* <span>Your new SALT: {salt}</span> */}
