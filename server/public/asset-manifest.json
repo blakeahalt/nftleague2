@@ -1,6 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.adfb76b0.css",
+<<<<<<< HEAD
     "main.js": "/static/js/main.12ea8c6b.js",
     "index.html": "/index.html",
     "main.adfb76b0.css.map": "/static/css/main.adfb76b0.css.map",
@@ -9,5 +10,15 @@
   "entrypoints": [
     "static/css/main.adfb76b0.css",
     "static/js/main.12ea8c6b.js"
+=======
+    "main.js": "/static/js/main.8221bb01.js",
+    "index.html": "/index.html",
+    "main.adfb76b0.css.map": "/static/css/main.adfb76b0.css.map",
+    "main.8221bb01.js.map": "/static/js/main.8221bb01.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.adfb76b0.css",
+    "static/js/main.8221bb01.js"
+>>>>>>> parent of be8b84fc (adding <LINK...></LINK> to googleLogut)
   ]
 }
