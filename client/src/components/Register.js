@@ -34,7 +34,7 @@ const Register = () => {
 	const [notification, setNotification] = useState("")
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/register")  //"http://localhost:3001/register"
+		axios.get("/register")  //"http://localhost:3001/register"
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -87,7 +87,7 @@ const Register = () => {
 			// 	}
 			// );
 			const response = 
-			await axios.post("http://localhost:3001/register", {  //remove URL and only use "/register" when deploying a build to heroku
+			await axios.post("/register", {  //remove URL and only use "/register" when deploying a build to heroku
 				user: user,
 				pwd: pwd
 			});
