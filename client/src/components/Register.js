@@ -73,8 +73,8 @@ const Register = () => {
 	// 			setNotification(res.data.message)
 	// 		})
 	// }, [])
-	
-	
+
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		// if button enabled with JS hack
@@ -127,24 +127,24 @@ const Register = () => {
 
 	const decryptPassword = (encryption) => {
 		axios.post('http://localhost:3001/decryptPassword', {
-		  password: encryption.password,
-		  iv: encryption.iv,
+			password: encryption.password,
+			iv: encryption.iv,
 		}).then((response) => {
-		  setPasswordList(
-			passwordList.map((val) => {
-			  return val.id === encryption.id
-				? {
-					id: val.id,
-					password: val.password,
-					user: response.data,
-					iv: val.iv,
-				  }
-				: val;
-			})
-		  );
+			setPasswordList(
+				passwordList.map((val) => {
+					return val.id === encryption.id
+						? {
+							id: val.id,
+							password: val.password,
+							user: response.data,
+							iv: val.iv,
+						}
+						: val;
+				})
+			);
 		});
-	  };
-	
+	};
+
 
 	return (
 		<>
@@ -265,13 +265,13 @@ const Register = () => {
 						{passwordList.map((val, key) => {
 							return (
 								<div
-								className="Password"
-								onClick={() => {
-									decryptPassword({ password: val.password, iv: val.iv, id: val.id })
-								}}
-								key={key}
-								> 
-								<ul> {val.user} </ul>
+									className="Password"
+									onClick={() => {
+										decryptPassword({ password: val.password, iv: val.iv, id: val.id })
+									}}
+									key={key}
+								>
+									<ul> {val.user} </ul>
 								</div>
 							)
 						})}
