@@ -33,8 +33,10 @@ const Register = () => {
 	const [catchUser, setCatchUser] = useState('')
 	const [notification, setNotification] = useState("")
 
+	const [passwordList, setPasswordList] = useState([])
+
 	useEffect((req, res) => {
-		axios.get("/register")  //"http://localhost:3001/register"
+		axios.get("http://localhost:3001/register")  //"http://localhost:3001/register"
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -58,6 +60,12 @@ const Register = () => {
 		setErrMsg('');
 	}, [user, pwd, matchPwd])
 
+	useEffect(() => {
+		axios.get('http://localhost:3001/showPasswords').then((response) => {
+			setPasswordList(response.data)
+		})
+	}, [])
+
 	// useEffect((req, res) => {
 	// 	axios.post("http://localhost:3001/register")
 	// 		.then(res => {
@@ -65,7 +73,8 @@ const Register = () => {
 	// 			setNotification(res.data.message)
 	// 		})
 	// }, [])
-
+	
+	
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		// if button enabled with JS hack
@@ -86,15 +95,15 @@ const Register = () => {
 			// 		// withCredentials: true
 			// 	}
 			// );
-			const response = 
-			await axios.post("/register", {  //remove URL and only use "/register" when deploying a build to heroku
-				user: user,
-				pwd: pwd
-			});
-			console.log("1",response.config.data);
-			console.log("2",response?.data); //prints {response: 'WORKING'} from server index.js
+			const response =
+				await axios.post('http://localhost:3001/addPassword', {  //remove URL and only use "/register" when deploying a build to heroku
+					user: user,
+					pwd: pwd
+				});
+			console.log("1", response.config.data);
+			console.log("2", response?.data); //prints {response: 'WORKING'} from server index.js
 			// console.log(response?.accessToken);
-			console.log("3",JSON.stringify(response))
+			console.log("3", JSON.stringify(response))
 			setSuccess(true);
 			// setNotification(response.data.message)
 			//clear state and controlled inputs
@@ -103,6 +112,7 @@ const Register = () => {
 			setUser('');
 			setPwd('');
 			setMatchPwd('');
+
 		} catch (err) {
 			if (!err?.response) {
 				setErrMsg('No Server Response');
@@ -114,6 +124,27 @@ const Register = () => {
 			// errRef.current.focus();
 		}
 	}
+
+	const decryptPassword = (encryption) => {
+		axios.post('http://localhost:3001/decryptPassword', {
+		  password: encryption.password,
+		  iv: encryption.iv,
+		}).then((response) => {
+		  setPasswordList(
+			passwordList.map((val) => {
+			  return val.id === encryption.id
+				? {
+					id: val.id,
+					password: val.password,
+					user: response.data,
+					iv: val.iv,
+				  }
+				: val;
+			})
+		  );
+		});
+	  };
+	
 
 	return (
 		<>
@@ -223,13 +254,28 @@ const Register = () => {
 						<br />
 						<span className="line">
 							<Link to="/notification">Get notification message</Link>
-							<br/>
+							<br />
 							{/* <Link to="/test">Get test message</Link> */}
 						</span>
 					</p>
 					<br />
 					<p>axios.get('/register') status: <i>{notification}</i></p>
 
+					<div className="Passwords">
+						{passwordList.map((val, key) => {
+							return (
+								<div
+								className="Password"
+								onClick={() => {
+									decryptPassword({ password: val.password, iv: val.iv, id: val.id })
+								}}
+								key={key}
+								> 
+								<ul> {val.user} </ul>
+								</div>
+							)
+						})}
+					</div>
 				</section>
 			)}
 		</>
