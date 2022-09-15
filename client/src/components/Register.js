@@ -97,6 +97,11 @@ const Register = () => {
 			console.log("2", response?.data); //prints {response: 'WORKING'} from server index.js
 			// console.log(response?.accessToken);
 			console.log("3", JSON.stringify(response))
+			setSuccess(true)
+			setCatchUser(user)
+			setUser('');
+			setPwd('');
+			setMatchPwd('');
 		}).catch ((err)=> {
 			if (!err?.response) {
 				setErrMsg('No Server Response');
@@ -108,11 +113,6 @@ const Register = () => {
 			// errRef.current.focus();
 		})
 		console.log(user, pwd);
-		setSuccess(true)
-		setCatchUser(user)
-		setUser('');
-		setPwd('');
-		setMatchPwd('');
 	}
 	
 	// HANDLESUBMIT USING ASYNC/AWAIT 
