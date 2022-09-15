@@ -28,8 +28,9 @@ app.use(express.json());
 
 // ========================================
 // JawsDB with Node.js
+const JAWSDB_URL = 'mysql://hu6etanlnbizgzv5:g9clxpcv1kdf5jqj@cwe1u6tjijexv3r6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/hzgtrybfzcvlvstf'
 var mysql = require('mysql');
-var connection = mysql.createConnection(process.env.JAWSDB_URL);
+var connection = mysql.createConnection(JAWSDB_URL);
 
 connection.connect();
 
