@@ -49,6 +49,10 @@ app.get("/profile", (req, res) => {
   res.json({ message:"WORKING" });
 });
 
+app.get("/working", (req, res) => {
+  res.json({ message:"WORKING" });
+});
+
 app.get("/added", (req, res) => {
   res.send(res.data.user)
   res.json({ message: "WORKING" });
@@ -64,11 +68,11 @@ app.get("/login", (req, res) => {
 
 
 
-app.post("/register", (req, res) => {
-  // console.log("user: ", req.body.user);   //prints to the terminal not console
-  // console.log("pwd: ", req.body.pwd); 
-  res.json({ message: 'WORKING' });
-});
+// app.post("/register", (req, res) => {
+//   // console.log("user: ", req.body.user);   //prints to the terminal not console
+//   // console.log("pwd: ", req.body.pwd); 
+//   res.json({ message: 'WORKING' });
+// });
 
 app.post("/addPassword", (req, res) => {
   const {pwd, user} = req.body 

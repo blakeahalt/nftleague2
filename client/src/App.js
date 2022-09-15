@@ -20,7 +20,7 @@ function App() {
           <Routes>
             {/* <Route exact path="/" element={<Login/>}/> */}
             {/* <Route exact path="/api" element={<Api/>}/> */}
-            <Route exact path="/register" element={<Register/>}/>
+            <Route exact path="/register/" element={<Register/>}/>
             <Route exact path="/notification" element={<Notification/>}/>
             {/* <Route exact path="/test" element={<Test/>}/> */}
             <Route exact path="/profile" element={<Profile/>}/>

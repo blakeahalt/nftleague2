@@ -11,7 +11,7 @@ const Profile = () => {
 
 	useEffect((req, res) => {
 		// axios.get("http://localhost:3001/profile")  //"http://localhost:3001/register"
-		axios.get("/profile")  //"http://localhost:3001/register"
+		axios.get("/working")  //"http://localhost:3001/register"
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -21,9 +21,9 @@ const Profile = () => {
 
        return (
               <>
-              You Logged in through Google!...Profile page coming soon
+              You've registered!...Profile page coming soon
 
-              <p>axios.get('/googleapp') status: <i>{notification}</i></p>
+              <p>axios.get('/profile') status: <i>{notification}</i></p>
               <br/>
               <br/>
               <br/>

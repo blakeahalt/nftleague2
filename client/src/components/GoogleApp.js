@@ -62,7 +62,7 @@ function App() {
 	})
 
 	useEffect((req, res) => {
-		// axios.get("http://localhost:3001/GoogleApp")  //"http://localhost:3001/login"
+		// axios.get("http://localhost:3001/working")  //"http://localhost:3001/login"
 		axios.get("/GoogleApp")  //"http://localhost:3001/login"
 			.then(res => {
 				console.log(res)
@@ -158,6 +158,9 @@ function App() {
 return (
 	<>
 		{success ? (
+			// <Routes>
+			// 	<Route exact path="/success" element={<RegisterSuccess/>}/>
+			// </Routes>
 			<section>
 				<h1>You are logged in!</h1>
 				<br />

@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import axios from './api/axios.js';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
+
+
 // import Notification from "./components/Notification";
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%*]).{6,24}$/;
@@ -36,7 +38,7 @@ const Register = () => {
 	// const [passwordList, setPasswordList] = useState([])
 
 	useEffect((req, res) => {
-		// axios.get("http://localhost:3001/register")  //"http://localhost:3001/register"
+		// axios.get("http://localhost:3001/working")  //"http://localhost:3001/register"
 		axios.get("/register")  //"http://localhost:3001/register"
 			.then(res => {
 				console.log(res)
@@ -153,7 +155,10 @@ const Register = () => {
 				<section>
 					<h1>Success!</h1>
 					<p>
-						<Link to="/">Home</Link>
+						<Link to="/">Login</Link>
+					</p>
+					<p>
+						<Link to="/profile">Visit Your Profile</Link>
 					</p>
 					<p>Added User: {catchUser}</p>
 

@@ -9,8 +9,8 @@ const Notification = () => {
 	const [notification, setNotification] = useState("")
 
 	useEffect((req, res) => {
-		// axios.get("http://localhost:3001/notification")  //"http://localhost:3001/register"
-		axios.get("/notification")  //"http://localhost:3001/register"
+		// axios.get("http://localhost:3001/working")  //"http://localhost:3001/register"
+		axios.get("/working")  //"http://localhost:3001/register"
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -23,7 +23,7 @@ const Notification = () => {
 			<Link to="/register">
 				<button className="primary-button" id="reg_btn"><span>Back to Registration</span></button>
 			</Link>
-			<Link to="/">
+			<Link to="/googleapp">
 				<button className="primary-button" id="reg_btn"><span>Back to Login</span></button>
 			</Link>
 		<br />
