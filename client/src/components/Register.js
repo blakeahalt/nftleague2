@@ -77,8 +77,8 @@ const Register = () => {
 	// 		})
 	// }, [])
 	
-	
-	const handleSubmit = async (e) => {
+	// HANDLESUBMIT USING PROMISE
+	const handleSubmit = (e) => {
 		e.preventDefault();
 		// if button enabled with JS hack
 		const v1 = USER_REGEX.test(user);
@@ -89,35 +89,27 @@ const Register = () => {
 		}
 		console.log(user, pwd);
 		setSuccess(true)
-
-		try {
-			// const response = await axios.post("http://localhost:3001/register/",
-			// 	JSON.stringify({ user, pwd }),
-			// 	{
-			// 		headers: { 'Content-Type': 'application/json' },
-			// 		// withCredentials: true
-			// 	}
-			// );
-		const response =
-			// await axios.post('http://localhost:3001/addPassword', {  //remove URL when deploying a build to heroku
-			await axios.post('/addPassword', {  //remove URL when deploying a build to heroku
+		axios.post('http://localhost:3001/addPassword', {  //remove URL when deploying a build to heroku
+			// await axios.post('/addPassword', {  //remove URL when deploying a build to heroku
 				user: user,
 				pwd: pwd
-			});
-		console.log("1", response.config.data);
-		console.log("2", response?.data); //prints {response: 'WORKING'} from server index.js
-		// console.log(response?.accessToken);
-		console.log("3", JSON.stringify(response))
-		setSuccess(true);
-		// setNotification(response.data.message)
-		//clear state and controlled inputs
-		//need value attrib on inputs for this
-		setCatchUser(user)
-		setUser('');
-		setPwd('');
-		setMatchPwd('');
+			})
+		.then((response)=> {
+			console.log("1", response.config.data);
+			console.log("2", response?.data); //prints {response: 'WORKING'} from server index.js
+			// console.log(response?.accessToken);
+			console.log("3", JSON.stringify(response))
+			setSuccess(true);
+			// setNotification(response.data.message)
+			//clear state and controlled inputs
+			//need value attrib on inputs for this
+			setCatchUser(user)
+			setUser('');
+			setPwd('');
+			setMatchPwd('');
+		})
 
-		} catch (err) {
+		.catch ((err)=> {
 			if (!err?.response) {
 				setErrMsg('No Server Response');
 			} else if (err.response?.status === 409) {
@@ -126,8 +118,60 @@ const Register = () => {
 				setErrMsg('Registration Failed')
 			}
 			// errRef.current.focus();
-		}
+		})
 	}
+	
+	// HANDLESUBMIT USING ASYNC/AWAIT 
+	// const handleSubmit = async (e) => {
+	// 	e.preventDefault();
+	// 	// if button enabled with JS hack
+	// 	const v1 = USER_REGEX.test(user);
+	// 	const v2 = PWD_REGEX.test(pwd);
+	// 	if (!v1 || !v2) {
+	// 		setErrMsg("Invalid Entry");
+	// 		return;
+	// 	}
+	// 	console.log(user, pwd);
+	// 	setSuccess(true)
+
+	// 	try {
+	// 		// const response = await axios.post("http://localhost:3001/register/",
+	// 		// 	JSON.stringify({ user, pwd }),
+	// 		// 	{
+	// 		// 		headers: { 'Content-Type': 'application/json' },
+	// 		// 		// withCredentials: true
+	// 		// 	}
+	// 		// );
+	// 	const response =
+	// 		await axios.post('http://localhost:3001/addPassword', {  //remove URL when deploying a build to heroku
+	// 		// await axios.post('/addPassword', {  //remove URL when deploying a build to heroku
+	// 			user: user,
+	// 			pwd: pwd
+	// 		});
+	// 	console.log("1", response.config.data);
+	// 	console.log("2", response?.data); //prints {response: 'WORKING'} from server index.js
+	// 	// console.log(response?.accessToken);
+	// 	console.log("3", JSON.stringify(response))
+	// 	setSuccess(true);
+	// 	// setNotification(response.data.message)
+	// 	//clear state and controlled inputs
+	// 	//need value attrib on inputs for this
+	// 	setCatchUser(user)
+	// 	setUser('');
+	// 	setPwd('');
+	// 	setMatchPwd('');
+
+	// 	} catch (err) {
+	// 		if (!err?.response) {
+	// 			setErrMsg('No Server Response');
+	// 		} else if (err.response?.status === 409) {
+	// 			setErrMsg('Username Taken');
+	// 		} else {
+	// 			setErrMsg('Registration Failed')
+	// 		}
+	// 		// errRef.current.focus();
+	// 	}
+	// }
 		
 		// const decryptPassword = (encryption) => {
 		// 	axios.post('http://localhost:3001/decryptPassword', {
