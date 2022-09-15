@@ -9,6 +9,13 @@ app.use(cors());
 app.use(express.json());
 const mysql = require('mysql')
 
+const proxy = require('http-proxy-middleware')
+
+module.exports = function(app) {
+    // add other server routes to path array
+    app.use(proxy(['/api' ], { target: 'http://localhost:5000' }));
+} 
+
 const {encrypt, decrypt} = require('./EncryptionHandler')
 
 const db = mysql.createConnection({
@@ -21,9 +28,9 @@ const db = mysql.createConnection({
 app.use(express.static(path.join(__dirname, "public")));
 // app.use(express.static(path.resolve(__dirname, '/public')));
 
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello from server!" });
-});
+// app.get("/api", (req, res) => {
+//   res.json({ message: "Hello from server!" });
+// });
 
 app.get("/test", (req, res) => {
   res.json({ message:"WORKING" });
