@@ -88,20 +88,20 @@ const Register = () => {
 			return;
 		}
 		setSuccess(true)
-		setCatchUser(user)
-		setUser('');
-		setPwd('');
-		setMatchPwd('');
 		// axios.post('http://localhost:3001/addPassword', {  //remove URL when deploying a build to heroku
-			axios.post('/addPassword', {  //remove URL when deploying a build to heroku
-				user: user,
-				pwd: pwd
-			})
+		axios.post('/addPassword', {  //remove URL when deploying a build to heroku
+			user: user,
+			pwd: pwd
+		})
 		.then((response)=> {
 			console.log("1", response.config.data);
 			console.log("2", response?.data); //prints {response: 'WORKING'} from server index.js
 			// console.log(response?.accessToken);
 			console.log("3", JSON.stringify(response))
+			setCatchUser(user)
+			setUser('');
+			setPwd('');
+			setMatchPwd('');
 		}).catch ((err)=> {
 			if (!err?.response) {
 				setErrMsg('No Server Response');
