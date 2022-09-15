@@ -23,7 +23,7 @@ const db = mysql.createConnection({
   user: 'hu6etanlnbizgzv5' ,
   host: 'cwe1u6tjijexv3r6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
   password:'g9clxpcv1kdf5jqj',
-  database: 'passwordManager'
+  database: 'hzgtrybfzcvlvstf'
 })
 
 // ========================================
