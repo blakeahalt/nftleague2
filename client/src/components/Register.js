@@ -87,8 +87,8 @@ const Register = () => {
 			setErrMsg("Invalid Entry");
 			return;
 		}
-		axios.post('http://localhost:3001/addPassword', {  //remove URL when deploying a build to heroku
-			// axios.post('/addPassword', {  //remove URL when deploying a build to heroku
+		// axios.post('http://localhost:3001/addPassword', {  //remove URL when deploying a build to heroku
+			axios.post('/addPassword', {  //remove URL when deploying a build to heroku
 				user: user,
 				pwd: pwd
 			})
