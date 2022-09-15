@@ -62,7 +62,8 @@ function App() {
 	})
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/GoogleApp")  //"http://localhost:3001/login"
+		// axios.get("http://localhost:3001/GoogleApp")  //"http://localhost:3001/login"
+		axios.get("/GoogleApp")  //"http://localhost:3001/login"
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)

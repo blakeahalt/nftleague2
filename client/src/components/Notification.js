@@ -9,6 +9,7 @@ const Notification = () => {
 	const [notification, setNotification] = useState("")
 
 	useEffect((req, res) => {
+		// axios.get("http://localhost:3001/notification")  //"http://localhost:3001/register"
 		axios.get("/notification")  //"http://localhost:3001/register"
 			.then(res => {
 				console.log(res)
