@@ -7,23 +7,41 @@ const port = process.env.PORT || 3001;
 const cors = require("cors");
 app.use(cors());
 app.use(express.json());
-const mysql = require('mysql')
 
 // const proxy = require('http-proxy-middleware')
 
 // module.exports = function(app) {
-//     // add other server routes to path array
-//     app.use(proxy(['/api' ], { target: 'http://localhost:5000' }));
-// } 
+  //     // add other server routes to path array
+  //     app.use(proxy(['/api' ], { target: 'http://localhost:5000' }));
+  // } 
+  
+  const {encrypt, decrypt} = require('./EncryptionHandler')
+// =======================================
+// mysql that works in development
+// const mysql = require('mysql')
+// const db = mysql.createConnection({
+//   user: 'root' ,
+//   host: 'localhost',
+//   password:'Pass*3827',
+//   database: 'passwordManager'
+// })
 
-const {encrypt, decrypt} = require('./EncryptionHandler')
+// ========================================
+// JawsDB with Node.js
+var mysql = require('mysql');
+var connection = mysql.createConnection(process.env.JAWSDB_URL);
 
-const db = mysql.createConnection({
-  user: 'root' ,
-  host: 'localhost',
-  password:'Pass*3827',
-  database: 'passwordManager'
-})
+connection.connect();
+
+connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
+  if (err) throw err;
+
+  console.log('The solution is: ', rows[0].solution);
+});
+
+connection.end();
+// ==========================================
+
 
 app.use(express.static(path.join(__dirname, "public")));
 // app.use(express.static(path.resolve(__dirname, '/public')));
