@@ -18,29 +18,29 @@ app.use(express.json());
   const {encrypt, decrypt} = require('./EncryptionHandler')
 // =======================================
 // mysql that works in development
-// const mysql = require('mysql')
-// const db = mysql.createConnection({
-//   user: 'root' ,
-//   host: 'localhost',
-//   password:'Pass*3827',
-//   database: 'passwordManager'
-// })
+const mysql = require('mysql')
+const db = mysql.createConnection({
+  user: 'root' ,
+  host: 'cwe1u6tjijexv3r6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com	',
+  password:'g9clxpcv1kdf5jqj',
+  database: 'passwordManager'
+})
 
 // ========================================
 // JawsDB with Node.js
-const JAWSDB_URL = 'mysql://hu6etanlnbizgzv5:g9clxpcv1kdf5jqj@cwe1u6tjijexv3r6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/hzgtrybfzcvlvstf'
-var mysql = require('mysql');
-var connection = mysql.createConnection(JAWSDB_URL);
+// const JAWSDB_URL = 'mysql://hu6etanlnbizgzv5:g9clxpcv1kdf5jqj@cwe1u6tjijexv3r6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/hzgtrybfzcvlvstf'
+// var mysql = require('mysql');
+// var connection = mysql.createConnection(JAWSDB_URL);
 
-connection.connect();
+// connection.connect();
 
-connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
-  if (err) throw err;
+// connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
+//   if (err) throw err;
 
-  console.log('The solution is: ', rows[0].solution);
-});
+//   console.log('The solution is: ', rows[0].solution);
+// });
 
-connection.end();
+// connection.end();
 // ==========================================
 
 
