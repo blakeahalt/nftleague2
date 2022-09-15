@@ -87,12 +87,6 @@ const Register = () => {
 			setErrMsg("Invalid Entry");
 			return;
 		}
-		console.log(user, pwd);
-		setSuccess(true)
-		setCatchUser(user)
-		setUser('');
-		setPwd('');
-		setMatchPwd('');
 		axios.post('http://localhost:3001/addPassword', {  //remove URL when deploying a build to heroku
 			// axios.post('/addPassword', {  //remove URL when deploying a build to heroku
 				user: user,
@@ -113,6 +107,12 @@ const Register = () => {
 			}
 			// errRef.current.focus();
 		})
+		console.log(user, pwd);
+		setSuccess(true)
+		setCatchUser(user)
+		setUser('');
+		setPwd('');
+		setMatchPwd('');
 	}
 	
 	// HANDLESUBMIT USING ASYNC/AWAIT 
