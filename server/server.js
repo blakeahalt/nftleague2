@@ -9,12 +9,12 @@ app.use(cors());
 app.use(express.json());
 const mysql = require('mysql')
 
-const proxy = require('http-proxy-middleware')
+// const proxy = require('http-proxy-middleware')
 
-module.exports = function(app) {
-    // add other server routes to path array
-    app.use(proxy(['/api' ], { target: 'http://localhost:5000' }));
-} 
+// module.exports = function(app) {
+//     // add other server routes to path array
+//     app.use(proxy(['/api' ], { target: 'http://localhost:5000' }));
+// } 
 
 const {encrypt, decrypt} = require('./EncryptionHandler')
 
