@@ -174,7 +174,7 @@ useEffect(() => {
 	axios.get("/checkPassword").then((response) => {
 		if (response.data.loggedIn === true) {
 		setLoginStatus(response.data.user[0].user);
-		setSuccess=true
+	    	setSuccess(true)
 		}
 	});
 }, []);	
@@ -187,7 +187,7 @@ const login = () => {
 	}).then((response) => {
 	  if (response.data.message) {
 	    setLoginStatus(response.data.message);
-	    setSuccess=true
+	    setSuccess(true)
 	  } else {
 	    setLoginStatus(response.data[0].user);
 	  }
