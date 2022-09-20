@@ -166,37 +166,37 @@ function App() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-	// 	axios.post('http://localhost:3001/checkPassword', {    // Development
-	// 		// axios.post('/login', {			     // Heroku
-	// 		user: user,
-	// 		pwd: pwd,
-	// 	}).then((response) => {
-	// 		if (!response.data.message) {
-	// 		setLoginStatus(response.data.message);
-	// 		} else {
-	// 		setLoginStatus (response.data[0].message);
-	// 		}
-	// 		// console.log(JSON.stringify(response?.data));
-	// 		//console.log(JSON.stringify(response));
-	// 		// const accessToken = response?.data?.accessToken;
-	// 		// const roles = response?.data?.roles;
-	// 		// setAuth({ user, pwd, accessToken });
-	// 		setUser('');
-	// 		setPwd('');
-	// 		setSuccess(true);
-	// 	}).catch((err)=> {
-	// 		if (!err?.response) {
-	// 			setErrMsg('No Server Response');
-	// 		} else if (err.response?.status === 400) {
-	// 			setErrMsg('Missing Username or Password');
-	// 		} else if (err.response?.status === 401) {
-	// 			setErrMsg('Unauthorized');
-	// 		} else {
-	// 			setErrMsg('Login Failed');
-	// 		}
-	// 		// errRef.current.focus(); //don't use...was causing an error
-	// 	})
-	// 	console.log(user, pwd);
+		axios.post('http://localhost:3001/checkPassword', {    // Development
+			// axios.post('/login', {			     // Heroku
+			user: user,
+			pwd: pwd,
+		}).then((response) => {
+			if (!response.data.message) {
+			setLoginStatus(response.data.message);
+			} else {
+			setLoginStatus (response.data[0].message);
+			}
+			// console.log(JSON.stringify(response?.data));
+			//console.log(JSON.stringify(response));
+			// const accessToken = response?.data?.accessToken;
+			// const roles = response?.data?.roles;
+			// setAuth({ user, pwd, accessToken });
+			setUser('');
+			setPwd('');
+			setSuccess(true);
+		}).catch((err)=> {
+			if (!err?.response) {
+				setErrMsg('No Server Response');
+			} else if (err.response?.status === 400) {
+				setErrMsg('Missing Username or Password');
+			} else if (err.response?.status === 401) {
+				setErrMsg('Unauthorized');
+			} else {
+				setErrMsg('Login Failed');
+			}
+			// errRef.current.focus(); //don't use...was causing an error
+		})
+		console.log(user, pwd);
 	// };	
 	// ============================
 				// .then(res => {
