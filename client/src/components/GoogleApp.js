@@ -173,7 +173,8 @@ useEffect(() => {
 	// axios.get("http://localhost:3001/checkPassword").then((response) => {
 	axios.get("/checkPassword").then((response) => {
 		if (response.data.loggedIn === true) {
-		setLoginStatus(response.data.user[0].username);
+		setLoginStatus(response.data.user[0].user);
+		setSuccess=true
 		}
 	});
 }, []);	
@@ -186,8 +187,9 @@ const login = () => {
 	}).then((response) => {
 	  if (response.data.message) {
 	    setLoginStatus(response.data.message);
+	    setSuccess=true
 	  } else {
-	    setLoginStatus(response.data[0].username);
+	    setLoginStatus(response.data[0].user);
 	  }
 	});
      };
