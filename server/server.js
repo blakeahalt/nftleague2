@@ -7,58 +7,58 @@ app.use(cors());
 app.use(express.json());
 
 // NEW SERVER========================================
-const corsOptions = require('./config/corsOptions');
-const { logger } = require('./middleware/logEvents');
-const errorHandler = require('./middleware/errorHandler');
-const verifyJWT = require('./middleware/verifyJWT');
-const cookieParser = require('cookie-parser');
-const credentials = require('./middleware/credentials');
+// const corsOptions = require('./config/corsOptions');
+// const { logger } = require('./middleware/logEvents');
+// const errorHandler = require('./middleware/errorHandler');
+// const verifyJWT = require('./middleware/verifyJWT');
+// const cookieParser = require('cookie-parser');
+// const credentials = require('./middleware/credentials');
 
 
-// custom middleware logger
-app.use(logger);
+// // custom middleware logger
+// app.use(logger);
 
-// Handle options credentials check - before CORS!
-// and fetch cookies credentials requirement
-app.use(credentials);
+// // Handle options credentials check - before CORS!
+// // and fetch cookies credentials requirement
+// app.use(credentials);
 
-// Cross Origin Resource Sharing
-app.use(cors(corsOptions));
+// // Cross Origin Resource Sharing
+// app.use(cors(corsOptions));
 
-// built-in middleware to handle urlencoded form data
-app.use(express.urlencoded({ extended: false }));
+// // built-in middleware to handle urlencoded form data
+// app.use(express.urlencoded({ extended: false }));
 
-// // built-in middleware for json 
-// app.use(express.json());
+// // // built-in middleware for json 
+// // app.use(express.json());
 
-//middleware for cookies
-app.use(cookieParser());
+// //middleware for cookies
+// app.use(cookieParser());
 
-// //serve static files
-// app.use('/', express.static(path.join(__dirname, '/public')));
+// // //serve static files
+// // app.use('/', express.static(path.join(__dirname, '/public')));
 
-// routes
-app.use('/', require('./routes/root'));
-app.use('/register', require('./routes/register'));
-app.use('/auth', require('./routes/auth'));
-app.use('/refresh', require('./routes/refresh'));
-app.use('/logout', require('./routes/logout'));
+// // routes
+// app.use('/', require('./routes/root'));
+// app.use('/register', require('./routes/register'));
+// app.use('/auth', require('./routes/auth'));
+// app.use('/refresh', require('./routes/refresh'));
+// app.use('/logout', require('./routes/logout'));
 
-app.use(verifyJWT);
-app.use('/employees', require('./routes/api/employees'));
+// app.use(verifyJWT);
+// app.use('/employees', require('./routes/api/employees'));
 
-app.all('*', (req, res) => {
-    res.status(404);
-    if (req.accepts('html')) {
-        res.sendFile(path.join(__dirname, 'views', '404.html'));
-    } else if (req.accepts('json')) {
-        res.json({ "error": "404 Not Found" });
-    } else {
-        res.type('txt').send("404 Not Found");
-    }
-});
+// app.all('*', (req, res) => {
+//     res.status(404);
+//     if (req.accepts('html')) {
+//         res.sendFile(path.join(__dirname, 'views', '404.html'));
+//     } else if (req.accepts('json')) {
+//         res.json({ "error": "404 Not Found" });
+//     } else {
+//         res.type('txt').send("404 Not Found");
+//     }
+// });
 
-app.use(errorHandler);
+// app.use(errorHandler);
 
 // NEW SERVER ================================================
 // const proxy = require('http-proxy-middleware')
@@ -68,7 +68,7 @@ app.use(errorHandler);
   //     app.use(proxy(['/api' ], { target: 'http://localhost:5000' }));
   // } 
   
-  const {encrypt, decrypt} = require('./EncryptionHandler')
+const {encrypt, decrypt} = require('./EncryptionHandler')
 // =======================================
 // mysql that works in development
 const mysql = require('mysql')
@@ -76,7 +76,7 @@ const db = mysql.createConnection({
   user: 'hu6etanlnbizgzv5' ,
   host: 'cwe1u6tjijexv3r6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
   password:'g9clxpcv1kdf5jqj',
-  database: 'passwordManager'
+  database: 'hzgtrybfzcvlvstf'
 })
 
 // ========================================

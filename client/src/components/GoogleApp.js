@@ -73,6 +73,7 @@ function App() {
 
 	// From Login.js ========================================================================================
 	// const Login = () => {
+		// eslint-disable-next-line
 	const { setAuth } = useContext(AuthContext);
 	const userRef = useRef();
 	// const pwdRef = useRef();
@@ -121,7 +122,9 @@ function App() {
 
 	// ========================================================
 	// Login:
+	// eslint-disable-next-line
 	const [loginStatus, setLoginStatus] = useState("");
+	// eslint-disable-next-line
 	const [passwordList, setPasswordList] = useState([]);
 
 	// useEffect(() => {
@@ -166,8 +169,8 @@ function App() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		axios.post('http://localhost:3001/checkPassword', {    // Development
-			// axios.post('/login', {			     // Heroku
+		// axios.post('http://localhost:3001/checkPassword', {    // Development
+			axios.post('/checkPassword', {			     // Heroku
 			user: user,
 			pwd: pwd,
 		}).then((response) => {
@@ -197,42 +200,42 @@ function App() {
 			// errRef.current.focus(); //don't use...was causing an error
 		})
 		console.log(user, pwd);
-	// };	
+	};	
 	// ============================
 				// .then(res => {
 				// 	console.log(res)
 				// 	setNotification(res.data.message)
 				// })
-	const checkPassword = (props) => {
-			axios.get('/checkPassword', {
-			// axios.get('http://localhost:3001/checkPassword', {
-				password: props.password,
-				user: props.data,
-				iv: props.iv,
-			}).then((response) => {
-				setPasswordList(
-					passwordList.map((val) => {
-						return val.password === props.password ? 
-						{
-							id: val.id,
-							password: val.password,
-							user: response.data,
-						} : val;
-					})
-					);
-				}).catch((err)=> {
-						if (!err?.response) {
-							setErrMsg('No Server Response');
-						} else if (err.response?.status === 400) {
-							setErrMsg('Missing Username or Password');
-						} else if (err.response?.status === 401) {
-							setErrMsg('Unauthorized');
-						} else {
-							setErrMsg('Login Failed');
-						};
-			});
-		}
-	}
+	// const checkPassword = (props) => {
+	// 		axios.get('/checkPassword', {
+	// 		// axios.get('http://localhost:3001/checkPassword', {
+	// 			password: props.password,
+	// 			user: props.data,
+	// 			iv: props.iv,
+	// 		}).then((response) => {
+	// 			setPasswordList(
+	// 				passwordList.map((val) => {
+	// 					return val.password === props.password ? 
+	// 					{
+	// 						id: val.id,
+	// 						password: val.password,
+	// 						user: response.data,
+	// 					} : val;
+	// 				})
+	// 				);
+	// 			}).catch((err)=> {
+	// 					if (!err?.response) {
+	// 						setErrMsg('No Server Response');
+	// 					} else if (err.response?.status === 400) {
+	// 						setErrMsg('Missing Username or Password');
+	// 					} else if (err.response?.status === 401) {
+	// 						setErrMsg('Unauthorized');
+	// 					} else {
+	// 						setErrMsg('Login Failed');
+	// 					};
+	// 		});
+	// 	}
+	// }
 
 	// const decryptPassword = (encryption) => {
 	// 		axios.get('http://localhost:3001/decryptPassword', {
