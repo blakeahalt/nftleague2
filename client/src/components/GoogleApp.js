@@ -62,8 +62,8 @@ function App() {
 	})
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/working")  //"http://localhost:3001/login"
-		// axios.get("/GoogleApp")  //"http://localhost:3001/login"
+		// axios.get("http://localhost:3001/working")  //"http://localhost:3001/login"
+		axios.get("/working")  //"http://localhost:3001/login"
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -170,7 +170,8 @@ function App() {
 // ======================================================================================== 9/20/20
 
 useEffect(() => {
-	axios.get("http://localhost:3001/checkPassword").then((response) => {
+	// axios.get("http://localhost:3001/checkPassword").then((response) => {
+	axios.get("/checkPassword").then((response) => {
 		if (response.data.loggedIn === true) {
 		setLoginStatus(response.data.user[0].username);
 		}
@@ -178,7 +179,8 @@ useEffect(() => {
 }, []);	
 
 const login = () => {
-	axios.post("http://localhost:3001/checkPassword", {
+	// axios.post("http://localhost:3001/checkPassword", {
+	axios.post("/checkPassword", {
 	  user: user,
 	  pwd: pwd,
 	}).then((response) => {

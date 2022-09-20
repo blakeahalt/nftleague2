@@ -9,8 +9,8 @@ const Notification = () => {
 	const [notification, setNotification] = useState("")
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/working")  //"http://localhost:3001/register"
-		// axios.get("/working")  //"http://localhost:3001/register"
+		// axios.get("http://localhost:3001/working")  //"http://localhost:3001/register"
+		axios.get("/working")  //"http://localhost:3001/register"
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
