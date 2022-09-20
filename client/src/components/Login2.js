@@ -1,16 +1,35 @@
-import { useRef, useState, useEffect, useContext } from "react";
+import { useRef, useState, useEffect, useContext, useNavigate } from "react";
 import { Link } from 'react-router-dom';
+import AuthContext from "../context/AuthProvider";
 import axios from 'axios'
-const Login = () => {
+
+function Login() {
   const userRef = useRef();
   const errRef = useRef();
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
-  const [auth, setAuth] = useState('');
+  const { setAuth } = useContext(AuthContext);
 
-const Login = () => {
+
+	const navigate = useNavigate();
+
+	
+	useEffect(() => {
+		userRef.current.focus();
+	}, [])
+
+	useEffect(() => {
+		setErrMsg('');
+	}, [user, pwd])
+
+	useEffect(() => {
+		if (localStorage.getItem('user-info')) {
+			navigate.push("/added")
+		}
+	})
+
   useEffect(() => {
     userRef.current.focus();
   }, []);
@@ -104,6 +123,6 @@ const Login = () => {
     </>
   );
 };
-}
+
 
 export default Login;
