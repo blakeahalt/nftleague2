@@ -331,11 +331,12 @@ return (
 			// 	<Route exact path="/success" element={<RegisterSuccess/>}/>
 			// </Routes>
 			<section>
-				<h1>You are logged in!</h1>
+				{/* <h1>You are logged in!</h1>
 				<br />
 				<p>
 				  <Link to='/Profile'>Go to your Profile</Link>
-				</p>
+				</p> */}
+				<Redirect  to='/profile' />
 			</section>
 		) : (
 			<section>
