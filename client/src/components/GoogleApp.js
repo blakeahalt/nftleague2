@@ -119,39 +119,171 @@ function App() {
 	// 	})
 	// }
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		console.log(user, pwd);
+	// ========================================================
+	// Login:
+	const [loginStatus, setLoginStatus] = useState("");
+	const [passwordList, setPasswordList] = useState([]);
 
-		try {
-			const response = await axios.post(LOGIN_URL,
-				JSON.stringify({ user, pwd }),
-				{
-					headers: { 'Content-Type': 'application/json' },
-					// withCredentials: true
-				}
-			);
-			console.log(JSON.stringify(response?.data));
-			//console.log(JSON.stringify(response));
-			const accessToken = response?.data?.accessToken;
-			const roles = response?.data?.roles;
-			setAuth({ user, pwd, roles, accessToken });
-			setUser('');
-			setPwd('');
-			setSuccess(true);
-		} catch (err) {
-			if (!err?.response) {
-				setErrMsg('No Server Response');
-			} else if (err.response?.status === 400) {
-				setErrMsg('Missing Username or Password');
-			} else if (err.response?.status === 401) {
-				setErrMsg('Unauthorized');
-			} else {
-				setErrMsg('Login Failed');
-			}
-			// errRef.current.focus();
+	// useEffect(() => {
+	// 	axios.get('http://localhost:3001/showPasswords').then((response) => {
+	// 		setPasswordList(response.data)
+	// 	})
+	// }, [])
+
+	// const login = () => {
+	// 	axios.post('http://localhost:3001/googleapp', {    // Development
+	// 	// axios.post('/login', {			     // Heroku
+	// 	user: user,
+	// 	pwd: pwd,
+	// }).then((response) => {
+	// 	if (!response.data.message) {
+	// 	setLoginStatus( response.data.message);
+	// 	} else {
+	// 	setLoginStatus (response.data[0].message);
+	// 	}
+	// });
+	// };	
+
+	// function handleLoginForm() {
+	// 	const email = userRef.current.value
+	// 	const password = pwdRef.current.value
+	// 	// const hashedPassword = bcrypt.hashSync(password, '$2a$10$CwTycUXWue0Thq9StjUM0u') // hash created previously created upon sign up
+
+	// 	fetch('http://localhost:3001/GoogleApp', {
+	// 		method: 'POST',
+	// 		headers: {
+	// 			Accept: 'application/json',
+	// 			'Content-Type': 'application/json',
+	// 		},
+	// 		body: JSON.stringify({
+	// 			email: email,
+	// 			// password: hashedPassword,
+	// 			password: password,
+	// 		}),
+	// 	})
+	// }
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+
+	// 	axios.post('http://localhost:3001/checkPassword', {    // Development
+	// 		// axios.post('/login', {			     // Heroku
+	// 		user: user,
+	// 		pwd: pwd,
+	// 	}).then((response) => {
+	// 		if (!response.data.message) {
+	// 		setLoginStatus(response.data.message);
+	// 		} else {
+	// 		setLoginStatus (response.data[0].message);
+	// 		}
+	// 		// console.log(JSON.stringify(response?.data));
+	// 		//console.log(JSON.stringify(response));
+	// 		// const accessToken = response?.data?.accessToken;
+	// 		// const roles = response?.data?.roles;
+	// 		// setAuth({ user, pwd, accessToken });
+	// 		setUser('');
+	// 		setPwd('');
+	// 		setSuccess(true);
+	// 	}).catch((err)=> {
+	// 		if (!err?.response) {
+	// 			setErrMsg('No Server Response');
+	// 		} else if (err.response?.status === 400) {
+	// 			setErrMsg('Missing Username or Password');
+	// 		} else if (err.response?.status === 401) {
+	// 			setErrMsg('Unauthorized');
+	// 		} else {
+	// 			setErrMsg('Login Failed');
+	// 		}
+	// 		// errRef.current.focus(); //don't use...was causing an error
+	// 	})
+	// 	console.log(user, pwd);
+	// };	
+	// ============================
+				// .then(res => {
+				// 	console.log(res)
+				// 	setNotification(res.data.message)
+				// })
+	const checkPassword = (props) => {
+			axios.get('/checkPassword', {
+			// axios.get('http://localhost:3001/checkPassword', {
+				password: props.password,
+				user: props.data,
+				iv: props.iv,
+			}).then((response) => {
+				setPasswordList(
+					passwordList.map((val) => {
+						return val.password === props.password ? 
+						{
+							id: val.id,
+							password: val.password,
+							user: response.data,
+						} : val;
+					})
+					);
+				}).catch((err)=> {
+						if (!err?.response) {
+							setErrMsg('No Server Response');
+						} else if (err.response?.status === 400) {
+							setErrMsg('Missing Username or Password');
+						} else if (err.response?.status === 401) {
+							setErrMsg('Unauthorized');
+						} else {
+							setErrMsg('Login Failed');
+						};
+			});
 		}
 	}
+
+	// const decryptPassword = (encryption) => {
+	// 		axios.get('http://localhost:3001/decryptPassword', {
+	// 			password: encryption.password,
+	// 			user: response.data,
+	// 			iv: encryption.iv,
+	// 		}).then((response) => {
+	// 			setPasswordList(
+	// 				passwordList.map((val) => {
+	// 					return user === val.user ? 
+	// 					{
+	// 						id: val.id,
+	// 						password: val.password,
+	// 						user: response.data,
+	// 						iv: val.iv,
+	// 					} : val;
+	// 				})
+	// 				);
+	// 			});
+	// 		};
+// ======================
+
+		// try {
+		// 	const response = await axios.post(LOGIN_URL,
+		// 		JSON.stringify({ user, pwd }),
+		// 		{
+		// 			headers: { 'Content-Type': 'application/json' },
+		// 			// withCredentials: true
+		// 		}
+		// 	);
+		// 	console.log(JSON.stringify(response?.data));
+		// 	//console.log(JSON.stringify(response));
+		// 	const accessToken = response?.data?.accessToken;
+		// 	const roles = response?.data?.roles;
+		// 	setAuth({ user, pwd, roles, accessToken });
+		// 	setUser('');
+		// 	setPwd('');
+		// 	setSuccess(true);
+		// } catch (err) {
+		// 	if (!err?.response) {
+		// 		setErrMsg('No Server Response');
+		// 	} else if (err.response?.status === 400) {
+		// 		setErrMsg('Missing Username or Password');
+		// 	} else if (err.response?.status === 401) {
+		// 		setErrMsg('Unauthorized');
+		// 	} else {
+		// 		setErrMsg('Login Failed');
+		// 	}
+		// 	// errRef.current.focus(); //don't use...was causing an error
+		// }
+// }
 	// From Login.js ========================================================================================
 
 

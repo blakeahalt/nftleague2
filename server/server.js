@@ -1,13 +1,66 @@
 const express = require("express");
-// eslint-disable-next-line no-unused-vars
-// const bodyParser = require('body-parser');
-const path = require("path");
 const app = express();
+const path = require("path");
 const port = process.env.PORT || 3001;
 const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 
+// NEW SERVER========================================
+const corsOptions = require('./config/corsOptions');
+const { logger } = require('./middleware/logEvents');
+const errorHandler = require('./middleware/errorHandler');
+const verifyJWT = require('./middleware/verifyJWT');
+const cookieParser = require('cookie-parser');
+const credentials = require('./middleware/credentials');
+
+
+// custom middleware logger
+app.use(logger);
+
+// Handle options credentials check - before CORS!
+// and fetch cookies credentials requirement
+app.use(credentials);
+
+// Cross Origin Resource Sharing
+app.use(cors(corsOptions));
+
+// built-in middleware to handle urlencoded form data
+app.use(express.urlencoded({ extended: false }));
+
+// // built-in middleware for json 
+// app.use(express.json());
+
+//middleware for cookies
+app.use(cookieParser());
+
+// //serve static files
+// app.use('/', express.static(path.join(__dirname, '/public')));
+
+// routes
+app.use('/', require('./routes/root'));
+app.use('/register', require('./routes/register'));
+app.use('/auth', require('./routes/auth'));
+app.use('/refresh', require('./routes/refresh'));
+app.use('/logout', require('./routes/logout'));
+
+app.use(verifyJWT);
+app.use('/employees', require('./routes/api/employees'));
+
+app.all('*', (req, res) => {
+    res.status(404);
+    if (req.accepts('html')) {
+        res.sendFile(path.join(__dirname, 'views', '404.html'));
+    } else if (req.accepts('json')) {
+        res.json({ "error": "404 Not Found" });
+    } else {
+        res.type('txt').send("404 Not Found");
+    }
+});
+
+app.use(errorHandler);
+
+// NEW SERVER ================================================
 // const proxy = require('http-proxy-middleware')
 
 // module.exports = function(app) {
@@ -126,9 +179,36 @@ app.get("/showPasswords", (req, res) => {
   })
 })
 
-app.post("/decryptpassword", (req, res) => {
-  res.send(decrypt(req.body));
-});
+// app.post("/decryptpassword", (req, res) => {
+//   res.send(decrypt(req.body));
+// });
+
+app.get("/checkPassword", (req, res) => {
+  // res.send(decrypt(req.body));
+  // const user = req.body.user;
+  // const pwd = req.body.pwd;
+  // const {user, pwd} = req.body 
+
+  const {pwd, user} = req.body 
+  const decryptedPassword = decrypt(pwd)
+
+  db.query(
+      "SELECT * FROM passwords WHERE user = ? AND password = ?",
+      [user, decryptedPassword.password],
+      (err, result)=> {
+          if (err) {
+              res.send({err: err});
+          } else {
+            res.send("Success")
+          }
+        })
+          // if (result.length > 0) {
+          //     res.send(result);
+          //     } else {
+          //       res.send({message: 'Wut'});
+          //     }
+                // else({message: "Wrong username/password comination!"});
+})
 
 // app.get("/register", (req, res) => {
 //   res.json({ user: {} });
