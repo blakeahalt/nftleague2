@@ -141,8 +141,45 @@ app.get("/added", (req, res) => {
 //   res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 // });
 
+// app.get("/login", (req, res) => {
+//   res.json({ res });
+// });
+
 app.get("/login", (req, res) => {
-  res.json({ res });
+  if (req.session.user) {
+    res.send({ loggedIn: true, user: req.session.user });
+  } else {
+    res.send({ loggedIn: false });
+  }
+});
+
+app.post("/login", (req, res) => {
+  const user = req.body.user;
+  const pwd = req.body.pwd;
+
+  db.query(
+    "SELECT * FROM hzgtrybfzcvlvstf WHERE user = ?;",
+    user,
+    (err, result) => {
+      if (err) {
+        res.send({ err: err });
+      }
+
+      if (result.length > 0) {
+        crypto.compare(pwd, result[0].pwd, (error, response) => {
+          if (response) {
+            req.session.user = result;
+            console.log(req.session.user);
+            res.send(result);
+          } else {
+            res.send({ message: "Wrong username/password combination!" });
+          }
+        });
+      } else {
+        res.send({ message: "User doesn't exist" });
+      }
+    }
+  );
 });
 
 
@@ -179,11 +216,23 @@ app.get("/showPasswords", (req, res) => {
   })
 })
 
+
+app.get("/checkPasswords", (req, res) => {
+  db.query("SELECT * FROM hzgtrybfzcvlvstf;", 
+  (err, result) => {
+    if(err) {
+      console.log(err);
+    } else {
+      res.send(result)
+    }
+  })
+})
+
 // app.post("/decryptpassword", (req, res) => {
 //   res.send(decrypt(req.body));
 // });
 
-app.get("/checkPassword", (req, res) => {
+app.post("/checkPassword", (req, res) => {
   // res.send(decrypt(req.body));
   // const user = req.body.user;
   // const pwd = req.body.pwd;
@@ -193,7 +242,7 @@ app.get("/checkPassword", (req, res) => {
   const decryptedPassword = decrypt(pwd)
 
   db.query(
-      "SELECT * FROM passwords WHERE user = ? AND password = ?",
+      "SELECT * FROM hzgtrybfzcvlvstf WHERE user = ? AND password = ?",
       [user, decryptedPassword.password],
       (err, result)=> {
           if (err) {

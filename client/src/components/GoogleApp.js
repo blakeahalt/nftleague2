@@ -62,8 +62,8 @@ function App() {
 	})
 
 	useEffect((req, res) => {
-		// axios.get("http://localhost:3001/working")  //"http://localhost:3001/login"
-		axios.get("/GoogleApp")  //"http://localhost:3001/login"
+		axios.get("http://localhost:3001/working")  //"http://localhost:3001/login"
+		// axios.get("/GoogleApp")  //"http://localhost:3001/login"
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -74,14 +74,15 @@ function App() {
 	// From Login.js ========================================================================================
 	// const Login = () => {
 		// eslint-disable-next-line
-	const { setAuth } = useContext(AuthContext);
-	const userRef = useRef();
-	// const pwdRef = useRef();
-	const errRef = useRef();
-
-	const [user, setUser] = useState('');
-	const [pwd, setPwd] = useState('');
-	const [errMsg, setErrMsg] = useState('');
+		const { setAuth } = useContext(AuthContext);
+		const userRef = useRef();
+		// const pwdRef = useRef();
+		const errRef = useRef();
+		
+		const [user, setUser] = useState('');
+		const [pwd, setPwd] = useState('');
+		const [errMsg, setErrMsg] = useState('');
+		// eslint-disable-next-line
 	const [success, setSuccess] = useState(false);
 
 	const navigate = useNavigate();
@@ -166,41 +167,68 @@ function App() {
 	// 	})
 	// }
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
+// ======================================================================================== 9/20/20
 
-		// axios.post('http://localhost:3001/checkPassword', {    // Development
-			axios.post('/checkPassword', {			     // Heroku
-			user: user,
-			pwd: pwd,
-		}).then((response) => {
-			if (!response.data.message) {
-			setLoginStatus(response.data.message);
-			} else {
-			setLoginStatus (response.data[0].message);
-			}
-			// console.log(JSON.stringify(response?.data));
-			//console.log(JSON.stringify(response));
-			// const accessToken = response?.data?.accessToken;
-			// const roles = response?.data?.roles;
-			// setAuth({ user, pwd, accessToken });
-			setUser('');
-			setPwd('');
-			setSuccess(true);
-		}).catch((err)=> {
-			if (!err?.response) {
-				setErrMsg('No Server Response');
-			} else if (err.response?.status === 400) {
-				setErrMsg('Missing Username or Password');
-			} else if (err.response?.status === 401) {
-				setErrMsg('Unauthorized');
-			} else {
-				setErrMsg('Login Failed');
-			}
-			// errRef.current.focus(); //don't use...was causing an error
-		})
-		console.log(user, pwd);
-	};	
+useEffect(() => {
+	axios.get("http://localhost:3001/checkPassword").then((response) => {
+		if (response.data.loggedIn === true) {
+		setLoginStatus(response.data.user[0].username);
+		}
+	});
+}, []);	
+
+const login = () => {
+	axios.post("http://localhost:3001/checkPassword", {
+	  user: user,
+	  pwd: pwd,
+	}).then((response) => {
+	  if (response.data.message) {
+	    setLoginStatus(response.data.message);
+	  } else {
+	    setLoginStatus(response.data[0].username);
+	  }
+	});
+     };
+
+// ======================================================================================== 9/20/20
+
+
+// eslint-disable-next-line
+	// const handleSubmit = (e) => {
+	// 	e.preventDefault();
+
+	// 	axios.post('http://localhost:3001/checkPassword', {    // Development
+	// 		// axios.post('/checkPassword', {			     // Heroku
+	// 		user: user,
+	// 		pwd: pwd,
+	// 	}).then((response) => {
+	// 		if (!response.data.message) {
+	// 		setLoginStatus(response.data.message);
+	// 		} else {
+	// 		setLoginStatus (response.data[0].message);
+	// 		}
+	// 		// console.log(JSON.stringify(response?.data));
+	// 		//console.log(JSON.stringify(response));
+	// 		// const accessToken = response?.data?.accessToken;
+	// 		// const roles = response?.data?.roles;
+	// 		// setAuth({ user, pwd, accessToken });
+	// 		setUser('');
+	// 		setPwd('');
+	// 		setSuccess(true);
+	// 	}).catch((err)=> {
+	// 		if (!err?.response) {
+	// 			setErrMsg('No Server Response');
+	// 		} else if (err.response?.status === 400) {
+	// 			setErrMsg('Missing Username or Password');
+	// 		} else if (err.response?.status === 401) {
+	// 			setErrMsg('Unauthorized');
+	// 		} else {
+	// 			setErrMsg('Login Failed');
+	// 		}
+	// 		// errRef.current.focus(); //don't use...was causing an error
+	// 	})
+	// 	console.log(user, pwd);
+	// };	
 	// ============================
 				// .then(res => {
 				// 	console.log(res)
@@ -288,6 +316,8 @@ function App() {
 		// }
 // }
 	// From Login.js ========================================================================================
+	
+	
 
 
 return (
@@ -307,7 +337,7 @@ return (
 			<section>
 				<p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
 				<h1>Sign In</h1>
-				<form onSubmit={() => handleSubmit }>
+				<form onSubmit={() => login }>
 					<label htmlFor="username">Username:</label>
 					<input
 						type="text"
