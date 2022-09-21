@@ -38,8 +38,8 @@ const Register = () => {
 	// const [passwordList, setPasswordList] = useState([])
 
 	useEffect((req, res) => {
-		// axios.get("http://localhost:3001/working")  //"http://localhost:3001/register"
-		axios.get("/working")  //"http://localhost:3001/register"
+		axios.get("http://localhost:3001/working")  //"http://localhost:3001/register"
+		// axios.get("/working")  //"http://localhost:3001/register"
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -87,8 +87,8 @@ const Register = () => {
 			setErrMsg("Invalid Entry");
 			return;
 		}
-		// axios.post('http://localhost:3001/addPassword', {  //remove URL when deploying a build to heroku
-		axios.post('/addPassword', {  //remove URL when deploying a build to heroku
+		axios.post('http://localhost:3001/addPassword', {  //remove URL when deploying a build to heroku
+		// axios.post('/addPassword', {  //remove URL when deploying a build to heroku
 			user: user,
 			pwd: pwd
 		})
@@ -193,7 +193,7 @@ const Register = () => {
 				<section>
 					<h1>Success!</h1>
 					<p>
-						<Link to="/">Login</Link>
+						<Link to="/googleapp">Login</Link>
 					</p>
 					<p>
 						<Link to="/profile">Visit Your Profile</Link>

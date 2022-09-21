@@ -1,12 +1,15 @@
 import LoginButton from "./GoogleLogin"
 import LogoutButton from "./GoogleLogout"
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate, Route, Routes } from 'react-router-dom';
 import { useEffect, useState, useRef, useContext } from 'react'
 import { gapi } from 'gapi-script'
 import axios from 'axios'
 import AuthContext from "../context/AuthProvider";
 // import GoogleLogin from "react-google-login";
 import jwt_decode from "jwt-decode"
+// import Googleapp from "./GoogleApp"
+// import Profile from "./Profile"
+import Notification from "./Notification";
 
 
 // import Login from "./Login";
@@ -19,7 +22,8 @@ function App() {
 	const [notification, setNotification] = useState("")
 
 	useEffect((req, res) => {
-		axios.get("/GoogleApp")
+		axios.get("http://localhost:3001/working")  //"http://localhost:3001/login"
+		// axios.get("/working")  //"http://localhost:3001/login"
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -61,14 +65,6 @@ function App() {
 		})
 	})
 
-	useEffect((req, res) => {
-		// axios.get("http://localhost:3001/working")  //"http://localhost:3001/login"
-		axios.get("/working")  //"http://localhost:3001/login"
-			.then(res => {
-				console.log(res)
-				setNotification(res.data.message)
-			})
-	}, [])
 	// var accessToken = gapi.auth.getToken().access_token
 
 	// From Login.js ========================================================================================
@@ -169,32 +165,41 @@ function App() {
 
 // ======================================================================================== 9/20/20
 
-useEffect(() => {
-	// axios.get("http://localhost:3001/checkPassword").then((response) => {
-	axios.get("/checkPassword").then((response) => {
-		if (response.data.loggedIn === true) {
-		setLoginStatus(response.data.user[0].user);
-	    	setSuccess(true)
-		}
-	});
-}, []);	
+// useEffect(() => {
+// 	axios.get("http://localhost:3001/checkPassword").then((response) => {
+// 	// axios.get("/checkPassword").then((response) => {
+// 		if (response.data.loggedIn === true) {
+// 		setLoginStatus(response.data.user[0].user);
+// 			setSuccess(true)
+// 		}
+// 	});
+// 	// return <Navigate to='/profile' />
+// }, []);	
 
 const login = () => {
-	// axios.post("http://localhost:3001/checkPassword", {
-	axios.post("/checkPassword", {
-	  user: user,
-	  pwd: pwd,
-	}).then((response) => {
-	  if (response.data.message) {
-	    setLoginStatus(response.data.message);
-	    setSuccess(true)
-	  } else {
-	    setLoginStatus(response.data[0].user);
-	  }
-	});
-     };
+	axios.get("http://localhost:3001/checkPassword")
+	.then((response) => {
+		if (response.data === true) {
+		setLoginStatus(response.data.user[0].user);
+		setSuccess(true)
+		}	
+		if (response.data.message) {
+				setLoginStatus(response.data.message);
+				setSuccess(true)
+				console.log(loginStatus);
+				return <Navigate to='/profile' />
+			} else {
+				setLoginStatus(response.data[0].user);
+			}
+		});
+	};
+//  if (success) {
+// 	return <Navigate to='/profile' />
+//  }
 
-// ======================================================================================== 9/20/20
+
+	
+	// ======================================================================================== 9/20/20
 
 
 // eslint-disable-next-line
@@ -336,7 +341,40 @@ return (
 				<p>
 				  <Link to='/Profile'>Go to your Profile</Link>
 				</p> */}
-				<Redirect  to='/profile' />
+				{/* <Router> */}
+					<Routes>
+						{/* <Route 
+						path='/' 
+						element={<Googleapp />}
+						/>
+						<Route 
+						path='/googleapp' 
+						element={<Googleapp />}
+						/>
+						<Route
+						path='/Profile'
+						element={<Profile />}
+						/> */}
+						<Route
+						path='/' 
+						element={ success ? (
+						  <Navigate replace to='/Profile' />
+						) : (
+						   <Notification />
+						)
+						}
+						/>
+						{/* <Route
+						path='/googleapp' 
+						element={ success ? (
+						  <Navigate replace to='/Profile' />
+						) : (
+						   <Notification />
+						)
+						}
+						/> */}
+					</Routes>
+				{/* </Router> */}
 			</section>
 		) : (
 			<section>

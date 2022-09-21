@@ -1,39 +1,39 @@
 import { useRef, useState, useEffect, useContext } from 'react';
-// import Register from './components/Register.js'
-// import Notification from './components/Notification.js';
-// import bcrypt from 'bcryptjs'
-import { Link, useNavigate } from 'react-router-dom';
-import AuthContext from "../context/AuthProvider";
+import { Link, Navigate } from 'react-router-dom';
+
+import AuthContext from "./AuthProvider";
 import axios from 'axios';
-// import GoogleApp from './components/GoogleApp'
-// import LoginButton from "./GoogleLogin"
-// import LogoutButton from "./GoogleLogout"
-// import { gapi } from 'gapi-script'
-
-// const clientId="1077671935526-e6mu705tptsm57l6p1ajpom0umt43a1p.apps.googleusercontent.com"
-
-const LOGIN_URL = 'http://localhost:3001/login';
-
-
-// const REGISTER_URL = '/register'
-// const salt = bcrypt.genSaltSync(10)
-
-
+// import {decrypt} from '../../../server/EncryptionHandler';
 
 const Login = () => {
     const { setAuth } = useContext(AuthContext);
     const userRef = useRef();
-    const pwdRef = useRef();
     const errRef = useRef();
 
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
-
     const [notification, setNotification] = useState("")
-    
-    const navigate = useNavigate();
+    const [passwordList, setPasswordList] = useState([]);
+
+	useEffect((req, res) => {
+		axios.get("http://localhost:3001/working")  //"http://localhost:3001/login"
+		// axios.get("/working")  //"http://localhost:3001/login"
+			.then(res => {
+				console.log(res)
+				setNotification(res.data.message)
+			})
+	}, [])
+
+    // useEffect(() => {
+	// 	axios.get("http://localhost:3001/checkpassword")  //"http://localhost:3001/login"
+	// 	// axios.get("/checkpassword")  //"http://localhost:3001/login"
+	// 		.then(res => {
+	// 			console.log('JSON data', res)
+	// 			setPasswordList(res.data)
+	// 		})
+	// }, [])
 
     useEffect(() => {
         userRef.current.focus();
@@ -42,95 +42,25 @@ const Login = () => {
     useEffect(() => {
         setErrMsg('');
     }, [user, pwd])
-    
-    useEffect(() => {
-        if(localStorage.getItem('user-info')) {
-            navigate.push("http://localhost:3001/add")
-        }
-    })
 
-    useEffect((req, res) => {
-		axios.get("http://localhost:3001/login")  //"http://localhost:3001/login"
-			.then(res => {
-				console.log(res)
-				setNotification(res.data.message)
-			})
-	}, [])
+    const handleSubmit = () => {
+        axios.post('http://localhost:3001/checkPassword',  
+        JSON.stringify({ user, pwd }), {    // Development
+        // axios.post('/checkPassword', {			     // Heroku
+        		user: user,
+        		pwd: pwd,
+        	}).then((response) => {
 
-    // function App() {
-
-    //     useEffect(() => {
-    //         function start() {
-    //             gapi.client.init({
-    //                 clientId: clientId,
-    //                 scope: ""
-    //             })
-    //         }
-    
-    //         gapi.load('client:auth2', start)
-    //     })
-	// }
-
-
-	// var accessToken = gapi.auth.getToken().access_token
-
-    function handleLoginForm() {
-        const email = userRef.current.value
-        const password = pwdRef.current.value
-        // const hashedPassword = bcrypt.hashSync(password, '$2a$10$CwTycUXWue0Thq9StjUM0u') // hash created previously created upon sign up
-    
-        fetch('/login', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: email,
-            // password: hashedPassword,
-            password: password,
-          }),
-        })
-      }
-    
-// async function login(){
-
-//     let item={user, pwd}
-//     let result = await fetch("http://localhost:3001/login", {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json",
-//             "Accept": "application/json"
-//         },
-//         body: JSON.stringify(item)
-//     })
-//     result = await result.json();
-//     localStorage.setItem("user-info", JSON.stringify(result))
-//     navigate.push("/add")
-// }
-     
-    
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(user, pwd);
-        
-        try {
-            const response = await axios.post(LOGIN_URL,
-                JSON.stringify({ user, pwd }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    // withCredentials: true
-                }
-            );
-            console.log(JSON.stringify(response?.data));
-            //console.log(JSON.stringify(response));
-            const accessToken = response?.data?.accessToken;
-            const roles = response?.data?.roles;
-            setAuth({ user, pwd, roles, accessToken });
-            setUser('');
-            setPwd('');
-            setSuccess(true);
-        } catch (err) {
+                console.log(JSON.stringify(response?.data));
+                //console.log(JSON.stringify(response));
+                const accessToken = response?.data?.accessToken;
+                const roles = response?.data?.roles;
+                setAuth({ user, pwd, roles, accessToken });
+                setUser('');
+                setPwd('');
+                setSuccess(true);
+            
+            }).catch((err)=> {
             if (!err?.response) {
                 setErrMsg('No Server Response');
             } else if (err.response?.status === 400) {
@@ -140,25 +70,49 @@ const Login = () => {
             } else {
                 setErrMsg('Login Failed');
             }
-            // errRef.current.focus();
-        }
+            errRef.current.focus();
+            })
     }
+
+    // const decryptPassword = (encryption) => {
+	// 		axios.post('http://localhost:3001/decryptPassword', {
+	// 		// axios.post('/decryptPassword', {
+	// 			password: encryption.password,
+	// 			iv: encryption.iv,
+	// 		}).then((response) => {
+	// 			setPasswordList(
+	// 				passwordList.map((val) => {
+	// 					return val.id === encryption.id
+	// 					? {
+	// 						id: val.id,
+	// 						password: val.password,
+	// 						user: response.data,
+	// 						iv: val.iv,
+	// 					}
+	// 					: val;
+	// 				})
+	// 				);
+	// 			});
+	// 		};
+
 
     return (
         <>
             {success ? (
                 <section>
-                    <h1>You are logged in!</h1>
+                      <Navigate path='/profile' />
+                    {/* <h1>You are logged in!</h1>
                     <br />
                     <p>
-                    <Link to='/notification'>Go to Home</Link>
-                    </p>
+                        <a href="#">Go to Home</a>
+                     
+                    </p> */}
                 </section>
             ) : (
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                    {/* <h1>Sign In</h1> */}
-                    <form onSubmit={()=> handleSubmit & handleLoginForm}>
+                    <h1>Sign In</h1>
+                    <form onSubmit={handleSubmit}>
                         <label htmlFor="username">Username:</label>
                         <input
                             type="text"
@@ -168,7 +122,7 @@ const Login = () => {
                             onChange={(e) => setUser(e.target.value)}
                             value={user}
                             required
-                            />
+                        />
 
                         <label htmlFor="password">Password:</label>
                         <input
@@ -177,113 +131,39 @@ const Login = () => {
                             onChange={(e) => setPwd(e.target.value)}
                             value={pwd}
                             required
-                            />
+                        />
                         <button>Sign In</button>
                     </form>
-                    {/* <div className="App">
-                    <p>Or Login with your Google Account</p>
-                    <LoginButton />
-                    <LogoutButton />
-                </div> */}
                     <p>
-                        Need an Account?<br />
-                        <span className="line">
-                            {/*put router link here*/}
-                            {/* <a href="/register">Sign Up</a> */}
-                            <Link to='/register'>Sign Up</Link>
-                        </span>
-                        {/* <span>Your new SALT: {salt}</span> */}
-                        <br />
-                        <span>
-                        Save this Salt, UPON sign up <br /> if you refresh it will generate a new SALT!!!
-                        </span>
-                    </p>
-                <div>
-                <Link to='/googleapp'>Google Login</Link>
-                </div>
-                <p>axios.get('/login') status: <i>{notification}</i></p>
-                </section>
+					Need an Account?
+					<br />
+					<span className="line">
+						{/*put router link here*/}
+						{/* <a href="/register">Sign Up</a> */}
+						<Link to='/register'>Sign Up</Link>
+					</span>
+				</p>
+                    <p>axios.get('/login') status: <i>{notification}</i></p>
+                    {/* <div className="Passwords">
+						{passwordList.map((val, key) => {
+							return (
+								<div
+								className="Password"
+								onClick={() => {
+									decryptPassword({ password: val.password, iv: val.iv, id: val.id })
+								}}
+								key={key}
+								> 
+								{/* <ul> {val.user} </ul> */}
+								{/* </div>
+							)
+						})}
+					</div> */} 
 
+                </section>
             )}
         </>
     )
 }
 
 export default Login
-
-
-// import { useState } from 'react';
-// import axios from "axios";
-
-// function Login(props) {
-
-//     const [loginForm, setloginForm] = useState({
-//       username: "",
-//       password: ""
-//     })
-
-//     function logMeIn(event) {
-//       axios({
-//         method: "POST",
-//         url:"/token",
-//         data:{
-//           username: loginForm.username,
-//           password: loginForm.password
-//          }
-//       })
-//       .then((response) => {
-//         props.setToken(response.data.access_token)
-//       }).catch((error) => {
-//         if (error.response) {
-//           console.log(error.response)
-//           console.log(error.response.status)
-//           console.log(error.response.headers)
-//           }
-//       })
-
-//       setloginForm(({
-//         username: "",
-//         password: ""}))
-
-//       event.preventDefault()
-//     }
-
-//     function handleChange(event) { 
-//       const {value, name} = event.target
-//       setloginForm(prevNote => ({
-//           ...prevNote, [name]: value})
-//       )}
-
-//     return (
-//       <div>
-//         <h1>Login</h1>
-//           <form className="login">
-//             <div className="mb-3">
-//                 <input autoComplete="off" autoFocus className="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text" />
-//             </div>
-//             <div className="mb-3">
-//                 <input className="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password" />
-//             </div>
-//             <button className="btn btn-primary" type="submit">Log In</button>
-//           </form>
-//           {/* <form className="login">
-//             <input onChange={handleChange} 
-//                   type="email"
-//                   text={loginForm.email} 
-//                   name="email" 
-//                   placeholder="Email" 
-//                   value={loginForm.email} />
-//             <input onChange={handleChange} 
-//                   type="password"
-//                   text={loginForm.password} 
-//                   name="password" 
-//                   placeholder="Password" 
-//                   value={loginForm.password} />
-
-//           <button onClick={logMeIn}>Submit</button>
-//         </form> */}
-//       </div>
-//     );
-// }
-
-// export default Login;

@@ -120,9 +120,9 @@ app.get("/notification", (req, res) => {
   res.json({ message:"WORKING" });
 });
 
-app.get("/register", (req, res) => {
-  res.json({ message:"WORKING" });
-});
+// app.get("/register", (req, res) => {
+//   res.json({ message:"WORKING" });
+// });
 
 app.get("/profile", (req, res) => {
   res.json({ message:"WORKING" });
@@ -205,6 +205,71 @@ app.post("/addPassword", (req, res) => {
 });
 
   
+
+
+app.get("/checkPasswords", (req, res) => {
+  const {pwd, user} = req.body 
+  const decryptedPassword = decrypt(pwd)
+  
+  db.query(
+    "SELECT * FROM hzgtrybfzcvlvstf",
+    user,
+    (err, result) => {
+      if (err) {
+        res.send({ err: err });
+      }
+      if (result.length > 0) {
+        crypto.compare(pwd, result[0].pwd, 
+          (err, res) => {
+            if (res) {
+            res.send({
+              "code":200,
+              "success":"login sucessfull"
+            }, res)
+        } else {
+          res.send({
+               "code":204,
+               "success":"Email and password does not match"
+          })
+        }
+      }
+    );
+}
+    })
+  })
+
+app.post("/decryptpassword", (req, res) => {
+  res.send(decrypt(req.body));
+});
+
+app.post("/checkPassword", (req, res) => {
+  // res.send(decrypt(req.body));
+  // const user = req.body.user;
+  // const pwd = req.body.pwd;
+  // const {user, pwd} = req.body 
+  
+  const {pwd, user} = req.body 
+  const decryptedPassword = decrypt(pwd)
+  
+    db.query(
+    "SELECT * FROM hzgtrybfzcvlvstf",
+    // [user, decryptedPassword.password],
+    (err, result)=> {
+      if (err) {
+        res.send({err: err});
+      } else {
+        res.send("Success")
+      }
+    })
+    if (res.length > 0) {
+          res.send(res);
+          } else {
+              res.send({message: 'Wut'});
+            }
+      //   else { ({message: "Wrong username/password comination!"});
+      // }
+    })
+      
 app.get("/showPasswords", (req, res) => {
   db.query("SELECT * FROM passwords;", 
   (err, result) => {
@@ -216,57 +281,14 @@ app.get("/showPasswords", (req, res) => {
   })
 })
 
-
-app.get("/checkPasswords", (req, res) => {
-  db.query("SELECT * FROM hzgtrybfzcvlvstf;", 
-  (err, result) => {
-    if(err) {
-      console.log(err);
-    } else {
-      res.send(result)
-    }
-  })
-})
-
-// app.post("/decryptpassword", (req, res) => {
-//   res.send(decrypt(req.body));
-// });
-
-app.post("/checkPassword", (req, res) => {
-  // res.send(decrypt(req.body));
-  // const user = req.body.user;
-  // const pwd = req.body.pwd;
-  // const {user, pwd} = req.body 
-
-  const {pwd, user} = req.body 
-  const decryptedPassword = decrypt(pwd)
-
-  db.query(
-      "SELECT * FROM hzgtrybfzcvlvstf WHERE user = ? AND password = ?",
-      [user, decryptedPassword.password],
-      (err, result)=> {
-          if (err) {
-              res.send({err: err});
-          } else {
-            res.send("Success")
-          }
-        })
-          // if (result.length > 0) {
-          //     res.send(result);
-          //     } else {
-          //       res.send({message: 'Wut'});
-          //     }
-                // else({message: "Wrong username/password comination!"});
-})
-
-// app.get("/register", (req, res) => {
-//   res.json({ user: {} });
-// });
+app.get("/register", (req, res) => {
+  res.json({ user: {} });
+});
 // app.get('/', (req, res) => res.sendFile(path.resolve(__dirname, "build", "index.html")));
 
 // if (process.env.NODE_ENV === "production") {
 //   app.use(express.static(path.join(__dirname, "/client/build")));
-  
+
 
 // This route serves the React app
 app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, "public", "index.html")));
