@@ -70,16 +70,16 @@ const Register = () => {
         }
 		axios.post('http://localhost:3001/addPassword',   //remove URL when deploying a build to heroku
 		// axios.post('/addPassword', {  //remove URL when deploying a build to heroku
-		// {
-		// 	user: user,
-		// 	pwd: pwd
-		// })
-		JSON.stringify({ user, pwd }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
-            )
+		{
+			user: user,
+			pwd: pwd
+		})
+		// JSON.stringify({ user, pwd }),
+        //         {
+        //             headers: { 'Content-Type': 'application/json' },
+        //             withCredentials: true
+        //         }
+        //     )
 		.then((response)=> {
 			console.log("1", response.config.data);
 			console.log("2", response?.data); //prints {response: 'WORKING'} from server index.js

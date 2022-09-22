@@ -47,6 +47,14 @@ function App() {
 		// 	{ theme: "outline", size: "large"}
 		// )
 	}, [])
+	
+	window.gapi.load('client:auth2', () => {
+		window.gapi.client.init({
+		    clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+		    scope: "email"
+		})
+	})
+
 	useEffect(() => {
 		function start() {
 			gapi.client.init({
@@ -57,13 +65,6 @@ function App() {
 
 		gapi.load('client:auth2', start)
 	}, [])
-
-	window.gapi.load('client:auth2', () => {
-		window.gapi.client.init({
-		    clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-		    scope: "email"
-		})
-	})
 
 	// var accessToken = gapi.auth.getToken().access_token
 
