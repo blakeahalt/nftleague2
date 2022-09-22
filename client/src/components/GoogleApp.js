@@ -1,3 +1,4 @@
+
 import LoginButton from "./GoogleLogin"
 import LogoutButton from "./GoogleLogout"
 import { Link, useNavigate, Navigate, Route, Routes } from 'react-router-dom';
@@ -10,6 +11,8 @@ import jwt_decode from "jwt-decode"
 // import Googleapp from "./GoogleApp"
 // import Profile from "./Profile"
 import Notification from "./Notification";
+import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 // import Login from "./Login";
@@ -66,6 +69,11 @@ function App() {
 		gapi.load('client:auth2', start)
 	}, [])
 
+	// AUTH0 Login
+	const AuthLoginButton = () => {
+		const { loginWithRedirect } = useAuth0()
+		return <button onClick={() => loginWithRedirect()}>Auth0 Log in</button>
+	     };
 	// var accessToken = gapi.auth.getToken().access_token
 
 	// From Login.js ========================================================================================
@@ -176,6 +184,7 @@ function App() {
 // 	});
 // 	// return <Navigate to='/profile' />
 // }, []);	
+
 
 const login = () => {
 	axios.get("http://localhost:3001/checkPassword")
@@ -411,6 +420,11 @@ return (
 					<LoginButton />
 					<LogoutButton />
 					<br />
+				</div>
+				<div>
+					Log in with your Auth0 Account
+					<AuthLoginButton>Log In</AuthLoginButton>
+					
 				</div>
 				<p>
 					Need an Account?
