@@ -10,7 +10,7 @@ const Profile = () => {
        const [notification, setNotification] = useState("")
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/profile")  //"http://localhost:3001/register"
+		axios.get("http://localhost:3001/working" || "/working")  //"http://localhost:3001/register"
 		// axios.get("/working")  //"http://localhost:3001/register"
 			.then(res => {
 				console.log(res)

@@ -25,8 +25,8 @@ function App() {
 	const [notification, setNotification] = useState("")
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/working")  //"http://localhost:3001/login"
-		// axios.get("/working")  //"http://localhost:3001/login"
+		// axios.get("http://localhost:3001/working")  //"http://localhost:3001/login"
+		axios.get("/working")  //"http://localhost:3001/login"
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -187,7 +187,8 @@ function App() {
 
 
 const login = () => {
-	axios.get("http://localhost:3001/checkPassword")
+	// axios.get("http://localhost:3001/checkPassword")
+	axios.get("/checkPassword")
 	.then((response) => {
 		if (response.data === true) {
 		setLoginStatus(response.data.user[0].user);
