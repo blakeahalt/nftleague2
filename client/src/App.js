@@ -12,7 +12,8 @@ import GoogleApp from './components/GoogleApp'
 import Login from './components/LoginAuth0'
 // import Logout from './components/LogoutAuth0'
 import Added from './components/Added'
-import Profile from './components/Profile'
+import Profile from './components/Profile2'
+
 
 function App() {
 
@@ -29,7 +30,7 @@ function App() {
             <Route exact path="/profile" element={<Profile/>}/>
             <Route exact path="/GoogleLogin" element={<GoogleLogin/>}/>
             <Route exact path="/GoogleLogout" element={<GoogleLogout/>}/>
-            <Route exact path="/" element={<Profile/>}/>
+            <Route exact path="/" element={<GoogleApp/>}/>
             <Route exact path="/googleapp" element={<GoogleApp/>}/>
             <Route exact path="/login" element={<Login/>}/>
             {/* <Route exact path="/googleapp" element={<Logout/>}/> */}

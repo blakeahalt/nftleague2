@@ -76,7 +76,7 @@ const Register = () => {
 	// 			setNotification(res.data.message)
 	// 		})
 	// }, [])
-	
+
 	// HANDLESUBMIT USING PROMISE
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -92,29 +92,29 @@ const Register = () => {
 			user: user,
 			pwd: pwd
 		})
-		.then((response)=> {
-			console.log("1", response.config.data);
-			console.log("2", response?.data); //prints {response: 'WORKING'} from server index.js
-			// console.log(response?.accessToken);
-			console.log("3", JSON.stringify(response))
-			setSuccess(true)
-			setCatchUser(user)
-			setUser('');
-			setPwd('');
-			setMatchPwd('');
-		}).catch ((err)=> {
-			if (!err?.response) {
-				setErrMsg('No Server Response');
-			} else if (err.response?.status === 409) {
-				setErrMsg('Username Taken');
-			} else {
-				setErrMsg('Registration Failed')
-			}
-			// errRef.current.focus();
-		})
+			.then((response) => {
+				console.log("1", response.config.data);
+				console.log("2", response?.data); //prints {response: 'WORKING'} from server index.js
+				// console.log(response?.accessToken);
+				console.log("3", JSON.stringify(response))
+				setSuccess(true)
+				setCatchUser(user)
+				setUser('');
+				setPwd('');
+				setMatchPwd('');
+			}).catch((err) => {
+				if (!err?.response) {
+					setErrMsg('No Server Response');
+				} else if (err.response?.status === 409) {
+					setErrMsg('Username Taken');
+				} else {
+					setErrMsg('Registration Failed')
+				}
+				// errRef.current.focus();
+			})
 		console.log(user, pwd);
 	}
-	
+
 	// HANDLESUBMIT USING ASYNC/AWAIT 
 	// const handleSubmit = async (e) => {
 	// 	e.preventDefault();
@@ -166,27 +166,26 @@ const Register = () => {
 	// 		// errRef.current.focus();
 	// 	}
 	// }
-		
-		// const decryptPassword = (encryption) => {
-		// 	axios.post('http://localhost:3001/decryptPassword', {
-		// 		password: encryption.password,
-		// 		iv: encryption.iv,
-		// 	}).then((response) => {
-		// 		setPasswordList(
-		// 			passwordList.map((val) => {
-		// 				return val.id === encryption.id
-		// 				? {
-		// 					id: val.id,
-		// 					password: val.password,
-		// 					user: response.data,
-		// 					iv: val.iv,
-		// 				}
-		// 				: val;
-		// 			})
-		// 			);
-		// 		});
-		// 	};
-			
+
+	// const decryptPassword = (encryption) => {
+	// 	axios.post('http://localhost:3001/decryptPassword', {
+	// 		password: encryption.password,
+	// 		iv: encryption.iv,
+	// 	}).then((response) => {
+	// 		setPasswordList(
+	// 			passwordList.map((val) => {
+	// 				return val.id === encryption.id
+	// 				? {
+	// 					id: val.id,
+	// 					password: val.password,
+	// 					user: response.data,
+	// 					iv: val.iv,
+	// 				}
+	// 				: val;
+	// 			})
+	// 			);
+	// 		});
+	// 	};
 	return (
 		<>
 			{success ? (

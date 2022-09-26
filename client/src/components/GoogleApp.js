@@ -1,7 +1,6 @@
-
 import LoginButton from "./GoogleLogin"
 import LogoutButton from "./GoogleLogout"
-import { Link, useNavigate, Navigate, Route, Routes } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { useEffect, useState, useRef, useContext } from 'react'
 import { gapi } from 'gapi-script'
 import axios from 'axios'
@@ -10,9 +9,15 @@ import AuthContext from "../context/AuthProvider";
 import jwt_decode from "jwt-decode"
 // import Googleapp from "./GoogleApp"
 // import Profile from "./Profile"
-import Notification from "./Notification";
+// import Notification from "./Notification";
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+// import Profile from './Profile2'
+// import { Route, Routes } from 'react-router-dom'
+
+// import LoginAuth0 from "./LoginAuth0"
+// import LogoutAuth0 from "./LogoutAuth0"
+
 
 
 // import Login from "./Login";
@@ -23,10 +28,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 function App() {
 	const [notification, setNotification] = useState("")
+	const [success, setSuccess] = useState(false);
 
 	useEffect((req, res) => {
-		// axios.get("http://localhost:3001/working")  //"http://localhost:3001/login"
-		axios.get("/working")  //"http://localhost:3001/login"
+		axios.get("http://localhost:3001/working" || "/working")  //"http://localhost:3001/login"
+			// axios.get("/working")  //"http://localhost:3001/login"
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -40,7 +46,7 @@ function App() {
 	}
 	useEffect(() => {
 		/* global google */
-		google.accounts.id.initialize ({
+		google.accounts.id.initialize({
 			client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
 			callback: handleCallbackResponse
 		})
@@ -50,11 +56,11 @@ function App() {
 		// 	{ theme: "outline", size: "large"}
 		// )
 	}, [])
-	
+
 	window.gapi.load('client:auth2', () => {
 		window.gapi.client.init({
-		    clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-		    scope: "email"
+			clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+			scope: "email"
 		})
 	})
 
@@ -69,30 +75,44 @@ function App() {
 		gapi.load('client:auth2', start)
 	}, [])
 
+	// AUTH0 Logout
+	const AuthLogoutButton = () => {
+		const logout = useAuth0();
+		return (
+			<button onClick={() => logout({ returnTo: "http://localhost:3000/googleapp" })}>
+				Sign Out
+			</button>
+		)
+	};
+	
 	// AUTH0 Login
 	const AuthLoginButton = () => {
-		const { loginWithRedirect } = useAuth0()
-		return <button onClick={() => loginWithRedirect()}>Auth0 Log in</button>
-	     };
+		const { loginWithRedirect } = useAuth0();
+		return (
+			<button onClick={() => loginWithRedirect()}>
+				Sign In
+			</button>
+		)
+	}
+
 	// var accessToken = gapi.auth.getToken().access_token
 
 	// From Login.js ========================================================================================
 	// const Login = () => {
-		// eslint-disable-next-line
-		const { setAuth } = useContext(AuthContext);
-		const userRef = useRef();
-		// const pwdRef = useRef();
-		const errRef = useRef();
-		
-		const [user, setUser] = useState('');
-		const [pwd, setPwd] = useState('');
-		const [errMsg, setErrMsg] = useState('');
-		// eslint-disable-next-line
-	const [success, setSuccess] = useState(false);
+	// eslint-disable-next-line
+	const { setAuth } = useContext(AuthContext);
+	const userRef = useRef();
+	// const pwdRef = useRef();
+	const errRef = useRef();
+
+	const [user, setUser] = useState('');
+	const [pwd, setPwd] = useState('');
+	const [errMsg, setErrMsg] = useState('');
+	// eslint-disable-next-line
 
 	const navigate = useNavigate();
 
-	
+
 	useEffect(() => {
 		userRef.current.focus();
 	}, [])
@@ -172,48 +192,56 @@ function App() {
 	// 	})
 	// }
 
-// ======================================================================================== 9/20/20
+	// ======================================================================================== 9/20/20
 
-// useEffect(() => {
-// 	axios.get("http://localhost:3001/checkPassword").then((response) => {
-// 	// axios.get("/checkPassword").then((response) => {
-// 		if (response.data.loggedIn === true) {
-// 		setLoginStatus(response.data.user[0].user);
-// 			setSuccess(true)
-// 		}
-// 	});
-// 	// return <Navigate to='/profile' />
-// }, []);	
+	// useEffect(() => {
+	// 	axios.get("http://localhost:3001/checkPassword").then((response) => {
+	// 	// axios.get("/checkPassword").then((response) => {
+	// 		if (response.data.loggedIn === true) {
+	// 		setLoginStatus(response.data.user[0].user);
+	// 			setSuccess(true)
+	// 		}
+	// 	});
+	// 	// return <Navigate to='/profile' />
+	// }, []);	
 
 
-const login = () => {
-	// axios.get("http://localhost:3001/checkPassword")
-	axios.get("/checkPassword")
-	.then((response) => {
-		if (response.data === true) {
-		setLoginStatus(response.data.user[0].user);
-		setSuccess(true)
-		}	
-		if (response.data.message) {
-				setLoginStatus(response.data.message);
-				setSuccess(true)
-				console.log(loginStatus);
-				return <Navigate to='/profile' />
-			} else {
-				setLoginStatus(response.data[0].user);
-			}
-		});
+	const login = () => {
+		axios.get("http://localhost:3001/checkPassword" || "/checkPassword")
+			// axios.get("/checkPassword")
+			.then((response) => {
+				if (response.data) {
+					console.log("1", response.config.data);
+					setLoginStatus(response.data.user[0].user);
+				}
+				if (response.data.message) {
+					setLoginStatus(response.data.message);
+					console.log(loginStatus);
+					return <Navigate to='/profile' />
+				} else {
+					setLoginStatus(response.data[0].user);
+				}
+			}).catch((err) => {
+				if (!err?.response) {
+					setErrMsg('No Server Response');
+				} else if (err.response?.status === 409) {
+					setErrMsg('Username Taken');
+				} else {
+					setErrMsg('Registration Failed')
+				}
+				// errRef.current.focus();
+			})
 	};
-//  if (success) {
-// 	return <Navigate to='/profile' />
-//  }
+	//  if (success) {
+	// 	return <Navigate to='/profile' />
+	//  }
 
 
-	
+
 	// ======================================================================================== 9/20/20
 
 
-// eslint-disable-next-line
+	// eslint-disable-next-line
 	// const handleSubmit = (e) => {
 	// 	e.preventDefault();
 
@@ -250,10 +278,10 @@ const login = () => {
 	// 	console.log(user, pwd);
 	// };	
 	// ============================
-				// .then(res => {
-				// 	console.log(res)
-				// 	setNotification(res.data.message)
-				// })
+	// .then(res => {
+	// 	console.log(res)
+	// 	setNotification(res.data.message)
+	// })
 	// const checkPassword = (props) => {
 	// 		axios.get('/checkPassword', {
 	// 		// axios.get('http://localhost:3001/checkPassword', {
@@ -304,94 +332,61 @@ const login = () => {
 	// 				);
 	// 			});
 	// 		};
-// ======================
+	// ======================
 
-		// try {
-		// 	const response = await axios.post(LOGIN_URL,
-		// 		JSON.stringify({ user, pwd }),
-		// 		{
-		// 			headers: { 'Content-Type': 'application/json' },
-		// 			// withCredentials: true
-		// 		}
-		// 	);
-		// 	console.log(JSON.stringify(response?.data));
-		// 	//console.log(JSON.stringify(response));
-		// 	const accessToken = response?.data?.accessToken;
-		// 	const roles = response?.data?.roles;
-		// 	setAuth({ user, pwd, roles, accessToken });
-		// 	setUser('');
-		// 	setPwd('');
-		// 	setSuccess(true);
-		// } catch (err) {
-		// 	if (!err?.response) {
-		// 		setErrMsg('No Server Response');
-		// 	} else if (err.response?.status === 400) {
-		// 		setErrMsg('Missing Username or Password');
-		// 	} else if (err.response?.status === 401) {
-		// 		setErrMsg('Unauthorized');
-		// 	} else {
-		// 		setErrMsg('Login Failed');
-		// 	}
-		// 	// errRef.current.focus(); //don't use...was causing an error
-		// }
-// }
+	// try {
+	// 	const response = await axios.post(LOGIN_URL,
+	// 		JSON.stringify({ user, pwd }),
+	// 		{
+	// 			headers: { 'Content-Type': 'application/json' },
+	// 			// withCredentials: true
+	// 		}
+	// 	);
+	// 	console.log(JSON.stringify(response?.data));
+	// 	//console.log(JSON.stringify(response));
+	// 	const accessToken = response?.data?.accessToken;
+	// 	const roles = response?.data?.roles;
+	// 	setAuth({ user, pwd, roles, accessToken });
+	// 	setUser('');
+	// 	setPwd('');
+	// 	setSuccess(true);
+	// } catch (err) {
+	// 	if (!err?.response) {
+	// 		setErrMsg('No Server Response');
+	// 	} else if (err.response?.status === 400) {
+	// 		setErrMsg('Missing Username or Password');
+	// 	} else if (err.response?.status === 401) {
+	// 		setErrMsg('Unauthorized');
+	// 	} else {
+	// 		setErrMsg('Login Failed');
+	// 	}
+	// 	// errRef.current.focus(); //don't use...was causing an error
+	// }
+	// }
 	// From Login.js ========================================================================================
-	
-	
 
 
-return (
-	<>
-		{success ? (
-			// <Routes>
-			// 	<Route exact path="/success" element={<RegisterSuccess/>}/>
-			// </Routes>
+
+
+	return (
+		success ? (
 			<section>
-				{/* <h1>You are logged in!</h1>
-				<br />
+				<h1>Success!</h1>
 				<p>
-				  <Link to='/Profile'>Go to your Profile</Link>
-				</p> */}
-				{/* <Router> */}
-					<Routes>
-						{/* <Route 
-						path='/' 
-						element={<Googleapp />}
-						/>
-						<Route 
-						path='/googleapp' 
-						element={<Googleapp />}
-						/>
-						<Route
-						path='/Profile'
-						element={<Profile />}
-						/> */}
-						<Route
-						path='/' 
-						element={ success ? (
-						  <Navigate replace to='/Profile' />
-						) : (
-						   <Notification />
-						)
-						}
-						/>
-						{/* <Route
-						path='/googleapp' 
-						element={ success ? (
-						  <Navigate replace to='/Profile' />
-						) : (
-						   <Notification />
-						)
-						}
-						/> */}
-					</Routes>
-				{/* </Router> */}
+					{/* <Link to="/googleapp">Login</Link> */}
+					<Link to="/Profile">Visit Your Profile</Link>
+				</p>
+
+				<p>axios.get('/GoogleApp') status: <i>{notification}</i></p>
+				{/* <Route exact path="/profile" element={<Profile/>}/> */}
+
+				<AuthLogoutButton />
 			</section>
 		) : (
 			<section>
 				<p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
 				<h1>Sign In</h1>
-				<form onSubmit={() => login }>
+				<form onSubmit={() => login}>
 					<label htmlFor="username">Username:</label>
 					<input
 						type="text"
@@ -419,35 +414,33 @@ return (
 					Log in with your Google Account
 					{/* <div id="signInDiv"></div> */}
 					<LoginButton />
+					{/* <Link to="/profile"/> */}
+					{/* </LoginButton> */}
 					<LogoutButton />
 					<br />
 				</div>
 				<div>
 					Log in with your Auth0 Account
-					<AuthLoginButton>Log In</AuthLoginButton>
-					
+					{/* <button onclick={setSuccess(true)}>
+						Sign in
+					</button> */}
+					<br />
+					<AuthLoginButton />
 				</div>
 				<p>
 					Need an Account?
 					<br />
 					<span className="line">
-						{/*put router link here*/}
-						{/* <a href="/register">Sign Up</a> */}
 						<Link to='/register'>Sign Up</Link>
 					</span>
-					{/* <span>Your new SALT: {salt}</span> */}
 					<br />
-					{/* <span>
-						Save this Salt, UPON sign up <br /> if you refresh it will generate a new SALT!!!
-					</span> */}
 				</p>
 				<p>axios.get('/googleapp') status: <i>{notification}</i></p>
-				<br />
-				
+
+
 			</section>
-		)}
-	</>
-)
+		)
+	)
 }
 
 export default App
