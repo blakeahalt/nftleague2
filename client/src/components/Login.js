@@ -2,7 +2,7 @@ import { useRef, useState, useEffect, useContext } from 'react';
 // import Register from './components/Register.js'
 // import Notification from './components/Notification.js';
 // import bcrypt from 'bcryptjs'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import AuthContext from "../context/AuthProvider";
 import axios from 'axios';
 // import GoogleApp from './components/GoogleApp'
@@ -33,7 +33,7 @@ const Login = () => {
 
     const [notification, setNotification] = useState("")
     
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     useEffect(() => {
         userRef.current.focus();
@@ -43,11 +43,11 @@ const Login = () => {
         setErrMsg('');
     }, [user, pwd])
     
-    useEffect(() => {
-        if(localStorage.getItem('user-info')) {
-            navigate.push("http://localhost:3001/add")
-        }
-    })
+    // useEffect(() => {
+    //     if(localStorage.getItem('user-info')) {
+    //         navigate.push("http://localhost:3001/add")
+    //     }
+    // })
 
     useEffect((req, res) => {
 		axios.get("http://localhost:3001/login")  //"http://localhost:3001/login"

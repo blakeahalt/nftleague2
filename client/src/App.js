@@ -6,7 +6,7 @@ import Register from './components/Register';
 // import Test from './components/Test';
 import GoogleLogin from './components/GoogleLogin'
 import GoogleLogout from './components/GoogleLogout'
-import GoogleApp from './components/GoogleApp'
+import GoogleApp from './components/GoogleApp2'
 import Login from './components/Login2'
 import Added from './components/Added'
 import Profile from './components/Profile'

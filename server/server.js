@@ -3,7 +3,9 @@ const app = express();
 const path = require("path");
 const port = process.env.PORT || 3001;
 const cors = require("cors");
-app.use(cors());
+// app.use(cors());
+app.use(cors({ credentials: true }))
+
 app.use(express.json());
 
 // NEW SERVER========================================
@@ -96,6 +98,11 @@ const db = mysql.createConnection({
 // connection.end();
 // ==========================================
 
+app.use(function(req, res, next) {
+  res.header("Cross-Origin-Embedder-Policy", "require-corp");
+  res.header("Cross-Origin-Opener-Policy", "same-origin");
+  next();
+});
 
 app.use(express.static(path.join(__dirname, "public")));
 // app.use(express.static(path.resolve(__dirname, '/public')));
