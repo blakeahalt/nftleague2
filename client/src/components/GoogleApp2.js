@@ -1,8 +1,8 @@
-import LoginButton from "./GoogleLogin"
+// import LoginButton from "./GoogleLogin"
 // import LogoutButton from "./GoogleLogout"
 // import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react'
-import { gapi } from 'gapi-script'
+// import { gapi } from 'gapi-script'
 import axios from 'axios'
 // import AuthContext from "../context/AuthProvider";
 // import GoogleLogin from "react-google-login";
@@ -21,17 +21,17 @@ function App() {
 			})
 	}, [])
 
+	function handleSignOut(event) {
+		setUser({})
+		document.getElementById("signInDiv").hidden = false
+	}
+
 	function handleCallbackResponse(response) {
 		console.log("Encoded JWT ID token: " + response.credentials);
 		var userObject = jwt_decode(response.credential)
 		console.log(userObject);
 		setUser(userObject);
 		document.getElementById("signInDiv").hidden = true
-	}
-
-	function handleSignOut(event) {
-		setUser({})
-		document.getElementById("signInDiv").hidden = false
 	}
 
 	useEffect(() => {
@@ -60,7 +60,9 @@ function App() {
 					<h3>{user.name}</h3>
 				</div>
 			}
+		<p>axios.get('/googleapp') status: <i>{notification}</i></p>
 		</div>
+
 	)
 }
 
