@@ -65,8 +65,97 @@ function App() {
 }
 
 export default App
+// ======================================================================
+// return (
+// 		<>
+// 			{success ? (
+// 				// <Routes>
+// 				// 	<Route exact path="/success" element={<RegisterSuccess/>}/>
+// 				// </Routes>
+// 				// <section>
+// 				// 	<h1>You are logged in!</h1>
+// 				// 	<br />
+// 				// 	<p>
+// 				// 		<Link to='/Profile'>Go to your Profile</Link>
+// 				// 	</p>
+// 				// </section>
+// 				<div className="App">
+// 					<div id="signInDiv"></div>
+// 					{Object.keys(user).length !== 0 &&
+// 					<button onClick={(e) => handleSignOut(e)}>Sign Out</button>
+//  					}
+
+// 				{user &&
+//  				<div>
+//  					<h3>{user.name}</h3>
+//  				</div>
+//  				}
+//  			</div>
+// 			) : (
+// 				<section>
+// 					<p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+// 					<h1>Sign In</h1>
+// 					<form onSubmit={() => handleSubmit}>
+// 						<label htmlFor="username">Username:</label>
+// 						<input
+// 							type="text"
+// 							id="username"
+// 							ref={userRef}
+// 							autoComplete="off"
+// 							onChange={(e) => setUser(e.target.value)}
+// 							value={user}
+// 							required
+// 						/>
+
+// 						<label htmlFor="password">Password:</label>
+// 						<input
+// 							type="password"
+// 							id="password"
+// 							onChange={(e) => setPwd(e.target.value)}
+// 							value={pwd}
+// 							required
+// 						/>
+// 						<button>Sign In</button>
+// 					</form>
+// 					<br />
+// 					<div className="App">
+// 						{/* <Link to='/googleapp'>Google Login</Link> */}
+// 						Log in with your Google Account
+// 						<div id="signInDiv"></div>
+// 						{/* <LoginButton /> */}
+// 						<LogoutButton />
+// 						<br />
+// 					</div>
+// 					<p>
+// 						Need an Account?
+// 						<br />
+// 						<span className="line">
+// 							{/*put router link here*/}
+// 							{/* <a href="/register">Sign Up</a> */}
+// 							<Link to='/register'>Sign Up</Link>
+// 						</span>
+// 						{/* <span>Your new SALT: {salt}</span> */}
+// 						<br />
+// 						{/* <span>
+// 						Save this Salt, UPON sign up <br /> if you refresh it will generate a new SALT!!!
+// 					</span> */}
+// 					</p>
+// 					<p>axios.get('/googleapp') status: <i>{notification}</i></p>
+// 					<br />
+
+// 				</section>
+// 			)}
+// 		</>
+// 	)
+// }
+
+// export default App
+// ======================================================================
+
 
 // ======================================================================
+// ======================================================================
+
 
 // let GoogleAuth
 
