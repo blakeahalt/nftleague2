@@ -35,15 +35,15 @@ const Register = () => {
 	const [catchUser, setCatchUser] = useState('')
 	const [notification, setNotification] = useState("")
 
+	const [userList, setUserList] = useState([])
 	// const [passwordList, setPasswordList] = useState([])
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/working") ||    // for dev 
-			axios.get("/working")
-				.then(res => {
-					console.log(res)
-					setNotification(res.data.message)
-				})
+		axios.get("http://localhost:3001/working" || "/working")
+			.then(res => {
+				console.log(res)
+				setNotification(res.data.message)
+			})
 	}, [])
 
 	useEffect(() => {
@@ -63,11 +63,16 @@ const Register = () => {
 		setErrMsg('');
 	}, [user, pwd, matchPwd])
 
-	// useEffect(() => {
-	// 	axios.get('http://localhost:3001/showPasswords').then((response) => {
-	// 		setPasswordList(response.data)
-	// 	})
-	// }, [])
+	useEffect((req, res) => {
+		axios.get("http://localhost:3001/getUser")
+		.then(res => {
+			console.log(res.data)
+			setUserList(res.data)
+			// console.log(JSON.stringify(res))
+		}).catch(err => console.log(err))
+	}, [])
+
+
 
 	// useEffect((req, res) => {
 	// 	axios.post("http://localhost:3001/register")
@@ -87,35 +92,32 @@ const Register = () => {
 			setErrMsg("Invalid Entry");
 			return;
 		}
-		axios.post('http://localhost:3001/addPassword', {   	// for dev
+
+		axios.post('http://localhost:3001/addPassword' || "/addPassword", {   	// for dev
 			user: user,
 			pwd: pwd
-		}) ||
-			axios.post('/addPassword', {  				// for heroku
-				user: user,
-				pwd: pwd
-			})
-				.then((response) => {
-					console.log("1", response.config.data);
-					console.log("2", response?.data); //prints {response: 'WORKING'} from server index.js
-					// console.log(response?.accessToken);
-					console.log("3", JSON.stringify(response))
-					setSuccess(true)
-					setCatchUser(user)
-					setUser('');
-					setPwd('');
-					setMatchPwd('');
-				}).catch((err) => {
-					if (!err?.response) {
-						setErrMsg('No Server Response');
-					} else if (err.response?.status === 409) {
-						setErrMsg('Username Taken');
-					} else {
-						setErrMsg('Registration Failed')
-					}
-					// errRef.current.focus();
-					console.log(user, pwd);
-				})
+		}).then((response) => {
+			console.log("1", response.config.data);
+			console.log("2", response?.data); //prints {response: 'WORKING'} from server index.js
+			// console.log(response?.accessToken);
+			console.log("3", JSON.stringify(response))
+			console.log("4", response.config.user)
+			setSuccess(true)
+			setCatchUser(user)
+			setUser('');
+			setPwd('');
+			setMatchPwd('');
+		}).catch((err) => {
+			if (!err?.response) {
+				setErrMsg('No Server Response');
+			} else if (err.response?.status === 409) {
+				setErrMsg('Username Taken');
+			} else {
+				setErrMsg('Registration Failed')
+			}
+			// errRef.current.focus();
+			console.log(user, pwd);
+		})
 	}
 
 	// HANDLESUBMIT USING ASYNC/AWAIT 
@@ -177,6 +179,8 @@ const Register = () => {
 					<h1>Success!</h1>
 					<p>
 						<Link to="/">Login</Link>
+					</p>
+					<p>
 						<Link to="/profile">Visit Your Profile</Link>
 					</p>
 					<p>Added User: {catchUser}</p>
@@ -282,6 +286,15 @@ const Register = () => {
 					</p>
 					<br />
 					<p>axios.get('/register') status: <i>{notification}</i></p>
+					<div>
+						{userList.length >=1 ? userList.map((user, idx) => {
+							return <p key={idx}>{user.user}</p>
+							}
+						):(
+						''
+						)
+						} 
+					</div>
 				</section>
 			)}
 		</>

@@ -10,8 +10,8 @@ import { gapi } from 'gapi-script'
 import AuthContext from "../context/AuthProvider";
 // import EncryptionHandler from './EncryptionHandler'
 // const {encrypt, decrypt} = require('./EncryptionHandler')
-
 // import GoogleLogin from "react-google-login";
+
 
 
 function App() {
@@ -27,7 +27,8 @@ function App() {
 	const [success, setSuccess] = useState(false);
 	const navigate = useNavigate();
 	const [loginStatus, setLoginStatus] = useState("");
-	const [passwordList, setPasswordList] = useState([]);
+	const [catchUser, setCatchUser] = useState('')
+
 	
 // 	const crypto = require('crypto')
 // 	const secret = 'pppppppppppppppppppppppppppppppp'
@@ -48,7 +49,7 @@ function App() {
 // }
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/working" || '/working') 
+		axios.get("http://localhost:3001/working" || "/working")
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -63,8 +64,9 @@ function App() {
 						"Authorization": `Bearer ${response.access_token}`
 					}
 				})
-				console.log("Login Success!");
-				setSuccess(true);
+				// console.log("Login Success!");
+				// setSuccess(true);
+				// setCatchUser(user)
 				console.log(res.data)
 			} catch (err) {
 				console.log(err)
@@ -74,11 +76,12 @@ function App() {
 				
 	useEffect(() => {
 		userRef.current.focus();
+		setUser('')
 	}, [])
 
 	useEffect(() => {
 		setErrMsg('');
-		setUser('')
+		// setUser('')
 	}, [user, pwd])
 
 	// useEffect(() => {
@@ -90,7 +93,7 @@ function App() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		axios.post('http://localhost:3001/checkPassword'||'/checkPassword', {  				// for heroku
+		axios.post('http://localhost:3001/checkPassword'||'/checkPassword', {  				
 			user: user,
 			pwd: pwd,
 		}).then((response) => {
@@ -99,11 +102,11 @@ function App() {
 			} else {
 				setLoginStatus(response.data[0].message);
 			}
-			// console.log(JSON.stringify(response?.data));
-			//console.log(JSON.stringify(response));
-			// const accessToken = response?.data?.accessToken;
+			console.log(JSON.stringify(response?.data));
+			console.log(JSON.stringify(response));
+			const accessToken = response?.data?.accessToken;
 			// const roles = response?.data?.roles;
-			// setAuth({ user, pwd, accessToken });
+			setAuth({ user, pwd, accessToken });
 			setUser('');
 			setPwd('');
 			setSuccess(true);
@@ -119,7 +122,7 @@ function App() {
 			}
 			// errRef.current.focus(); //don't use...was causing an error
 		})
-		// console.log(user, pwd);
+		console.log(user, pwd);
 	}
 
 	return (
@@ -164,20 +167,21 @@ function App() {
 						<div id="signInDiv">
 						{/* <LoginButton /> */}
 						<br/>
-						<br/>
 						 <GoogleLogin
 								onSuccess={credentialResponse => {
 								console.log(credentialResponse.credential);
 								var decoded = jwt_decode(credentialResponse.credential);
-								console.log(decoded)
-								setSuccess(true)
+								console.log(decoded);
+								setSuccess(true);
+								console.log("Login Success!");
 							}}
 							onError={() => {
 									console.log('Login Failed');
 								}} />
+								{/* <GLogin /> */}
 						{/* <LogoutButton /> */}
 						</div>
-						<br />
+						{/* <br /> */}
 					</div>
 					<p>
 						Need an Account?
