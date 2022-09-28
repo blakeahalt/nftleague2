@@ -39,7 +39,7 @@ const Register = () => {
 	// const [passwordList, setPasswordList] = useState([])
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/working" || "/working")
+		axios.get("/working")
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -64,7 +64,7 @@ const Register = () => {
 	}, [user, pwd, matchPwd])
 
 	const loadData = async() => {
-		const response = await axios.get("http://localhost:3001/getUser" || "/getUser")
+		const response = await axios.get("/getUser")
 		setUserList(response.data)
 		// console.log(response.data);
 	}
@@ -96,7 +96,7 @@ const Register = () => {
 			return;
 		}
 
-		axios.post('http://localhost:3001/addPassword' || "/addPassword", {   	// for dev
+		axios.post("/addPassword", {   	// for dev
 			user: user,
 			pwd: pwd
 		}).then((response) => {
