@@ -63,24 +63,27 @@ const Register = () => {
 		setErrMsg('');
 	}, [user, pwd, matchPwd])
 
-	useEffect((req, res) => {
-		axios.get("http://localhost:3001/getUser" || "/getUser")
-		.then(res => {
-			console.log(res.data)
-			setUserList(res.data)
-			// console.log(JSON.stringify(res))
-		}).catch(err => console.log(err))
+	const loadData = async() => {
+		const response = await axios.get("http://localhost:3001/getUser" || "/getUser")
+		setUserList(response.data)
+		// console.log(response.data);
+	}
+
+	useEffect(() => {
+		loadData()
+		console.log(userList);
 	}, [])
 
-
-
-	// useEffect((req, res) => {
-	// 	axios.post("http://localhost:3001/register")
-	// 		.then(res => {
-	// 			console.log(res)
-	// 			setNotification(res.data.message)
-	// 		})
-	// }, [])
+	const userName = userList.map(function(user){
+		return [`${user.user}`].join('')
+	})
+	console.log(userName);
+	
+	// let indexes = [0]
+	// const res = indexes.map(e => userName[e])
+	
+	// const res = userName.slice()  		
+	// console.log(res);
 
 	// HANDLESUBMIT USING PROMISE
 	const handleSubmit = (e) => {
@@ -286,7 +289,7 @@ const Register = () => {
 					</p>
 					<br />
 					<p>axios.get('/register') status: <i>{notification}</i></p>
-					<div>
+					{/* <div>
 						{userList.length >=1 ? userList.map((user, idx) => {
 							return <p key={idx}>{user.user}</p>
 							}
@@ -294,7 +297,10 @@ const Register = () => {
 						''
 						)
 						} 
-					</div>
+					</div> */}
+					<li>
+						{userName.slice().join(',  ')}
+					</li>
 				</section>
 			)}
 		</>

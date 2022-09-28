@@ -201,17 +201,16 @@ app.get("/showPasswords", (req, res) => {
 // });
 
 app.get("/getUser", (req, res) => {
-  // const user = req.params.user;
-  db.query("SELECT * FROM passwords WHERE user = ?", (err, result) => {
-      if(err) {
-          console.log(err);
-      } else {
-          res.send(result);
-          console.log(result);
-          console.log('Connected!');
-      }
-  });
-});
+  db.query("SELECT * FROM passwords", (err, result) => {
+    if(err) {
+      console.log(err);
+    } else {
+      res.send(result)
+      console.log(result);
+      console.log('Connected!');
+    }
+  })
+})
 
 // app.post("/decryptpassword", (req, res) => {
 //   res.send(decrypt(req.body));
