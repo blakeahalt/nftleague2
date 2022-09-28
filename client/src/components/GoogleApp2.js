@@ -91,7 +91,7 @@ function App() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		axios.post('http://localhost:3001/checkPassword' || '/checkPassword', {  	// for dev
+		axios.post('http://localhost:3001/checkPassword'||'/checkPassword', {  				// for heroku
 			user: user,
 			pwd: pwd,
 		}).then((response) => {
@@ -122,7 +122,6 @@ function App() {
 		})
 		// console.log(user, pwd);
 	}
-	
 
 	return (
 		<>
