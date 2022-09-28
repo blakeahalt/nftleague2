@@ -1,6 +1,6 @@
 import LoginButton from "./GoogleLogin"
 import LogoutButton from "./GoogleLogout"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef, useContext } from 'react'
 import { gapi } from 'gapi-script'
 import axios from 'axios'
@@ -27,35 +27,48 @@ function App() {
 			})
 	}, [])
 
-	useEffect(() => {
-		/* global google */
-		google.accounts.id.initialize({
-			client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-			callback: handleCallbackResponse
-		})
-
-		google.accounts.id.renderButton(
-			document.getElementById("signInDiv"),
-			// { theme: "outline", size: "large"}
-		)
-	}, [])
-
 	function handleCallbackResponse(response) {
 		console.log("Encoded JWT ID token: " + response.credentials);
 		var userObject = jwt_decode(response.credential)
 		console.log(userObject);
+		setUser(userObject);
+		document.getElementById("signInDiv").hidden = true
 	}
 
 	// useEffect(() => {
-	// 	function start() {
-	// 		gapi.client.init({
-	// 			clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-	// 			// scope: "email"
-	// 		})
-	// 	}
+	// 	/* global google */
+	// 	google.accounts.id.initialize({
+	// 		client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+	// 		callback: handleCallbackResponse
+	// 	})
 
-	// 	gapi.load('client:auth2', start)
+	// 	google.accounts.id.renderButton(
+	// 		document.getElementById("signInDiv"),
+	// 		{ theme: "outline", size: "large"}
+	// 	)
 	// }, [])
+		window.gapi.load('client:auth2', () => {
+		window.gapi.client.init({
+		    clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+		//     scope: "email"
+		})
+	})
+
+	function handleSignOut(event) {
+		setUser({})
+		document.getElementById("signInDiv").hidden = false
+	}
+
+	useEffect(() => {
+		function start() {
+			gapi.client.init({
+				clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+				scope: "email"
+			})
+		}
+
+		gapi.load('client:auth2', start)
+	}, [])
 
 	// window.gapi.load('client:auth2', () => {
 	// 	window.gapi.client.init({
@@ -79,7 +92,7 @@ function App() {
 	const [errMsg, setErrMsg] = useState('');
 	const [success, setSuccess] = useState(false);
 
-	// const navigate = useNavigate();
+	const navigate = useNavigate();
 
 
 	useEffect(() => {
@@ -90,11 +103,11 @@ function App() {
 		setErrMsg('');
 	}, [user, pwd])
 
-	// useEffect(() => {
-	// 	if (localStorage.getItem('user-info')) {
-	// 		navigate.push("/added")
-	// 	}
-	// })
+	useEffect(() => {
+		if (localStorage.getItem('user-info')) {
+			navigate.push("/added")
+		}
+	})
 
 	// function handleLoginForm() {
 	// 	const email = userRef.current.value

@@ -82,8 +82,12 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; 
+  min-height: 10vh; 
   padding: 1rem 0.5rem;
+}
+
+login {
+  align-items: center;
 }
 
 section {

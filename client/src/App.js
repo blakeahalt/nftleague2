@@ -10,6 +10,7 @@ import GoogleApp from './components/GoogleApp2'
 import Login from './components/Login2'
 import Added from './components/Added'
 import Profile from './components/Profile'
+import EncryptionHandler from './components/EncryptionHandler'
 
 function App() {
 
