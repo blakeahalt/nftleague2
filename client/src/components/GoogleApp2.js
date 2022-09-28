@@ -49,7 +49,8 @@ function App() {
 // }
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/working" || "/working")
+		// axios.get("http://localhost:3001/working")  	// dev
+		axios.get("/working")				//heroku
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -93,7 +94,8 @@ function App() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		axios.post('http://localhost:3001/checkPassword'||'/checkPassword', {  				
+		// axios.post('http://localhost:3001/checkPassword', {	// dev				
+		axios.post('/checkPassword', {  				// heroku	
 			user: user,
 			pwd: pwd,
 		}).then((response) => {

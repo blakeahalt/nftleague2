@@ -36,10 +36,10 @@ const Register = () => {
 	const [notification, setNotification] = useState("")
 
 	const [userList, setUserList] = useState([])
-	// const [passwordList, setPasswordList] = useState([])
 
 	useEffect((req, res) => {
-		axios.get("/working")
+		// axios.get("http://localhost:3000/working") 	// dev
+		axios.get("/working")				// heroku
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -64,7 +64,8 @@ const Register = () => {
 	}, [user, pwd, matchPwd])
 
 	const loadData = async() => {
-		const response = await axios.get("/getUser")
+		// const response = await axios.get("http://localhost:3000/getUser")  	// dev
+		const response = await axios.get("/getUser")					// heroku
 		setUserList(response.data)
 		// console.log(response.data);
 	}
@@ -96,7 +97,8 @@ const Register = () => {
 			return;
 		}
 
-		axios.post("/addPassword", {   	// for dev
+		// axios.post("http://localhost:3000/addPassword", {   	// dev
+		axios.post("/addPassword", {   				// heroku
 			user: user,
 			pwd: pwd
 		}).then((response) => {

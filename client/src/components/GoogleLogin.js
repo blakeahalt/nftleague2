@@ -15,7 +15,8 @@ function GLogin() {
 	const [success, setSuccess] = useState(false);
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/working" || "/working")  // for heroku
+		// axios.get("http://localhost:3001/working")  	// dev
+		axios.get("/working")				//heroku
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -49,15 +50,15 @@ function GLogin() {
 		console.log("LOGIN FAILED! Current user: ", res);
 	}
 
-	const AuthLogoutButton = () => {
-		const { logout } = useAuth0();
+	// const AuthLogoutButton = () => {
+	// 	const { logout } = useAuth0();
 
-		return (
-			<button onClick={() => logout({ returnTo: "http://localhost:3000/googleapp" })}>
-				Sign Out
-			</button>
-		)
-	};
+	// 	return (
+	// 		<button onClick={() => logout({ returnTo: "http://localhost:3000/googleapp" })}>
+	// 			Sign Out
+	// 		</button>
+	// 	)
+	// };
 
 	return (
 		<div id="signInButton" >
