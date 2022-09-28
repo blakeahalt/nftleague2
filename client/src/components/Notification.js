@@ -9,7 +9,8 @@ const Notification = () => {
 	const [notification, setNotification] = useState("")
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/working" || "/working")
+		axios.get("http://localhost:3001/working") ||    // for dev 
+              axios.get("/working")                            // for heroku
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)

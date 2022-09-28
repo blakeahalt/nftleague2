@@ -16,8 +16,8 @@ function GLogin() {
 	const [success, setSuccess] = useState(false);
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/working" || "/working")  //"http://localhost:3001/login"
-			// axios.get("/working")  //"http://localhost:3001/login"
+		axios.get("http://localhost:3001/working") ||    // for dev 
+		axios.get("/working")                            // for heroku
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)

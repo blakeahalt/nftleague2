@@ -38,11 +38,12 @@ const Register = () => {
 	// const [passwordList, setPasswordList] = useState([])
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/working" || "/working")	
-		.then(res => {
-				console.log(res)
-				setNotification(res.data.message)
-			})
+		axios.get("http://localhost:3001/working") ||    // for dev 
+			axios.get("/working")
+				.then(res => {
+					console.log(res)
+					setNotification(res.data.message)
+				})
 	}, [])
 
 	useEffect(() => {
@@ -75,7 +76,7 @@ const Register = () => {
 	// 			setNotification(res.data.message)
 	// 		})
 	// }, [])
-	
+
 	// HANDLESUBMIT USING PROMISE
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -86,34 +87,37 @@ const Register = () => {
 			setErrMsg("Invalid Entry");
 			return;
 		}
-		axios.post('http://localhost:3001/addPassword' || '/addPassword', {  //remove URL when deploying a build to heroku
-		// axios.post('/addPassword', {  //remove URL when deploying a build to heroku
+		axios.post('http://localhost:3001/addPassword', {   	// for dev
 			user: user,
 			pwd: pwd
-		})
-		.then((response)=> {
-			console.log("1", response.config.data);
-			console.log("2", response?.data); //prints {response: 'WORKING'} from server index.js
-			// console.log(response?.accessToken);
-			console.log("3", JSON.stringify(response))
-			setSuccess(true)
-			setCatchUser(user)
-			setUser('');
-			setPwd('');
-			setMatchPwd('');
-		}).catch ((err)=> {
-			if (!err?.response) {
-				setErrMsg('No Server Response');
-			} else if (err.response?.status === 409) {
-				setErrMsg('Username Taken');
-			} else {
-				setErrMsg('Registration Failed')
-			}
-			// errRef.current.focus();
-		})
-		console.log(user, pwd);
+		}) ||
+			axios.post('/addPassword', {  				// for heroku
+				user: user,
+				pwd: pwd
+			})
+				.then((response) => {
+					console.log("1", response.config.data);
+					console.log("2", response?.data); //prints {response: 'WORKING'} from server index.js
+					// console.log(response?.accessToken);
+					console.log("3", JSON.stringify(response))
+					setSuccess(true)
+					setCatchUser(user)
+					setUser('');
+					setPwd('');
+					setMatchPwd('');
+				}).catch((err) => {
+					if (!err?.response) {
+						setErrMsg('No Server Response');
+					} else if (err.response?.status === 409) {
+						setErrMsg('Username Taken');
+					} else {
+						setErrMsg('Registration Failed')
+					}
+					// errRef.current.focus();
+					console.log(user, pwd);
+				})
 	}
-	
+
 	// HANDLESUBMIT USING ASYNC/AWAIT 
 	// const handleSubmit = async (e) => {
 	// 	e.preventDefault();
@@ -165,27 +169,7 @@ const Register = () => {
 	// 		// errRef.current.focus();
 	// 	}
 	// }
-		
-		// const decryptPassword = (encryption) => {
-		// 	axios.post('http://localhost:3001/decryptPassword', {
-		// 		password: encryption.password,
-		// 		iv: encryption.iv,
-		// 	}).then((response) => {
-		// 		setPasswordList(
-		// 			passwordList.map((val) => {
-		// 				return val.id === encryption.id
-		// 				? {
-		// 					id: val.id,
-		// 					password: val.password,
-		// 					user: response.data,
-		// 					iv: val.iv,
-		// 				}
-		// 				: val;
-		// 			})
-		// 			);
-		// 		});
-		// 	};
-			
+
 	return (
 		<>
 			{success ? (
@@ -193,8 +177,6 @@ const Register = () => {
 					<h1>Success!</h1>
 					<p>
 						<Link to="/">Login</Link>
-					</p>
-					<p>
 						<Link to="/profile">Visit Your Profile</Link>
 					</p>
 					<p>Added User: {catchUser}</p>
@@ -286,9 +268,7 @@ const Register = () => {
 					<p>
 						Already registered?<br />
 						<span className="line">
-							{/*put router link here*/}
 							<Link to="/googleapp">Sign In</Link>
-							{/* <a href="/auth">Sign In</a> */}
 						</span>
 					</p>
 					<br />
@@ -298,27 +278,10 @@ const Register = () => {
 						<span className="line">
 							<Link to="/notification">Get notification message</Link>
 							<br />
-							{/* <Link to="/test">Get test message</Link> */}
 						</span>
 					</p>
 					<br />
 					<p>axios.get('/register') status: <i>{notification}</i></p>
-
-					{/* <div className="Passwords">
-						{passwordList.map((val, key) => {
-							return (
-								<div
-								className="Password"
-								onClick={() => {
-									decryptPassword({ password: val.password, iv: val.iv, id: val.id })
-								}}
-								key={key}
-								> 
-								<ul> {val.user} </ul>
-								</div>
-							)
-						})}
-					</div> */}
 				</section>
 			)}
 		</>

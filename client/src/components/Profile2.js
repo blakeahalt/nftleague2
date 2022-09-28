@@ -1,9 +1,19 @@
-import React from "react";
+import { React, useEffect, useState } from 'react'
 import { useAuth0 } from "@auth0/auth0-react";
-
+import axios from 'axios'
 
 const Profile = () => {
   const { user, isLoading } = useAuth0();
+  const [notification, setNotification] = useState("")
+
+	useEffect((req, res) => {
+		axios.get("http://localhost:3001/working") ||    // for dev 
+              axios.get("/working")                            // for heroku
+			.then(res => {
+				console.log(res)
+				setNotification(res.data.message)
+			})
+	}, [])
   
   if (isLoading) {
     return <div>Loading ...</div>;
@@ -41,6 +51,7 @@ const Profile = () => {
       //   <h2>{user.name}</h2>
       //   <p>{user.email}</p>
       // </div> */}
+      <p>axios.get('/profile') status: <i>{notification}</i></p>
       </div>
     )
 };

@@ -48,10 +48,8 @@ function App() {
 // }
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/working") 
-		// ||
-		axios.get("/working")
-			// axios.get("/GoogleApp")  //"http://localhost:3001/login"
+		axios.get("http://localhost:3001/working") ||    // for dev 
+              axios.get("/working")                            // for heroku
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -93,11 +91,7 @@ function App() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		// axios.post('http://localhost:3001/checkPassword', {
-		// 	user: user,
-		// 	pwd: pwd,
-		// } || 
-		axios.post('/checkPassword', {
+		axios.post('http://localhost:3001/checkPassword' || '/checkPassword', {  	// for dev
 			user: user,
 			pwd: pwd,
 		}).then((response) => {
@@ -127,14 +121,12 @@ function App() {
 			// errRef.current.focus(); //don't use...was causing an error
 		})
 		// console.log(user, pwd);
-	};
+	}
+	
 
 	return (
 		<>
 			{success ? (
-				// <Routes>
-				// 	<Route exact path="/success" element={<RegisterSuccess/>}/>
-				// </Routes>
 				<section>
 					<h1>You are logged in!</h1>
 					<br />
@@ -170,9 +162,8 @@ function App() {
 					</form>
 					<br />
 					<div className='App'>
-						{/* <Link to='/googleapp'>Google Login</Link> */}
 						Log in with your Google Account
-						{/* <div id="signInDiv"> */}
+						<div id="signInDiv">
 						{/* <LoginButton /> */}
 						<br/>
 						<br/>
@@ -187,15 +178,13 @@ function App() {
 									console.log('Login Failed');
 								}} />
 						{/* <LogoutButton /> */}
-						{/* </div> */}
+						</div>
 						<br />
 					</div>
 					<p>
 						Need an Account?
 						<br />
 						<span className="line">
-							{/*put router link here*/}
-							{/* <a href="/register">Sign Up</a> */}
 							<Link to='/register'>Sign Up</Link>
 						</span>
 						<br />
