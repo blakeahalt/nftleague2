@@ -64,7 +64,7 @@ const Register = () => {
 	}, [user, pwd, matchPwd])
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/getUser")
+		axios.get("http://localhost:3001/getUser" || "/getUser")
 		.then(res => {
 			console.log(res.data)
 			setUserList(res.data)
