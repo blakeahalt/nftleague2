@@ -48,7 +48,7 @@ function App() {
 // }
 
 	useEffect((req, res) => {
-		// axios.get("http://localhost:3001/working") ||
+		axios.get("http://localhost:3001/working") ||
 		axios.get("/working")
 			// axios.get("/GoogleApp")  //"http://localhost:3001/login"
 			.then(res => {
@@ -92,10 +92,10 @@ function App() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		axios.post('http://localhost:3001/checkPassword', {
-			user: user,
-			pwd: pwd,
-		} || 
+		// axios.post('http://localhost:3001/checkPassword', {
+		// 	user: user,
+		// 	pwd: pwd,
+		// } || 
 		axios.post('/checkPassword', {
 			user: user,
 			pwd: pwd,
@@ -125,7 +125,7 @@ function App() {
 			}
 			// errRef.current.focus(); //don't use...was causing an error
 		})
-		console.log(user, pwd);
+		// console.log(user, pwd);
 	};
 
 	return (
