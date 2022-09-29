@@ -7,6 +7,7 @@ import axios from 'axios'
 import AuthContext from "../context/AuthProvider";
 // import GoogleLogin from "react-google-login";
 import jwt_decode from "jwt-decode"
+import { GoogleLogin } from 'react-google-login'
 
 
 // import Login from "./Login";
@@ -301,7 +302,7 @@ function App() {
 						{/* <Link to='/googleapp'>Google Login</Link> */}
 						Log in with your Google Account
 						<div id="signInDiv"></div>
-						<LoginButton 
+						<GoogleLogin 
 							onSuccess={credentialResponse => {
 							console.log(credentialResponse.credential);
 							var decoded = jwt_decode(credentialResponse.credential);
