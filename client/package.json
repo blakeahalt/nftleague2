@@ -31,7 +31,7 @@
   },
   "browser": {
     "crypto": false
-},
+  },
   "scripts": {
     "start": "react-scripts start",
     "dev": "nodemon /.src/index.js",

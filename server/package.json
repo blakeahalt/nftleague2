@@ -33,7 +33,7 @@
   },
   "browser": {
     "crypto": false
-},
+  },
   "scripts": {
     "build": "react-scripts build",
     "server": "nodemon --quiet server",
