@@ -40,20 +40,21 @@ const Profile = () => {
 			setUser(userObject)
 			document.getElementById("signInDiv").hidden = true
 		}
-
+		
 		useEffect(() => {
 			/* global google */
 			google.accounts.id.initialize({
 				client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-				callback: handleCallbackResponse
+				callback: handleCallbackResponse,
 			})
-
-			google.accounts.id.renderButton(
-				document.getElementById("signInDiv"),
-				{ theme: "outline", size: "large"}
-			)
-
+			
+			// google.accounts.id.renderButton(
+			// 	document.getElementById("signInDiv"),
+			// 	{ theme: "outline", size: "large"}
+			// )
+			
 		}, [])
+		
 		
 		
 		
@@ -104,16 +105,12 @@ const Profile = () => {
               You've registered!...Profile page coming soon
               <br/>
               <br/>
-				{/* <div id="signInDiv"></div> */}
-					 {/* { user && */}
-					 <div>
-						<img src={user.picture} width="200" height="200" alt=''></img>
-						<h3>{user.name}</h3>
-					</div>
-					{/* } */}
-						<button onClick={(e) => handleSignOut(e)}>
-								Sign Out
-						</button>
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+              <br/>
 			<Link to="/googleapp">
                      <Logout
                             clientId={clientId}
@@ -123,6 +120,9 @@ const Profile = () => {
 				> 
                      </Logout>
 			</Link>
+				<br />
+				<br />
+				<br />
 				<br />
 				<br />
 				<br />

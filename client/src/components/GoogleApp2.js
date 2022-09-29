@@ -175,7 +175,7 @@ function App() {
 							<img src={user.picture} width="200" height="200" alt=''></img>
 							<h3>{user.name}</h3>
 						</div>
-					<p><Link to='/Profile' onclick={setUser(user)}>Go to your Profile</Link></p>
+					<p><Link to='/Profile'>Go to your Profile</Link></p>
 					</div>
 				</section>
 			) : (
