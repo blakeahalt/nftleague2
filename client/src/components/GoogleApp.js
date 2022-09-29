@@ -17,70 +17,6 @@ import jwt_decode from "jwt-decode"
 
 function App() {
 	const [notification, setNotification] = useState("")
-
-	useEffect((req, res) => {
-		axios.get("http://localhost:3001/working" || "/working") 
-			.then(res => {
-				console.log(res)
-				setNotification(res.data.message)
-			})
-	}, [])
-
-	function handleCallbackResponse(response) {
-		console.log("Encoded JWT ID token: " + response.credentials);
-		var userObject = jwt_decode(response.credential)
-		console.log(userObject);
-		setUser(userObject);
-		document.getElementById("signInDiv").hidden = true
-	}
-
-	// useEffect(() => {
-	// 	/* global google */
-	// 	google.accounts.id.initialize({
-	// 		client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-	// 		callback: handleCallbackResponse
-	// 	})
-
-	// 	google.accounts.id.renderButton(
-	// 		document.getElementById("signInDiv"),
-	// 		{ theme: "outline", size: "large"}
-	// 	)
-	// }, [])
-		window.gapi.load('client:auth2', () => {
-		window.gapi.client.init({
-		    clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-		//     scope: "email"
-		})
-	})
-
-	function handleSignOut(event) {
-		setUser({})
-		document.getElementById("signInDiv").hidden = false
-	}
-
-	useEffect(() => {
-		function start() {
-			gapi.client.init({
-				clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-				scope: "email"
-			})
-		}
-
-		gapi.load('client:auth2', start)
-	}, [])
-
-	// window.gapi.load('client:auth2', () => {
-	// 	window.gapi.client.init({
-	// 	    clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-	// 	//     scope: "email"
-	// 	})
-	// })
-
-	// var accessToken = gapi.auth.getToken().access_token
-
-	// From Login.js ========================================================================================
-	// const Login = () => {
-	// eslint-disable-next-line
 	const { setAuth } = useContext(AuthContext);
 	const userRef = useRef();
 	// const pwdRef = useRef();
@@ -92,6 +28,56 @@ function App() {
 	const [success, setSuccess] = useState(false);
 
 	const navigate = useNavigate();
+
+	const [loginStatus, setLoginStatus] = useState("");
+	const [passwordList, setPasswordList] = useState([]);
+
+
+
+
+	useEffect((req, res) => {
+		// axios.get("http://localhost:3001/working") 						// dev
+		axios.get("/working")									// heroku
+			.then(res => {
+				console.log(res)
+				setNotification(res.data.message)
+			})
+	}, [])
+
+	function handleCallbackResponse(response) {
+		console.log("Encoded JWT ID token: " + response.credentials);
+		var userObject = jwt_decode(response.credential)
+		console.log(userObject);
+	}
+	useEffect(() => {
+		/* global google */
+		google.accounts.id.initialize ({
+			client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+			callback: handleCallbackResponse
+		})
+
+		// google.accounts.id.renderButton(
+		// 	document.getElementById("signInDiv"),
+		// 	{ theme: "outline", size: "large"}
+		// )
+	}, [])
+	useEffect(() => {
+		function start() {
+			gapi.client.init({
+				clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+				scope: "email"
+			})
+		}
+
+		gapi.load('client:auth2', start)
+	}, [])
+
+	window.gapi.load('client:auth2', () => {
+		window.gapi.client.init({
+		    clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+		    scope: "email"
+		})
+	})
 
 
 	useEffect(() => {
@@ -128,12 +114,7 @@ function App() {
 	// }
 
 	// ========================================================
-	// Login:
-	// eslint-disable-next-line
-	const [loginStatus, setLoginStatus] = useState("");
-	// eslint-disable-next-line
-	const [passwordList, setPasswordList] = useState([]);
-
+// SHOWPASSWORDS
 	// useEffect(() => {
 	// 	axios.get('http://localhost:3001/showPasswords').then((response) => {
 	// 		setPasswordList(response.data)
@@ -265,38 +246,6 @@ function App() {
 	// 		};
 	// ======================
 
-	// try {
-	// 	const response = await axios.post(LOGIN_URL,
-	// 		JSON.stringify({ user, pwd }),
-	// 		{
-	// 			headers: { 'Content-Type': 'application/json' },
-	// 			// withCredentials: true
-	// 		}
-	// 	);
-	// 	console.log(JSON.stringify(response?.data));
-	// 	//console.log(JSON.stringify(response));
-	// 	const accessToken = response?.data?.accessToken;
-	// 	const roles = response?.data?.roles;
-	// 	setAuth({ user, pwd, roles, accessToken });
-	// 	setUser('');
-	// 	setPwd('');
-	// 	setSuccess(true);
-	// } catch (err) {
-	// 	if (!err?.response) {
-	// 		setErrMsg('No Server Response');
-	// 	} else if (err.response?.status === 400) {
-	// 		setErrMsg('Missing Username or Password');
-	// 	} else if (err.response?.status === 401) {
-	// 		setErrMsg('Unauthorized');
-	// 	} else {
-	// 		setErrMsg('Login Failed');
-	// 	}
-	// 	// errRef.current.focus(); //don't use...was causing an error
-	// }
-	// }
-	// From Login.js ========================================================================================
-
-
 	return (
 		<>
 			{success ? (
@@ -304,12 +253,23 @@ function App() {
 				// 	<Route exact path="/success" element={<RegisterSuccess/>}/>
 				// </Routes>
 				<section>
-					<h1>You are logged in!</h1>
-					<br />
-					<p>
-						<Link to='/Profile'>Go to your Profile</Link>
-					</p>
+					<div className="App">
+						<h1>You are logged in!</h1>
+						<br />
+						<div>
+							<img src={user.picture} width="200" height="200" alt=''></img>
+							<h3>{user.name}</h3>
+						</div>
+						<p><Link to='/Profile'>Go to your Profile</Link></p>
+					</div>
 				</section>
+				// <section>
+				// 	<h1>You are logged in!</h1>
+				// 	<br />
+				// 	<p>
+				// 		<Link to='/Profile'>Go to your Profile</Link>
+				// 	</p>
+				// </section>
 			) : (
 				<section>
 					<p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
@@ -341,7 +301,18 @@ function App() {
 						{/* <Link to='/googleapp'>Google Login</Link> */}
 						Log in with your Google Account
 						<div id="signInDiv"></div>
-						{/* <LoginButton /> */}
+						<LoginButton 
+							onSuccess={credentialResponse => {
+							console.log(credentialResponse.credential);
+							var decoded = jwt_decode(credentialResponse.credential);
+							console.log(decoded);
+							setSuccess(true);
+							setUser(decoded)
+							console.log("Login Success!");
+						}}
+						onError={() => {
+							console.log('Login Failed');
+						}} />
 						<LogoutButton />
 						<br />
 					</div>
