@@ -17,7 +17,7 @@ import AuthContext from "../context/AuthProvider";
 const clientId = "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
 
 function App() {
-	
+
 	const [notification, setNotification] = useState("")
 	const { setAuth } = useContext(AuthContext);
 	const userRef = useRef();
@@ -33,91 +33,91 @@ function App() {
 	const [isSignedIn, setIsSignedIn] = useState(false);
 
 
-	
-// 	const crypto = require('crypto')
-// 	const secret = 'pppppppppppppppppppppppppppppppp'
 
-// 	const encrypt = (password) => {
-// 	const iv = Buffer.from(crypto.randomBytes(16));
-// 	const cipher = crypto.createCipheriv('aes-256-ctr', Buffer.from(secret), iv);
+	// 	const crypto = require('crypto')
+	// 	const secret = 'pppppppppppppppppppppppppppppppp'
 
-// 	const encryptedPassword = Buffer.concat([
-// 		cipher.update(password),
-// 		cipher.final()
-// 	])
+	// 	const encrypt = (password) => {
+	// 	const iv = Buffer.from(crypto.randomBytes(16));
+	// 	const cipher = crypto.createCipheriv('aes-256-ctr', Buffer.from(secret), iv);
 
-// 	return {
-// 		iv: iv.toString('hex'),
-// 		password: encryptedPassword.toString('hex')
-// 	}
-// }
+	// 	const encryptedPassword = Buffer.concat([
+	// 		cipher.update(password),
+	// 		cipher.final()
+	// 	])
+
+	// 	return {
+	// 		iv: iv.toString('hex'),
+	// 		password: encryptedPassword.toString('hex')
+	// 	}
+	// }
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/working")  			// dev
-		// axios.get("/working")						//heroku
+		// axios.get("http://localhost:3001/working")  			// dev
+		axios.get("/working")						//heroku
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
 			})
 	}, [])
 
-		function handleSignOut(e) {
-			setUser({})
-			document.getElementById("signInDiv").hidden = false
+	function handleSignOut(e) {
+		setUser({})
+		document.getElementById("signInDiv").hidden = false
+	}
+
+	function handleCallbackResponse(response) {
+		console.log("Encoded JWT ID token: " + response.credential)
+		var userObject = jwt_decode(response.credential)
+		console.log(userObject)
+		setUser(userObject)
+		document.getElementById("signInDiv").hidden = true
+	}
+
+	useEffect(() => {
+		/* global google */
+		google.accounts.id.initialize({
+			client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+			callback: handleCallbackResponse,
+
+		})
+
+		// google.accounts.id.renderButton(
+		// 	document.getElementById("signInDiv"),
+		// 	{ theme: "outline", size: "large"}
+		// )
+
+	}, [])
+
+
+	const login = useGoogleLogin({
+		onSuccess: async response => {
+			try {
+				const res = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+					headers: {
+						"Authorization": `Bearer ${response.access_token}`
+					}
+				})
+				// console.log("Login Success!");
+				// setSuccess(true);
+				// setCatchUser(user)
+				// console.log(res.data)
+			} catch (err) {
+				console.log(err)
+			}
 		}
-       
-		function handleCallbackResponse(response) {
-			console.log("Encoded JWT ID token: " + response.credential)
-			var userObject = jwt_decode(response.credential)
-			console.log(userObject)
-			setUser(userObject)
-			document.getElementById("signInDiv").hidden = true
+	});
+
+	useEffect(() => {
+		function start() {
+			gapi.client.init({
+				clientId: clientId,
+				scope: "email",
+			});
 		}
+		gapi.load("client:auth2", start);
+	});
 
-		useEffect(() => {
-			/* global google */
-			google.accounts.id.initialize({
-				client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-				callback: handleCallbackResponse,
-				
-			})
-
-			google.accounts.id.renderButton(
-				document.getElementById("signInDiv"),
-				{ theme: "outline", size: "large"}
-			)
-
-		}, [])
-		
-
-	// const login = useGoogleLogin({
-	// 	onSuccess: async response => {
-	// 		try {
-	// 			const res = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
-	// 				headers: {
-	// 					"Authorization": `Bearer ${response.access_token}`
-	// 				}
-	// 			})
-	// 			// console.log("Login Success!");
-	// 			// setSuccess(true);
-	// 			// setCatchUser(user)
-	// 			// console.log(res.data)
-	// 		} catch (err) {
-	// 			console.log(err)
-	// 		}
-	// 	}
-	// });
-
-	// useEffect(() => {
-	// 	function start() {
-	// 	gapi.client.init({
-	// 		clientId: clientId,
-	// 		scope: "email",
-	// 	});
-	// 	}
-	// 	gapi.load("client:auth2", start);
-	// });
-				
 	useEffect(() => {
 		userRef.current.focus();
 		setUser('')
@@ -131,8 +131,8 @@ function App() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		axios.post('http://localhost:3001/checkPassword', {		// dev				
-		// axios.post('/checkPassword', {  					// heroku	
+		// axios.post('http://localhost:3001/checkPassword', {				// dev				
+		axios.post('/checkPassword', {  							// heroku	
 			user: user,
 			pwd: pwd,
 		}).then((response) => {
@@ -169,13 +169,13 @@ function App() {
 			{success ? (
 				<section>
 					<div className="App">
-					<h1>You are logged in!</h1>
-					<br />
+						<h1>You are logged in!</h1>
+						<br />
 						<div>
 							<img src={user.picture} width="200" height="200" alt=''></img>
 							<h3>{user.name}</h3>
 						</div>
-					<p><Link to='/Profile'>Go to your Profile</Link></p>
+						<p><Link to='/Profile'>Go to your Profile</Link></p>
 					</div>
 				</section>
 			) : (
@@ -214,30 +214,30 @@ function App() {
 						 
 						</div> */}
 						{isSignedIn ? (
-						// <div id="signOutButton">
+							// <div id="signOutButton">
 							<GoogleLogout
-								// clientId={clientId}
-								// buttonText="Logout"
-								// onLogoutSuccess={onSuccess}
-								/>
-						// </div>
+							// clientId={clientId}
+							// buttonText="Logout"
+							// onLogoutSuccess={onSuccess}
+							/>
+							// </div>
 						) : (
 							<GoogleLogin
 								onSuccess={credentialResponse => {
-								console.log(credentialResponse.credential);
-								var decoded = jwt_decode(credentialResponse.credential);
-								console.log(decoded);
-								setSuccess(true);
-								setUser(decoded)
-								console.log("Login Success!");
+									console.log(credentialResponse.credential);
+									var decoded = jwt_decode(credentialResponse.credential);
+									console.log(decoded);
+									setSuccess(true);
+									setUser(decoded)
+									console.log("Login Success!");
 								}}
 								onError={() => {
 									console.log('Login Failed');
-									}} />
-						// <div id="signInButton" >
+								}} />
+							// <div id="signInButton" >
 							// <GoogleLogin />
-						// </div>
-					)}
+							// </div>
+						)}
 						{/* {isSignedIn ? (
 						<div id="signOutButton">
 							<GoogleLogout 

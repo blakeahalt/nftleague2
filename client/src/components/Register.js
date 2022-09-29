@@ -38,8 +38,8 @@ const Register = () => {
 	const [userList, setUserList] = useState([])
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/working") 	// dev
-		// axios.get("/working")				// heroku
+		// axios.get("http://localhost:3001/working") 						// dev
+		axios.get("/working")									// heroku
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -64,8 +64,8 @@ const Register = () => {
 	}, [user, pwd, matchPwd])
 
 	const loadData = async() => {
-		const response = await axios.get("http://localhost:3001/getUser")  		// dev
-		// const response = await axios.get("/getUser")					// heroku
+		// const response = await axios.get("http://localhost:3001/getUser")  		// dev
+		const response = await axios.get("/getUser")						// heroku
 		setUserList(response.data)
 		console.log(response.data);
 	}
@@ -97,13 +97,13 @@ const Register = () => {
 			return;
 		}
 
-		axios.post("http://localhost:3001/addPassword", {   			// dev
-		// axios.post("/addPassword", {   						// heroku
+		// axios.post("http://localhost:3001/addPassword", {   					// dev
+		axios.post("/addPassword", {   								// heroku
 			user: user,
 			pwd: pwd
 		}).then((response) => {
 			console.log("1", response.config.data);
-			console.log("2", response?.data); //prints {response: 'WORKING'} from server index.js
+			console.log("2", response?.data);
 			// console.log(response?.accessToken);
 			console.log("3", JSON.stringify(response))
 			console.log("4", response.config.user)
