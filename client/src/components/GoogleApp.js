@@ -12,7 +12,7 @@ import jwt_decode from "jwt-decode"
 // import Login from "./Login";
 
 // const clientId = "1077671935526-e6mu705tptsm57l6p1ajpom0umt43a1p.apps.googleusercontent.com"
-
+const clientId="1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
 const LOGIN_URL = 'http://localhost:3001/GoogleApp'; //'http://localhost:3001/GoogleApp'
 
 function App() {

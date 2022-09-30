@@ -15,6 +15,7 @@ import AuthContext from "../context/AuthProvider";
 
 
 const clientId = "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
+const LOGIN_URL = 'http://localhost:3001/GoogleApp'; //'http://localhost:3001/GoogleApp'
 
 function App() {
 
@@ -53,8 +54,8 @@ function App() {
 	// }
 
 	useEffect((req, res) => {
-		// axios.get("http://localhost:3001/working")  			// dev
-		axios.get("/working")						//heroku
+		axios.get("http://localhost:3001/working")  			// dev
+		// axios.get("/working")						//heroku
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -77,15 +78,15 @@ function App() {
 	useEffect(() => {
 		/* global google */
 		google.accounts.id.initialize({
-			client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+			client_id: clientId,
 			callback: handleCallbackResponse,
 
 		})
 
-		// google.accounts.id.renderButton(
-		// 	document.getElementById("signInDiv"),
-		// 	{ theme: "outline", size: "large"}
-		// )
+		google.accounts.id.renderButton(
+			document.getElementById("signInDiv"),
+			{ theme: "outline", size: "large"}
+		)
 
 	}, [])
 
@@ -116,7 +117,14 @@ function App() {
 			});
 		}
 		gapi.load("client:auth2", start);
-	});
+	}, []);
+
+	window.gapi.load('client:auth2', () => {
+		window.gapi.client.init({
+		    clientId: clientId,
+		    scope: "email"
+		})
+	})
 
 	useEffect(() => {
 		userRef.current.focus();
@@ -128,28 +136,63 @@ function App() {
 		// setUser('')
 	}, [user, pwd])
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
+	// const handleSubmit = (e) => {
+	// 	e.preventDefault();
 
-		// axios.post('http://localhost:3001/checkPassword', {				// dev				
-		axios.post('/checkPassword', {  							// heroku	
-			user: user,
-			pwd: pwd,
-		}).then((response) => {
-			if (!response.data.message) {
-				setLoginStatus(response.data.message);
-			} else {
-				setLoginStatus(response.data[0].message);
-			}
+	// 	// axios.post('http://localhost:3001/checkPassword', {				// dev				
+	// 	axios.post('/checkPassword', {  							// heroku	
+	// 		user: user,
+	// 		pwd: pwd,
+	// 	}).then((response) => {
+	// 		if (!response.data.message) {
+	// 			setLoginStatus(response.data.message);
+	// 		} else {
+	// 			setLoginStatus(response.data[0].message);
+	// 		}
+	// 		console.log(JSON.stringify(response?.data));
+	// 		console.log(JSON.stringify(response));
+	// 		const accessToken = response?.data?.accessToken;
+	// 		// const roles = response?.data?.roles;
+	// 		setAuth({ user, pwd, accessToken });
+	// 		setUser('');
+	// 		setPwd('');
+	// 		setSuccess(true);
+	// 	}).catch((err) => {
+	// 		if (!err?.response) {
+	// 			setErrMsg('No Server Response');
+	// 		} else if (err.response?.status === 400) {
+	// 			setErrMsg('Missing Username or Password');
+	// 		} else if (err.response?.status === 401) {
+	// 			setErrMsg('Unauthorized');
+	// 		} else {
+	// 			setErrMsg('Login Failed');
+	// 		}
+	// 		// errRef.current.focus(); //don't use...was causing an error
+	// 	})
+	// 	console.log(user, pwd);
+	// }
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		console.log(user, pwd);
+
+		try {
+			const response = await axios.post(LOGIN_URL,
+				JSON.stringify({ user, pwd }),
+				{
+					headers: { 'Content-Type': 'application/json' },
+					// withCredentials: true
+				}
+			);
 			console.log(JSON.stringify(response?.data));
-			console.log(JSON.stringify(response));
+			//console.log(JSON.stringify(response));
 			const accessToken = response?.data?.accessToken;
-			// const roles = response?.data?.roles;
-			setAuth({ user, pwd, accessToken });
+			const roles = response?.data?.roles;
+			setAuth({ user, pwd, roles, accessToken });
 			setUser('');
 			setPwd('');
 			setSuccess(true);
-		}).catch((err) => {
+		} catch (err) {
 			if (!err?.response) {
 				setErrMsg('No Server Response');
 			} else if (err.response?.status === 400) {
@@ -159,9 +202,8 @@ function App() {
 			} else {
 				setErrMsg('Login Failed');
 			}
-			// errRef.current.focus(); //don't use...was causing an error
-		})
-		console.log(user, pwd);
+			// errRef.current.focus();
+		}
 	}
 
 	return (
@@ -205,6 +247,14 @@ function App() {
 						<button>Sign In</button>
 					</form>
 					<br />
+					<div>
+					{/* <Link to='/googleapp'>Google Login</Link> */}
+					Log in with your Google Account
+					{/* <div id="signInDiv"></div> */}
+					<LoginButton />
+					<LogoutButton />
+					<br />
+					</div>
 					<div className='App'>
 						Log in with your Google Account
 						<br />
