@@ -19,18 +19,20 @@ function App() {
 	const [notification, setNotification] = useState("")
 
 	useEffect((req, res) => {
-		axios.get("/GoogleApp")
-			.then(res => {
-				console.log(res)
-				setNotification(res.data.message)
-			})
-	}, [])
+              axios.get("http://localhost:3001/working")                  // dev
+              // axios.get("/working")                                                        //heroku
+                     .then(res => {
+                            console.log(res)
+                            setNotification(res.data.message)
+                     })
+       }, [])
 
 	function handleCallbackResponse(response) {
 		console.log("Encoded JWT ID token: " + response.credentials);
 		var userObject = jwt_decode(response.credential)
 		console.log(userObject);
 	}
+
 	useEffect(() => {
 		/* global google */
 		google.accounts.id.initialize ({
@@ -43,11 +45,13 @@ function App() {
 		// 	{ theme: "outline", size: "large"}
 		// )
 	}, [])
+
 	useEffect(() => {
 		function start() {
 			gapi.client.init({
 				clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-				scope: "email"
+				scope: "email",
+				plugin_name: 'NFTLeague'
 			})
 		}
 
@@ -57,17 +61,11 @@ function App() {
 	window.gapi.load('client:auth2', () => {
 		window.gapi.client.init({
 		    clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-		    scope: "email"
+		    scope: "email",
+		    plugin_name: 'NFTLeague'
 		})
 	})
 
-	useEffect((req, res) => {
-		axios.get("http://localhost:3001/GoogleApp")  //"http://localhost:3001/login"
-			.then(res => {
-				console.log(res)
-				setNotification(res.data.message)
-			})
-	}, [])
 	// var accessToken = gapi.auth.getToken().access_token
 
 	// From Login.js ========================================================================================
