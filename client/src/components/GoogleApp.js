@@ -7,6 +7,8 @@ import axios from 'axios'
 import AuthContext from "../context/AuthProvider";
 // import GoogleLogin from "react-google-login";
 import jwt_decode from "jwt-decode"
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+
 
 
 // import Login from "./Login";
@@ -18,13 +20,14 @@ const LOGIN_URL = 'http://localhost:3001/GoogleApp'; //'http://localhost:3001/Go
 function App() {
     const [notification, setNotification] = useState("")
 
-    useEffect((req, res) => {
-        axios.get("/GoogleApp")
-            .then(res => {
-                console.log(res)
-                setNotification(res.data.message)
-            })
-    }, [])
+	useEffect((req, res) => {
+		axios.get("http://localhost:3001/working")  			// dev
+		// axios.get("/working")								//heroku
+			.then(res => {
+				console.log(res)
+				setNotification(res.data.message)
+			})
+	}, [])
 
     function handleCallbackResponse(response) {
         console.log("Encoded JWT ID token: " + response.credentials);
@@ -43,32 +46,26 @@ function App() {
         //  { theme: "outline", size: "large"}
         // )
     }, [])
+
     useEffect(() => {
         function start() {
             gapi.client.init({
                 clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-                scope: "email"
+                scope: "email",
+				plugin_name: 'NFTLeague'
             })
         }
-
         gapi.load('client:auth2', start)
     }, [])
 
-    window.gapi.load('client:auth2', () => {
-        window.gapi.client.init({
-            clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-            scope: "email"
-        })
-    })
+    // window.gapi.load('client:auth2', () => {
+    //     window.gapi.client.init({
+    //         clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+    //         scope: "email",
+	// 		plugin_name: 'NFTLeague'
+    //     })
+    // })
 
-    useEffect((req, res) => {
-        axios.get("http://localhost:3001/working")  //"http://localhost:3001/login"
-        // axios.get("/GoogleApp")  //"http://localhost:3001/login"
-            .then(res => {
-                console.log(res)
-                setNotification(res.data.message)
-            })
-    }, [])
     // var accessToken = gapi.auth.getToken().access_token
 
     // From Login.js ========================================================================================
@@ -195,12 +192,49 @@ return (
                     <button>Sign In</button>
                 </form>
                 <br />
-                <div>
+                <div className="App">
                     {/* <Link to='/googleapp'>Google Login</Link> */}
                     Log in with your Google Account
                     {/* <div id="signInDiv"></div> */}
-                    <LoginButton />
-                    <LogoutButton />
+                    <GoogleLogin
+                        clientId={clientId}
+                        cookiePolicy={'single_host_origin'}
+                        isSignedIn={true}
+                        onSuccess={credentialResponse => {
+                            console.log(credentialResponse.credential);
+                            var decoded = jwt_decode(credentialResponse.credential);
+                            console.log(decoded);
+                            setSuccess(true);
+                            setUser(decoded)
+                            console.log("Login Success!");
+                        }}
+                        onFailure={() => {
+                            console.log('Login Failed');
+                        }} /> // localhost: WORKING - clicks through to appropriate page 
+                        // work.local: window pop-up is BLANK
+                        <LoginButton />
+                        {/* <div id="g_id_onload"
+                            data-client_id="1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
+                            data-context="signin"
+                            data-ux_mode="redirect"
+                            data-login_uri="http://localhost:3000"
+                            data-itp_support="false">
+                        </div>
+                    
+                        <div class="g_id_signin"
+                            data-type="standard"
+                            data-shape="rectangular"
+                            data-theme="filled_blue"
+                            data-text="signin_with"
+                            data-size="large"
+                            data-logo_alignment="left">
+                        </div>
+                        </LoginButton> */}
+                        // localhost:consoles LOGIN SUCCESS! Current user: consoles correct data info, NO redirect
+					    //work.local:(window pop-up) Access blocked: NFTLeague’s request is invalid 
+                    <LogoutButton 
+                        redirectUri="http://localhost:3000/profile"
+                        />
                     <br />
                 </div>
                 <p>

@@ -68,7 +68,7 @@ function App() {
 	}
 
 	function handleCallbackResponse(response) {
-		console.log("Encoded JWT ID token: " + response.credential)
+		// console.log("Encoded JWT ID token: " + response.credential)
 		var userObject = jwt_decode(response.credential)
 		console.log(userObject)
 		setUser(userObject)
@@ -91,23 +91,23 @@ function App() {
 	}, [])
 
 
-	const login = useGoogleLogin({
-		onSuccess: async response => {
-			try {
-				const res = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
-					headers: {
-						"Authorization": `Bearer ${response.access_token}`
-					}
-				})
-				// console.log("Login Success!");
-				// setSuccess(true);
-				// setCatchUser(user)
-				// console.log(res.data)
-			} catch (err) {
-				console.log(err)
-			}
-		}
-	});
+	// const login = useGoogleLogin({
+	// 	onSuccess: async response => {
+	// 		try {
+	// 			const res = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+	// 				headers: {
+	// 					"Authorization": `Bearer ${response.access_token}`
+	// 				}
+	// 			})
+	// 			// console.log("Login Success!");
+	// 			// setSuccess(true);
+	// 			// setCatchUser(user)
+	// 			// console.log(res.data)
+	// 		} catch (err) {
+	// 			console.log(err)
+	// 		}
+	// 	}
+	// });
 
 	useEffect(() => {
 		function start() {
@@ -138,63 +138,28 @@ function App() {
 		// setUser('')
 	}, [user, pwd])
 
-	// const handleSubmit = (e) => {
-	// 	e.preventDefault();
-
-	// 	// axios.post('http://localhost:3001/checkPassword', {				// dev				
-	// 	axios.post('/checkPassword', {  							// heroku	
-	// 		user: user,
-	// 		pwd: pwd,
-	// 	}).then((response) => {
-	// 		if (!response.data.message) {
-	// 			setLoginStatus(response.data.message);
-	// 		} else {
-	// 			setLoginStatus(response.data[0].message);
-	// 		}
-	// 		console.log(JSON.stringify(response?.data));
-	// 		console.log(JSON.stringify(response));
-	// 		const accessToken = response?.data?.accessToken;
-	// 		// const roles = response?.data?.roles;
-	// 		setAuth({ user, pwd, accessToken });
-	// 		setUser('');
-	// 		setPwd('');
-	// 		setSuccess(true);
-	// 	}).catch((err) => {
-	// 		if (!err?.response) {
-	// 			setErrMsg('No Server Response');
-	// 		} else if (err.response?.status === 400) {
-	// 			setErrMsg('Missing Username or Password');
-	// 		} else if (err.response?.status === 401) {
-	// 			setErrMsg('Unauthorized');
-	// 		} else {
-	// 			setErrMsg('Login Failed');
-	// 		}
-	// 		// errRef.current.focus(); //don't use...was causing an error
-	// 	})
-	// 	console.log(user, pwd);
-	// }
-
-	const handleSubmit = async (e) => {
+	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(user, pwd);
 
-		try {
-			const response = await axios.post(LOGIN_URL,
-				JSON.stringify({ user, pwd }),
-				{
-					headers: { 'Content-Type': 'application/json' },
-					// withCredentials: true
-				}
-			);
+		// axios.post('http://localhost:3001/checkPassword', {				// dev				
+		axios.post('/checkPassword', {  							// heroku	
+			user: user,
+			pwd: pwd,
+		}).then((response) => {
+			if (!response.data.message) {
+				setLoginStatus(response.data.message);
+			} else {
+				setLoginStatus(response.data[0].message);
+			}
 			console.log(JSON.stringify(response?.data));
-			//console.log(JSON.stringify(response));
+			console.log(JSON.stringify(response));
 			const accessToken = response?.data?.accessToken;
-			const roles = response?.data?.roles;
-			setAuth({ user, pwd, roles, accessToken });
+			// const roles = response?.data?.roles;
+			setAuth({ user, pwd, accessToken });
 			setUser('');
 			setPwd('');
 			setSuccess(true);
-		} catch (err) {
+		}).catch((err) => {
 			if (!err?.response) {
 				setErrMsg('No Server Response');
 			} else if (err.response?.status === 400) {
@@ -204,9 +169,44 @@ function App() {
 			} else {
 				setErrMsg('Login Failed');
 			}
-			// errRef.current.focus();
-		}
+			// errRef.current.focus(); //don't use...was causing an error
+		})
+		console.log(user, pwd);
 	}
+
+	// const handleSubmit = async (e) => {
+	// 	e.preventDefault();
+	// 	console.log(user, pwd);
+
+	// 	try {
+	// 		const response = await axios.post(LOGIN_URL,
+	// 			JSON.stringify({ user, pwd }),
+	// 			{
+	// 				headers: { 'Content-Type': 'application/json' },
+	// 				// withCredentials: true
+	// 			}
+	// 		);
+	// 		console.log(JSON.stringify(response?.data));
+	// 		//console.log(JSON.stringify(response));
+	// 		const accessToken = response?.data?.accessToken;
+	// 		const roles = response?.data?.roles;
+	// 		setAuth({ user, pwd, roles, accessToken });
+	// 		setUser('');
+	// 		setPwd('');
+	// 		setSuccess(true);
+	// 	} catch (err) {
+	// 		if (!err?.response) {
+	// 			setErrMsg('No Server Response');
+	// 		} else if (err.response?.status === 400) {
+	// 			setErrMsg('Missing Username or Password');
+	// 		} else if (err.response?.status === 401) {
+	// 			setErrMsg('Unauthorized');
+	// 		} else {
+	// 			setErrMsg('Login Failed');
+	// 		}
+	// 		// errRef.current.focus();
+	// 	}
+	// }
 
 	return (
 		<>
@@ -253,8 +253,9 @@ function App() {
 					{/* <Link to='/googleapp'>Google Login</Link> */}
 					Log in with your Google Account
 					{/* <div id="signInDiv"></div> */}
-					<LoginButton />
-					<LogoutButton />
+					<LoginButton /> // localhost:consoles LOGIN SUCCESS! Current user: consoles correct data info, NO redirect
+					//work.local:(window pop-up) Access blocked: NFTLeague’s request is invalid 
+					<LogoutButton />  // only console.logs (successfully logged out!)
 					<br />
 					</div>
 					<div className='App'>
@@ -273,10 +274,15 @@ function App() {
 							/>
 							) : (
 							<div className="App">
-							    <div id="signOutButton"></div>
-								<LoginButton />
+							    	<div id="signOutButton"></div> // localhost:WORKING: consoles handleCallbackResponse, NO redirect
+								//work.local: blank window pop-up
+								<LoginButton /> 
+									//localhost: window pop-up flashes and consoles LOGIN SUCCESS! Current user: w/correct data, NO redirect
+									//work.local:(window pop-up) Access blocked: NFTLeague’s request is invalid 
 								<br />
-								<GoogleLogin />
+								<GoogleLogin /> 
+									// localhost:Uncaught TypeError: onSuccessRef.current is not a function
+									//work.local: blank window pop-up
 								<GoogleLogin
 									onSuccess={credentialResponse => {
 										console.log(credentialResponse.credential);
@@ -288,9 +294,13 @@ function App() {
 									}}
 									onError={() => {
 										console.log('Login Failed');
-									}} />
-								<LogoutButton />
-								<GoogleLogout />
+									}} /> 
+									// localhost: WORKING - clicks through to appropriate page
+									//work.local: blank window pop-up
+								<LogoutButton /> 
+								// bundle.js:1198 successfully logged out!
+
+								<GoogleLogout /> // Uncaught TypeError: v is not a function
 							</div>
 						)}
 						{/* {isSignedIn ? (

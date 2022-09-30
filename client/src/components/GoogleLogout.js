@@ -50,9 +50,9 @@ function Logout() {
 		// setIsSignedIn(true)
 	}
 
-	// const onFailure = () => {
-	// 	console.log("LOGIN FAILED! Current user: ");
-	// }
+	const onFailure = () => {
+		console.log("LOGIN FAILED! Current user: ");
+	}
 
 	// const logout = () => {
 	// 	console.log("logged out!");
@@ -81,6 +81,8 @@ function Logout() {
 				clientId={clientId}
 				buttonText="Logout"
 				onLogoutSuccess={logout}
+				onFailure={onFailure}
+				redirectUri="http://localhost:3000/profile"
 				/>
 		</div>
 	)
