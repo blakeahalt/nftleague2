@@ -41,10 +41,10 @@ function App() {
             callback: handleCallbackResponse
         })
 
-        // google.accounts.id.renderButton(
-        //  document.getElementById("signInDiv"),
-        //  { theme: "outline", size: "large"}
-        // )
+        google.accounts.id.renderButton(
+         document.getElementById("signInDiv"),
+         { theme: "outline", size: "large"}
+        )
     }, [])
 
     useEffect(() => {
@@ -58,13 +58,13 @@ function App() {
         gapi.load('client:auth2', start)
     }, [])
 
-    // window.gapi.load('client:auth2', () => {
-    //     window.gapi.client.init({
-    //         clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-    //         scope: "email",
-	// 		plugin_name: 'NFTLeague'
-    //     })
-    // })
+    window.gapi.load('client:auth2', () => {
+        window.gapi.client.init({
+            clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+            scope: "email",
+			plugin_name: 'NFTLeague'
+        })
+    })
 
     // var accessToken = gapi.auth.getToken().access_token
 
@@ -96,6 +96,14 @@ function App() {
             navigate.push("/added")
         }
     })
+
+    const onSuccess = (res) => {
+        console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
+    }
+
+    const onFailure = (res) => {
+        console.log("LOGIN FAILED! Current user: ", res);
+    }
 
     // function handleLoginForm() {
     //  const email = userRef.current.value
@@ -193,7 +201,6 @@ return (
                 </form>
                 <br />
                 <div className="App">
-                    {/* <Link to='/googleapp'>Google Login</Link> */}
                     Log in with your Google Account
                     {/* <div id="signInDiv"></div> */}
                     <GoogleLogin
@@ -214,7 +221,23 @@ return (
                         <li>localhost: WORKING - clicks through to appropriate page</li>
                         <li>work.local: pop-up is BLANK</li>
                         <li>heroku: pop-up is BLANK</li>
-                        <LoginButton />
+                        <LoginButton 
+                        data-theme="filled_blue"
+                        onSuccess={onSuccess}
+                        onFailure={onFailure}
+                        cookiePolicy={'single_host_origin'}
+                        isSignedIn={true}
+                        data-callback={handleCallbackResponse()}
+                        data-context="signin"
+                        data-ux_mode="popup"
+                        data-itp_support="true"
+                        data-type="standard"
+                        data-shape="rectangular"
+                        data-text="signin_with"
+                        data-size="large"
+                        data-client_id={clientId}
+                        data-logo_alignment="left"
+                        />
                         {/* <div id="g_id_onload"
                             data-client_id="1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
                             data-context="signin"
