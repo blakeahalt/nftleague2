@@ -114,6 +114,7 @@ function App() {
 			gapi.client.init({
 				clientId: clientId,
 				scope: "email",
+				plugin_name: 'PLUGIN'
 			});
 		}
 		gapi.load("client:auth2", start);
@@ -122,7 +123,8 @@ function App() {
 	window.gapi.load('client:auth2', () => {
 		window.gapi.client.init({
 		    clientId: clientId,
-		    scope: "email"
+		    scope: "email",
+		    plugin_name: 'PLUGIN'
 		})
 	})
 

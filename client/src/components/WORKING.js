@@ -47,7 +47,8 @@ function App() {
 		function start() {
 			gapi.client.init({
 				clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-				scope: "email"
+				scope: "email",
+				plugin_name: 'PLUGIN'
 			})
 		}
 
@@ -57,7 +58,8 @@ function App() {
 	window.gapi.load('client:auth2', () => {
 		window.gapi.client.init({
 		    clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-		    scope: "email"
+		    scope: "email",
+		//     plugin_name: 'PLUGIN'
 		})
 	})
 
