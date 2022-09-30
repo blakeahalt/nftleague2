@@ -14,28 +14,30 @@ function Login() {
 	// const [notification, setNotification] = useState("")
 	const [success, setSuccess] = useState(false);
 	const [isSignedIn, setIsSignedIn] = useState(false);
+	const [user, setUser] = useState({});
 
-	// const login = useGoogleLogin({
-	// 	onSuccess: async respose => {
-	// 		try {
-	// 			const res = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
-	// 				headers: {
-	// 					"Authorization": `Bearer ${respose.access_token}`
-	// 				}
-	// 			})
-	// 			// console.log("Login Success!.");
-	// 			// console.log(res.data)
-	// 			// setSuccess(true);
-	// 		} catch (err) {
-	// 			console.log(err)
 
-	// 		}
+	const login = useGoogleLogin({
+		onSuccess: async respose => {
+			try {
+				const res = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+					headers: {
+						"Authorization": `Bearer ${respose.access_token}`
+					}
+				})
+				console.log("Login Success!.");
+				console.log(res.data)
+				setSuccess(true);
+			} catch (err) {
+				console.log(err)
 
-	// 	}
-	// });
+			}
 
-	const onSuccess = (res) => {
-		console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
+		}
+	});
+
+	const onSuccess = () => {
+		console.log("LOGIN SUCCESS! Current user: ");
 	}
 
 	const onFailure = (res) => {
@@ -56,15 +58,16 @@ function Login() {
 		<div id="signInButton" >
 			<GoogleLogin
 				clientId={clientId}
-				buttonText="Login"
+				buttonText="Login?"
 				// onSuccess={credentialResponse => {
 				// 	console.log(credentialResponse.credential);
 				// 	var decoded = jwt_decode(credentialResponse.credential);
 				// 	console.log(decoded)
-				// 	// console.log("Login Success!!")
-				// 	// setSuccess(true)
+				// 	setUser(decoded)
+				// 	console.log("Login Success!!")
+				// 	setSuccess(true)
 				// }}
-				onSuccess={onSuccess}
+				onSuccess={login}
 				onFailure={onFailure}
 				cookiePolicy={'single_host_origin'}
 				isSignedIn={true}

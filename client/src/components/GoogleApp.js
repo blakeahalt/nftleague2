@@ -425,15 +425,15 @@ function App() {
        useEffect(() => {
               /* global google */
               google.accounts.id.initialize({
-                     client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+                     client_id: clientId,
                      callback: handleCallbackResponse,
 
               })
 
-              // google.accounts.id.renderButton(
-              //     document.getElementById("signInDiv"),
-              //     { theme: "outline", size: "large"}
-              // )
+              google.accounts.id.renderButton(
+                  document.getElementById("signInDiv"),
+                  { theme: "outline", size: "large"}
+              )
 
        }, [])
 
@@ -446,10 +446,6 @@ function App() {
                                           "Authorization": `Bearer ${response.access_token}`
                                    }
                             })
-                            // console.log("Login Success!");
-                            // setSuccess(true);
-                            // setCatchUser(user)
-                            // console.log(res.data)
                      } catch (err) {
                             console.log(err)
                      }
@@ -557,20 +553,56 @@ function App() {
                                           Log in with your Google Account
                                           <br />
                                           <br />
-                                          <div id="signInDiv">
+                                         
+						<LoginButton />
+					       <div id="signInButton">
                                           <br/>
-                                           
+						<LoginButton />
+						<LoginButton 
+							// onSuccess={credentialResponse => {
+							// 	console.log(credentialResponse.credential);
+							// 	var decoded = jwt_decode(credentialResponse.credential);
+							// 	console.log(decoded);
+							// 	setSuccess(true);
+							// 	setUser(decoded)
+							// 	console.log("Login Success!");
+							// }}
+							clientId={clientId}
+							accessType="online"
+							buttonText="Login!!!"
+							onSuccess={login}
+							 ></LoginButton>
                                           </div>
-                                          {isSignedIn ? (
-                                                 <div id="signOutButton">
-                                                 <LogoutButton />
+
+					       <div id="signInDiv"></div>
+
+
+                                          <div id="signInButton" >
+						<GoogleLogin />
+						</div>
+
+						<GoogleLogin
+							onSuccess={credentialResponse => {
+								console.log(credentialResponse.credential);
+								var decoded = jwt_decode(credentialResponse.credential);
+								console.log(decoded);
+								setSuccess(true);
+								setUser(decoded)
+								console.log("Login Success!");
+							}}
+							onError={() => {
+								console.log('Login Failed');
+							}} />
+
+						<div id="signOutButton">
+						<LogoutButton />
 								{/* // clientId={clientId}
 								// buttonText="Logout"
 								// onLogoutSuccess={onSuccess} */}
                                                  
-                                                 </div>
-                                          ) : (
-                                                 // <GoogleLogin
+						</div>
+						<GoogleLogout />
+                                                 {/* // <GoogleLogin
                                                  //        onSuccess={credentialResponse => {
                                                  //               console.log(credentialResponse.credential);
                                                  //               var decoded = jwt_decode(credentialResponse.credential);
@@ -581,11 +613,9 @@ function App() {
                                                  //        }}
                                                  //        onError={() => {
                                                  //               console.log('Login Failed');
-                                                 //        }} />
-                                                 <div id="signInButton" >
-                                                 <GoogleLogin />
-                                                 </div>
-                                          )}
+                                                 //        }} /> */}
+						
+						
                                           {/* {isSignedIn ? (
                                           <div id="signOutButton">
                                                  <GoogleLogout 
