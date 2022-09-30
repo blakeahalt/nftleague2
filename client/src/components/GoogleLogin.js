@@ -1,85 +1,85 @@
-// // import { GoogleLogin, GoogleLogout } from 'react-google-login'
-// // import { React, useState, useEffect } from "react";
-// // import { useGoogleLogin } from '@react-oauth/google';
-// // import axios from 'axios'
-// // import jwt_decode from "jwt-decode";
-// // // import { useAuth0 } from "@auth0/auth0-react";
-// // // import LoginButton from "./GoogleLogin"
+// import { GoogleLogin, GoogleLogout } from 'react-google-login'
+// import { React, useState, useEffect } from "react";
+// import { useGoogleLogin } from '@react-oauth/google';
+// import axios from 'axios'
+// import jwt_decode from "jwt-decode";
+// // import { useAuth0 } from "@auth0/auth0-react";
+// // import LoginButton from "./GoogleLogin"
 
 
 
-// // const clientId = "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
+// const clientId = "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
 
-// // function Login() {
-// // 	// const [notification, setNotification] = useState("")
-// // 	const [success, setSuccess] = useState(false);
-// // 	const [isSignedIn, setIsSignedIn] = useState(false);
-// // 	const [user, setUser] = useState({});
+// function Login() {
+// 	// const [notification, setNotification] = useState("")
+// 	const [success, setSuccess] = useState(false);
+// 	const [isSignedIn, setIsSignedIn] = useState(false);
+// 	const [user, setUser] = useState({});
 
 
-// // 	const login = useGoogleLogin({
-// // 		onSuccess: async respose => {
-// // 			try {
-// // 				const res = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
-// // 					headers: {
-// // 						"Authorization": `Bearer ${respose.access_token}`
-// // 					}
-// // 				})
-// // 				console.log("Login Success!.");
-// // 				console.log(res.data)
-// // 				setSuccess(true);
-// // 			} catch (err) {
-// // 				console.log(err)
+// 	const login = useGoogleLogin({
+// 		onSuccess: async respose => {
+// 			try {
+// 				const res = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+// 					headers: {
+// 						"Authorization": `Bearer ${respose.access_token}`
+// 					}
+// 				})
+// 				console.log("Login Success!.");
+// 				console.log(res.data)
+// 				setSuccess(true);
+// 			} catch (err) {
+// 				console.log(err)
 
-// // 			}
+// 			}
 
-// // 		}
-// // 	});
+// 		}
+// 	});
 
-// // 	const onSuccess = () => {
-// // 		console.log("LOGIN SUCCESS! Current user: ");
-// // 	}
+// 	const onSuccess = () => {
+// 		console.log("LOGIN SUCCESS! Current user: ");
+// 	}
 
-// // 	const onFailure = (res) => {
-// // 		console.log("LOGIN FAILED! res: ", res);
-// // 	}
+// 	const onFailure = (res) => {
+// 		console.log("LOGIN FAILED! res: ", res);
+// 	}
 
-// // 	// const AuthLogoutButton = () => {
-// // 	// 	const { logout } = useAuth0();
+// 	// const AuthLogoutButton = () => {
+// 	// 	const { logout } = useAuth0();
 
-// // 	// 	return (
-// // 	// 		<button onClick={() => logout({ returnTo: "http://localhost:3000/googleapp" })}>
-// // 	// 			Sign Out
-// // 	// 		</button>
-// // 	// 	)
-// // 	// };
+// 	// 	return (
+// 	// 		<button onClick={() => logout({ returnTo: "http://localhost:3000/googleapp" })}>
+// 	// 			Sign Out
+// 	// 		</button>
+// 	// 	)
+// 	// };
 
-// // 	return (
-// // 		<div id="signInButton" >
-// // 			<GoogleLogin
-// // 				clientId={clientId}
-// // 				buttonText="Login?"
-// // 				// onSuccess={credentialResponse => {
-// // 				// 	console.log(credentialResponse.credential);
-// // 				// 	var decoded = jwt_decode(credentialResponse.credential);
-// // 				// 	console.log(decoded)
-// // 				// 	setUser(decoded)
-// // 				// 	console.log("Login Success!!")
-// // 				// 	setSuccess(true)
-// // 				// }}
-// // 				onSuccess={login}
-// // 				onFailure={onFailure}
-// // 				cookiePolicy={'single_host_origin'}
-// // 				isSignedIn={true}
-// // 				// onError={() => {
-// // 				// 	console.log('Login Failed');
-// // 				// }} 
-// // 			/>
-// // 		</div>
-// // 	)
-// // }
+// 	return (
+// 		<div id="signInButton" >
+// 			<GoogleLogin
+// 				clientId={clientId}
+// 				buttonText="Login?"
+// 				// onSuccess={credentialResponse => {
+// 				// 	console.log(credentialResponse.credential);
+// 				// 	var decoded = jwt_decode(credentialResponse.credential);
+// 				// 	console.log(decoded)
+// 				// 	setUser(decoded)
+// 				// 	console.log("Login Success!!")
+// 				// 	setSuccess(true)
+// 				// }}
+// 				onSuccess={login}
+// 				onFailure={onFailure}
+// 				cookiePolicy={'single_host_origin'}
+// 				isSignedIn={true}
+// 				// onError={() => {
+// 				// 	console.log('Login Failed');
+// 				// }} 
+// 			/>
+// 		</div>
+// 	)
+// }
 
-// // export default Login
+// export default Login
 
 
 
@@ -201,10 +201,17 @@
 
 
 import { GoogleLogin } from 'react-google-login'
+import jwt_decode from "jwt-decode";
+import { React, useState, useEffect } from "react";
+
+
 
 const clientId = "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
 
 function GLogin() {
+	const [success, setSuccess] = useState(false);
+	const [isSignedIn, setIsSignedIn] = useState(false);
+	const [user, setUser] = useState({});
 
        const onSuccess = (res) => {
               console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
@@ -215,16 +222,25 @@ function GLogin() {
        }
 
        return (
-              <div id="signInButton">
+              // <div id="signInButton">
                      <GoogleLogin
+
                             clientId={clientId}
                             buttonText="Login"
                             onSuccess={onSuccess}
+				cookiePolicy={'single_host_origin'}
+				isSignedIn={true}
+				// onSuccess={credentialResponse => {
+				// 	console.log(credentialResponse.credential);
+				// 	var decoded = jwt_decode(credentialResponse.credential);
+				// 	console.log(decoded);
+				// 	setSuccess(true);
+				// 	setUser(decoded)
+				// 	console.log("Login Success!")
+				//  }}
                             onFailure={onFailure}
-                            cookiePolicy={'single_host_origin'}
-                            isSignedIn={true}
                      />
-              </div>
+              // </div>
        )
 }
 
