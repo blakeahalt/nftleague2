@@ -222,21 +222,21 @@ return (
                         <li>work.local: pop-up is BLANK</li>
                         <li>heroku: pop-up is BLANK</li>
                         <LoginButton 
-                        data-theme="filled_blue"
-                        onSuccess={onSuccess}
-                        onFailure={onFailure}
-                        cookiePolicy={'single_host_origin'}
-                        isSignedIn={true}
-                        data-callback={handleCallbackResponse()}
-                        data-context="signin"
-                        data-ux_mode="popup"
-                        data-itp_support="true"
-                        data-type="standard"
-                        data-shape="rectangular"
-                        data-text="signin_with"
-                        data-size="large"
-                        data-client_id={clientId}
-                        data-logo_alignment="left"
+                        // data-theme="filled_blue"
+                        // onSuccess={onSuccess}
+                        // onFailure={onFailure}
+                        // cookiePolicy={'single_host_origin'}
+                        // isSignedIn={true}
+                        // data-callback={handleCallbackResponse()}
+                        // data-context="signin"
+                        // data-ux_mode="popup"
+                        // data-itp_support="true"
+                        // data-type="standard"
+                        // data-shape="rectangular"
+                        // data-text="signin_with"
+                        // data-size="large"
+                        // data-client_id={clientId}
+                        // data-logo_alignment="left"
                         />
                         {/* <div id="g_id_onload"
                             data-client_id="1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"

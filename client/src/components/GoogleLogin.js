@@ -115,59 +115,61 @@ function GLogin() {
 		var userObject = jwt_decode(response.credential)
 		console.log(userObject);
 	   }
-       return (
-		// <>
-		<div id="g_id_onload">
-		<GoogleLogin
-			// clientId={clientId}
-			// buttonText="Login"
-			data-theme="filled_blue"
-			onSuccess={onSuccess}
-			onFailure={onFailure}
-			cookiePolicy={'single_host_origin'}
-			isSignedIn={true}
-			data-context="signin"
-			data-ux_mode="popup"
-			data-itp_support="true"
-			data-type="standard"
-			data-shape="rectangular"
-			data-text="signin_with"
-			data-size="large"
-			data-client_id={clientId}
-			data-logo_alignment="left"/>
-		
-		</div>
-       )
-
-
-	// return( 
-	// 	<>
-	// 	<div id="g_id_onload"
-	// 		data-client_id="1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
-	// 		data-context="signin"
-	// 		data-ux_mode="popup"
-	// 		data-login_uri="http://localhost:3000/profile"
-	// 		data-itp_support="true">
-	// 	</div>
-	// 	{/* <div
+       // return (
+	// 	// <>
+	// 	<div id="g_id_signin">
+	// 		<GoogleLogin
 	// 		clientId={clientId}
 	// 		buttonText="Login"
 	// 		onSuccess={onSuccess}
 	// 		onFailure={onFailure}
 	// 		cookiePolicy={'single_host_origin'}
-	// 		isSignedIn={true} >
-	// 	</div> */}
-
-	// 	<div className="g_id_signin"
+	// 		isSignedIn={true}
+	// 		data-client_id={clientId}
+	// 		data-theme="filled_blue"
+	// 		data-context="signin"
+	// 		data-ux_mode="popup"
+	// 		data-itp_support="true"
 	// 		data-type="standard"
 	// 		data-shape="rectangular"
-	// 		data-theme="filled_blue"
 	// 		data-text="signin_with"
 	// 		data-size="large"
 	// 		data-logo_alignment="left">
-	// 	</div>
-	// </>
-	// )
+
+	// 	</GoogleLogin>
+	// 		</div>
+       // )
+
+
+	return( 
+		<>
+		<div id="g_id_onload"
+			data-client_id="1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
+			data-context="signin"
+			data-callback={handleCallbackResponse}
+			data-ux_mode="popup"
+			data-login_uri="http://localhost:3000/profile"
+			data-itp_support="true">
+		</div>
+		{/* <div
+			clientId={clientId}
+			buttonText="Login"
+			onSuccess={onSuccess}
+			onFailure={onFailure}
+			cookiePolicy={'single_host_origin'}
+			isSignedIn={true} >
+		</div> */}
+
+		<div className="g_id_signin"
+			data-type="standard"
+			data-shape="rectangular"
+			data-theme="filled_blue"
+			data-text="signin_with"
+			data-size="large"
+			data-logo_alignment="left">
+		</div>
+	</>
+	)
 }
 
 export default GLogin
