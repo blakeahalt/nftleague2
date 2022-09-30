@@ -1,343 +1,631 @@
+// import LoginButton from "./GoogleLogin"
+// import LogoutButton from "./GoogleLogout"
+// import { Link, useNavigate } from 'react-router-dom';
+// import { useEffect, useState, useRef, useContext } from 'react'
+// import { gapi } from 'gapi-script'
+// import axios from 'axios'
+// import AuthContext from "../context/AuthProvider";
+// // import GoogleLogin from "react-google-login";
+// import jwt_decode from "jwt-decode"
+// import { GoogleLogin } from 'react'
+
+
+// // import Login from "./Login";
+
+// // const clientId = "1077671935526-e6mu705tptsm57l6p1ajpom0umt43a1p.apps.googleusercontent.com"
+
+// // const LOGIN_URL = 'http://localhost:3001/GoogleApp'; //'http://localhost:3001/GoogleApp'
+
+// function App() {
+// 	const [notification, setNotification] = useState("")
+// 	const { setAuth } = useContext(AuthContext);
+// 	const userRef = useRef();
+// 	// const pwdRef = useRef();
+// 	const errRef = useRef();
+
+// 	const [user, setUser] = useState({});
+// 	const [pwd, setPwd] = useState('');
+// 	const [errMsg, setErrMsg] = useState('');
+// 	const [success, setSuccess] = useState(false);
+
+// 	const navigate = useNavigate();
+
+// 	const [loginStatus, setLoginStatus] = useState("");
+// 	const [passwordList, setPasswordList] = useState([]);
+
+
+
+
+// 	useEffect((req, res) => {
+// 		// axios.get("http://localhost:3001/working") 						// dev
+// 		axios.get("/working")									// heroku
+// 			.then(res => {
+// 				console.log(res)
+// 				setNotification(res.data.message)
+// 			})
+// 	}, [])
+
+// 	function handleCallbackResponse(response) {
+// 		console.log("Encoded JWT ID token: " + response.credentials);
+// 		var userObject = jwt_decode(response.credential)
+// 		console.log(userObject);
+// 	}
+// 	useEffect(() => {
+// 		/* global google */
+// 		google.accounts.id.initialize ({
+// 			client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+// 			callback: handleCallbackResponse
+// 		})
+
+// 		// google.accounts.id.renderButton(
+// 		// 	document.getElementById("signInDiv"),
+// 		// 	{ theme: "outline", size: "large"}
+// 		// )
+// 	}, [])
+// 	useEffect(() => {
+// 		function start() {
+// 			gapi.client.init({
+// 				clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+// 				scope: "email"
+// 			})
+// 		}
+
+// 		gapi.load('client:auth2', start)
+// 	}, [])
+
+// 	window.gapi.load('client:auth2', () => {
+// 		window.gapi.client.init({
+// 		    clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+// 		    scope: "email"
+// 		})
+// 	})
+
+
+// 	useEffect(() => {
+// 		userRef.current.focus();
+// 	}, [])
+
+// 	useEffect(() => {
+// 		setErrMsg('');
+// 	}, [user, pwd])
+
+// 	useEffect(() => {
+// 		if (localStorage.getItem('user-info')) {
+// 			navigate.push("/added")
+// 		}
+// 	})
+
+// 	// function handleLoginForm() {
+// 	// 	const email = userRef.current.value
+// 	// 	const password = pwdRef.current.value
+// 	// 	// const hashedPassword = bcrypt.hashSync(password, '$2a$10$CwTycUXWue0Thq9StjUM0u') // hash created previously created upon sign up
+
+// 	// 	fetch('http://localhost:3001/GoogleApp', {
+// 	// 		method: 'POST',
+// 	// 		headers: {
+// 	// 			Accept: 'application/json',
+// 	// 			'Content-Type': 'application/json',
+// 	// 		},
+// 	// 		body: JSON.stringify({
+// 	// 			email: email,
+// 	// 			// password: hashedPassword,
+// 	// 			password: password,
+// 	// 		}),
+// 	// 	})
+// 	// }
+
+// 	// ========================================================
+// // SHOWPASSWORDS
+// 	// useEffect(() => {
+// 	// 	axios.get('http://localhost:3001/showPasswords').then((response) => {
+// 	// 		setPasswordList(response.data)
+// 	// 	})
+// 	// }, [])
+
+// 	// const login = () => {
+// 	// 	axios.post('http://localhost:3001/googleapp', {    // Development
+// 	// 	// axios.post('/login', {			     // Heroku
+// 	// 	user: user,
+// 	// 	pwd: pwd,
+// 	// }).then((response) => {
+// 	// 	if (!response.data.message) {
+// 	// 	setLoginStatus( response.data.message);
+// 	// 	} else {
+// 	// 	setLoginStatus (response.data[0].message);
+// 	// 	}
+// 	// });
+// 	// };	
+
+// 	// function handleLoginForm() {
+// 	// 	const email = userRef.current.value
+// 	// 	const password = pwdRef.current.value
+// 	// 	// const hashedPassword = bcrypt.hashSync(password, '$2a$10$CwTycUXWue0Thq9StjUM0u') // hash created previously created upon sign up
+
+// 	// 	fetch('http://localhost:3001/GoogleApp', {
+// 	// 		method: 'POST',
+// 	// 		headers: {
+// 	// 			Accept: 'application/json',
+// 	// 			'Content-Type': 'application/json',
+// 	// 		},
+// 	// 		body: JSON.stringify({
+// 	// 			email: email,
+// 	// 			// password: hashedPassword,
+// 	// 			password: password,
+// 	// 		}),
+// 	// 	})
+// 	// }
+
+// 	const handleSubmit = (e) => {
+// 		e.preventDefault();
+
+// 		// axios.post('http://localhost:3001/checkPassword', {    // Development
+// 		axios.post('/checkPassword', {			     // Heroku
+// 			user: user,
+// 			pwd: pwd,
+// 		}).then((response) => {
+// 			if (!response.data.message) {
+// 				setLoginStatus(response.data.message);
+// 			} else {
+// 				setLoginStatus(response.data[0].message);
+// 			}
+// 			// console.log(JSON.stringify(response?.data));
+// 			//console.log(JSON.stringify(response));
+// 			// const accessToken = response?.data?.accessToken;
+// 			// const roles = response?.data?.roles;
+// 			// setAuth({ user, pwd, accessToken });
+// 			setUser('');
+// 			setPwd('');
+// 			setSuccess(true);
+// 		}).catch((err) => {
+// 			if (!err?.response) {
+// 				setErrMsg('No Server Response');
+// 			} else if (err.response?.status === 400) {
+// 				setErrMsg('Missing Username or Password');
+// 			} else if (err.response?.status === 401) {
+// 				setErrMsg('Unauthorized');
+// 			} else {
+// 				setErrMsg('Login Failed');
+// 			}
+// 			// errRef.current.focus(); //don't use...was causing an error
+// 		})
+// 		console.log(user, pwd);
+// 	};
+// 	// ============================
+// 	// .then(res => {
+// 	// 	console.log(res)
+// 	// 	setNotification(res.data.message)
+// 	// })
+// 	// const checkPassword = (props) => {
+// 	// 		axios.get('/checkPassword', {
+// 	// 		// axios.get('http://localhost:3001/checkPassword', {
+// 	// 			password: props.password,
+// 	// 			user: props.data,
+// 	// 			iv: props.iv,
+// 	// 		}).then((response) => {
+// 	// 			setPasswordList(
+// 	// 				passwordList.map((val) => {
+// 	// 					return val.password === props.password ? 
+// 	// 					{
+// 	// 						id: val.id,
+// 	// 						password: val.password,
+// 	// 						user: response.data,
+// 	// 					} : val;
+// 	// 				})
+// 	// 				);
+// 	// 			}).catch((err)=> {
+// 	// 					if (!err?.response) {
+// 	// 						setErrMsg('No Server Response');
+// 	// 					} else if (err.response?.status === 400) {
+// 	// 						setErrMsg('Missing Username or Password');
+// 	// 					} else if (err.response?.status === 401) {
+// 	// 						setErrMsg('Unauthorized');
+// 	// 					} else {
+// 	// 						setErrMsg('Login Failed');
+// 	// 					};
+// 	// 		});
+// 	// 	}
+// 	// }
+
+// 	// const decryptPassword = (encryption) => {
+// 	// 		axios.get('http://localhost:3001/decryptPassword', {
+// 	// 			password: encryption.password,
+// 	// 			user: response.data,
+// 	// 			iv: encryption.iv,
+// 	// 		}).then((response) => {
+// 	// 			setPasswordList(
+// 	// 				passwordList.map((val) => {
+// 	// 					return user === val.user ? 
+// 	// 					{
+// 	// 						id: val.id,
+// 	// 						password: val.password,
+// 	// 						user: response.data,
+// 	// 						iv: val.iv,
+// 	// 					} : val;
+// 	// 				})
+// 	// 				);
+// 	// 			});
+// 	// 		};
+// 	// ======================
+
+// 	return (
+// 		<>
+// 			{success ? (
+// 				// <Routes>
+// 				// 	<Route exact path="/success" element={<RegisterSuccess/>}/>
+// 				// </Routes>
+// 				<section>
+// 					<div className="App">
+// 						<h1>You are logged in!</h1>
+// 						<br />
+// 						<div>
+// 							<img src={user.picture} width="200" height="200" alt=''></img>
+// 							<h3>{user.name}</h3>
+// 						</div>
+// 						<p><Link to='/Profile'>Go to your Profile</Link></p>
+// 					</div>
+// 				</section>
+// 				// <section>
+// 				// 	<h1>You are logged in!</h1>
+// 				// 	<br />
+// 				// 	<p>
+// 				// 		<Link to='/Profile'>Go to your Profile</Link>
+// 				// 	</p>
+// 				// </section>
+// 			) : (
+// 				<section>
+// 					<p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+// 					<h1>Sign In</h1>
+// 					<form onSubmit={() => handleSubmit}>
+// 						<label htmlFor="username">Username:</label>
+// 						<input
+// 							type="text"
+// 							id="username"
+// 							ref={userRef}
+// 							autoComplete="off"
+// 							onChange={(e) => setUser(e.target.value)}
+// 							value={user}
+// 							required
+// 						/>
+
+// 						<label htmlFor="password">Password:</label>
+// 						<input
+// 							type="password"
+// 							id="password"
+// 							onChange={(e) => setPwd(e.target.value)}
+// 							value={pwd}
+// 							required
+// 						/>
+// 						<button>Sign In</button>
+// 					</form>
+// 					<br />
+// 					<div className="App">
+// 						{/* <Link to='/googleapp'>Google Login</Link> */}
+// 						Log in with your Google Account
+// 						<div id="signInDiv"></div>
+// 						<GoogleLogin 
+// 							onSuccess={credentialResponse => {
+// 							console.log(credentialResponse.credential);
+// 							var decoded = jwt_decode(credentialResponse.credential);
+// 							console.log(decoded);
+// 							setSuccess(true);
+// 							setUser(decoded)
+// 							console.log("Login Success!");
+// 						}}
+// 						onError={() => {
+// 							console.log('Login Failed');
+// 						}} />
+// 						<LogoutButton />
+// 						<br />
+// 					</div>
+// 					<p>
+// 						Need an Account?
+// 						<br />
+// 						<span className="line">
+// 							{/*put router link here*/}
+// 							{/* <a href="/register">Sign Up</a> */}
+// 							<Link to='/register'>Sign Up</Link>
+// 						</span>
+// 						{/* <span>Your new SALT: {salt}</span> */}
+// 						<br />
+// 						{/* <span>
+// 						Save this Salt, UPON sign up <br /> if you refresh it will generate a new SALT!!!
+// 					</span> */}
+// 					</p>
+// 					<p>axios.get('/googleapp') status: <i>{notification}</i></p>
+// 					<br />
+
+// 				</section>
+// 			)}
+// 		</>
+// 	)
+// }
+
+// export default App
+
+
+// ================================================================
+
+
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+import { GoogleLogout } from 'react-google-login';
+import jwt_decode from "jwt-decode";
+// import { useGoogleLogin } from '@react-oauth/google';
+import axios from "axios"
 import LoginButton from "./GoogleLogin"
 import LogoutButton from "./GoogleLogout"
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef, useContext } from 'react'
 import { gapi } from 'gapi-script'
-import axios from 'axios'
 import AuthContext from "../context/AuthProvider";
+// import EncryptionHandler from './EncryptionHandler'
+// const {encrypt, decrypt} = require('./EncryptionHandler')
 // import GoogleLogin from "react-google-login";
-import jwt_decode from "jwt-decode"
-import { GoogleLogin } from 'react-google-login'
 
 
-// import Login from "./Login";
-
-// const clientId = "1077671935526-e6mu705tptsm57l6p1ajpom0umt43a1p.apps.googleusercontent.com"
-
-// const LOGIN_URL = 'http://localhost:3001/GoogleApp'; //'http://localhost:3001/GoogleApp'
+const clientId = "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
 
 function App() {
-	const [notification, setNotification] = useState("")
-	const { setAuth } = useContext(AuthContext);
-	const userRef = useRef();
-	// const pwdRef = useRef();
-	const errRef = useRef();
 
-	const [user, setUser] = useState({});
-	const [pwd, setPwd] = useState('');
-	const [errMsg, setErrMsg] = useState('');
-	const [success, setSuccess] = useState(false);
-
-	const navigate = useNavigate();
-
-	const [loginStatus, setLoginStatus] = useState("");
-	const [passwordList, setPasswordList] = useState([]);
-
+       const [notification, setNotification] = useState("")
+       const { setAuth } = useContext(AuthContext);
+       const userRef = useRef();
+       // const pwdRef = useRef();
+       const errRef = useRef();
+       const [user, setUser] = useState({});
+       const [pwd, setPwd] = useState('');
+       const [errMsg, setErrMsg] = useState('');
+       const [success, setSuccess] = useState(false);
+       const navigate = useNavigate();
+       const [loginStatus, setLoginStatus] = useState("");
+       const [catchUser, setCatchUser] = useState('')
+       const [isSignedIn, setIsSignedIn] = useState(false);
 
 
 
-	useEffect((req, res) => {
-		// axios.get("http://localhost:3001/working") 						// dev
-		axios.get("/working")									// heroku
-			.then(res => {
-				console.log(res)
-				setNotification(res.data.message)
-			})
-	}, [])
+       //     const crypto = require('crypto')
+       //     const secret = 'pppppppppppppppppppppppppppppppp'
 
-	function handleCallbackResponse(response) {
-		console.log("Encoded JWT ID token: " + response.credentials);
-		var userObject = jwt_decode(response.credential)
-		console.log(userObject);
-	}
-	useEffect(() => {
-		/* global google */
-		google.accounts.id.initialize ({
-			client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-			callback: handleCallbackResponse
-		})
+       //     const encrypt = (password) => {
+       //     const iv = Buffer.from(crypto.randomBytes(16));
+       //     const cipher = crypto.createCipheriv('aes-256-ctr', Buffer.from(secret), iv);
 
-		// google.accounts.id.renderButton(
-		// 	document.getElementById("signInDiv"),
-		// 	{ theme: "outline", size: "large"}
-		// )
-	}, [])
-	useEffect(() => {
-		function start() {
-			gapi.client.init({
-				clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-				scope: "email"
-			})
-		}
+       //     const encryptedPassword = Buffer.concat([
+       //            cipher.update(password),
+       //            cipher.final()
+       //     ])
 
-		gapi.load('client:auth2', start)
-	}, [])
+       //     return {
+       //            iv: iv.toString('hex'),
+       //            password: encryptedPassword.toString('hex')
+       //     }
+       // }
 
-	window.gapi.load('client:auth2', () => {
-		window.gapi.client.init({
-		    clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-		    scope: "email"
-		})
-	})
+       useEffect((req, res) => {
+              // axios.get("http://localhost:3001/working")                  // dev
+              axios.get("/working")                                          //heroku
+                     .then(res => {
+                            console.log(res)
+                            setNotification(res.data.message)
+                     })
+       }, [])
+
+       function handleSignOut(e) {
+              setUser({})
+              document.getElementById("signInDiv").hidden = false
+       }
+
+       function handleCallbackResponse(response) {
+              console.log("Encoded JWT ID token: " + response.credential)
+              var userObject = jwt_decode(response.credential)
+              console.log(userObject)
+              setUser(userObject)
+              document.getElementById("signInDiv").hidden = true
+       }
+
+       useEffect(() => {
+              /* global google */
+              google.accounts.id.initialize({
+                     client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+                     callback: handleCallbackResponse,
+
+              })
+
+              // google.accounts.id.renderButton(
+              //     document.getElementById("signInDiv"),
+              //     { theme: "outline", size: "large"}
+              // )
+
+       }, [])
 
 
-	useEffect(() => {
-		userRef.current.focus();
-	}, [])
+       const login = useGoogleLogin({
+              onSuccess: async response => {
+                     try {
+                            const res = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+                                   headers: {
+                                          "Authorization": `Bearer ${response.access_token}`
+                                   }
+                            })
+                            // console.log("Login Success!");
+                            // setSuccess(true);
+                            // setCatchUser(user)
+                            // console.log(res.data)
+                     } catch (err) {
+                            console.log(err)
+                     }
+              }
+       });
 
-	useEffect(() => {
-		setErrMsg('');
-	}, [user, pwd])
+       useEffect(() => {
+              function start() {
+                     gapi.client.init({
+                            clientId: clientId,
+                            scope: "email",
+                     });
+              }
+              gapi.load("client:auth2", start);
+       });
 
-	useEffect(() => {
-		if (localStorage.getItem('user-info')) {
-			navigate.push("/added")
-		}
-	})
+       useEffect(() => {
+              userRef.current.focus();
+              setUser('')
+       }, [])
 
-	// function handleLoginForm() {
-	// 	const email = userRef.current.value
-	// 	const password = pwdRef.current.value
-	// 	// const hashedPassword = bcrypt.hashSync(password, '$2a$10$CwTycUXWue0Thq9StjUM0u') // hash created previously created upon sign up
+       useEffect(() => {
+              setErrMsg('');
+              // setUser('')
+       }, [user, pwd])
 
-	// 	fetch('http://localhost:3001/GoogleApp', {
-	// 		method: 'POST',
-	// 		headers: {
-	// 			Accept: 'application/json',
-	// 			'Content-Type': 'application/json',
-	// 		},
-	// 		body: JSON.stringify({
-	// 			email: email,
-	// 			// password: hashedPassword,
-	// 			password: password,
-	// 		}),
-	// 	})
-	// }
+       const handleSubmit = (e) => {
+              e.preventDefault();
 
-	// ========================================================
-// SHOWPASSWORDS
-	// useEffect(() => {
-	// 	axios.get('http://localhost:3001/showPasswords').then((response) => {
-	// 		setPasswordList(response.data)
-	// 	})
-	// }, [])
+              // axios.post('http://localhost:3001/checkPassword', {                       // dev                      
+              axios.post('/checkPassword', {                                               // heroku     
+                     user: user,
+                     pwd: pwd,
+              }).then((response) => {
+                     if (!response.data.message) {
+                            setLoginStatus(response.data.message);
+                     } else {
+                            setLoginStatus(response.data[0].message);
+                     }
+                     console.log(JSON.stringify(response?.data));
+                     console.log(JSON.stringify(response));
+                     const accessToken = response?.data?.accessToken;
+                     // const roles = response?.data?.roles;
+                     setAuth({ user, pwd, accessToken });
+                     setUser('');
+                     setPwd('');
+                     setSuccess(true);
+              }).catch((err) => {
+                     if (!err?.response) {
+                            setErrMsg('No Server Response');
+                     } else if (err.response?.status === 400) {
+                            setErrMsg('Missing Username or Password');
+                     } else if (err.response?.status === 401) {
+                            setErrMsg('Unauthorized');
+                     } else {
+                            setErrMsg('Login Failed');
+                     }
+                     // errRef.current.focus(); //don't use...was causing an error
+              })
+              console.log(user, pwd);
+       }
 
-	// const login = () => {
-	// 	axios.post('http://localhost:3001/googleapp', {    // Development
-	// 	// axios.post('/login', {			     // Heroku
-	// 	user: user,
-	// 	pwd: pwd,
-	// }).then((response) => {
-	// 	if (!response.data.message) {
-	// 	setLoginStatus( response.data.message);
-	// 	} else {
-	// 	setLoginStatus (response.data[0].message);
-	// 	}
-	// });
-	// };	
+       return (
+              <>
+                     {success ? (
+                            <section>
+                                   <div className="App">
+                                          <h1>You are logged in!</h1>
+                                          <br />
+                                          <div>
+                                                 <img src={user.picture} width="200" height="200" alt=''></img>
+                                                 <h3>{user.name}</h3>
+                                          </div>
+                                          <p><Link to='/Profile'>Go to your Profile</Link></p>
+                                   </div>
+                            </section>
+                     ) : (
+                            <section>
+                                   <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                                   <h1>Sign In</h1>
+                                   <form onSubmit={() => handleSubmit}>
+                                          <label htmlFor="username">Username:</label>
+                                          <input
+                                                 type="text"
+                                                 id="username"
+                                                 ref={userRef}
+                                                 autoComplete="off"
+                                                 onChange={(e) => setUser(e.target.value)}
+                                                 value={user}
+                                                 required
+                                          />
 
-	// function handleLoginForm() {
-	// 	const email = userRef.current.value
-	// 	const password = pwdRef.current.value
-	// 	// const hashedPassword = bcrypt.hashSync(password, '$2a$10$CwTycUXWue0Thq9StjUM0u') // hash created previously created upon sign up
+                                          <label htmlFor="password">Password:</label>
+                                          <input
+                                                 type="password"
+                                                 id="password"
+                                                 onChange={(e) => setPwd(e.target.value)}
+                                                 value={pwd}
+                                                 required
+                                          />
+                                          <button>Sign In</button>
+                                   </form>
+                                   <br />
+                                   <div className='App'>
+                                          Log in with your Google Account
+                                          <br />
+                                          <br />
+                                          <div id="signInDiv">
+                                          <br/>
+                                           
+                                          </div>
+                                          {isSignedIn ? (
+                                                 <div id="signOutButton">
+                                                 <LogoutButton />
+								{/* // clientId={clientId}
+								// buttonText="Logout"
+								// onLogoutSuccess={onSuccess} */}
+                                                 
+                                                 </div>
+                                          ) : (
+                                                 // <GoogleLogin
+                                                 //        onSuccess={credentialResponse => {
+                                                 //               console.log(credentialResponse.credential);
+                                                 //               var decoded = jwt_decode(credentialResponse.credential);
+                                                 //               console.log(decoded);
+                                                 //               setSuccess(true);
+                                                 //               setUser(decoded)
+                                                 //               console.log("Login Success!");
+                                                 //        }}
+                                                 //        onError={() => {
+                                                 //               console.log('Login Failed');
+                                                 //        }} />
+                                                 <div id="signInButton" >
+                                                 <GoogleLogin />
+                                                 </div>
+                                          )}
+                                          {/* {isSignedIn ? (
+                                          <div id="signOutButton">
+                                                 <GoogleLogout 
+                                                        clientId={clientId} 
+                                                        buttonText="Logout" 
+                                                        onLogoutSuccess={onSuccess}>
+                                                 </GoogleLogout>
+                                          </div>
+                                          ) : (
+                                          <div id="signInButton" >
+                                                 <GoogleLogin
+                                                        onSuccess={credentialResponse => {
+                                                               console.log(credentialResponse.credential);
+                                                               var decoded = jwt_decode(credentialResponse.credential);
+                                                               console.log(decoded);
+                                                               setSuccess(true);
+                                                               console.log("Login Success!");
+                                                               }}
+                                                        onError={() => {
+                                                          console.log('Login Failed');
+                                                        }} 
+                                                 />
+                                          </div>
+                                   )} */}
+                                   </div>
+                                   <p>
+                                          Need an Account?
+                                          <br />
+                                          <span className="line">
+                                                 <Link to='/register'>Sign Up</Link>
+                                          </span>
+                                          <br />
+                                   </p>
+                                   <p>axios.get('/googleapp') status: <i>{notification}</i></p>
+                                   <br />
 
-	// 	fetch('http://localhost:3001/GoogleApp', {
-	// 		method: 'POST',
-	// 		headers: {
-	// 			Accept: 'application/json',
-	// 			'Content-Type': 'application/json',
-	// 		},
-	// 		body: JSON.stringify({
-	// 			email: email,
-	// 			// password: hashedPassword,
-	// 			password: password,
-	// 		}),
-	// 	})
-	// }
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-
-		// axios.post('http://localhost:3001/checkPassword', {    // Development
-		axios.post('/checkPassword', {			     // Heroku
-			user: user,
-			pwd: pwd,
-		}).then((response) => {
-			if (!response.data.message) {
-				setLoginStatus(response.data.message);
-			} else {
-				setLoginStatus(response.data[0].message);
-			}
-			// console.log(JSON.stringify(response?.data));
-			//console.log(JSON.stringify(response));
-			// const accessToken = response?.data?.accessToken;
-			// const roles = response?.data?.roles;
-			// setAuth({ user, pwd, accessToken });
-			setUser('');
-			setPwd('');
-			setSuccess(true);
-		}).catch((err) => {
-			if (!err?.response) {
-				setErrMsg('No Server Response');
-			} else if (err.response?.status === 400) {
-				setErrMsg('Missing Username or Password');
-			} else if (err.response?.status === 401) {
-				setErrMsg('Unauthorized');
-			} else {
-				setErrMsg('Login Failed');
-			}
-			// errRef.current.focus(); //don't use...was causing an error
-		})
-		console.log(user, pwd);
-	};
-	// ============================
-	// .then(res => {
-	// 	console.log(res)
-	// 	setNotification(res.data.message)
-	// })
-	// const checkPassword = (props) => {
-	// 		axios.get('/checkPassword', {
-	// 		// axios.get('http://localhost:3001/checkPassword', {
-	// 			password: props.password,
-	// 			user: props.data,
-	// 			iv: props.iv,
-	// 		}).then((response) => {
-	// 			setPasswordList(
-	// 				passwordList.map((val) => {
-	// 					return val.password === props.password ? 
-	// 					{
-	// 						id: val.id,
-	// 						password: val.password,
-	// 						user: response.data,
-	// 					} : val;
-	// 				})
-	// 				);
-	// 			}).catch((err)=> {
-	// 					if (!err?.response) {
-	// 						setErrMsg('No Server Response');
-	// 					} else if (err.response?.status === 400) {
-	// 						setErrMsg('Missing Username or Password');
-	// 					} else if (err.response?.status === 401) {
-	// 						setErrMsg('Unauthorized');
-	// 					} else {
-	// 						setErrMsg('Login Failed');
-	// 					};
-	// 		});
-	// 	}
-	// }
-
-	// const decryptPassword = (encryption) => {
-	// 		axios.get('http://localhost:3001/decryptPassword', {
-	// 			password: encryption.password,
-	// 			user: response.data,
-	// 			iv: encryption.iv,
-	// 		}).then((response) => {
-	// 			setPasswordList(
-	// 				passwordList.map((val) => {
-	// 					return user === val.user ? 
-	// 					{
-	// 						id: val.id,
-	// 						password: val.password,
-	// 						user: response.data,
-	// 						iv: val.iv,
-	// 					} : val;
-	// 				})
-	// 				);
-	// 			});
-	// 		};
-	// ======================
-
-	return (
-		<>
-			{success ? (
-				// <Routes>
-				// 	<Route exact path="/success" element={<RegisterSuccess/>}/>
-				// </Routes>
-				<section>
-					<div className="App">
-						<h1>You are logged in!</h1>
-						<br />
-						<div>
-							<img src={user.picture} width="200" height="200" alt=''></img>
-							<h3>{user.name}</h3>
-						</div>
-						<p><Link to='/Profile'>Go to your Profile</Link></p>
-					</div>
-				</section>
-				// <section>
-				// 	<h1>You are logged in!</h1>
-				// 	<br />
-				// 	<p>
-				// 		<Link to='/Profile'>Go to your Profile</Link>
-				// 	</p>
-				// </section>
-			) : (
-				<section>
-					<p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-					<h1>Sign In</h1>
-					<form onSubmit={() => handleSubmit}>
-						<label htmlFor="username">Username:</label>
-						<input
-							type="text"
-							id="username"
-							ref={userRef}
-							autoComplete="off"
-							onChange={(e) => setUser(e.target.value)}
-							value={user}
-							required
-						/>
-
-						<label htmlFor="password">Password:</label>
-						<input
-							type="password"
-							id="password"
-							onChange={(e) => setPwd(e.target.value)}
-							value={pwd}
-							required
-						/>
-						<button>Sign In</button>
-					</form>
-					<br />
-					<div className="App">
-						{/* <Link to='/googleapp'>Google Login</Link> */}
-						Log in with your Google Account
-						<div id="signInDiv"></div>
-						<GoogleLogin 
-							onSuccess={credentialResponse => {
-							console.log(credentialResponse.credential);
-							var decoded = jwt_decode(credentialResponse.credential);
-							console.log(decoded);
-							setSuccess(true);
-							setUser(decoded)
-							console.log("Login Success!");
-						}}
-						onError={() => {
-							console.log('Login Failed');
-						}} />
-						<LogoutButton />
-						<br />
-					</div>
-					<p>
-						Need an Account?
-						<br />
-						<span className="line">
-							{/*put router link here*/}
-							{/* <a href="/register">Sign Up</a> */}
-							<Link to='/register'>Sign Up</Link>
-						</span>
-						{/* <span>Your new SALT: {salt}</span> */}
-						<br />
-						{/* <span>
-						Save this Salt, UPON sign up <br /> if you refresh it will generate a new SALT!!!
-					</span> */}
-					</p>
-					<p>axios.get('/googleapp') status: <i>{notification}</i></p>
-					<br />
-
-				</section>
-			)}
-		</>
-	)
+                            </section>
+                     )}
+              </>
+       )
 }
 
-export default App
+export default App;

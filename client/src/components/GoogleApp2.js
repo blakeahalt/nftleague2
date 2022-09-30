@@ -209,10 +209,9 @@ function App() {
 						Log in with your Google Account
 						<br />
 						<br />
-						{/* <div id="signInDiv">
-						<br/>
-						 
-						</div> */}
+						<div id="signInDiv"><br/></div>
+
+					</div>
 						{isSignedIn ? (
 							// <div id="signOutButton">
 							<GoogleLogout
@@ -220,23 +219,27 @@ function App() {
 							// buttonText="Logout"
 							// onLogoutSuccess={onSuccess}
 							/>
-							// </div>
-						) : (
-							<GoogleLogin
-								onSuccess={credentialResponse => {
-									console.log(credentialResponse.credential);
-									var decoded = jwt_decode(credentialResponse.credential);
-									console.log(decoded);
-									setSuccess(true);
-									setUser(decoded)
-									console.log("Login Success!");
-								}}
-								onError={() => {
-									console.log('Login Failed');
-								}} />
-							// <div id="signInButton" >
-							// <GoogleLogin />
-							// </div>
+							) : (
+							<div className="App">
+							    <div id="signOutButton"></div>
+								<LoginButton />
+								<br />
+								<GoogleLogin />
+								<GoogleLogin
+									onSuccess={credentialResponse => {
+										console.log(credentialResponse.credential);
+										var decoded = jwt_decode(credentialResponse.credential);
+										console.log(decoded);
+										setSuccess(true);
+										setUser(decoded)
+										console.log("Login Success!");
+									}}
+									onError={() => {
+										console.log('Login Failed');
+									}} />
+								<LogoutButton />
+								<GoogleLogout />
+							</div>
 						)}
 						{/* {isSignedIn ? (
 						<div id="signOutButton">
@@ -261,8 +264,7 @@ function App() {
 								}} 
 							/>
 						</div>
-					)} */}
-					</div>
+						)} */}
 					<p>
 						Need an Account?
 						<br />
@@ -275,9 +277,9 @@ function App() {
 					<br />
 
 				</section>
-			)}
+				)}
 		</>
-	)
+		)
 }
 
 export default App;
