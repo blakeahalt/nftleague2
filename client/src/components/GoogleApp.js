@@ -210,8 +210,10 @@ return (
                         }}
                         onFailure={() => {
                             console.log('Login Failed');
-                        }} /> // localhost: WORKING - clicks through to appropriate page 
-                        // work.local: window pop-up is BLANK
+                        }} /> 
+                        <li>localhost: WORKING - clicks through to appropriate page</li>
+                        <li>work.local: pop-up is BLANK</li>
+                        <li>heroku: pop-up is BLANK</li>
                         <LoginButton />
                         {/* <div id="g_id_onload"
                             data-client_id="1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
@@ -230,8 +232,9 @@ return (
                             data-logo_alignment="left">
                         </div>
                         </LoginButton> */}
-                        // localhost:consoles LOGIN SUCCESS! Current user: consoles correct data info, NO redirect
-					    //work.local:(window pop-up) Access blocked: NFTLeague’s request is invalid 
+                        <li>localhost:consoles LOGIN SUCCESS! Current user: consoles correct data info, NO redirect</li>
+                        <li>work.local: pop-up (Access blocked: NFTLeague’s request is invalid) </li>
+					    <li>heroku: pop-up flashes BLANK, consoles LOGIN FAILED!(pop_up_closed_by_user)</li>
                     <LogoutButton 
                         redirectUri="http://localhost:3000/profile"
                         />
