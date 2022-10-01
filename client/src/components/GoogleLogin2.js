@@ -191,6 +191,8 @@
 
 
 import { GoogleLogin } from 'react-google-login'
+// import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+
 import jwt_decode from "jwt-decode";
 import { React, useState, useEffect } from "react";
 
@@ -212,25 +214,26 @@ function GLogin() {
        }
 
        return (
-              // <div id="signInButton">
+              <div id="signInButton">
                      <GoogleLogin
 
                             clientId={clientId}
                             buttonText="Login"
-                            onSuccess={onSuccess}
+                            // onSuccess={onSuccess}
                             cookiePolicy={'single_host_origin'}
                             isSignedIn={true}
-                            // onSuccess={credentialResponse => {
-                            //     console.log(credentialResponse.credential);
-                            //     var decoded = jwt_decode(credentialResponse.credential);
-                            //     console.log(decoded);
-                            //     setSuccess(true);
-                            //     setUser(decoded)
-                            //     console.log("Login Success!")
-                            //  }}
+                            onSuccess={credentialResponse => {
+                                console.log(credentialResponse.credential);
+                                var decoded = jwt_decode(credentialResponse.credential);
+                                console.log(decoded);
+                                setSuccess(true);
+                                setUser(decoded)
+                                console.log("Login Success!")
+                             }}
                             onFailure={onFailure}
+                            setSuccess={true}
                      />
-              // </div>
+              </div>
        )
 }
 

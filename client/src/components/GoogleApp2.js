@@ -7,8 +7,9 @@ import axios from 'axios'
 import AuthContext from "../context/AuthProvider";
 // import GoogleLogin from "react-google-login";
 import jwt_decode from "jwt-decode"
-import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
-
+// import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+import { GoogleLogout } from 'react-google-login';
+import { GoogleLogin } from 'react-google-login';
 
 
 // import Login from "./Login";
@@ -19,6 +20,7 @@ const LOGIN_URL = 'http://localhost:3001/GoogleApp'; //'http://localhost:3001/Go
 
 function App() {
     const [notification, setNotification] = useState("")
+    const [isSignedIn, setIsSignedIn] = useState(false);
 
        useEffect((req, res) => {
               axios.get("http://localhost:3001/working")                  // dev
@@ -160,129 +162,247 @@ function App() {
     // From Login.js ========================================================================================
 
 
-return (
-    <>
-        {success ? (
-            // <Routes>
-            //  <Route exact path="/success" element={<RegisterSuccess/>}/>
-            // </Routes>
-            <section>
-                <h1>You are logged in!</h1>
-                <br />
-                <p>
-                  <Link to='/Profile'>Go to your Profile</Link>
-                </p>
-            </section>
-        ) : (
-            <section>
-                <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                <h1>Sign In</h1>
-                <form onSubmit={() => handleSubmit }>
-                    <label htmlFor="username">Username:</label>
-                    <input
-                        type="text"
-                        id="username"
-                        ref={userRef}
-                        autoComplete="off"
-                        onChange={(e) => setUser(e.target.value)}
-                        value={user}
-                        required
-                    />
+// return (
+//     <>
+//         {success ? (
+//             // <Routes>
+//             //  <Route exact path="/success" element={<RegisterSuccess/>}/>
+//             // </Routes>
+//             <section>
+//                 <h1>You are logged in!</h1>
+//                 <br />
+//                 <p>
+//                   <Link to='/Profile'>Go to your Profile</Link>
+//                 </p>
+//             </section>
+//         ) : (
+//             <section>
+//                 <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+//                 <h1>Sign In</h1>
+//                 <form onSubmit={() => handleSubmit }>
+//                     <label htmlFor="username">Username:</label>
+//                     <input
+//                         type="text"
+//                         id="username"
+//                         ref={userRef}
+//                         autoComplete="off"
+//                         onChange={(e) => setUser(e.target.value)}
+//                         value={user}
+//                         required
+//                     />
 
-                    <label htmlFor="password">Password:</label>
-                    <input
-                        type="password"
-                        id="password"
-                        onChange={(e) => setPwd(e.target.value)}
-                        value={pwd}
-                        required
-                    />
-                    <button>Sign In</button>
-                </form>
-                <br />
-                <div className="App">
-                    Log in with your Google Account
-                    {/* <div id="signInDiv"></div> */}
-                    <GoogleLogin
-                        clientId={clientId}
-                        cookiePolicy={'single_host_origin'}
-                        isSignedIn={true}
-                        onSuccess={credentialResponse => {
-                            console.log(credentialResponse.credential);
-                            var decoded = jwt_decode(credentialResponse.credential);
-                            console.log(decoded);
-                            setSuccess(true);
-                            setUser(decoded)
-                            console.log("Login Success!");
-                        }}
-                        onFailure={() => {
-                            console.log('Login Failed');
-                        }} /> 
-                        <li>localhost: WORKING - clicks through to appropriate page</li>
-                        <li>work.local: pop-up is BLANK</li>
-                        <li>heroku: pop-up is BLANK</li>
-                     <LoginButton />
-                        {/* // data-theme="filled_blue"
-                        // onSuccess={onSuccess}
-                        // onFailure={onFailure}
-                        // cookiePolicy={'single_host_origin'}
-                        // isSignedIn={true}
-                        // data-callback={handleCallbackResponse()}
-                        // data-context="signin"
-                        // data-ux_mode="popup"
-                        // data-itp_support="true"
-                        // data-type="standard"
-                        // data-shape="rectangular"
-                        // data-text="signin_with"
-                        // data-size="large"
-                        // data-client_id={clientId}
-                        // data-logo_alignment="left" */}
-                        {/* <div id="g_id_onload"
-                            data-client_id="1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
-                            data-context="signin"
-                            data-ux_mode="redirect"
-                            data-login_uri="http://localhost:3000"
-                            data-itp_support="false">
-                        </div>
+//                     <label htmlFor="password">Password:</label>
+//                     <input
+//                         type="password"
+//                         id="password"
+//                         onChange={(e) => setPwd(e.target.value)}
+//                         value={pwd}
+//                         required
+//                     />
+//                     <button>Sign In</button>
+//                 </form>
+//                 <br />
+//                 <div className="App">
+//                     Log in with your Google Account
+//                     {/* <div id="signInDiv"></div> */}
+//                     <GoogleLogin
+//                         clientId={clientId}
+//                         cookiePolicy={'single_host_origin'}
+//                         isSignedIn={true}
+//                         onSuccess={credentialResponse => {
+//                             console.log(credentialResponse.credential);
+//                             var decoded = jwt_decode(credentialResponse.credential);
+//                             console.log(decoded);
+//                             setSuccess(true);
+//                             setUser(decoded)
+//                             console.log("Login Success!");
+//                         }}
+//                         onFailure={() => {
+//                             console.log('Login Failed');
+//                         }} /> 
+//                         <li>localhost: WORKING - clicks through to appropriate page</li>
+//                         <li>work.local: pop-up is BLANK</li>
+//                         <li>heroku: pop-up is BLANK</li>
+//                      <LoginButton />
+//                         {/* // data-theme="filled_blue"
+//                         // onSuccess={onSuccess}
+//                         // onFailure={onFailure}
+//                         // cookiePolicy={'single_host_origin'}
+//                         // isSignedIn={true}
+//                         // data-callback={handleCallbackResponse()}
+//                         // data-context="signin"
+//                         // data-ux_mode="popup"
+//                         // data-itp_support="true"
+//                         // data-type="standard"
+//                         // data-shape="rectangular"
+//                         // data-text="signin_with"
+//                         // data-size="large"
+//                         // data-client_id={clientId}
+//                         // data-logo_alignment="left" */}
+//                         {/* <div id="g_id_onload"
+//                             data-client_id="1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
+//                             data-context="signin"
+//                             data-ux_mode="redirect"
+//                             data-login_uri="http://localhost:3000"
+//                             data-itp_support="false">
+//                         </div>
                     
-                        <div class="g_id_signin"
-                            data-type="standard"
-                            data-shape="rectangular"
-                            data-theme="filled_blue"
-                            data-text="signin_with"
-                            data-size="large"
-                            data-logo_alignment="left">
-                        </div>
-                        </LoginButton> */}
-                        <li>localhost:consoles LOGIN SUCCESS! Current user: consoles correct data info, NO redirect</li>
-                        <li>work.local: pop-up (Access blocked: NFTLeague’s request is invalid) </li>
-                                       <li>heroku: pop-up flashes BLANK, consoles LOGIN FAILED!(pop_up_closed_by_user)</li>
-                    <LogoutButton 
-                        redirectUri="http://localhost:3000/profile"
-                        />
-                    <br />
-                </div>
-                <p>
-                    Need an Account?
-                    <br />
-                    <span className="line">
-                        {/*put router link here*/}
-                        {/* <a href="/register">Sign Up</a> */}
-                        <Link to='/register'>Sign Up</Link>
-                    </span>
-                    {/* <span>Your new SALT: {salt}</span> */}
-                    <br />
-                    {/* <span>
-                        Save this Salt, UPON sign up <br /> if you refresh it will generate a new SALT!!!
-                    </span> */}
-                </p>
-                <p>axios.get('/googleapp') status: <i>{notification}</i></p>
-                <br />
+//                         <div class="g_id_signin"
+//                             data-type="standard"
+//                             data-shape="rectangular"
+//                             data-theme="filled_blue"
+//                             data-text="signin_with"
+//                             data-size="large"
+//                             data-logo_alignment="left">
+//                         </div>
+//                         </LoginButton> */}
+//                         <li>localhost:consoles LOGIN SUCCESS! Current user: consoles correct data info, NO redirect</li>
+//                         <li>work.local: pop-up (Access blocked: NFTLeague’s request is invalid) </li>
+//                                        <li>heroku: pop-up flashes BLANK, consoles LOGIN FAILED!(pop_up_closed_by_user)</li>
+//                     <LogoutButton 
+//                         redirectUri="http://localhost:3000/profile"
+//                         />
+//                     <br />
+//                 </div>
+//                 <p>
+//                     Need an Account?
+//                     <br />
+//                     <span className="line">
+//                         {/*put router link here*/}
+//                         {/* <a href="/register">Sign Up</a> */}
+//                         <Link to='/register'>Sign Up</Link>
+//                     </span>
+//                     {/* <span>Your new SALT: {salt}</span> */}
+//                     <br />
+//                     {/* <span>
+//                         Save this Salt, UPON sign up <br /> if you refresh it will generate a new SALT!!!
+//                     </span> */}
+//                 </p>
+//                 <p>axios.get('/googleapp') status: <i>{notification}</i></p>
+//                 <br />
                 
-            </section>
-        )}
-    </>
+//             </section>
+//         )}
+//     </>
+// )
+// }
+
+// export default App
+
+return (
+	<>
+		{success ? (
+			<section>
+				<div className="App">
+					<h1>You are logged in!</h1>
+					<br />
+					<div>
+						<img src={user.picture} width="200" height="200" alt=''></img>
+						<h3>{user.name}</h3>
+					</div>
+					<p><Link to='/Profile'>Go to your Profile</Link></p>
+				</div>
+			</section>
+		) : (
+			<section>
+				<p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+				<h1>Sign In</h1>
+				<form onSubmit={() => handleSubmit}>
+					<label htmlFor="username">Username:</label>
+					<input
+						type="text"
+						id="username"
+						ref={userRef}
+						autoComplete="off"
+						onChange={(e) => setUser(e.target.value)}
+						value={user}
+						required
+					/>
+
+					<label htmlFor="password">Password:</label>
+					<input
+						type="password"
+						id="password"
+						onChange={(e) => setPwd(e.target.value)}
+						value={pwd}
+						required
+					/>
+					<button>Sign In</button>
+				</form>
+				<br />
+				<div className='App'>
+					Log in with your Google Account
+					<br />
+					<br />
+					{/* <div id="signInDiv">
+					<br/>
+					 
+					</div> */}
+					{isSignedIn ? (
+						// <div id="signOutButton">
+						<GoogleLogout
+						// clientId={clientId}
+						// buttonText="Logout"
+						// onLogoutSuccess={onSuccess}
+						/>
+						// </div>
+					) : (
+						<GoogleLogin
+							onSuccess={credentialResponse => {
+								console.log(credentialResponse.credential);
+								var decoded = jwt_decode(credentialResponse.credential);
+								console.log(decoded);
+								setSuccess(true);
+								setUser(decoded)
+								console.log("Login Success!");
+							}}
+							onError={() => {
+								console.log('Login Failed');
+							}} />
+						// <div id="signInButton" >
+						// <GoogleLogin />
+						// </div>
+					)}
+					{/* {isSignedIn ? (
+					<div id="signOutButton">
+						<GoogleLogout 
+							clientId={clientId} 
+							buttonText="Logout" 
+							onLogoutSuccess={onSuccess}>
+						</GoogleLogout>
+					</div>
+					) : (
+					<div id="signInButton" >
+						<GoogleLogin
+							onSuccess={credentialResponse => {
+								console.log(credentialResponse.credential);
+								var decoded = jwt_decode(credentialResponse.credential);
+								console.log(decoded);
+								setSuccess(true);
+								console.log("Login Success!");
+								}}
+							onError={() => {
+							  console.log('Login Failed');
+							}} 
+						/>
+					</div>
+				)} */}
+				</div>
+				<p>
+					Need an Account?
+					<br />
+					<span className="line">
+						<Link to='/register'>Sign Up</Link>
+					</span>
+					<br />
+				</p>
+				<p>axios.get('/googleapp') status: <i>{notification}</i></p>
+				<br />
+
+			</section>
+		)}
+	</>
 )
 }
 
-export default App
+export default App;

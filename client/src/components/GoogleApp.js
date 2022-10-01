@@ -7,16 +7,30 @@ import axios from 'axios'
 import AuthContext from "../context/AuthProvider";
 // import GoogleLogin from "react-google-login";
 import jwt_decode from "jwt-decode"
+// import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import Profile from './Profile'
+
+// const {google} = require('googleapis');
+
+// const oauth2Client = new google.auth.OAuth2(
+// 	clientId=clientId
+// 	clientSecret="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",
+// 	YOUR_REDIRECT_URL
+//      );
 
 
 // import Login from "./Login";
 
 // const clientId = "1077671935526-e6mu705tptsm57l6p1ajpom0umt43a1p.apps.googleusercontent.com"
 
+const clientId="1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
 const LOGIN_URL = 'http://localhost:3001/GoogleApp'; //'http://localhost:3001/GoogleApp'
 
 function App() {
 	const [notification, setNotification] = useState("")
+	const [isSignedIn, setIsSignedIn] = useState(false);
+
 
 	useEffect((req, res) => {
               axios.get("http://localhost:3001/working")                  // dev
@@ -54,7 +68,6 @@ function App() {
 				plugin_name: 'NFTLeague'
 			})
 		}
-
 		gapi.load('client:auth2', start)
 	}, [])
 
@@ -96,6 +109,10 @@ function App() {
 			navigate.push("/added")
 		}
 	})
+
+	const onSuccess = (res) => {
+		console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
+	   }
 
 	// function handleLoginForm() {
 	// 	const email = userRef.current.value
@@ -154,14 +171,17 @@ function App() {
 
 return (
 	<>
-		{success ? (
+		{user ? (
 			<section>
+			<div className="App">
 				<h1>You are logged in!</h1>
 				<br />
-				<p>
-					<Link to='/added'>Go to Home</Link>
-				</p>
-			</section>
+				<div>
+				<Profile user={user} setUser={setUser} />
+				</div>
+				<p><Link to='/register'>Go to your Profile</Link></p>
+			</div>
+		</section>
 		) : (
 			<section>
 				<p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
@@ -189,21 +209,32 @@ return (
 					<button>Sign In</button>
 				</form>
 				<br />
-				<div>
-					{/* <Link to='/googleapp'>Google Login</Link> */}
-					Log in with your Google Account
-					{/* <div id="signInDiv"></div> */}
-					<LoginButton />
-					<LogoutButton />
-					<br />
-				</div>
+				{/* <div className='App'> */}
+				Log in with your Google Account
+				<br />
+				<br />
+				{/* <div id="signInDiv">
+				<br/>
+				 
+					<LogoutButton/>
+					<LoginButton setUser={setUser} user={user}/>
+				</div> */}
+				{/* <div className="app"> */}
+					{user ? (
+						<Profile user={user} setUser={setUser} />
+					) : (
+						<LoginButton setUser={setUser} />
+					)}
+						{/* <GoogleLogin setUser={setUser} setSuccess={true}/> */}
+					{/* </div> */}
+				{/* </div> */}
 				<p>
 					Need an Account?
 					<br />
 					<span className="line">
 						{/*put router link here*/}
 						{/* <a href="/register">Sign Up</a> */}
-						<Link to='/register'>Sign Up</Link>
+					<Link to='/register'>Sign Up</Link>
 					</span>
 					{/* <span>Your new SALT: {salt}</span> */}
 					<br />

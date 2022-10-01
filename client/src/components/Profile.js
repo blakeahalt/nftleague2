@@ -12,48 +12,49 @@ import { Link } from 'react-router-dom';
 
 
 
+
 const clientId="1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
 
-const Profile = () => {
+const Profile = (props) => {
               const [user, setUser] = useState({})
               const [notification, setNotification] = useState("")
        //    const [stateAuth, setStateAuth] = useState()
 
        useEffect((req, res) => {
-              // axios.get("http://localhost:3001/working")           // dev
-              axios.get("/working")                                   //heroku
+              axios.get("http://localhost:3001/working")                  // dev
+              // axios.get("/working")                                                        //heroku
                      .then(res => {
                             console.log(res)
                             setNotification(res.data.message)
                      })
-              }, [])
+       }, [])
 
-              function handleSignOut(e) {
-                     setUser({})
-                     document.getElementById("signInDiv").hidden = false
-              }
+              // function handleSignOut(e) {
+              //        setUser({})
+              //        document.getElementById("signInDiv").hidden = false
+              // }
        
-              function handleCallbackResponse(response) {
-                     console.log("Encoded JWT ID token: " + response.credential)
-                     var userObject = jwt_decode(response.credential)
-                     console.log(userObject)
-                     setUser(userObject)
-                     document.getElementById("signInDiv").hidden = true
-              }
+              // function handleCallbackResponse(response) {
+              //        console.log("Encoded JWT ID token: " + response.credential)
+              //        var userObject = jwt_decode(response.credential)
+              //        console.log(userObject)
+              //        setUser(userObject)
+              //        document.getElementById("signInDiv").hidden = true
+              // }
               
-              useEffect(() => {
-                     /* global google */
-                     google.accounts.id.initialize({
-                            client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-                            callback: handleCallbackResponse,
-                     })
+              // useEffect(() => {
+              //        /* global google */
+              //        google.accounts.id.initialize({
+              //               client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+              //               callback: handleCallbackResponse,
+              //        })
                      
                      // google.accounts.id.renderButton(
                      //     document.getElementById("signInDiv"),
                      //     { theme: "outline", size: "large"}
                      // )
                      
-              }, [])
+              // }, [])
               
               // const logout = (response) => {
               //     gapi.auth2.getAuthInstance().signOut();
@@ -96,17 +97,10 @@ const Profile = () => {
               //   </div>
 
        return (
-              <div className="App">
-              You've registered!...Profile page coming soon
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-                     <Link to="/googleapp">
+              <div >
+              {/* You've registered!...Profile page coming soon */}
+             
+                     {/* <Link to="/googleapp">
                      <Logout
                             clientId={clientId}
                             buttonText="Logout"
@@ -114,16 +108,19 @@ const Profile = () => {
                             onClick={(e) => handleSignOut(e)}
                             > 
                      </Logout>
-                     </Link>
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <p>axios.get('/profile') status: <i>{notification}</i></p>
+                     </Link> */}
+			<div className="profile-card">
+				<img src={props.user.imageUrl} alt="" />
+				<h1>{props.user.name}</h1>
+				<span>{props.user.email}</span>
+				{/* <p>Id: {props.user.googleId}</p> */}
+			</div>
+		<br />
+		<br />
+		<br />
+				<Logout setUser={props.setUser} />
+		<br />
+		<br />
                      </div> 
             //   </div>
        )

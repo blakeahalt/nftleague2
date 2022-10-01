@@ -33,8 +33,11 @@ const Register = () => {
 	const [catchUser, setCatchUser] = useState('')
 	const [notification, setNotification] = useState("")
 
+       const [userList, setUserList] = useState([])
+
+
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/register")  //"http://localhost:3001/register"
+		axios.get("http://localhost:3001/working")  //"http://localhost:3001/register"
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -65,55 +68,116 @@ const Register = () => {
 	// 			setNotification(res.data.message)
 	// 		})
 	// }, [])
+       const loadData = async() => {
+              const response = await axios.get("http://localhost:3001/getUser")                // dev
+              // const response = await axios.get("/getUser")                                        // heroku
+              setUserList(response.data)
+              console.log(response.data);
+       }
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		// if button enabled with JS hack
-		const v1 = USER_REGEX.test(user);
-		const v2 = PWD_REGEX.test(pwd);
-		if (!v1 || !v2) {
-			setErrMsg("Invalid Entry");
-			return;
-		}
-		console.log(user, pwd);
-		setSuccess(true)
+       useEffect(() => {
+              loadData()
+              console.log(userList);
+       }, [])
 
-		try {
-			// const response = await axios.post("http://localhost:3001/register/",
-			// 	JSON.stringify({ user, pwd }),
-			// 	{
-			// 		headers: { 'Content-Type': 'application/json' },
-			// 		// withCredentials: true
-			// 	}
-			// );
-			const response = 
-			await axios.post("http://localhost:3001/register", {  //remove URL and only use "/register" when deploying a build to heroku
-				user: user,
-				pwd: pwd
-			});
-			console.log("1",response.config.data);
-			console.log("2",response?.data); //prints {response: 'WORKING'} from server index.js
-			// console.log(response?.accessToken);
-			console.log("3",JSON.stringify(response))
-			setSuccess(true);
-			// setNotification(response.data.message)
-			//clear state and controlled inputs
-			//need value attrib on inputs for this
-			setCatchUser(user)
-			setUser('');
-			setPwd('');
-			setMatchPwd('');
-		} catch (err) {
-			if (!err?.response) {
-				setErrMsg('No Server Response');
-			} else if (err.response?.status === 409) {
-				setErrMsg('Username Taken');
-			} else {
-				setErrMsg('Registration Failed')
-			}
-			// errRef.current.focus();
-		}
-	}
+       const userName = userList.map((user)=>{
+              return [`${user.user}`].join('')
+       })
+
+       console.log(userName);
+
+       // let indexes = [0]
+       // const res = indexes.map(e => userName[e])
+       
+       const res = userName.slice()           
+       console.log(res);
+
+       const handleSubmit = (e) => {
+              e.preventDefault();
+              // if button enabled with JS hack
+              const v1 = USER_REGEX.test(user);
+              const v2 = PWD_REGEX.test(pwd);
+              if (!v1 || !v2) {
+                     setErrMsg("Invalid Entry");
+                     return;
+              }
+
+              axios.post("http://localhost:3001/addPassword", {                                // dev
+              // axios.post("/addPassword", {                                                        // heroku
+                     user: user,
+                     pwd: pwd
+              }).then((response) => {
+                     console.log("1", response.config.data);
+                     console.log("2", response?.data);
+                     // console.log(response?.accessToken);
+                     console.log("3", JSON.stringify(response))
+                     console.log("4", response.config.user)
+                     setSuccess(true)
+                     setCatchUser(user)
+                     setUser('');
+                     setPwd('');
+                     setMatchPwd('');
+              }).catch((err) => {
+                     if (!err?.response) {
+                            setErrMsg('No Server Response');
+                     } else if (err.response?.status === 409) {
+                            setErrMsg('Username Taken');
+                     } else {
+                            setErrMsg('Registration Failed')
+                     }
+                     // errRef.current.focus();
+                     console.log(user, pwd);
+              })
+       }
+
+	// const handleSubmit = async (e) => {
+	// 	e.preventDefault();
+	// 	// if button enabled with JS hack
+	// 	const v1 = USER_REGEX.test(user);
+	// 	const v2 = PWD_REGEX.test(pwd);
+	// 	if (!v1 || !v2) {
+	// 		setErrMsg("Invalid Entry");
+	// 		return;
+	// 	}
+	// 	console.log(user, pwd);
+	// 	setSuccess(true)
+
+	// 	try {
+	// 		// const response = await axios.post("http://localhost:3001/register/",
+	// 		// 	JSON.stringify({ user, pwd }),
+	// 		// 	{
+	// 		// 		headers: { 'Content-Type': 'application/json' },
+	// 		// 		// withCredentials: true
+	// 		// 	}
+	// 		// );
+	// 		const response = 
+	// 		await axios.post("http://localhost:3001/register", {  //remove URL and only use "/register" when deploying a build to heroku
+	// 			user: user,
+	// 			pwd: pwd
+	// 		});
+	// 		console.log("1",response.config.data);
+	// 		console.log("2",response?.data); //prints {response: 'WORKING'} from server index.js
+	// 		// console.log(response?.accessToken);
+	// 		console.log("3",JSON.stringify(response))
+	// 		setSuccess(true);
+	// 		// setNotification(response.data.message)
+	// 		//clear state and controlled inputs
+	// 		//need value attrib on inputs for this
+	// 		setCatchUser(user)
+	// 		setUser('');
+	// 		setPwd('');
+	// 		setMatchPwd('');
+	// 	} catch (err) {
+	// 		if (!err?.response) {
+	// 			setErrMsg('No Server Response');
+	// 		} else if (err.response?.status === 409) {
+	// 			setErrMsg('Username Taken');
+	// 		} else {
+	// 			setErrMsg('Registration Failed')
+	// 		}
+	// 		// errRef.current.focus();
+	// 	}
+	// }
 
 	return (
 		<>
@@ -121,12 +185,11 @@ const Register = () => {
 				<section>
 					<h1>Success!</h1>
 					<p>
-						<Link to="/">Home</Link>
+						<Link to="/">Back to Sign In</Link>
 					</p>
 					<p>Added User: {catchUser}</p>
-
+                                   <p><Link to="/profile">Visit Your Profile</Link></p>
 					<p>axios.get('/register') status: <i>{notification}</i></p>
-
 				</section>
 			) : (
 				<section>
@@ -134,9 +197,9 @@ const Register = () => {
 					<h1>Register</h1>
 					<form onSubmit={handleSubmit}>
 						<label htmlFor="username">
-							Username:
-							{/* <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
-					<FontAwesomeIcon icon={faTimes} className={validName || !user ? "hide" : "invalid"} /> */}
+                                                 Username:
+                                                 <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
+                                                 <FontAwesomeIcon icon={faTimes} className={validName || !user ? "hide" : "invalid"} />
 						</label>
 						<input
 							type="text"
@@ -212,9 +275,7 @@ const Register = () => {
 					<p>
 						Already registered?<br />
 						<span className="line">
-							{/*put router link here*/}
-							<Link to="/">Sign In</Link>
-							{/* <a href="/auth">Sign In</a> */}
+							<Link to="/googleapp">Sign In</Link>
 						</span>
 					</p>
 					<br />
@@ -229,7 +290,18 @@ const Register = () => {
 					</p>
 					<br />
 					<p>axios.get('/register') status: <i>{notification}</i></p>
-
+                                   {/* <div>
+                                          {userList.length >=1 ? userList.map((user, idx) => {
+                                                 return <p key={idx}>{user.user}</p>
+                                                 }
+                                          ):(
+                                          ''
+                                          )
+                                          } 
+                                   </div> */}
+                                   <li>
+                                          {userName.slice().join(',  ')}
+                                   </li>
 				</section>
 			)}
 		</>

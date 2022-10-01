@@ -9,7 +9,7 @@ import GoogleLogout from './components/GoogleLogout'
 import GoogleApp from './components/GoogleApp'
 import Login from './components/Login'
 import Added from './components/Added'
-
+import Profile from './components/Profile'
 function App() {
 
   return (
@@ -28,6 +28,7 @@ function App() {
             <Route exact path="/googleapp" element={<GoogleApp/>}/>
             <Route exact path="/login" element={<Login/>}/>
             <Route exact path="/add" element={<Added/>}/>
+            <Route exact path="/profile" element={<Profile/>}/>
             {/* <Route exact path="/register" element={<Registration/>}/> */}
             {/* <Route exact path="/main" element={<Main/>}/> */}
           </Routes>
