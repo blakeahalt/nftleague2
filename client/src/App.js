@@ -2,7 +2,7 @@ import { React } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import './App.css';
 import Notification from './components/Notification'
-import Register from './components/Register';
+import Register from './components/Register2';
 // import Test from './components/Test';
 import GoogleLogin from './components/GoogleLogin'
 import GoogleLogout from './components/GoogleLogout'
