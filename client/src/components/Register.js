@@ -291,15 +291,15 @@ const Register = () => {
 					</p>
 					<br />
 					<p>axios.get('/register') status: <i>{notification}</i></p>
-					<div>
-						{/* {userList.length >=1 ? userList.map((user, idx) => {
+					{/* <div>
+						{userList.length >=1 ? userList.map((user, idx) => {
 							return <p key={idx}>{user.user}</p>
 							}
 						):(
 						''
 						)
-						}  */}
-					</div>
+						} 
+					</div> */}
 					<li>
 						{userName.slice().join(',  ')}
 					</li>
