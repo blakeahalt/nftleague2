@@ -301,8 +301,9 @@ function App() {
 					<div className="App">
 						{/* <Link to='/googleapp'>Google Login</Link> */}
 						Log in with your Google Account
-						<div id="signInDiv"></div>
-						<GoogleLogin 
+						{/* <div id="signInDiv"></div> */}
+						<LoginButton />
+						{/* <GoogleLogin 
 							onSuccess={credentialResponse => {
 							console.log(credentialResponse.credential);
 							var decoded = jwt_decode(credentialResponse.credential);
@@ -313,7 +314,7 @@ function App() {
 						}}
 						onError={() => {
 							console.log('Login Failed');
-						}} />
+						}} /> */}
 						<LogoutButton />
 						<br />
 					</div>
