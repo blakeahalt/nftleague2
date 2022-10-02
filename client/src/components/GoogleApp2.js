@@ -91,33 +91,33 @@ function App() {
 	}, [])
 
 
-	const login = useGoogleLogin({
-		onSuccess: async response => {
-			try {
-				const res = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
-					headers: {
-						"Authorization": `Bearer ${response.access_token}`
-					}
-				})
-				// console.log("Login Success!");
-				// setSuccess(true);
-				// setCatchUser(user)
-				// console.log(res.data)
-			} catch (err) {
-				console.log(err)
-			}
-		}
-	});
+	// const login = useGoogleLogin({
+	// 	onSuccess: async response => {
+	// 		try {
+	// 			const res = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+	// 				headers: {
+	// 					"Authorization": `Bearer ${response.access_token}`
+	// 				}
+	// 			})
+	// 			// console.log("Login Success!");
+	// 			// setSuccess(true);
+	// 			// setCatchUser(user)
+	// 			// console.log(res.data)
+	// 		} catch (err) {
+	// 			console.log(err)
+	// 		}
+	// 	}
+	// });
 
-	useEffect(() => {
-		function start() {
-			gapi.client.init({
-				clientId: clientId,
-				scope: "email",
-			});
-		}
-		gapi.load("client:auth2", start);
-	});
+	// useEffect(() => {
+	// 	function start() {
+	// 		gapi.client.init({
+	// 			clientId: clientId,
+	// 			scope: "email",
+	// 		});
+	// 	}
+	// 	gapi.load("client:auth2", start);
+	// });
 
 	useEffect(() => {
 		userRef.current.focus();
