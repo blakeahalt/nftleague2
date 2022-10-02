@@ -77,7 +77,7 @@ const Register = () => {
 
        useEffect(() => {
               loadData()
-              console.log(userList);
+              // console.log(userList);
        }, [])
 
        const userName = userList.map((user)=>{
