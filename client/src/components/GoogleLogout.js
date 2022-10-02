@@ -76,6 +76,8 @@ function Logout() {
 
 
 	return (
+		<>
+		<Link to="/register">
 		<div id="signOutButton">
 			<GoogleLogout
 				clientId={clientId}
@@ -83,6 +85,8 @@ function Logout() {
 				onLogoutSuccess={logout}
 				/>
 		</div>
+		</Link>
+		</>
 	)
 }
 

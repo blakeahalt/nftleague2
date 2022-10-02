@@ -62,17 +62,17 @@ function App() {
 			})
 	}, [])
 
-	function handleSignOut(e) {
-		setUser({})
-		document.getElementById("signInDiv").hidden = false
-	}
+	// function handleSignOut(e) {
+	// 	setUser({})
+	// 	document.getElementById("signInDiv").hidden = false
+	// }
 
 	function handleCallbackResponse(response) {
 		console.log("Encoded JWT ID token: " + response.credential)
 		var userObject = jwt_decode(response.credential)
 		console.log(userObject)
 		setUser(userObject)
-		document.getElementById("signInDiv").hidden = true
+		// document.getElementById("signInDiv").hidden = true
 	}
 
 	useEffect(() => {
@@ -89,6 +89,26 @@ function App() {
 		// )
 
 	}, [])
+
+    // useEffect(() => {
+	// 	function start() {
+	// 		gapi.client.init({
+	// 			clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+	// 			scope: "email",
+	// 			plugin_name: 'NFTLeague'
+	// 		})
+	// 	}
+	// 	gapi.load('client:auth2', start)
+	// }, [])
+
+	// window.gapi.load('client:auth2', () => {
+	// 	window.gapi.client.init({
+	// 	    clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+	// 	    scope: "email",
+	// 	    plugin_name: 'NFTLeague'
+	// 	})
+	// })
+
 
 
 	// const login = useGoogleLogin({
@@ -169,16 +189,24 @@ function App() {
 		<>
 			{success ? (
 				<section>
-					<div className="App">
+					{/* <div className="App">
 						<h1>You are logged in!</h1>
 						<br />
 						<div>
                             {/* <Profile /> */}
-							<img src={user.picture} width="200" height="200" alt=''></img>
+							{/* <img src={user.picture} width="200" height="200" alt=''></img>
 							<h3>{user.name}</h3>
 						</div>
 						<p><Link to='/Profile'>Go to your Profile</Link></p>
-					</div>
+					</div> */} */}
+                    	<div className="App">
+                            <h1>You are logged in!</h1>
+                            <br />
+                            <div>
+                            <Profile user={user} setUser={setUser} />
+                            </div>
+                            <p><Link to='/register'>Go to your Profile</Link></p>
+                        </div>
 				</section>
 			) : (
 				<section>
@@ -211,10 +239,10 @@ function App() {
 						Log in with your Google Account
 						<br />
 						<br />
-						{/* <div id="signInDiv">
+						<div id="signInDiv">
 						<br/>
 						 
-						</div> */}
+						</div>
 							<GoogleLogin
 								onSuccess={credentialResponse => {
 									console.log(credentialResponse.credential);
@@ -228,9 +256,13 @@ function App() {
 									console.log('Login Failed');
 								}}
                                  />
-							{/* // <div id="signInButton" >
-							// <GoogleLogin />
-							// </div> */}
+                                 <LoginButton 
+                                    setUser={setUser}
+                                        />
+                                 
+							<div id="signInButton" >
+							<GoogleLogin />
+							</div>
 						{/* {isSignedIn ? (
 						<div id="signOutButton">
 							<GoogleLogout 

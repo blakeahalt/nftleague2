@@ -3,6 +3,8 @@ import { React, useState, useEffect } from "react";
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios'
 import jwt_decode from "jwt-decode";
+import { Link } from 'react-router-dom';
+
 // import { useAuth0 } from "@auth0/auth0-react";
 // import LoginButton from "./GoogleLogin"
 
@@ -32,9 +34,9 @@ function Login() {
 	// 					"Authorization": `Bearer ${respose.access_token}`
 	// 				}
 	// 			})
-	// 			// console.log("Login Success!.");
-	// 			// console.log(res.data)
-	// 			// setSuccess(true);
+	// 			console.log("Login Success!.");
+	// 			console.log(res.data)
+	// 			setSuccess(true);
 	// 		} catch (err) {
 	// 			console.log(err)
 
@@ -42,9 +44,21 @@ function Login() {
 
 	// 	}
 	// });
+	
+	// const login = (res) => { 
+	// 	axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+	// 		headers: {
+	// 			"Authorization": `Bearer ${res.access_token}`
+	// 				}
+	// 			})
+	// 			console.log("Login Success!.");
+	// 			console.log(res.data)
+	// 			setSuccess(true);
+	// }
 
 	const onSuccess = (res) => {
 		console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
+		setSuccess(true)
 	}
 
 	const onFailure = (res) => {
