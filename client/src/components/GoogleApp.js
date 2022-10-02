@@ -8,6 +8,7 @@ import AuthContext from "../context/AuthProvider";
 // import GoogleLogin from "react-google-login";
 import jwt_decode from "jwt-decode"
 import { GoogleLogin } from 'react-google-login'
+import Profile from './Profile'
 
 
 // import Login from "./Login";
@@ -37,8 +38,8 @@ function App() {
 
 
 	useEffect((req, res) => {
-		// axios.get("http://localhost:3001/working") 						// dev
-		axios.get("/working")									// heroku
+		axios.get("http://localhost:3001/working") 						// dev
+		// axios.get("/working")									// heroku
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -158,8 +159,8 @@ function App() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		// axios.post('http://localhost:3001/checkPassword', {    // Development
-		axios.post('/checkPassword', {			     // Heroku
+		axios.post('http://localhost:3001/checkPassword', {    // Development
+		// axios.post('/checkPassword', {			     // Heroku
 			user: user,
 			pwd: pwd,
 		}).then((response) => {
@@ -249,6 +250,82 @@ function App() {
 
 	return (
 		<>
+		{user ? (
+			<section>
+			<div className="App">
+				<h1>You are logged in!</h1>
+				<br />
+				<div>
+				<Profile user={user} setUser={setUser} />
+				</div>
+				<p><Link to='/register'>Go to your Profile</Link></p>
+			</div>
+		</section>
+		) : (
+			<section>
+				<p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+				<h1>Sign In</h1>
+				<form onSubmit={() => handleSubmit }>
+					<label htmlFor="username">Username:</label>
+					<input
+						type="text"
+						id="username"
+						ref={userRef}
+						autoComplete="off"
+						onChange={(e) => setUser(e.target.value)}
+						value={user}
+						required
+					/>
+
+					<label htmlFor="password">Password:</label>
+					<input
+						type="password"
+						id="password"
+						onChange={(e) => setPwd(e.target.value)}
+						value={pwd}
+						required
+					/>
+					<button>Sign In</button>
+				</form>
+				<br />
+				{/* <div className='App'> */}
+				Log in with your Google Account
+				<br />
+				<br />
+				{/* <div id="signInDiv">
+				<br/>
+				 
+					<LogoutButton/>
+					<LoginButton setUser={setUser} user={user}/>
+				</div> */}
+				{/* <div className="app"> */}
+					{user ? (
+						<Profile user={user} setUser={setUser} />
+					) : (
+						<LoginButton setUser={setUser} />
+					)}
+						{/* <GoogleLogin setUser={setUser} setSuccess={true}/> */}
+					{/* </div> */}
+				{/* </div> */}
+				<p>
+					Need an Account?
+					<br />
+					<span className="line">
+						{/*put router link here*/}
+						{/* <a href="/register">Sign Up</a> */}
+					<Link to='/register'>Sign Up</Link>
+					</span>
+					{/* <span>Your new SALT: {salt}</span> */}
+					<br />
+					{/* <span>
+						Save this Salt, UPON sign up <br /> if you refresh it will generate a new SALT!!!
+					</span> */}
+				</p>
+				<p>axios.get('/googleapp') status: <i>{notification}</i></p>
+				<br />
+				
+			</section>
+		)}
 			{success ? (
 				// <Routes>
 				// 	<Route exact path="/success" element={<RegisterSuccess/>}/>
