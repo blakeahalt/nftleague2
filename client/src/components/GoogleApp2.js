@@ -215,15 +215,6 @@ function App() {
 						<br/>
 						 
 						</div> */}
-						{isSignedIn ? (
-							// <div id="signOutButton">
-							<GoogleLogout
-							// clientId={clientId}
-							// buttonText="Logout"
-							// onLogoutSuccess={onSuccess}
-							/>
-							// </div>
-						) : (
 							<GoogleLogin
 								onSuccess={credentialResponse => {
 									console.log(credentialResponse.credential);
@@ -237,10 +228,9 @@ function App() {
 									console.log('Login Failed');
 								}}
                                  />
-							// <div id="signInButton" >
+							{/* // <div id="signInButton" >
 							// <GoogleLogin />
-							// </div>
-						)}
+							// </div> */}
 						{/* {isSignedIn ? (
 						<div id="signOutButton">
 							<GoogleLogout 
