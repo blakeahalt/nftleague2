@@ -41,13 +41,13 @@ function GLogout(props) {
 
 	return (
 		<div>
-			<Link to="/register">
+			{/* <Link to="/register"> */}
 			<GoogleLogout
 				clientId={clientId}
 				buttonText={"Logout"}
 				onLogoutSuccess={onSuccess}
 				/>
-			</Link>
+			{/* </Link> */}
 		</div>
 	)
 }
