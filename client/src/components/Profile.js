@@ -20,40 +20,40 @@ const Profile = () => {
 	//    const [stateAuth, setStateAuth] = useState()
 
 	useEffect((req, res) => {
-		// axios.get("http://localhost:3001/working")  		// dev
-		axios.get("/working")					//heroku
+		axios.get("http://localhost:3001/working")  		// dev
+		// axios.get("/working")					//heroku
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
 			})
 		}, [])
 
-		function handleSignOut(e) {
-			setUser({})
-			document.getElementById("signInDiv").hidden = false
-		}
+		// function handleSignOut(e) {
+		// 	setUser({})
+		// 	document.getElementById("signInDiv").hidden = false
+		// }
        
-		function handleCallbackResponse(response) {
-			console.log("Encoded JWT ID token: " + response.credential)
-			var userObject = jwt_decode(response.credential)
-			console.log(userObject)
-			setUser(userObject)
-			document.getElementById("signInDiv").hidden = true
-		}
+		// function handleCallbackResponse(response) {
+		// 	console.log("Encoded JWT ID token: " + response.credential)
+		// 	var userObject = jwt_decode(response.credential)
+		// 	console.log(userObject)
+		// 	setUser(userObject)
+		// 	document.getElementById("signInDiv").hidden = true
+		// }
 		
-		useEffect(() => {
-			/* global google */
-			google.accounts.id.initialize({
-				client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-				callback: handleCallbackResponse,
-			})
+		// useEffect(() => {
+		// 	/* global google */
+		// 	google.accounts.id.initialize({
+		// 		client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+		// 		callback: handleCallbackResponse,
+		// 	})
 			
-			// google.accounts.id.renderButton(
-			// 	document.getElementById("signInDiv"),
-			// 	{ theme: "outline", size: "large"}
-			// )
+		// 	// google.accounts.id.renderButton(
+		// 	// 	document.getElementById("signInDiv"),
+		// 	// 	{ theme: "outline", size: "large"}
+		// 	// )
 			
-		}, [])
+		// }, [])
 		
 		// const logout = (response) => {
               // 	gapi.auth2.getAuthInstance().signOut();
@@ -111,7 +111,7 @@ const Profile = () => {
                             clientId={clientId}
                             buttonText="Logout"
                             onLogoutSuccess={onLogoutSuccess}
-				onClick={(e) => handleSignOut(e)}
+				// onClick={(e) => handleSignOut(e)}
 				> 
                      </Logout>
 			</Link>

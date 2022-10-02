@@ -12,6 +12,7 @@ import AuthContext from "../context/AuthProvider";
 // import EncryptionHandler from './EncryptionHandler'
 // const {encrypt, decrypt} = require('./EncryptionHandler')
 // import GoogleLogin from "react-google-login";
+import Profile from './Profile'
 
 
 const clientId = "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
@@ -172,6 +173,7 @@ function App() {
 						<h1>You are logged in!</h1>
 						<br />
 						<div>
+                            {/* <Profile /> */}
 							<img src={user.picture} width="200" height="200" alt=''></img>
 							<h3>{user.name}</h3>
 						</div>
@@ -233,7 +235,8 @@ function App() {
 								}}
 								onError={() => {
 									console.log('Login Failed');
-								}} />
+								}}
+                                 />
 							// <div id="signInButton" >
 							// <GoogleLogin />
 							// </div>
