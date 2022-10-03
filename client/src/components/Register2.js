@@ -64,8 +64,8 @@ const Register = () => {
 	}, [user, pwd, matchPwd])
 
 	const loadData = async() => {
-		const response = await axios.get("http://localhost:3001/getUser")  		// dev
-		// const response = await axios.get("/getUser")						// heroku
+		// const response = await axios.get("http://localhost:3001/getUser")  		// dev
+		const response = await axios.get("/getUser")						// heroku
 		setUserList(response.data)
 		console.log(response.data);
 	}
@@ -115,8 +115,8 @@ const Register = () => {
 			return;
 		}
 
-		axios.post("http://localhost:3001/addPassword", {   					// dev
-		// axios.post("/addPassword", {   								// heroku
+		// axios.post("http://localhost:3001/addPassword", {   					// dev
+		axios.post("/addPassword", {   								// heroku
 			user: user,
 			pwd: pwd
 		}).then((response) => {

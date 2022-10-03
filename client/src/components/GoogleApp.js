@@ -173,12 +173,18 @@ return (
 	<>
 		{user ? (
 			<section>
-			<div className="profile-card">
+			<div className="App">
 				<h1>You are logged in!</h1>
 				<br />
-				<div>
+				<div className="profile-card">
+				<img src={user.imageUrl} alt="" />
+				<h1>{user.name}</h1>
+				<span>{user.email}</span>
+				{/* <p>Id: {props.user.googleId}</p> */}
+			</div>
+				{/* <div>
 				<Profile user={user} setUser={setUser} />
-				</div>
+				</div> */}
 				<p><Link to='/profile'>Go to your Profile</Link></p>
 			</div>
 		</section>
