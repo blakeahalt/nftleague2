@@ -52,7 +52,7 @@ function App() {
             gapi.client.init({
                 clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
                 scope: "email",
-				plugin_name: 'NFTLeague'
+		  plugin_name: 'NFTLeague'
             })
         }
         gapi.load('client:auth2', start)

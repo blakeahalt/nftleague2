@@ -200,7 +200,9 @@
 
 
 
-import { GoogleLogin } from 'react-google-login'
+// import { GoogleLogin } from 'react-google-login'
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+
 import jwt_decode from "jwt-decode";
 import { React, useState, useEffect } from "react";
 
@@ -213,8 +215,9 @@ function GLogin() {
 	const [isSignedIn, setIsSignedIn] = useState(false);
 	const [user, setUser] = useState({});
 
-       const onSuccess = (res) => {
+       const onSuccess = (res, setSuccess) => {
               console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
+		setSuccess=(true)
        }
 
        const onFailure = (res) => {

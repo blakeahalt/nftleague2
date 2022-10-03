@@ -1,4 +1,4 @@
-import LoginButton from "./GoogleLogin"
+import LoginButton from "./GoogleLogin2"
 import LogoutButton from "./GoogleLogout"
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef, useContext } from 'react'
@@ -7,6 +7,7 @@ import axios from 'axios'
 import AuthContext from "../context/AuthProvider";
 // import GoogleLogin from "react-google-login";
 import jwt_decode from "jwt-decode"
+import Profile from './Profile3'
 
 
 // import Login from "./Login";
@@ -166,6 +167,9 @@ return (
 			<section>
 				<h1>You are logged in!</h1>
 				<br />
+				<div>
+				<Profile user={user} setUser={setUser} />
+				</div>
 				<p>
 				  <Link to='/Profile'>Go to your Profile</Link>
 				</p>

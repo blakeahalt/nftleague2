@@ -1,9 +1,11 @@
 // import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogout } from 'react-google-login';
+// import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import jwt_decode from "jwt-decode";
 // import { useGoogleLogin } from '@react-oauth/google';
 import axios from "axios"
-import LoginButton from "./GoogleLogin"
+import LoginButton from "./GoogleLogin2"
 import LogoutButton from "./GoogleLogout"
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef, useContext } from 'react'
@@ -185,6 +187,14 @@ return (
 						<img src={user.picture} width="200" height="200" alt=''></img>
 						<h3>{user.name}</h3>
 					</div>
+                                   {/* <article className='column'>
+        {user?.picture && <img src={user.picture} alt={user?.name} />}
+        <h2>{user?.name}</h2>
+          <ul>
+            {Object.keys(user).map((objKey, i) => <li key={i}>{objKey}: {user[objKey]} </li>)}
+          </ul>
+        {/* {JSON.stringify(user)} */}
+      {/* </article> */} 
 					<p><Link to='/Profile'>Go to your Profile</Link></p>
 				</div>
 			</section>
@@ -232,18 +242,37 @@ return (
 						/>
 						// </div>
 					) : (
+                                          <>
+                                          <GoogleLogin
+                                           clientId={clientId}
+                                           cookiePolicy={'single_host_origin'}
+                                           isSignedIn={true}
+                                          onSuccess={credentialResponse => {
+                                                 console.log(credentialResponse.credential);
+                                                 var decoded = jwt_decode(credentialResponse.credential);
+                                                 console.log(decoded);
+                                                 setSuccess(true);
+                                                 setUser(decoded)
+                                                 console.log("Login Success!");
+                                                 }}
+                                                 onError={() => {
+                                                 console.log('Login Failed');
+                                                 }} /> 
 						<GoogleLogin
-							onSuccess={credentialResponse => {
-								console.log(credentialResponse.credential);
-								var decoded = jwt_decode(credentialResponse.credential);
-								console.log(decoded);
-								setSuccess(true);
-								setUser(decoded)
-								console.log("Login Success!");
+                                          onSuccess={credentialResponse => {
+                                                 console.log(credentialResponse.credential);
+                                                 var decoded = jwt_decode(credentialResponse.credential);
+                                                 console.log(decoded);
+                                                 setSuccess(true);
+                                                 setUser(decoded)
+                                                 console.log("Login Success!");
 							}}
 							onError={() => {
 								console.log('Login Failed');
 							}} />
+                                                 <LoginButton 
+                                                        />
+                                                 </>
 						// <div id="signInButton" >
 						// <GoogleLogin />
 						// </div>
