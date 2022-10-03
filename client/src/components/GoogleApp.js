@@ -173,13 +173,13 @@ return (
 	<>
 		{user ? (
 			<section>
-			<div className="App">
+			<div className="profile-card">
 				<h1>You are logged in!</h1>
 				<br />
 				<div>
 				<Profile user={user} setUser={setUser} />
 				</div>
-				<p><Link to='/register'>Go to your Profile</Link></p>
+				<p><Link to='/profile'>Go to your Profile</Link></p>
 			</div>
 		</section>
 		) : (

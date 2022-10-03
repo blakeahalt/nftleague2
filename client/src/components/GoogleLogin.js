@@ -56,8 +56,8 @@ function GLogin(props) {
 	}
 
 	function onFailure(res) {
-		// console.log("LOGIN FAILED! Current user: ", res);
-		alert(`LOGIN ERROR: ${res}`)
+		console.log("LOGIN FAILED!");
+		// alert(`LOGIN ERROR: ${res}`)
 	}
 
 	return (

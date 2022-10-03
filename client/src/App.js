@@ -9,7 +9,7 @@ import GoogleLogout from './components/GoogleLogout'
 import GoogleApp from './components/GoogleApp'
 import Login from './components/Login'
 import Added from './components/Added'
-import Profile from './components/Profile'
+import Profile from './components/Profile3'
 function App() {
 
   return (
