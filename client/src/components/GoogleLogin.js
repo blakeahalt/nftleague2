@@ -1,6 +1,6 @@
 import { GoogleLogin, GoogleLogout } from 'react-google-login'
 import { React, useState, useEffect } from "react";
-import { useGoogleLogin } from '@react-oauth/google';
+import { GoogleLoginuseGoogleLogin } from '@react-oauth/google';
 import axios from 'axios'
 import jwt_decode from "jwt-decode";
 import { Link } from 'react-router-dom';

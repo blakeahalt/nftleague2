@@ -7,7 +7,9 @@ import axios from 'axios'
 import AuthContext from "../context/AuthProvider";
 // import GoogleLogin from "react-google-login";
 import jwt_decode from "jwt-decode"
-import { GoogleLogin } from 'react-google-login'
+// import { GoogleLogin } from 'react-google-login'
+import { GoogleLogin } from '@react-oauth/google';
+
 import Profile from './Profile'
 
 
@@ -303,8 +305,8 @@ function App() {
 						<Profile user={user} setUser={setUser} />
 					) : (
 						<LoginButton setUser={setUser} />
+						// <GoogleLogin setUser={setUser} setSuccess={true}/>
 					)}
-						{/* <GoogleLogin setUser={setUser} setSuccess={true}/> */}
 					{/* </div> */}
 				{/* </div> */}
 				<p>

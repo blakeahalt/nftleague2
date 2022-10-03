@@ -1,4 +1,5 @@
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+// import { GoogleLogin } from 'react-google-login';
 import { GoogleLogout } from 'react-google-login';
 import jwt_decode from "jwt-decode";
 // import { useGoogleLogin } from '@react-oauth/google';
@@ -198,7 +199,7 @@ function App() {
 							<h3>{user.name}</h3>
 						</div>
 						<p><Link to='/Profile'>Go to your Profile</Link></p>
-					</div> */} */}
+					</div> */} 
                     	<div className="App">
                             <h1>You are logged in!</h1>
                             <br />
@@ -260,9 +261,7 @@ function App() {
                                     setUser={setUser}
                                         />
                                  
-							<div id="signInButton" >
 							<GoogleLogin />
-							</div>
 						{/* {isSignedIn ? (
 						<div id="signOutButton">
 							<GoogleLogout 
