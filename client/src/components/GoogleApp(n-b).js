@@ -1,4 +1,4 @@
-import LoginButton from "./GoogleLogin"
+import LoginButton from "./GoogleLogin2"
 import LogoutButton from "./GoogleLogout"
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef, useContext } from 'react'
@@ -219,15 +219,15 @@ return (
 					<LogoutButton/>
 					<LoginButton setUser={setUser} user={user}/>
 				</div> */}
-				{/* <div className="app"> */}
+				<div className="app">
 					{user ? (
 						<Profile user={user} setUser={setUser} />
 					) : (
 						<LoginButton setUser={setUser} />
 					)}
-						{/* <GoogleLogin setUser={setUser} setSuccess={true}/> */}
+						<GoogleLogin setUser={setUser} setSuccess={true}/>
 					{/* </div> */}
-				{/* </div> */}
+				</div>
 				<p>
 					Need an Account?
 					<br />

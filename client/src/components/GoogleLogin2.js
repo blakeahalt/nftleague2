@@ -215,7 +215,7 @@ function GLogin() {
        }
 
        return (
-              <div id="signInButton">
+              // <div id="signInButton">
                      
                      <GoogleLogin
 
@@ -235,7 +235,7 @@ function GLogin() {
                             onFailure={onFailure}
                             setSuccess={true}
                      />
-              </div>
+              // </div>
        )
 }
 
