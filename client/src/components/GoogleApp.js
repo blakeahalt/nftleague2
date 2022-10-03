@@ -33,8 +33,8 @@ function App() {
 
 
 	useEffect((req, res) => {
-              axios.get("http://localhost:3001/working")                  // dev
-              // axios.get("/working")                                                        //heroku
+              // axios.get("http://localhost:3001/working")                  // dev
+              axios.get("/working")                                                        //heroku
                      .then(res => {
                             console.log(res)
                             setNotification(res.data.message)
@@ -176,7 +176,7 @@ return (
 			<div className="App">
 				<h1>You are logged in!</h1>
 				<br />
-				<div className="profile-card">
+				<div>
 				<img src={user.imageUrl} alt="" />
 				<h1>{user.name}</h1>
 				<span>{user.email}</span>
@@ -226,11 +226,11 @@ return (
 					<LoginButton setUser={setUser} user={user}/>
 				</div> */}
 				{/* <div className="app"> */}
-					{user ? (
+					{/* {user ? (
 						<Profile user={user} setUser={setUser} />
-					) : (
-						<LoginButton setUser={setUser} />
-					)}
+					) : ( */}
+						<LoginButton user={user} setUser={setUser} />
+					{/* )} */}
 						{/* <GoogleLogin setUser={setUser} setSuccess={true}/> */}
 					{/* </div> */}
 				{/* </div> */}
