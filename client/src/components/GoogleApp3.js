@@ -140,6 +140,29 @@ function App() {
 		// setUser('')
 	}, [user, pwd])
 
+	const onSuccess = (res, setSuccess) => {
+              console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
+              setSuccess(true)
+		return (
+			<GoogleLogin 
+			onSuccess={credentialResponse => {
+				console.log(credentialResponse);
+				setSuccess(true);
+				var decoded = jwt_decode(credentialResponse.credential);
+				setSuccess(true);
+				setUser(decoded)
+				console.log(setUser);
+				console.log('Yeet');
+			}}
+			onError={() => {
+				console.log('Login Failed');
+			}}
+			setUser={setUser} 
+
+			setSuccess={true}/>
+		)
+       }
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
@@ -183,18 +206,18 @@ return (
 				<div className="App">
 					<h1>You are logged in!</h1>
 					<br />
-					<div>
-						<img src={user.picture} width="200" height="200" alt=''></img>
+					{/* <div>
+						<img src={user.imageUrl} width="200" height="200" alt=''></img>
 						<h3>{user.name}</h3>
-					</div>
-                                   {/* <article className='column'>
-        {user?.picture && <img src={user.picture} alt={user?.name} />}
-        <h2>{user?.name}</h2>
-          <ul>
-            {Object.keys(user).map((objKey, i) => <li key={i}>{objKey}: {user[objKey]} </li>)}
-          </ul>
-        {/* {JSON.stringify(user)} */}
-      {/* </article> */} 
+					</div> */}
+                                   <article className='column'>
+						{user?.picture && <img src={user.picture} alt={user?.name} />}
+						<h2>{user?.name}</h2>
+						{/* <ul>
+						{Object.keys(user).map((objKey, i) => <li key={i}>{objKey}: {user[objKey]} </li>)}
+						</ul> */}
+						{/* {JSON.stringify(user)} */}
+					</article> 
 					<p><Link to='/Profile'>Go to your Profile</Link></p>
 				</div>
 			</section>
@@ -253,6 +276,7 @@ return (
                                                  console.log(decoded);
                                                  setSuccess(true);
                                                  setUser(decoded)
+							setIsSignedIn(true)
                                                  console.log("Login Success!");
                                                  }}
                                                  onError={() => {
@@ -271,7 +295,27 @@ return (
 								console.log('Login Failed');
 							}} />
                                                  <LoginButton 
-                                                        />
+                                                        onSuccess={onSuccess}
+								// setUser={setUser} 
+								// setSuccess={true}
+								/>
+							<GoogleLogin 
+							onSuccess={credentialResponse => {
+								console.log(credentialResponse);
+								setSuccess(true);
+								var decoded = jwt_decode(credentialResponse.credential);
+								setSuccess(true);
+								setUser(decoded)
+								console.log(setUser);
+								console.log('Yeet');
+							}}
+							onError={() => {
+								console.log('Login Failed');
+							}}
+							setUser={setUser} 
+
+							setSuccess={true}/>
+								
                                                  </>
 						// <div id="signInButton" >
 						// <GoogleLogin />

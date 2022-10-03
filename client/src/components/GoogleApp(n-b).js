@@ -7,9 +7,12 @@ import axios from 'axios'
 import AuthContext from "../context/AuthProvider";
 // import GoogleLogin from "react-google-login";
 import jwt_decode from "jwt-decode"
-// import { GoogleLogin } from '@react-oauth/google';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { GoogleLogin , googleLogout} from '@react-oauth/google';
+// import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import Profile from './Profile'
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
+<GoogleOAuthProvider clientId="1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com">...</GoogleOAuthProvider>;
 
 // const {google} = require('googleapis');
 
@@ -78,6 +81,7 @@ function App() {
 		    plugin_name: 'NFTLeague'
 		})
 	})
+	googleLogout()
 
 	// var accessToken = gapi.auth.getToken().access_token
 
@@ -225,7 +229,15 @@ return (
 					) : (
 						<LoginButton setUser={setUser} />
 					)}
-						<GoogleLogin setUser={setUser} setSuccess={true}/>
+						<GoogleLogin 
+							onSuccess={credentialResponse => {
+								console.log(credentialResponse);
+							}}
+							onError={() => {
+								console.log('Login Failed');
+							}}
+							setUser={setUser} 
+							setSuccess={true}/>
 					{/* </div> */}
 				</div>
 				<p>

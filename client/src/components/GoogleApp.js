@@ -1,4 +1,4 @@
-import LoginButton from "./GoogleLogin"
+import LoginButton from "./GoogleLogin2"
 import LogoutButton from "./GoogleLogout"
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef, useContext } from 'react'
@@ -222,6 +222,29 @@ return (
                         <li>work.local: pop-up is BLANK</li>
                         <li>heroku: pop-up is BLANK</li>
 			<LoginButton />
+			<GoogleLogin 
+				onSuccess={credentialResponse => {
+					console.log(credentialResponse);
+					setSuccess(true);
+				}}
+				onError={() => {
+					console.log('Login Failed');
+				}}
+				setUser={setUser} 
+
+				setSuccess={true}/>
+			<GoogleLogin
+				onSuccess={credentialResponse => {
+					console.log(credentialResponse.credential);
+					var decoded = jwt_decode(credentialResponse.credential);
+					console.log(decoded);
+					setSuccess(true);
+					console.log("Login Success!");
+					}}
+				onError={() => {
+					console.log('Login Failed');
+				}} 
+			/>
                         {/* // data-theme="filled_blue"
                         // onSuccess={onSuccess}
                         // onFailure={onFailure}
