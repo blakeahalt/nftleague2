@@ -355,8 +355,8 @@ const Register = () => {
        const [userList, setUserList] = useState([])
 
        useEffect((req, res) => {
-              axios.get("http://localhost:3001/working")                                       // dev
-              // axios.get("/working")                                                               // heroku
+              // axios.get("http://localhost:3001/working")                                       // dev
+              axios.get("/working")                                                               // heroku
                      .then(res => {
                             console.log(res)
                             setNotification(res.data.message)
@@ -381,15 +381,15 @@ const Register = () => {
        }, [user, pwd, matchPwd])
 
        const loadData = async() => {
-              const response = await axios.get("http://localhost:3001/getUser")                // dev
-              // const response = await axios.get("/getUser")                                        // heroku
+              // const response = await axios.get("http://localhost:3001/getUser")                // dev
+              const response = await axios.get("/getUser")                                        // heroku
               setUserList(response.data)
               console.log(response.data);
        }
 
        useEffect(() => {
               loadData()
-              console.log(userList);
+              // console.log(userList);
        }, [])
 
        const userName = userList.map(function(user){
@@ -414,8 +414,8 @@ const Register = () => {
                      return;
               }
 
-              axios.post("http://localhost:3001/addPassword", {                                // dev
-              // axios.post("/addPassword", {                                                        // heroku
+              // axios.post("http://localhost:3001/addPassword", {                                // dev
+              axios.post("/addPassword", {                                                        // heroku
                      user: user,
                      pwd: pwd
               }).then((response) => {
