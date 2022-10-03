@@ -265,7 +265,7 @@ function App() {
 						<div id="signInDiv"><br/></div>
 
 					</div>
-						{isSignedIn ? (
+						{user ? (
 							// <div id="signOutButton">
 							<GoogleLogout
 							// clientId={clientId}
@@ -301,6 +301,7 @@ function App() {
 								// bundle.js:1198 successfully logged out!
 
 								<GoogleLogout /> // Uncaught TypeError: v is not a function
+                                <LoginButton setUser={setUser} />
 							</div>
 						)}
 						{/* {isSignedIn ? (
