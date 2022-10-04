@@ -192,10 +192,10 @@
 
 // import { GoogleLogin } from 'react-google-login'
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
-
+import axios from 'axios'
 import jwt_decode from "jwt-decode";
 import { React, useState, useEffect } from "react";
-
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const clientId = "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
@@ -205,9 +205,55 @@ function GLogin() {
        const [isSignedIn, setIsSignedIn] = useState(false);
        const [user, setUser] = useState({});
 
-       const onSuccess = (res, setSuccess) => {
-              console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
+
+       const login = useGoogleLogin({
+		onSuccess: async response => {
+			try {
+				const res = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+					headers: {
+						"Authorization": `Bearer ${response.access_token}`
+					}
+				})
+				console.log("Login Success!.");
+				console.log(res.data)
+                            console.log(response.credential);
+                                var decoded = jwt_decode(response.credential);
+                                console.log(decoded);
+                                setSuccess(true);
+                                setUser(decoded)
+                                console.log("Login Success!")
+			} catch (err) {
+				console.log(err)
+
+			}
+
+		}
+	});
+
+       function handleSetSuccess(e){
+              e.preventDefault();
               setSuccess(true)
+       }
+
+       const onSuccess = (res) => {
+              console.log("LOGIN SUCCESS! Current user: ", jwt_decode(res.credential).name);
+              // <button onClick={handleSetSuccess}/>
+              setUser(jwt_decode(res.credential).name)
+              // {handleSetSuccess()}
+
+              // axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+		// 			headers: {
+		// 				"Authorization": `Bearer ${res.access_token}`
+		// 			}
+		// 		})
+				console.log("Login Success!.");
+				console.log(res.data)
+                            console.log(res.credential);
+                                var decoded = jwt_decode(res.credential);
+                                console.log(decoded);
+                                setSuccess(true);
+                                setUser(decoded)
+                                console.log("Login Success!")
        }
 
        const onFailure = (res) => {
@@ -216,28 +262,45 @@ function GLogin() {
 
        return (
               // <div id="signInButton">
-                     
+              // <>
+              //        <Link 
+              //               to="/profile"
+              //               />
                      <GoogleLogin
 
                             clientId={clientId}
                             buttonText="Login"
-                            // onSuccess={onSuccess}
+                            onSuccess={onSuccess}
+                            // onSuccess={login}
                             cookiePolicy={'single_host_origin'}
                             isSignedIn={true}
-                            onSuccess={credentialResponse => {
-                                console.log(credentialResponse.credential);
-                                var decoded = jwt_decode(credentialResponse.credential);
-                                console.log(decoded);
-                                setSuccess(true);
-                                setUser(decoded)
-                                console.log("Login Success!")
-                             }}
+                            // onSuccess={credentialResponse => {
+                            //     console.log(credentialResponse.credential);
+                            //     var decoded = jwt_decode(credentialResponse.credential);
+                            //     console.log(decoded);
+                            //     setSuccess(true);
+                            //     setUser(decoded)
+                            //     console.log("Login Success!")
+                            //  }}
                             onFailure={onFailure}
-                            setSuccess={true}
+                            // setSuccess={setSuccess}
+                            // setUser={setUser}
+                            // onClick={()=>handleSetSuccess}
+                            // setSuccess={handleSetSuccess}
+                            // {handleSetSuccess()}
+
                      />
-              // </div>
+              // </>
        )
 }
+
+// function SetSuccess({ onClick }) {
+//        return(
+//               <div>
+//                      <SetSuccess onClick={() =>}
+//               </div>
+//        )
+// }
 
 export default GLogin
 

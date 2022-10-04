@@ -3,7 +3,7 @@ import { GoogleLogout } from 'react-google-login';
 import jwt_decode from "jwt-decode";
 // import { useGoogleLogin } from '@react-oauth/google';
 import axios from "axios"
-import LoginButton from "./GoogleLogin2"
+import LoginButton from "./GoogleLogin"
 import LogoutButton from "./GoogleLogout"
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef, useContext } from 'react'
@@ -208,6 +208,9 @@ function App() {
 	// 	}
 	// }
 
+    function handleSetSuccess() {
+        setSuccess(true)
+ }
 	return (
 		<>
 			{success ? (
@@ -319,10 +322,32 @@ function App() {
 								  console.log('Login Failed');
 								}} 
 							/>
-                            <LoginButton/>
+                            <LoginButton 
+                                // {...handleSetSuccess()}
+                                setUser={setUser}
+                            />
 						    </div>
                             </>
 						)}
+                        <div >
+							<GoogleLogin
+								onSuccess={credentialResponse => {
+									// console.log(credentialResponse.credential);
+									var decoded = jwt_decode(credentialResponse.credential);
+									console.log(decoded);
+									setSuccess(true);
+                                    setUser(decoded)
+									console.log("Login Success!");
+									}}
+								onError={() => {
+								  console.log('Login Failed');
+								}} 
+							/>
+                            <LoginButton 
+                                setSuccess={handleSetSuccess}
+                                setUser={setUser}
+                            />
+						    </div>
 						{/* {isSignedIn ? (
 						<div id="signOutButton">
 							<GoogleLogout 

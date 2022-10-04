@@ -200,9 +200,9 @@
 
 
 
-import { GoogleLogin } from 'react-google-login'
-// import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
-
+// import { GoogleLogin } from 'react-google-login'
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios'
 import jwt_decode from "jwt-decode";
 import { React, useState, useEffect } from "react";
 
@@ -215,13 +215,23 @@ function GLogin() {
 	const [isSignedIn, setIsSignedIn] = useState(false);
 	const [user, setUser] = useState({});
 
-       const onSuccess = (res, setSuccess) => {
-              console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
-		setSuccess=(true)
+       const onSuccess = (res) => {
+              // console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
+		// axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+		// 			headers: {
+		// 				"Authorization": `Bearer ${res.access_token}`
+		// 			}
+		// 		})
+		console.log("LOGIN SUCCESS! Current user: ",
+		jwt_decode(res.credential).name)
+		console.log(jwt_decode(res.credential));
+		// console.log(res.profileObj);
+		setUser(jwt_decode(res.credential).name)
+
        }
 
-       const onFailure = (res) => {
-              console.log("LOGIN FAILED! Current user: ", res);
+       const onFailure = (response) => {
+              console.log("LOGIN FAILED! Current user: ", response.credential);
        }
 
        return (
@@ -233,6 +243,7 @@ function GLogin() {
                             onSuccess={onSuccess}
 				cookiePolicy={'single_host_origin'}
 				isSignedIn={true}
+				setSuccess={setSuccess}
 				// onSuccess={credentialResponse => {
 				// 	console.log(credentialResponse.credential);
 				// 	var decoded = jwt_decode(credentialResponse.credential);
