@@ -273,6 +273,7 @@ function App() {
 							// onLogoutSuccess={onSuccess}
 							/>
 							) : (
+                                <>
 							<div className="App">
 							    	<div id="signOutButton"></div> // localhost:WORKING: consoles handleCallbackResponse, NO redirect
 								//work.local: blank window pop-up
@@ -303,6 +304,22 @@ function App() {
 								<GoogleLogout /> // Uncaught TypeError: v is not a function
                                 <LoginButton setUser={setUser} />
 							</div>
+                            <div id="signInButton" >
+							<GoogleLogin
+								onSuccess={credentialResponse => {
+									console.log(credentialResponse.credential);
+									var decoded = jwt_decode(credentialResponse.credential);
+									console.log(decoded);
+									setSuccess(true);
+									console.log("Login Success!");
+									}}
+								onError={() => {
+								  console.log('Login Failed');
+								}} 
+							/>
+                            <LoginButton/>
+						    </div>
+                            </>
 						)}
 						{/* {isSignedIn ? (
 						<div id="signOutButton">
