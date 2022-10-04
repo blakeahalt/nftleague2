@@ -3,7 +3,7 @@ import { GoogleLogout } from 'react-google-login';
 import jwt_decode from "jwt-decode";
 // import { useGoogleLogin } from '@react-oauth/google';
 import axios from "axios"
-import LoginButton from "./GoogleLogin"
+import LoginButton from "./GoogleLogin2"
 import LogoutButton from "./GoogleLogout"
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef, useContext } from 'react'
@@ -216,7 +216,7 @@ function App() {
 						<h1>You are logged in!</h1>
 						<br />
 						<div>
-							<img src={user.picture} width="200" height="200" alt=''></img>
+							<img src={user.picture || user.imageUrl} width="200" height="200" alt=''></img>
 							<h3>{user.name}</h3>
 						</div>
 						<p><Link to='/Profile'>Go to your Profile</Link></p>
@@ -275,10 +275,11 @@ function App() {
 							) : (
                                 <>
 							<div className="App">
-							    	<div id="signOutButton"></div> // localhost:WORKING: consoles handleCallbackResponse, NO redirect
+							    	<div id="signOutButton"></div> 
+                                // localhost:WORKING: consoles handleCallbackResponse, NO redirect
 								//work.local: blank window pop-up
 								<LoginButton /> 
-									//localhost: window pop-up flashes and consoles LOGIN SUCCESS! Current user: w/correct data, NO redirect
+									//localhost: window pop-up flashes and consoles LOGIN SUCCESS! Current user: w/correct data, then displays Logout Button
 									//work.local:(window pop-up) Access blocked: NFTLeague’s request is invalid 
 								<br />
 								<GoogleLogin /> 
@@ -299,7 +300,7 @@ function App() {
 									// localhost: WORKING - clicks through to appropriate page
 									//work.local: blank window pop-up
 								<LogoutButton /> 
-								// bundle.js:1198 successfully logged out!
+								// Consoles 'successfully logged out!' but doesn't actually logout
 
 								<GoogleLogout /> // Uncaught TypeError: v is not a function
                                 <LoginButton setUser={setUser} />
@@ -307,10 +308,11 @@ function App() {
                             <div id="signInButton" >
 							<GoogleLogin
 								onSuccess={credentialResponse => {
-									console.log(credentialResponse.credential);
+									// console.log(credentialResponse.credential);
 									var decoded = jwt_decode(credentialResponse.credential);
 									console.log(decoded);
 									setSuccess(true);
+                                    setUser(decoded)
 									console.log("Login Success!");
 									}}
 								onError={() => {
