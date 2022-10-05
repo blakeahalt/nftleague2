@@ -214,6 +214,12 @@ function GLogin() {
 						"Authorization": `Bearer ${response.access_token}`
 					}
 				})
+                            axios.get('/connect/google', passport.authenticate('google', {
+                                   scope: [
+                                       'https://www.googleapis.com/auth/userinfo.profile',
+                                       'https://www.googleapis.com/auth/userinfo.email'
+                                   ]
+                               }));
 				console.log("Login Success!.");
 				console.log(res.data)
                             console.log(response.credential);

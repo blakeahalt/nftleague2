@@ -83,10 +83,10 @@ function App() {
 
 		})
 
-		google.accounts.id.renderButton(
-			document.getElementById("signInDiv"),
-			{ theme: "outline", size: "large"}
-		)
+		// google.accounts.id.renderButton(
+		// 	document.getElementById("signInDiv"),
+		// 	{ theme: "outline", size: "large"}
+		// )
 
 	}, [])
 
@@ -208,7 +208,7 @@ function App() {
 	// 	}
 	// }
 
-    function handleSetSuccess() {
+    const handleSetSuccess= () => {
         setSuccess(true)
  }
 	return (
@@ -336,7 +336,7 @@ function App() {
 									var decoded = jwt_decode(credentialResponse.credential);
 									console.log(decoded);
 									setSuccess(true);
-                                    setUser(decoded)
+                                    				setUser(decoded)
 									console.log("Login Success!");
 									}}
 								onError={() => {
@@ -344,8 +344,15 @@ function App() {
 								}} 
 							/>
                             <LoginButton 
-                                setSuccess={handleSetSuccess}
-                                setUser={setUser}
+                                onClick={credentialResponse => {
+					// console.log(credentialResponse.credential);
+					var decoded = jwt_decode(credentialResponse.credential);
+					console.log(decoded);
+					setSuccess(handleSetSuccess);
+					setUser(decoded)
+					console.log("Login Success!");
+					}}
+                            //     setUser={setUser}
                             />
 						    </div>
 						{/* {isSignedIn ? (
