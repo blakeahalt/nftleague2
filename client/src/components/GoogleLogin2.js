@@ -252,8 +252,8 @@ function GLogin() {
 		// 				"Authorization": `Bearer ${res.access_token}`
 		// 			}
 		// 		})
-				console.log("Login Success!.");
-				console.log(res.data)
+				console.log("Login Success!!!!!!.");
+				// console.log(res.data)
                             console.log(res.credential);
                                 var decoded = jwt_decode(res.credential);
                                 console.log(decoded);
