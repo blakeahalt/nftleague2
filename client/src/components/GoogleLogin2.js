@@ -214,12 +214,6 @@ function GLogin() {
 						"Authorization": `Bearer ${response.access_token}`
 					}
 				})
-                            axios.get('/connect/google', passport.authenticate('google', {
-                                   scope: [
-                                       'https://www.googleapis.com/auth/userinfo.profile',
-                                       'https://www.googleapis.com/auth/userinfo.email'
-                                   ]
-                               }));
 				console.log("Login Success!.");
 				console.log(res.data)
                             console.log(response.credential);
@@ -240,6 +234,23 @@ function GLogin() {
               e.preventDefault();
               setSuccess(true)
        }
+
+
+       const {OAuth2Client} = require('google-auth-library');
+       const client = new OAuth2Client(clientId);
+              async function verify(res) {
+                const ticket = await client.verifyIdToken({
+                     idToken: res.credential,
+                     audience: clientId,
+              });
+                const payload = ticket.getPayload();
+                const userid = payload['sub'];
+              // If request specified a G Suite domain:
+              // const domain = payload['hd'];
+              }
+       verify().catch(console.error);
+       console.log(client);
+
 
        const onSuccess = (res) => {
               console.log("LOGIN SUCCESS! Current user: ", jwt_decode(res.credential).name);
