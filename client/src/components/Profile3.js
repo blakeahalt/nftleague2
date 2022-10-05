@@ -20,8 +20,8 @@ const Profile = () => {
 	//    const [stateAuth, setStateAuth] = useState()
 
 	useEffect((req, res) => {
-		axios.get("http://localhost:3001/working")  		// dev
-		// axios.get("/working")					//heroku
+		// axios.get("http://localhost:3001/working")  		// dev
+		axios.get("/working")					//heroku
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -113,13 +113,13 @@ const Profile = () => {
               <br/>
               <br/>
 			<Link to="/googleapp">
-                     <Logout
+                     <GoogleLogout
                             clientId={clientId}
                             buttonText="Logout"
                             onLogoutSuccess={onLogoutSuccess}
 				// onClick={(e) => handleSignOut(e)}
 				> 
-                     </Logout>
+                     </GoogleLogout>
 			</Link>
 				<br />
 				<br />

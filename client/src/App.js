@@ -6,11 +6,11 @@ import Register from './components/Register';
 // import Test from './components/Test';
 // import GoogleLogin from './components/GoogleLogin'
 // import GoogleLogout from './components/GoogleLogout'
-import GoogleApp from './components/GoogleApp2'
+import GoogleApp from './components/GoogleAppFinal'
 import GLogin from './components/Login2'
 import GLogout from './components/GoogleLogout'
 import Added from './components/Added'
-import Profile from './components/Profile'
+import Profile from './components/Profile3'
 
 import EncryptionHandler from './components/EncryptionHandler'
 

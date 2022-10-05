@@ -82,7 +82,6 @@ function Logout() {
 				buttonText="Logout"
 				onLogoutSuccess={logout}
 				onFailure={onFailure}
-				redirectUri="http://localhost:3000/profile"
 				/>
 		</div>
 	)
