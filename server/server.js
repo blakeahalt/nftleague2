@@ -105,8 +105,6 @@ app.use(function(req, res, next) {
 });
 
 app.use(express.static(path.join(__dirname, "public")));
-
-// app.use(express.static(path.join(__dirname + "/client/build")));
 // app.use(express.static(path.resolve(__dirname, '/public')));
 
 // app.get("/api", (req, res) => {

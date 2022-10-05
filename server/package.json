@@ -35,7 +35,7 @@
     "crypto": false
   },
   "scripts": {
-    "build": "cd client && react-scripts build",
+    "build": "react-scripts build",
     "server": "nodemon --quiet server",
     "client": "npm start --prefix client",
     "dev": "concurrently \"cd server && npm start\" \"cd client && npm start\"",
