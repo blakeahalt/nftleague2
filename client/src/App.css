@@ -261,3 +261,53 @@ button {
   font-family: Arial, Helvetica, sans-serif;
   cursor: pointer;
 }
+
+.page {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 20px;
+  font-size: 16px;
+}
+
+.headerIcon {
+  width: 30px;
+  height: 30px;
+}
+
+.button {
+  border: none;
+  border-radius: 50px;
+  padding: 3px 9px;
+  cursor: pointer;
+  background-color: rgb(228, 228, 228);
+}
+
+.main {
+  display: flex;
+  align-items: left;
+  justify-content: center;
+  flex-direction: row;
+  flex: 1;
+  padding: 20px;
+}
+
+.form {
+  display: flex;
+  width: 200px;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-grow: 1;
+  padding-bottom: 1rem;
+}

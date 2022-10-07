@@ -6,11 +6,12 @@ import Register from './components/Register';
 // import Test from './components/Test';
 // import GoogleLogin from './components/GoogleLogin'
 // import GoogleLogout from './components/GoogleLogout'
-import GoogleApp from './components/GoogleAppFinal'
+import GoogleApp from './components/GoogleApp3'
 import GLogin from './components/Login2'
 import GLogout from './components/GoogleLogout'
 import Added from './components/Added'
 import Profile from './components/Profile3'
+import NFTList from './components/NFTList'
 
 import EncryptionHandler from './components/EncryptionHandler'
 
@@ -34,6 +35,7 @@ function App() {
             <Route exact path="/login" element={<GLogin/>}/>
             <Route exact path="/logout" element={<GLogout/>}/>
             <Route exact path="/add" element={<Added/>}/>
+            <Route exact path="/nftlist" element={<NFTList/>}/>
             {/* <Route exact path="/register" element={<Registration/>}/> */}
             {/* <Route exact path="/main" element={<Main/>}/> */}
           </Routes>

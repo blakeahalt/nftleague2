@@ -116,7 +116,6 @@ function App() {
 		}
 		gapi.load("client:auth2", start);
 	}, []);
-	var accessToken = gapi.auth.getToken().access_token
 
 	window.gapi.load('client:auth2', () => {
 		window.gapi.client.init({
@@ -136,76 +135,41 @@ function App() {
 		// setUser('')
 	}, [user, pwd])
 
+	const handleSubmit = (e) => {
+		e.preventDefault();
 
-
-  const handleSubmit = async (e) => {
-
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        LOGIN_URL,
-        JSON.stringify({ user, pwd }),
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
-      const accessToken = response?.data?.accessToken;
-      const roles = response?.data?.roles;
-      setAuth({ user, pwd, roles, accessToken });
-      setUser("");
-      setPwd("");
-      setSuccess(true);
-    } catch (err) {
-      if (!err?.response) {
-        setErrMsg("No Server Response");
-      } else if (err.response?.status === 400) {
-        setErrMsg("Missing Username or Password");
-      } else if (err.response?.status === 401) {
-        setErrMsg("Unauthorized");
-      } else {
-        setErrMsg("Login Failed");
-      }
-      errRef.current.focus();
-    }
-  };
-
-
-	// const handleSubmit = (e) => {
-	// 	e.preventDefault();
-
-	// 	// axios.post('http://localhost:3001/checkPassword', {				// dev				
-	// 	axios.post('/checkPassword', {  							// heroku	
-	// 		user: user,
-	// 		pwd: pwd,
-	// 	}).then((response) => {
-	// 		if (!response.data.message) {
-	// 			setLoginStatus(response.data.message);
-	// 		} else {
-	// 			setLoginStatus(response.data[0].message);
-	// 		}
-	// 		console.log(JSON.stringify(response?.data));
-	// 		console.log(JSON.stringify(response));
-	// 		const accessToken = response?.data?.accessToken;
-	// 		// const roles = response?.data?.roles;
-	// 		setAuth({ user, pwd, accessToken });
-	// 		setUser('');
-	// 		setPwd('');
-	// 		setSuccess(true);
-	// 	}).catch((err) => {
-	// 		if (!err?.response) {
-	// 			setErrMsg('No Server Response');
-	// 		} else if (err.response?.status === 400) {
-	// 			setErrMsg('Missing Username or Password');
-	// 		} else if (err.response?.status === 401) {
-	// 			setErrMsg('Unauthorized');
-	// 		} else {
-	// 			setErrMsg('Login Failed');
-	// 		}
-	// 		// errRef.current.focus(); //don't use...was causing an error
-	// 	})
-	// 	console.log(user, pwd);
-	// }
+		axios.post('http://localhost:3001/checkPassword', {				// dev				
+		// axios.post('/checkPassword', {  							// heroku	
+			user: user,
+			pwd: pwd,
+		}).then((response) => {
+			if (!response.data.message) {
+				setLoginStatus(response.data.message);
+			} else {
+				setLoginStatus(response.data[0].message);
+			}
+			console.log(JSON.stringify(response?.data));
+			console.log(JSON.stringify(response));
+			const accessToken = response?.data?.accessToken;
+			// const roles = response?.data?.roles;
+			setAuth({ user, pwd, accessToken });
+			setUser('');
+			setPwd('');
+			setSuccess(true);
+		}).catch((err) => {
+			if (!err?.response) {
+				setErrMsg('No Server Response');
+			} else if (err.response?.status === 400) {
+				setErrMsg('Missing Username or Password');
+			} else if (err.response?.status === 401) {
+				setErrMsg('Unauthorized');
+			} else {
+				setErrMsg('Login Failed');
+			}
+			// errRef.current.focus(); //don't use...was causing an error
+		})
+		console.log(user, pwd);
+	}
 
 
     const handleSetSuccess= () => {
@@ -320,6 +284,7 @@ function App() {
 					</p>
 					<p>axios.get('/googleapp') status: <i>{notification}</i></p>
 					<br />
+					<Link to='/nftlist'>NFTList</Link>
 
 				</section>
 				)}
