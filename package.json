@@ -22,15 +22,22 @@
   "homepage": "https://github.com/blakeahalt/nftleague2",
   "dependencies": {
     "@auth0/auth0-react": "^1.11.0",
+    "@popperjs/core": "^2.11.6",
     "@react-oauth/google": "^0.2.6",
+    "ag-grid-community": "^28.2.0",
+    "ag-grid-react": "^28.2.0",
     "alchemy-sdk": "^2.1.0",
     "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.2.2",
     "can-use-dom": "^0.1.0",
+    "chart.js": "^3.9.1",
+    "cjs": "^0.0.11",
     "concurrently": "^7.4.0",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "crypto-browserify": "^3.12.0",
     "crypto-js": "^4.1.1",
+    "css-loader": "^6.7.1",
     "ethers": "^5.7.1",
     "express": "^4.18.1",
     "gapi-script": "^1.2.0",
@@ -38,10 +45,14 @@
     "http-proxy-middleware": "^2.0.6",
     "jwt-decode": "^3.1.2",
     "mysql": "^2.18.1",
+    "node-sass": "^7.0.3",
+    "react-chartjs-2": "^4.3.1",
     "react-google-login": "^5.2.2",
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.4.1",
-    "rsuite": "^5.19.0"
+    "render": "^0.1.4",
+    "rsuite": "^5.19.0",
+    "startbootstrap-sb-admin-2": "^4.1.4"
   },
   "browser": {
     "crypto": false

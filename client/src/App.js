@@ -12,7 +12,8 @@ import GLogout from './components/GoogleLogout'
 import Added from './components/Added'
 import Profile from './components/Profile3'
 import NFTList from './components/NFTList'
-
+import LineChart from './components/LineChart'
+import Grid from './components/Grid'
 import EncryptionHandler from './components/EncryptionHandler'
 
 function App() {
@@ -35,7 +36,9 @@ function App() {
             <Route exact path="/login" element={<GLogin/>}/>
             <Route exact path="/logout" element={<GLogout/>}/>
             <Route exact path="/add" element={<Added/>}/>
-            <Route exact path="/nftlist" element={<NFTList/>}/>
+            <Route exact path="/NFTList" element={<NFTList/>}/>
+            <Route exact path="/LineChart" element={<LineChart/>}/>
+            <Route exact path="/Grid" element={<Grid/>}/>
             {/* <Route exact path="/register" element={<Registration/>}/> */}
             {/* <Route exact path="/main" element={<Main/>}/> */}
           </Routes>

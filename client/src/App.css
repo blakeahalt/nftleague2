@@ -68,8 +68,9 @@ input {
 
 html {
     font-family: 'Nunito', sans-serif;
-    font-size: 22px;
+    font-size: 15px;
     color: #fff;
+    text-align: left;
 }
 
 body {
@@ -79,6 +80,7 @@ body {
 
 .App {
   display: flex;
+  flex-wrap: wrap; 
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -178,7 +180,7 @@ button {
     display: inline-block;
 }
 
-.App {
+.App-image {
   text-align: center;
 }
 
@@ -194,10 +196,11 @@ button {
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  background-color: #1c4390;
+  min-height: 50px;
+  display:flex;
+  width: 100%;
+  flex-direction:row;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
@@ -262,52 +265,51 @@ button {
   cursor: pointer;
 }
 
-.page {
-  height: 100vh;
-  width: 100%;
+.container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: space-around;
+  justify-content: space-around;
+  padding: 1rem;
+  background-color: rgba(16, 85, 155, 0.996);
+  border: 2px solid #fff;
+  color: #fff;
+  margin-top: 25px;
 }
 
-.header {
-  min-height: 45px;
+.col {
+  align-content: space-around;
+  padding: .5rem;
+  flex-wrap: wrap; 
+}
+/* 
+/* .navbar-brand {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap; 
+} */ */
+
+.navbar-title {
+  display: flex;
   justify-content: space-between;
-  padding: 5px 20px;
-  font-size: 16px;
-}
-
-.headerIcon {
-  width: 30px;
-  height: 30px;
-}
-
-.button {
-  border: none;
-  border-radius: 50px;
-  padding: 3px 9px;
-  cursor: pointer;
-  background-color: rgb(228, 228, 228);
-}
-
-.main {
-  display: flex;
-  align-items: left;
-  justify-content: center;
-  flex-direction: row;
-  flex: 1;
-  padding: 20px;
-}
-
-.form {
-  display: flex;
-  width: 200px;
   align-items: center;
-  justify-content: center;
-  height: 30px;
-  flex-direction: row;
-  justify-content: space-evenly;
-  flex-grow: 1;
-  padding-bottom: 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: transparent;
+  width: 100%;
+  height: 80px;
+  font-size: 20px;
+  z-index: 1;
+  margin-top: 5px;
+}
+
+.nav-link {
+  float: right;
+  margin-left: 15px;
+  margin-right:0px;
+  font-size: 22px;
+  justify-content: space-between;
+  
 }

@@ -1,4 +1,5 @@
 import "../App.css";
+// import "../main.css";
 import { ethers } from "ethers";
 import { useState, useEffect, useRef } from "react";
 import erc721Abi from "../abi/erc721.json";
@@ -6,6 +7,9 @@ import Header from "./Header";
 import axios from 'axios'
 import Profile from './NFTProfile'
 import {Stack} from 'rsuite'
+import LineChart from "./LineChart";
+
+
 
 
 function NFTList() {
@@ -177,9 +181,9 @@ function NFTList() {
   };
   
   
-  // useEffect(() => {
-    //   connect();
-    // }, []);
+  useEffect(() => {
+      connect();
+    }, []);
     
     // function callFunctions(){
     //   getStats();
@@ -245,23 +249,84 @@ function NFTList() {
 
 
   return (
-    <>
-    <div className="page">
-      <Header connect={connect} account={account} />
-      {/* <Header account={account} /> */}
-        <p>NFT League</p>
-      <div className="main">
-        {/* <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p> */}
-        <Stack direction="row" spacing={10}>
-         <Profile newCS="renga" />
-         <Profile newCS="boredapeyachtclub" />
-         <Profile newCS="proof-moonbirds" />
-         <Profile newCS="cryptopunks" />
-         <Profile newCS="terraforms" />
-         </Stack>
+    <div>
+    {/* <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet"/> */}
+
+    {/* <div> */}
+      {/* <div className="App-header">
+      
+      </div> */}
+      {/* <nav class="navbar navbar-dark bg-primary"> */}
+      {/* <Header connect={connect} account={account}/>
+          <p>NFT League</p> */}
+      {/* <nav class="App-header"> */}
+
+    {/* <nav class="navbar navbar-expand-lg bg-light" > */}
+    <nav class="navbar navbar-dark bg-primary" id="mainNav">
+
+      <div class="navbar-brand">
+        {/* <button 
+          class="navbar-toggler" 
+          type="button" 
+          data-bs-toggle="collapse" 
+          data-bs-target="#navbarNavAltMarkup" 
+          aria-controls="navbarNavAltMarkup" 
+          aria-expanded="false" 
+          aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon" href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fmobile.twitter.com%2Freidardao&psig=AOvVaw2pScq1totzTkPmAE_BgzjR&ust=1665309783256000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCICh0cKw0PoCFQAAAAAdAAAAABAJ"></span>
+        </button> */}
+        <div class="nav-link" id="navbarNavAltMarkup">
+          <div class="navbar-title">
+            <a class="nav-link active" aria-current="page" href='/grid'>Home</a>
+            <a class="nav-link" href="/profile">Profile</a>
+            <a class="nav-link" href="#">Browse</a>
+            <a class="nav-link">Sign Out</a>
+          </div>
+        </div>
+        {/* <a class="navbar-title" href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fmobile.twitter.com%2Freidardao&psig=AOvVaw2pScq1totzTkPmAE_BgzjR&ust=1665309783256000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCICh0cKw0PoCFQAAAAAdAAAAABAJ">NFT League</a> */}
       </div>
+    </nav>
+    {/* </nav> */}
+
+          
+     
+      <br/>      
+        <div className="container" >
+          {/* <div className="row g-2"> */}
+              <div className="col-6">
+              <Profile class="p-4 bg-light" newCS="renga" className="col" />
+              </div>
+              <div className="col-6">
+              <Profile class="p-4 bg-light" newCS="boredapeyachtclub" className="col" />
+              </div>
+              <div className="col-6">
+              <Profile class="p-4 bg-light" newCS="proof-moonbirds" />
+              </div>
+              <div className="col-6">
+              <Profile class="p-4 bg-light" newCS="cryptopunks" />
+              </div>
+              <div className="col-6">
+              <Profile class="p-4 bg-light" newCS="terraforms" />
+              </div>
+              <div className="col-6">
+              <Profile class="p-4 bg-light" newCS="doodles-official" />
+              </div>
+              <div className="col-6">
+              <Profile class="p-4 bg-light" newCS="clonex" />
+              </div>
+              <div className="col-6">
+              <Profile class="p-4 bg-light" newCS="art-blocks" />
+              </div>
+          {/* </div> */}
+          <div>
+        </div>
+        </div>
+        <lineChart newCS="clonex" />
+         {/* </Stack> */}
+      {/* </div> */}
+    {/* </div> */}
+    {/* <DoughnutChart /> */}
     </div>
-    </>
   );
 }
 
