@@ -5,6 +5,9 @@ import axios from 'axios'
 
 import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
+import { getDataGroupBy } from 'rsuite/esm/utils';
+import { arrayify } from 'ethers/lib/utils';
+import e from 'cors';
 
 const App = () => {
 
@@ -49,11 +52,12 @@ const App = () => {
 // load data from cryptoslam
 const [gridData, setGridData] = useState([])
 const [resData, setResData] = useState({})
+const [ranks, setRanks] = useState([])
 
  const options = {
     method: 'GET',
     headers: {
-      'X-BLOBR-KEY': 'a9DfAQ0uf3jkmXHbpveGACRNMVJEfP2Z'
+      'X-BLOBR-KEY': 'uIcdHg2BDLpKfqGmBhpYJwxpZljpmGFw'
     },
   };
 
@@ -61,14 +65,71 @@ const [resData, setResData] = useState({})
     const baseURL= 'https://api.cryptoslam.io/im6pi8nxcs120nhb/v1/collections/top-100'
     const response= await axios.get(baseURL, options)
     setResData(response.data)
-    setGridData([resData])
-    console.log('GridData:', gridData);
+    setGridData([response.data])
   }
 
-//   useEffect(() => {
-//     onGridReady()
-// },[])
+  useEffect(() => {
+    onGridReady()
+},[])
 
+
+
+
+//   const collectionNames = gridData.map(({data}) => {
+// for (let i = 0; i < 100; i++){
+//   // const rank = resData.data[i].rank ?? {}
+//   const {collectionName} = resData.data[i] ?? {}
+//   return (
+//     collectionName
+//   )
+// }
+// }
+// )
+
+// for (let {data: [{rank}]} of gridData){
+//   console.log('rank',rank);
+// }
+
+// const collectionName = JSON.parse(JSON.stringify([resData.data, ...resData.data[]], ["collectionName"]))
+
+const dataArr = []
+for (let i =0; i<10; i++) {
+  // const keyData = gridData.data[i]
+  const collectionName = gridData.map(post => ({
+    rank:post.data[i].rank, 
+    collectionName:post.data[i].collectionName, 
+    collectionImageURL:post.data[i].collectionImageURL, 
+    salesVolume: post.data[i].quote
+  }
+    )) 
+  // const rank = gridData.map(post => (
+  //   {rank:(post.data[i].rank)}
+  //   )) 
+  dataArr.push(collectionName)
+} 
+// for (let i =0; i<10; i++) {
+
+// }
+
+// const collection = gridData.map(post => ({rank: post.data[0].collectionName})) 
+// const collection = gridData.map(post => ({rank: post.data[0].collectionName})) 
+
+
+console.log(dataArr[2]);
+const arr2 = dataArr[2]
+console.log('arr2',arr2);
+console.log('arr2',arr2[0].rank);
+console.log('arr2',arr2[0].collectionName);
+const {collectionImageURL, collectionName} = arr2
+// console.log(collectionImageURL, collectionName);
+  // console.log('GridData:', gridData);
+  // console.log('resData:', resData);
+  // console.log('test',resData.data);
+
+// const collectionNames = resData.map(function(data, index) {
+//   return(`${data}`)
+// })
+// console.log('collectionNamess:', collectionNames);
 //   const onGridReady = async() => {
 //     const response = await axios.get('https://api.cryptoslam.io/im6pi8nxcs120nhb/v1/collections/top-100', options)
 //     // .then(response => response.json())
@@ -78,30 +139,32 @@ const [resData, setResData] = useState({})
 //     }
     // .catch(err => console.error(err));
   // }
-  useEffect(() => {
-    onGridReady()
-},[])
+//   useEffect(() => {
+//     onGridReady()
+// },[])
 
-// const collectionName = Object.entries(resData).map(([key, val], i) => (
+// const collectionName = Object.entries(resData.data).map(([key, val], i) => (
 //     <p key={i}>
 //        <span>data: {resData[key]}</span>
 //     </p>
 // ))
 
-const collectionName = gridData.map((data, index) => {
-    <div key={index}>
-    <h1>{data.data}</h1>
-    {data.data.map((d, i) => (
-        <div key={i}>
-            <h3>{d.collectionName}</h3>
-        </div>
-    ))}
-    </div>
-    })
+// console.log('collection name:',collectionName);
+
+// const collectionName = resData.map((data) => {
+//     <div key={data.id}>
+//     <h1>{data.data}</h1>
+//     {data.data.map((d, i) => (
+//         <div key={i.id}>
+//             <h3>{d.collectionName}</h3>
+//         </div>
+//     ))}
+//     </div>
+//     })
 
 
 
-console.log('collectionName:',collectionName);
+// console.log('collectionName:',collectionName);
 
 
 
@@ -158,14 +221,23 @@ console.log('collectionName:',collectionName);
 //  const buttonListener = useCallback( e => {
 //    gridRef.current.api.deselectAll();
 //  }, []);
-    const onFirstDataRendered = useCallback((params) => {
-        gridRef.current.api.sizeColumnsToFit();
-    }, []);
+    
+
+    // const onFirstDataRendered = useCallback((params) => {
+    //     gridRef.current.api.sizeColumnsToFit();
+    // }, []);
 
  return (
 //    <div>
-
-    //  {/* Example using Grid's API */}
+<>
+{/* <div>
+  {gridData.map((data, index) => (
+    <li key={index}>
+      {data}
+    </li>
+  ))}
+</div> */}
+    {/* //  Example using Grid's API */}
     //  {/* <button onClick={buttonListener}>Push Me</button> */}
 
     //  {/* On div wrapping Grid a) specify theme CSS Class Class and b) sets Grid size */}
@@ -182,7 +254,7 @@ console.log('collectionName:',collectionName);
            defaultColDef={defaultColDef} // Default Column Properties
 
            onGridReady={onGridReady}
-           onFirstDataRendered={onFirstDataRendered}
+          //  onFirstDataRendered={onFirstDataRendered}
 
           
 
@@ -204,7 +276,9 @@ console.log('collectionName:',collectionName);
                  })}
                  </div> */}
         </div>
+        </div>
     </div>
+  </>
  );
 };
 
