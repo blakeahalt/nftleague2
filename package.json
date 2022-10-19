@@ -27,6 +27,7 @@
     "ag-grid-community": "^28.2.0",
     "ag-grid-react": "^28.2.0",
     "alchemy-sdk": "^2.1.0",
+    "assert": "^2.0.0",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.2.2",
     "can-use-dom": "^0.1.0",

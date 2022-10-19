@@ -283,11 +283,7 @@ button {
   padding: .5rem;
   flex-wrap: wrap; 
 }
-/* 
-/* .navbar-brand {
-  display: flex;
-  flex-wrap: wrap; 
-} */ */
+ 
 
 .navbar-title {
   display: flex;
@@ -312,4 +308,89 @@ button {
   font-size: 22px;
   justify-content: space-between;
   
+}
+
+
+
+.ag-theme-alpine .ag-header-cell {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.ag-center-cols-clipper {
+  min-height: unset !important;
+}
+
+.ag-right-header .ag-header-cell-label {
+   flex-direction: row-reverse;
+}
+
+.ag-center-header .ag-header-cell-label {
+  justify-content: center;
+}
+
+.ag-left-header .ag-header-cell-label {
+  flex-direction: row;
+}
+
+.ag-header-collection {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.ag-center-cell {
+  text-align: center;
+}
+
+.ag-right-cell {
+  text-align: right;
+}
+
+.ag-left-cell {
+  text-align: left;
+}
+
+.ag-font-size-cell {
+  font-size: 14px;
+}
+
+.ag-vertical-center {
+  vertical-align: center;
+}
+
+.ag-margin-top-rank {
+  margin-top: 8px
+}
+.ag-margin-top-image {
+  margin-top: 7px
+}
+
+.ag-rank-row {
+  margin-top: 8px;
+  font-size: 14px;
+  justify-content: right;
+  text-align: right;
+}
+
+.ag-image-row {
+  margin-top: 7px;
+  justify-content: left;
+  text-align: left;
+}
+
+.ag-collection-row {
+  margin-top: 8px;
+  justify-content: left;
+  text-align: left;
+}
+
+.ag-collection-header {
+  margin-left: 12px
+}
+
+.ag-rank-header {
+  margin-left: 25px
+}
+.ag-image-header {
+  margin-left: -5px
 }

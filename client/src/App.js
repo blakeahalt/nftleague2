@@ -13,7 +13,7 @@ import Added from './components/Added'
 import Profile from './components/Profile3'
 import NFTList from './components/NFTList'
 import LineChart from './components/LineChart'
-import Grid from './components/Grid'
+import Grid from './components/Grid4'
 import EncryptionHandler from './components/EncryptionHandler'
 
 function App() {

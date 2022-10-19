@@ -12,30 +12,28 @@ import e from 'cors';
 const App = () => {
 
  const gridRef = useRef(); // Optional - for accessing Grid's API
- const [rowData, setRowData] = useState(); // Set rowData to Array of Objects, one Object per Row
+ 
+ 
  const containerStyle = useMemo(() => ({ width: 1000, height: 1000 }), []);
   const gridStyle = useMemo(() => ({ height: 1000, width: 1000 }), []);
 
  // Each Column Definition results in one Column.
  const [columnDefs, setColumnDefs] = useState([
    {field: 'Collection', filter: true, minWidth: 100},
-   {field: 'Floor Price', filter: true, minWidth: 100},
-   {field: 'Sales', minWidth: 100},
-   {field: 'Average', minWidth: 100},
-   {field: '7 Day Volume', minWidth: 100},
+  //  {field: 'Floor Price', filter: true, minWidth: 100},
+  //  {field: 'Sales', minWidth: 100},
+  //  {field: 'Average', minWidth: 100},
+  //  {field: '7 Day Volume', minWidth: 100},
  ]);
 
- // DefaultColDef sets props common to all Columns
-    const defaultColDef = useMemo( ()=> {
-        return {
-        // enableRowGroup: true,
-        // enablePivot: true,
-        // enableValue: true,
-        // sortable: true,
-        // filter: true,
-        resizable: true,
-    };
-    }, []);
+// const [rowData, setRowData] = useState([
+//   {
+//     Collection: gridData.map(name => {
+//       const collectionName = name.data.collectionName
+//     })
+//   }
+// ]); // Set rowData to Array of Objects, one Object per Row
+
 
  // Example of consuming Grid Event
 //  const cellClickedListener = useCallback( event => {
@@ -57,7 +55,7 @@ const [ranks, setRanks] = useState([])
  const options = {
     method: 'GET',
     headers: {
-      'X-BLOBR-KEY': 'uIcdHg2BDLpKfqGmBhpYJwxpZljpmGFw'
+      'X-BLOBR-KEY': 'uPxQwc1zhFHR7smpg662xqjtz90VHUlV'
     },
   };
 
@@ -73,7 +71,30 @@ const [ranks, setRanks] = useState([])
 },[])
 
 
+const dataArr = []
+const [rowData, setRowData] = useState([
+])
+const collectionName = rowData.map(post => ({
+  Collection: post.data.collectionName, 
+  // rank:post.data[i].rank, 
+  // collectionImageURL:post.data[i].collectionImageURL, 
+  // salesVolume: post.data[i].quote
+ }
+ )) 
+rowData.push(collectionName)
 
+
+ // DefaultColDef sets props common to all Columns
+    const defaultColDef = useMemo( ()=> {
+        return {
+        // enableRowGroup: true,
+        // enablePivot: true,
+        // enableValue: true,
+        // sortable: true,
+        // filter: true,
+        resizable: true,
+    };
+    }, []);
 
 //   const collectionNames = gridData.map(({data}) => {
 // for (let i = 0; i < 100; i++){
@@ -92,21 +113,21 @@ const [ranks, setRanks] = useState([])
 
 // const collectionName = JSON.parse(JSON.stringify([resData.data, ...resData.data[]], ["collectionName"]))
 
-const dataArr = []
-for (let i =0; i<10; i++) {
-  // const keyData = gridData.data[i]
-  const collectionName = gridData.map(post => ({
-    rank:post.data[i].rank, 
-    collectionName:post.data[i].collectionName, 
-    collectionImageURL:post.data[i].collectionImageURL, 
-    salesVolume: post.data[i].quote
-  }
-    )) 
-  // const rank = gridData.map(post => (
-  //   {rank:(post.data[i].rank)}
-  //   )) 
-  dataArr.push(collectionName)
-} 
+// const dataArr = []
+// for (let i =0; i<10; i++) {
+//   // const keyData = gridData.data[i]
+//   const collectionName = rowData.map(post => ({
+//     Collection:post.data[i].collectionName, 
+//     // rank:post.data[i].rank, 
+//     // collectionImageURL:post.data[i].collectionImageURL, 
+//     // salesVolume: post.data[i].quote
+//   }
+//     )) 
+//   // const rank = gridData.map(post => (
+//   //   {rank:(post.data[i].rank)}
+//   //   )) 
+//   dataArr.push(collectionName)
+// } 
 // for (let i =0; i<10; i++) {
 
 // }
@@ -116,11 +137,11 @@ for (let i =0; i<10; i++) {
 
 
 console.log(dataArr[2]);
-const arr2 = dataArr[2]
-console.log('arr2',arr2);
-console.log('arr2',arr2[0].rank);
-console.log('arr2',arr2[0].collectionName);
-const {collectionImageURL, collectionName} = arr2
+// const arr2 = dataArr[2]
+// console.log('arr2',arr2);
+// console.log('arr2',arr2[0].rank);
+// console.log('arr2',arr2[0].collectionName);
+// const {collectionImageURL, collectionName} = arr2
 // console.log(collectionImageURL, collectionName);
   // console.log('GridData:', gridData);
   // console.log('resData:', resData);
@@ -230,25 +251,14 @@ const {collectionImageURL, collectionName} = arr2
  return (
 //    <div>
 <>
-{/* <div>
-  {gridData.map((data, index) => (
-    <li key={index}>
-      {data}
-    </li>
-  ))}
-</div> */}
-    {/* //  Example using Grid's API */}
-    //  {/* <button onClick={buttonListener}>Push Me</button> */}
-
-    //  {/* On div wrapping Grid a) specify theme CSS Class Class and b) sets Grid size */}
-    //  <div className="ag-theme-alpine" style={{width: '100%', height: '100%'}}>
+   <div className="ag-theme-alpine" style={{width: '100%', height: '100%'}}>
     <div style={containerStyle}>
       <div style={gridStyle} className="ag-theme-alpine">
 
        <AgGridReact
            ref={gridRef} // Ref for accessing Grid's API
 
-           rowData={rowData} // Row Data for Rows
+           rowData={dataArr} // Row Data for Rows
 
            columnDefs={columnDefs} // Column Defs for Columns
            defaultColDef={defaultColDef} // Default Column Properties
@@ -263,18 +273,6 @@ const {collectionImageURL, collectionName} = arr2
 
         //    onCellClicked={cellClickedListener} // Optional - registering for Grid Event
            />
-             {/* <li>
-                {collectionName.slice().join(',  ')}
-            </li> */}
-            {/* <div>
-            {gridData && gridData.map(item=>{
-                return(
-                <div key={item.data}>
-                    <div>{item.data.rank}</div>
-                </div>
-                )
-                 })}
-                 </div> */}
         </div>
         </div>
     </div>
@@ -284,9 +282,10 @@ const {collectionImageURL, collectionName} = arr2
 
 
 export default App;
+// render(<App></App>, document.querySelector('#root'));
+// render(<App></App>, document.querySelector('#root'));
 
-
-
+// 
 // import React, { useCallback, useMemo, useRef, useState } from 'react';
 // import { render } from 'react-dom';
 // import { AgGridReact } from 'ag-grid-react';

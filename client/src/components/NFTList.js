@@ -321,7 +321,7 @@ function NFTList() {
           <div>
         </div>
         </div>
-        <lineChart newCS="clonex" />
+        {/* <lineChart newCS="clonex" /> */}
          {/* </Stack> */}
       {/* </div> */}
     {/* </div> */}
