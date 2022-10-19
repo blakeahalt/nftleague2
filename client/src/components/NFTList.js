@@ -278,9 +278,9 @@ function NFTList() {
         <div class="nav-link" id="navbarNavAltMarkup">
           <div class="navbar-title">
             <a class="nav-link active" aria-current="page" href='/grid'>Home</a>
-            <a class="nav-link" href="/profile">Profile</a>
-            <a class="nav-link" href="#">Browse</a>
-            <a class="nav-link">Sign Out</a>
+            <a class="nav-link active" href="/profile">Profile</a>
+            <a class="nav-link active" href="grid">Browse</a>
+            <a class="nav-link active" href="/GoogleApp">Sign Out</a>
           </div>
         </div>
         {/* <a class="navbar-title" href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fmobile.twitter.com%2Freidardao&psig=AOvVaw2pScq1totzTkPmAE_BgzjR&ust=1665309783256000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCICh0cKw0PoCFQAAAAAdAAAAABAJ">NFT League</a> */}
