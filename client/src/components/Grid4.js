@@ -115,8 +115,8 @@ const onFirstDataRendered = (params) => {
     //   <div className="ag-theme-alpine" style={{width: 1300, height: 800}}>
     //   {/* <div className="ag-theme-alpine" style={{width: 1300, height: 750}}> */}
     <>
-  <nav className="navbar navbar-dark bg-primary" id="mainNav">
-    <div className="navbar-brand">
+  <nav class="navbar navbar-dark bg-primary" id="mainNav">
+    <div class="navbar-brand">
 
       {/* <button 
         class="navbar-toggler" 
@@ -128,12 +128,12 @@ const onFirstDataRendered = (params) => {
         aria-label="Toggle navigation">
       <span class="navbar-toggler-icon" href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fmobile.twitter.com%2Freidardao&psig=AOvVaw2pScq1totzTkPmAE_BgzjR&ust=1665309783256000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCICh0cKw0PoCFQAAAAAdAAAAABAJ"></span>
       </button> */}
-      <div className="nav-link" id="navbarNavAltMarkup">
-        <div className="navbar-title">
-          <a className="nav-link active" aria-current="page" href='/grid'>Home</a>
-          <a className="nav-link" href="/profile">Profile</a>
-          <a className="nav-link" href="#">Browse</a>
-          <a className="nav-link">Sign Out</a>
+      <div class="nav-link" id="navbarNavAltMarkup">
+        <div class="navbar-title">
+          <a class="nav-link active" aria-current="page" href='/grid'>Home</a>
+          <a class="nav-link" href="/profile">Profile</a>
+          <a class="nav-link" href="#">Browse</a>
+          <a class="nav-link">Sign Out</a>
         </div>
       </div>
   {/* <a class="navbar-title" href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fmobile.twitter.com%2Freidardao&psig=AOvVaw2pScq1totzTkPmAE_BgzjR&ust=1665309783256000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCICh0cKw0PoCFQAAAAAdAAAAABAJ">NFT League</a> */}
@@ -142,7 +142,7 @@ const onFirstDataRendered = (params) => {
 
 <br/>
       <div style={{ width: '1250px', height: '650px' }}>
-        <div id="grid-wrapper" style={{ width: '100%', height: '100%' }}>
+        {/* <div id="grid-wrapper" style={{ width: '100%', height: '100%' }}> */}
             <div
                 id="myGrid"
                 style={{
@@ -166,7 +166,7 @@ const onFirstDataRendered = (params) => {
               <AgGridColumn field="Collection" width={width}></AgGridColumn>
         </AgGridReact>
       </div>
-    </div>
+    {/* </div> */}
   </div>
 
   </>

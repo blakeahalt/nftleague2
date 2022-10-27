@@ -215,8 +215,9 @@ return(
     </div> */}
             {/* <div className="App-image">{name}</div> */}
             <div className="App-image">
-                <img src={image_url} height="100" alt="URL"/></div>
-                <div className="App-image">{name}</div>
+                <img src={image_url} height="100" alt="URL"/>
+            </div>
+            <div className="App-image">{name}</div>
             <div>Floooor Price: Ξ {floor_price}</div>
             {/* <p>Average Price: {average_price}</p> */}
             <div>7 Day Volume: Ξ {seven_day_volume}</div>

@@ -131,7 +131,7 @@ button {
 }
 
 button {
-  padding: 0.5rem;
+  padding: .05rem;
   cursor: pointer;
 }
 
@@ -266,11 +266,11 @@ button {
 }
 
 .container {
-  display: flex;
-  flex-direction: row;
+  display:flex;
+  flex-direction:inherit;
   flex-wrap: wrap;
-  align-content: space-around;
-  justify-content: space-around;
+  align-content:inherit;
+  justify-content:center;
   padding: 1rem;
   background-color: rgba(16, 85, 155, 0.996);
   border: 2px solid #fff;
@@ -278,18 +278,24 @@ button {
   margin-top: 25px;
 }
 
+#tr-stripe :nth-child() {
+  background-color:#4e6eae
+}
+/* #tr-stripe :nth-child(odd) {
+  background-color:#4e6eae
+} */
+
 .col {
-  align-content: space-around;
+  align-content:center;
   padding: .5rem;
-  flex-wrap: wrap; 
+  flex-wrap: nowrap; 
 }
  
-
 .navbar-title {
-  display: flex;
+  display:contents;
   justify-content: space-between;
-  align-items: center;
-  position: fixed;
+  align-items:center;
+  position:fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -306,10 +312,18 @@ button {
   margin-left: 15px;
   margin-right:0px;
   font-size: 22px;
-  justify-content: space-between;
+  justify-content:center;
   
 }
 
+/* .table {
+  display: table;
+  border-collapse: separate;
+  box-sizing: border-box;
+  text-indent: initial;
+  border-spacing: 2px;
+  border-color: grey;
+} */
 
 
 .ag-theme-alpine .ag-header-cell {

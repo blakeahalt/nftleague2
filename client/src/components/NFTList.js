@@ -277,8 +277,9 @@ function NFTList() {
         </button> */}
         <div class="nav-link" id="navbarNavAltMarkup">
           <div class="navbar-title">
-            <a class="nav-link active" aria-current="page" href='/grid'>Home</a>
-            <a class="nav-link active" href="/profile">Profile</a>
+            <a class="nav-link active" aria-current="page" href='/grid'>Top Sales</a>
+            <a className="nav-link active" aria-current="page" href='/collectionsday'>Top 100</a>
+            <a class="nav-link active" href="/NFTList">Profile</a>
             <a class="nav-link active" href="grid">Browse</a>
             <a class="nav-link active" href="/GoogleApp">Sign Out</a>
           </div>
