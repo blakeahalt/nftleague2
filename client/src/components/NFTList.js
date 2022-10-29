@@ -1,16 +1,8 @@
 import "../App.css";
-// import "../main.css";
 import { ethers } from "ethers";
 import { useState, useEffect, useRef } from "react";
-import erc721Abi from "../abi/erc721.json";
-import Header from "./Header";
 import axios from 'axios'
 import Profile from './NFTProfile'
-import {Stack} from 'rsuite'
-import LineChart from "./LineChart";
-
-
-
 
 function NFTList() {
   const [account, setAccount] = useState("");
@@ -24,15 +16,7 @@ function NFTList() {
   const userRef = useRef();
   const inputRef = useRef(null)
 
-
-  // const options = {method: 'GET'};
   const options = {method: 'GET', headers: {accept: 'application/json'}};
-
-//   useEffect(() => {
-//     inputRef.current.focus();
-// }, [])
-
-
 
   // const loadCollectionData = async() => {
   //   const response = await axios.get(`https://api.opensea.io/api/v1/collection/${updated}`, options)
@@ -47,9 +31,7 @@ function NFTList() {
   //       // .then((response) => { 
   //           setCollectionSearch([response.data])
   //           console.log(response)
-    
   // }
-
 
   // const banner_image_url = collection.map(function(stat){
   //     return [`${stat.collection.banner_image_url}`].join('')
@@ -59,12 +41,7 @@ function NFTList() {
   // useEffect(() => {
   //   getCollectionSearch()
   // }, [])
-  
 
-
-    
-   
-    
 
   // const image_url = collection.map(function(stat){
   //     return [`${stat.collection.image_url}`].join('')
@@ -250,46 +227,22 @@ function NFTList() {
 
   return (
     <div>
-    {/* <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet"/> */}
-
-    {/* <div> */}
-      {/* <div className="App-header">
-      
-      </div> */}
-      {/* <nav class="navbar navbar-dark bg-primary"> */}
-      {/* <Header connect={connect} account={account}/>
-          <p>NFT League</p> */}
-      {/* <nav class="App-header"> */}
-
-    {/* <nav class="navbar navbar-expand-lg bg-light" > */}
-    <nav class="navbar navbar-dark bg-primary" id="mainNav">
-
-      <div class="navbar-brand">
-        {/* <button 
-          class="navbar-toggler" 
-          type="button" 
-          data-bs-toggle="collapse" 
-          data-bs-target="#navbarNavAltMarkup" 
-          aria-controls="navbarNavAltMarkup" 
-          aria-expanded="false" 
-          aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon" href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fmobile.twitter.com%2Freidardao&psig=AOvVaw2pScq1totzTkPmAE_BgzjR&ust=1665309783256000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCICh0cKw0PoCFQAAAAAdAAAAABAJ"></span>
-        </button> */}
-        <div class="nav-link" id="navbarNavAltMarkup">
-          <div class="navbar-title">
-            <a class="nav-link active" aria-current="page" href='/grid'>Top Sales</a>
-            <a className="nav-link active" aria-current="page" href='/collectionsday'>Top 100</a>
-            <a class="nav-link active" href="/NFTList">Profile</a>
-            <a class="nav-link active" href="grid">Browse</a>
-            <a class="nav-link active" href="/GoogleApp">Sign Out</a>
-          </div>
+      <div className="navbar-link">
+            <nav className="navbar navbar-dark bg-primary" id="mainNav">
+                <div className="navbar-brand">
+                    <div className="nav-link" id="navbarNavAltMarkup">
+                        <div className="navbar-title">
+                            <a className="nav-link active" aria-current="page" href='/salesweek'>Top Sales</a>
+                            <a className="nav-link active" aria-current="page" href='/collectionsday'>Top Collections</a>
+                            <a className="nav-link active" href="/profile">Profile</a>
+                            <a className="nav-link active" href="nftlist">Browse</a>
+                            <a className="nav-link active" href="/GoogleApp">Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <br />
         </div>
-        {/* <a class="navbar-title" href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fmobile.twitter.com%2Freidardao&psig=AOvVaw2pScq1totzTkPmAE_BgzjR&ust=1665309783256000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCICh0cKw0PoCFQAAAAAdAAAAABAJ">NFT League</a> */}
-      </div>
-    </nav>
-    {/* </nav> */}
-
-          
      
       <br/>      
         <div className="container" >

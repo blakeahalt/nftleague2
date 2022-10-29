@@ -13,7 +13,6 @@ import Added from './components/Added'
 import Profile from './components/Profile3'
 import NFTList from './components/NFTList'
 import LineChart from './components/LineChart'
-import Grid from './components/SalesWeek'
 import SalesMonth from './components/SalesMonth'
 import SalesWeek from './components/SalesWeek'
 import SalesDay from './components/SalesDay'
@@ -44,7 +43,6 @@ function App() {
             <Route exact path="/add" element={<Added />} />
             <Route exact path="/NFTList" element={<NFTList />} />
             <Route exact path="/LineChart" element={<LineChart />} />
-            <Route exact path="/Grid" element={<Grid />} />
             <Route exact path="/SalesMonth" element={<SalesMonth />} />
             <Route exact path="/SalesWeek" element={<SalesWeek />} />
             <Route exact path="/SalesDay" element={<SalesDay />} />

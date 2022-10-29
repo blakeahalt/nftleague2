@@ -178,23 +178,23 @@ function App() {
 	return (
 		<>
 			{success ? (
-				<section>
+				<section style={{ minWidth:300}}>
 					<div className="App">
-						<h1>You are logged in!</h1>
+						<h1> Successfull Login: </h1>
+						<h1> {user.name} </h1>
 						<br />
 						<div>
 							<img src={user.picture || user.imageUrl} width="150" height="150" alt=''></img>
-							<h3>{user.name}</h3>
 						</div>
-						<p><Link to='/Profile'>Go to your Profile</Link></p>
-						<p>axios.get('/googleapp') status: <i>{notification}</i></p>
+						<h2><Link to='/Profile'>Go to your Profile</Link></h2>
+						{/* <p>axios.get('/googleapp') status: <i>{notification}</i></p> */}
 
 					</div>
 				</section>
 			) : (
-				<section>
+				<section style={{ minWidth:300}}>
 					<p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-					<h1>Sign In</h1>
+					<h1 style={{fontSize:30, textAlign:'center'}}>Sign In</h1>
 					<form onSubmit={() => handleSubmit}>
 						<label htmlFor="username">Username:</label>
 						<input
@@ -215,13 +215,14 @@ function App() {
 							value={pwd}
 							required
 						/>
-						<button>Sign In</button>
+						<button className="button">Sign In</button>
 					</form>
 					<br />
 
 					{!isSignedIn ? (					
 					<>
-					<div>Log in with your Google Account</div>
+					<br/><br/><br/><br/>
+					<div style={{textAlign:'center', marginBottom:-20}}>Log in with your Google Account</div>
 					<div className="App">
 						<GoogleLogin
 							onSuccess={res => {
@@ -239,52 +240,20 @@ function App() {
 					</div>
 					</>
 					) : (
-					<>
-					<div>You are Signed In</div>
-						{/* <LogoutButton />  */}
-						<googleLogout />
-					</>
+						<>
+							<div>You are Signed In</div>
+							<googleLogout />
+						</>
 					)}
-                                                 {/* <div id="signout_button">
-                                                        <LogoutButton/>
-                                                 </div> */}
-                                                 {/* </> */}
-						{/* )} */}
-						{/* {isSignedIn ? (
-						<div id="signOutButton">
-							<GoogleLogout 
-								clientId={clientId} 
-								buttonText="Logout" 
-								onLogoutSuccess={onSuccess}>
-							</GoogleLogout>
-						</div>
-						) : (
-						<div id="signInButton" >
-							<GoogleLogin
-								onSuccess={credentialResponse => {
-									console.log(credentialResponse.credential);
-									var decoded = jwt_decode(credentialResponse.credential);
-									console.log(decoded);
-									setSuccess(true);
-									console.log("Login Success!");
-									}}
-								onError={() => {
-								  console.log('Login Failed');
-								}} 
-							/>
-						</div>
-						)} */}
-					<p>
+					<br/><br/><br/><br/><br/>
+					<div style={{textAlign:'right'}}>
 						Need an Account?
-						<br />
-						<span className="line">
-							<Link to='/register'>Sign Up</Link>
-						</span>
-						<br />
-					</p>
-					<p>axios.get('/googleapp') status: <i>{notification}</i></p>
+						<br/>
+						<Link to='/register'> Register Here </Link>
+					</div>
+					{/* <p>axios.get('/googleapp') status: <i>{notification}</i></p>
 					<br />
-					<Link to='/nftlist'>NFTList</Link>
+					<Link to='/nftlist'>NFTList</Link> */}
 
 				</section>
 				)}
