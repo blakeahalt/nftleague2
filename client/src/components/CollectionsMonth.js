@@ -67,6 +67,7 @@ function UserList() {
 			  	{rowDataSalesMonth.map(row => {
 				  	return (
 					  	<Row className="row-stripe" style={{ height: '50px', margin:5, paddingBottom:30 }} key={row.id}>
+                <Col style={{ maxWidth: 200, marginTop:27 }}> {row.id} </Col>
 						  	<Col style={{ minWidth: 250, maxWidth: 500, marginTop:15 }}>
 							  	<a href={row.collection_url} target="_blank" rel="noreferrer"> {row.collection} </a></Col>
 						  	<Col style={{ minWidth: 180, maxWidth: 400, marginTop:27, paddingLeft:110 }}> {row.trades} </Col>

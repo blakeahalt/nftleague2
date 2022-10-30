@@ -19,7 +19,7 @@ import SalesDay from './components/SalesDay'
 import CollectionsDay from './components/CollectionsDay'
 import CollectionsWeek from './components/CollectionsWeek'
 import CollectionsMonth from './components/CollectionsMonth'
-import EncryptionHandler from './components/EncryptionHandler'
+import RapidApiOpensea from './components/RapidApiOpensea'
 
 function App() {
 
