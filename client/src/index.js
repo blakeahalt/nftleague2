@@ -23,13 +23,13 @@ const clientId ="1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleuserc
 // );
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <GoogleOAuthProvider clientId={clientId}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
      </GoogleOAuthProvider>
-   </React.StrictMode>,
+  //  </React.StrictMode>,
 );
 
 // # ReactDOM.render(

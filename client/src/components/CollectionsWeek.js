@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
+import { _fetchData } from 'ethers/lib/utils';
 
 function UserList() {
 
@@ -30,9 +31,20 @@ function UserList() {
     fetch('https://top-nft-sales.p.rapidapi.com/collections/7d', options)
       .then(response => response.json())
       .then(rowDataSales => setRowDataSales(rowDataSales))
-  },[])
+      // console.log("rowDataSales", rowDataSales);
+    }, [])
 
-// console.log("rowDataSales", rowDataSales);
+    const CSoptions = {
+      method: 'GET',
+      headers: {
+        'X-BLOBR-KEY': 'e6CjQuVjiVsugMjtPuONz3C9EkAzXpFj'
+      },
+    };
+    
+    fetch('https://api.cryptoslam.io/im6pi8nxcs120nhb/v1/collections/top-100', CSoptions)
+      .then(response => response.json())
+      .then(response => console.log(response))
+      .catch(err => console.error(err));
 
 // //take endpoints from rapidapi collection and attach to opensea api
 // //Output: array of urls that can be used with opensea api
@@ -44,6 +56,64 @@ function UserList() {
         endpoints.push(y)
     }
 	// console.log("endpoints:",endpoints);
+  
+  // useEffect(() => {
+  //   function getOSData () {
+  //     for (const url in endpoints) {
+  //     const OSresponse = fetch(url, OSoptions)
+  //       .then(response => response.json())
+  //       .then(setopenSeaData)
+  //       .catch(error => (console.log(error)));
+  //     }
+  //   }
+  //   console.log("openSeaData", openSeaData);
+  //   getOSData()
+  // }, [])
+
+const promises=[]
+const stats=[]
+  async function getCollectionData() {
+	  for (const url of endpoints) {
+		  await axios.get(url, OSoptions)
+		  .then((result) => {
+			  promises.push(result.data.collection)
+			  setopenSeaData(promises.map(x => ({
+          name:x.name,
+          image_url:x.image_url, 
+          stats:x.stats, 
+        })))
+			})
+		}}
+		// console.log("OpenSeaData:", openSeaData);
+
+    useEffect(()=> {
+      getCollectionData()
+    },[])
+
+
+// Merge object arrays allows mapping from just one array: preserves row structure below (both.map{...})
+  const indexArray = Array(100).fill(1).map((n, i) => n + i)
+  // console.log(indexArray);
+  const collection_url = rowDataSales.map(x => ({collection_url:x.collection_url, trades:x.trades, volume:x.volume}))
+  const both = openSeaData.map((item, i) => Object.assign({}, item, {index:`${i=i+1}`}, {collection_url:collection_url[i-1]}));
+  // indexArray[i] will output index:'string' values 
+  // const both1 = openSeaData.map((item, i) => Object.assign({}, item, {index:indexArray[i]}, {collection_url:collection_url[i]}));
+// }
+  console.log("both", both);
+
+
+
+
+// console.log("both2", both2);
+	// useEffect(() => {
+	// 	setCollectionData(openSeaData.map(x => ({
+	// 		name:x.name, 
+	// 		image_url:x.image_url, 
+	// 		slug:x.slug, 
+	// 	})));
+	// }, []);
+
+
 
   // const promises=[]
   // // useEffect(() => {
@@ -54,26 +124,64 @@ function UserList() {
   //   }
   // // }, [])
   // console.log("openseaData", openSeaData);
-    const promises=[]
-    async function getOSData() {
-      for (const url of endpoints) {
-        await axios.get(url, OSoptions)
-        .then((result) => {
-					promises.push((result.data.collection))})
-        // setopenSeaData(promises.map(x => ({
-        //     image_url:x.image_url, 
-        //     stats:x.stats					
-        //   })))
-        }
-          console.log("promises", promises);
-          // console.log("OpenSeaData", openSeaData);
-				}
 
-        // getOSData()
 
-  useEffect(()=>{
-    getOSData()
-  },[])
+  // const promises=[]
+
+  
+
+
+
+  //   const getOSData = async() => {
+
+  //     try{
+  //     for (const url of endpoints) {
+  //       const response = await axios.get(url, OSoptions)
+  //      return promises.push(response.data)
+  //     }
+      //   setopenSeaData([...openSeaData, promises.map(x => ({image_url:x.image_url, stats:x.stats}), i => Object.assign({}, x => ({image_url:x.image_url, stats:x.stats}), rowDataSales[i]))])
+      // })
+        // .then((result) => {
+          
+        // setopenSeaData([...openSeaData,promises.map(x => ({
+        //     image_url:x.data.collection.image_url, 
+        //     stats:x.data.collection.stats
+        //   }))					
+        //   ])
+        
+          // setopenSeaData([...openSeaData,promises])
+        
+      
+//         }
+//         catch(error){}
+//       }
+      
+//       useEffect(()=>{
+//         getOSData().then(res=> {
+//         setopenSeaData(res)
+//         console.log("-fetchData",openSeaData);
+//     })
+// }, [])
+      // console.log("OpenSeaData", openSeaData);
+
+// console.log("promises", promises);
+    // getOSData()
+  // }, [])
+      
+
+  // useEffect(()=> {
+  //   getOSData()
+  // },[])
+// useEffect(() => {
+//   const merge = () => {
+//   setopenSeaData([...openSeaData, promises.map(x => ([x.image_url, x.stats]))])
+//   console.log("OpenSeaData2", openSeaData);
+// }
+// merge()
+// },[])
+    
+
+  // getOSData()
       
   //     const response = axios.get(url, OSoptions)
 	// 	  setopenSeaData(response.data.collection)
@@ -114,13 +222,13 @@ function UserList() {
 // 	// 	})));
 // 	// }, []);
 
-  useEffect(() => {
-		setCollectionData(promises.map(x => ({
-			image_url:x.image_url, 
-			stats:x.stats
-		})));
-		setCollectionData()
-	}, []);
+  // useEffect(() => {
+	// 	setCollectionData(promises.map(x => ({
+	// 		image_url:x.image_url, 
+	// 		stats:x.stats
+	// 	})));
+	// 	setCollectionData()
+	// }, []);
 
 	// useEffect(() => {
   //   function getCollectionData(){
@@ -177,10 +285,55 @@ function UserList() {
 //merge collectionData objs with rapidapi objs into 'both' arr
 //merge openseaStats data with 'both' array into 'all' array
 
-    const both = collectionData.map((item, i) => Object.assign({}, item, rowDataSales[i]));
-	// const all = both.map((item, i) => Object.assign({}, item, statData[i]));
 
-// // console.log("both:", both);
+// const both=[]
+// // useEffect(()=>{
+//   const mergeArrays = () => {
+//     // const merge = openSeaData.map((item, i) => Object.assign({}, item, rowDataSales[i]));
+//     const merge = promises.map(x => ({image_url:x.image_url, stats:x.stats}), i => Object.assign({}, x => ({image_url:x.image_url, stats:x.stats}), rowDataSales[i]));
+//     both.push(merge)
+    
+//     // both.push(merge)
+//     //   console.log("both:", both);
+//     console.log("both:", openSeaData);
+//   }
+//   // mergeArrays()
+  
+  
+// // }, [])
+
+
+// useEffect(()=> {
+//   getOSData()
+//   mergeArrays()  
+// }, [])
+
+
+
+
+// console.log("both.stats", both.data.stats);
+
+  // const mergeArrays = () => {
+  //   const merge = openSeaData.map((x, i) => Object.assign({}, x, indexArray[i]));
+  //   both.push(merge)
+  //   console.log("both:", merge);
+    
+  // both.push(merge)
+//   //   console.log("both:", both);
+  // }
+
+
+
+//   useEffect(()=>{
+//   mergeArrays()
+  
+  
+// },[])
+
+
+
+// const all = both.map((item, i) => Object.assign({}, item, statData[i]));
+
 // // getCollectionData()
 
 // // const floorPrice = all.map(function(stat){
@@ -193,7 +346,8 @@ function UserList() {
 // // const floorPrice = all.map(function(stat){
 // // 	return `${stat.floor_price.toFixed(2)}`
 // // })
-// const indexArray = Array(100).fill(1).map((n, i) => n + i)
+
+// console.log(indexArray);
 
 
 
@@ -217,11 +371,11 @@ function UserList() {
             <br />
         </div>
 
-        <div className="container" style={{ minWidth: 650 }}>
+        <div className="container">
             <h2 style={{ textAlign: 'center', fontSize: 42, marginTop: 0, marginBottom: 10 }}> Top Collections </h2>
                 <div style={{ position: 'relative', textAlign: 'center', marginTop: -10, marginBottom: 20}}>
                   <Link to='/CollectionsDay' style={{color:'black'}}>
-				  	<button className="button-days" style={{ backgroundColor:'gray', color:'darkgray'}}> 1DAY </button></Link>
+				  	        <button className="button-days" style={{ backgroundColor:'gray', color:'darkgray'}}> 1DAY </button></Link>
                   <Link to='/CollectionsWeek' style={{color:'black'}}>
                     <button className="button-days"> 7DAY </button></Link>
                   <Link to='/CollectionsMonth' style={{color:'black'}}>
@@ -229,37 +383,53 @@ function UserList() {
              	</div>
 
               	<Row style={{ maxHeight: '75px', fontSize: 25, flexWrap: 'nowrap', marginBottom:10 }} >
-					<Col style={{ minWidth: 100, maxWidth: 100, paddingLeft:100 }}></Col>
-					<Col style={{ minWidth: 200, maxWidth: 500, marginLeft:-95 }}> Collection </Col>
-					<Col style={{ minWidth: 50, maxWidth: 200, marginLeft:120 }}> Trades </Col>
-					<Col style={{ maxWidth: 200 }}> Volume </Col>
-					<Col style={{ maxWidth: 200, marginRight:10 }}> Floor </Col>
-				</Row>
+                  <Col style={{ minWidth: 100, maxWidth: 100, paddingLeft:100 }}></Col>
+                  <Col style={{ minWidth: 455, maxWidth: 530, marginLeft:-95 }}> Collection </Col>
+                  <Col style={{ minWidth: 102, minWidth: 100, maxWidth: 200, marginLeft:125, textAlign:'right' }}> Trades </Col>
+                  <Col style={{ minWidth: 102, maxWidth: 400, textAlign:'right' }}> Volume </Col>
+                  <Col style={{ minWidth: 102, maxWidth: 400, textAlign:'right' }}> Floor </Col> 
+                  <Col style={{ minWidth: 102, maxWidth: 400, textAlign:'right' }}> Avg. Price </Col> 
+                  <Col style={{ minWidth: 160, maxWidth: 400, flexWrap: 'wrap', textAlign:'right' }}> Owners / Supply </Col> 
+                  <Col style={{ minWidth: 160, maxWidth: 400, textAlign:'right', marginRight:10, flexWrap: 'nowrap' }}> Market Cap </Col> 
+                </Row>
 
-              {both.map((row, id) => {
+            {both.map((row) => {
               return(
-                <Row className="row-stripe" style={{ height: '50px', margin:5, paddingBottom:30 }} key={row.id}>
-                  {/* <Col style={{ minWidth: 50, maxWidth: 50, marginTop:27 }}> {indexArray.map(x=>{x.id}) </Col> */}
-                  <Col style={{ minHeight:75, maxWidth:100, paddingLeft:15 }}> <img src={row.image_url} style={{height:80, maxWidth:75}} alt="pfp"></img>  </Col>
-                  <Col style={{ minWidth: 250, maxWidth: 500, marginTop:15 }}>
-                  <a href={row.collection_url} target="_blank" rel="noreferrer">{row.collection} </a>
+                <Row className="row-stripe" style={{ height: '50px',  paddingBottom:30, flexDirection:'row' }} key={row.id}>
+                  <Col style={{ maxWidth:40, marginTop:22, textAlign:'center', fontSize:22 }}> {row.index} </Col>
+                  <Col style={{ minHeight:75, maxWidth:100, paddingLeft:15 }}> 
+                    <img src={row.image_url} style={{height:80, maxWidth:75}} alt="pfp"></img>  </Col>
+                  <Col style={{ minWidth: 450, maxWidth: 500, marginTop:15, fontSize:22 }}>
+                    <a href={row.collection_url?row.collection_url.collection_url:null} target="_blank" rel="noreferrer">{row.name}</a>
                   </Col>
-                  <Col style={{ minWidth: 50, maxWidth: 200, marginTop:27 }}> {row.trades} </Col>
-                  <Col style={{ maxWidth: 200, marginTop:27 }}> {row.volume} </Col>
-                  <Col style={{ maxWidth: 200, marginTop:27 }}> Ξ{row.stats.floor_price? row.stats.floor_price.toFixed(2):"N/D"} </Col>
+                  <Col style={{ minWidth: 100, maxWidth: 200, marginTop:27, textAlign:'right', fontSize:18 }}> {row.stats.seven_day_sales?row.stats.seven_day_sales.toFixed(0):"N/D"} </Col>
+                  <Col style={{ minWidth:102, maxWidth: 400, marginTop:27, textAlign:'right', fontSize:18 }}> {row.collection_url?row.collection_url.volume:null} </Col>
+                  <Col style={{ minWidth:102, maxWidth: 400, marginTop:27, textAlign:'right', fontSize:18 }}> Ξ{row.stats.floor_price? row.stats.floor_price.toFixed(3):"N/D"} </Col>
+                  <Col style={{ minWidth:102, maxWidth: 400, marginTop:27, textAlign:'right', fontSize:18 }}> {row.stats.seven_day_average_price
+? row.stats.seven_day_average_price
+.toFixed(3):"N/D"}</Col>
+                  <Col style={{ minWidth: 160, maxWidth: 400, marginTop:27, textAlign:'right', fontSize:18, flexWrap: 'wrap' }}> {row.stats.num_owners?row.stats.num_owners:"N/D"} / <br/> {row.stats.count?row.stats.count:"N/D"} </Col>
+                  <Col style={{ minWidth: 160, maxWidth: 400, marginTop:27, fontSize:18 }}> </Col>
+
+                  
+                 
                 </Row>
                 )
               })}
+        <div className="pagination">
+          <a href="#">&laquo;</a>
+          <a href="#">1</a>
+          <a href="#" className="active">2</a>
+          <a href="#">3</a>
+          <a href="#">4</a>
+          <a href="#">5</a>
+          <a href="#">6</a>
+          <a href="#">&raquo;</a>
+        </div>
+        
   			</div>
 	  </>
   )
 }
-
-// return(
-//   <div>
-//     yo
-//   </div>
-// )
-// }
 
 export default UserList

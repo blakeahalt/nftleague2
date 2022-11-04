@@ -24,188 +24,115 @@ function UserList() {
     }
   };
 
-	
-	
-	
-
-	// useEffect(() => {
-	// 	fetch('https://top-nft-sales.p.rapidapi.com/collections/1d', options)
-	// 		.then(response => response.json())
-	// 		.then(rowDataSales1 => setRowDataSales1(rowDataSales1))
-	// }, [])
-	// console.log(rowDataSales1);
-	const rapidEndpoints=[]
-	const OSEndpoints=[]
-	const url_string = "https://www.nft-stats.com/collection/"
-	
 	useEffect(() => {
-		async function getRapidApiData () {
-		const response = await axios.get('https://top-nft-sales.p.rapidapi.com/collections/1d', options)
-		setRowDataSales1(response.data)
-		// const rapidEndpoints = (rowDataSales1.map(x => {
-		// 	return (x.collection_url)
-		// 	}))
-		// for (const x of rapidEndpoints) {
-		// 	const y = x.replace(url_string, "https://api.opensea.io/api/v1/collection/")
-		// 	OSEndpoints.push(y)
-		// }
+		fetch('https://top-nft-sales.p.rapidapi.com/collections/1d', options)
+			.then(response => response.json())
+			.then(rowDataSales1 => setRowDataSales1(rowDataSales1))
+	}, [])
 
-		getRapidApiData()
-		.catch(console.error);
-		console.log("rowDataSales1", rowDataSales1);
-	}
-}, [])	
+	//gathers opensea collection data and stat data into 'promises'/'stats' array
+//Output: extensive array of each collection's data and stat data
+const promises=[]
+const stats=[]
+  async function getCollectionData() {
+	  for (const url of endpoints) {
+		  await axios.get(url, OSoptions)
+		  .then((result) => {
+			  promises.push(result.data.collection)
+			  stats.push(result.data.collection.stats)})
+			  .then(openSeaData => setopenSeaData(promises))
+			  .then(openSeaStats => setopenSeaStats(stats))
+			}
+		}
+		// console.log("OpenSeaData:", openSeaData);
 
-// console.log("OSEndpoints", OSEndpoints);
-
-	
-	function getCollectionData() {
-		for (const url of OSEndpoints) {
-		  const response = axios.get(url, OSoptions)
-		  setopenSeaData(response.data.collection)
-		  setCollectionData(openSeaData.map(x=>({
-			image_url:x.response.data.collection.image_url, 
-			stats:x.response.data.collection.stats
-		})
-		))
-	}
-	console.log("openSeaData", openSeaData)
-	console.log("collectionData", collectionData)
-}
-
-	
 	useEffect(() => {
 		setCollectionData(openSeaData.map(x => ({
-			collection: x.collection
+			name:x.name, 
+			image_url:x.image_url, 
+			slug:x.slug, 
 		})));
-	},[]);
+	}, []);
 
 	useEffect(() => {
-		const promises=[]
-		const stats=[]
-		async function getCollectionData() {
-			for (const url of OSEndpoints) {
-				await axios.get(url, OSoptions)
-				.then((result) => {
-					promises.push(result.data.collection)
-					.then(openSeaData => setopenSeaData(promises))
-					})
-					}
-				}
-				getCollectionData()
-	}, [])	
-	console.log("openSeaData", openSeaData)
-	console.log("collectionData", collectionData)
-
-	// 	  useEffect(() => {
-	// 	setCollectionData(openSeaData.map(x => ({
-	// 		image_url:x.image_url, 
-	// 		stats:x.stats
-	// 	})));
-	// 	setCollectionData()
-	// }, []);
-
+		setStatData(openSeaStats.map(x => ({
+			average_price: x.average_price,
+			market_cap:x.market_cap,
+			floor_price: x.floor_price,
+			num_owners: x.num_owners,
+			count: x.count,
+			one_day_average_price:x.one_day_average_price,
+			one_day_change:x.one_day_change,
+			one_day_difference:x.one_day_difference,
+			one_day_sales:x.one_day_sales,
+			one_day_sales_change:x.one_day_sales_change,
+			one_day_volume:x.one_day_volume,
+			one_hour_average_price:x.one_hour_average_price,
+			one_hour_change:x.one_hour_change,
+			one_hour_difference:x.one_hour_difference,
+			one_hour_sales:x.one_hour_sales,
+			one_hour_sales_change:x.one_hour_sales_change,
+			one_hour_volume:x.one_hour_volume,
+			seven_day_average_price:x.seven_day_average_price,
+			seven_day_change:x.seven_day_change, 
+			seven_day_difference:x.seven_day_difference,
+			seven_day_sales:x.seven_day_sales,
+			seven_day_volume:x.seven_day_volume,
+			six_hour_average_price:x.six_hour_average_price,
+			six_hour_change:x.six_hour_change,
+			six_hour_difference:x.six_hour_difference, 
+			six_hour_sales:x.six_hour_sales,
+			six_hour_sales_change:x.six_hour_sales_change,
+			six_hour_volume:x.six_hour_volume,
+			thirty_day_average_price:x.thirty_day_average_price,
+			thirty_day_change:x.thirty_day_change, 
+			thirty_day_difference:x.thirty_day_difference,
+			thirty_day_sales:x.thirty_day_sales,
+			thirty_day_volume:x.thirty_day_volume,
+			total_sales:x.total_sales,
+			total_supply:x.total_supply,
+			total_volume:x.total_volume 
+		})));
+	}, []);
 	
-
+	useEffect(() => {
+		getCollectionData()
+	},[])
 	
-
 //collects urls from rapidapi collection request
 //Output: array of rapidapi urls
-// const obj=[]
-// for (const x of rowDataSales1) {
-// 	const y = x.collection_url
-// 	obj.push(y)
-// }
-// console.log("obj:",obj);
-
-// const obj = (rowDataSales1.map(x => {
-// 	return (x.collection_url)
-// 	}))
+	const obj = (rowDataSales1.map(x => {
+		return (x.collection_url)
+		}))
 
 //take endpoints from rapidapi collection and attach to opensea api
 //Output: array of urls that can be used with opensea api
-// const endpoints = []
-// const url_string = "https://www.nft-stats.com/collection/"
-// for (const x of obj) {
-// 	const y = x.replace(url_string, "https://api.opensea.io/api/v1/collection/")
-// 	// const z = y.concat("/stats")
-// 	endpoints.push(y)
-// }
-// console.log("endpoints:",endpoints);
-
-
-//gathers opensea collection data and stat data into 'promises'/'stats' array
-//Output: extensive array of each collection's data and stat data
-// const promises=[]
-// const stats=[]
-//   async function getCollectionData() {
-// 	  for (const url of endPoints) {
-// 		  await axios.get(url, OSoptions)
-// 		  .then((result) => {
-// 			  promises.push(result.data.collection)})
-// 			//   stats.push(result.data.collection.stats)})
-// 			.then(openSeaData => setopenSeaData(promises))
-// 			//   .then(openSeaStats => setopenSeaStats(stats))
-// 			.then(collectionData => setCollectionData(openSeaData.map(x=>({
-// 				image_url:x.image_url, 
-// 				stats:x.stats
-// 			}))))
-// 			}
-// 		}
-		// console.log("OpenSeaData:", openSeaData);
-	
-// setCollectionData(openSeaData.map(x=>({
-// 	image_url:x.image_url, 
-// 	stats:x.stats
-// })))
-
-	// useEffect(() => {
-	// 	setStatData(openSeaStats.map(x => ({
-	// 		average_price: x.average_price,
-	// 		market_cap:x.market_cap,
-	// 		floor_price: x.floor_price,
-	// 		num_owners: x.num_owners,
-	// 		count: x.count,
-	// 		one_day_average_price:x.one_day_average_price,
-	// 		one_day_change:x.one_day_change,
-	// 		one_day_difference:x.one_day_difference,
-	// 		one_day_sales:x.one_day_sales,
-	// 		one_day_sales_change:x.one_day_sales_change,
-	// 		one_day_volume:x.one_day_volume,
-	// 		one_hour_average_price:x.one_hour_average_price,
-	// 		one_hour_change:x.one_hour_change,
-	// 		one_hour_difference:x.one_hour_difference,
-	// 		one_hour_sales:x.one_hour_sales,
-	// 		one_hour_sales_change:x.one_hour_sales_change,
-	// 		one_hour_volume:x.one_hour_volume,
-	// 		seven_day_average_price:x.seven_day_average_price,
-	// 		seven_day_change:x.seven_day_change, 
-	// 		seven_day_difference:x.seven_day_difference,
-	// 		seven_day_sales:x.seven_day_sales,
-	// 		seven_day_volume:x.seven_day_volume,
-	// 		six_hour_average_price:x.six_hour_average_price,
-	// 		six_hour_change:x.six_hour_change,
-	// 		six_hour_difference:x.six_hour_difference, 
-	// 		six_hour_sales:x.six_hour_sales,
-	// 		six_hour_sales_change:x.six_hour_sales_change,
-	// 		six_hour_volume:x.six_hour_volume,
-	// 		thirty_day_average_price:x.thirty_day_average_price,
-	// 		thirty_day_change:x.thirty_day_change, 
-	// 		thirty_day_difference:x.thirty_day_difference,
-	// 		thirty_day_sales:x.thirty_day_sales,
-	// 		thirty_day_volume:x.thirty_day_volume,
-	// 		total_sales:x.total_sales,
-	// 		total_supply:x.total_supply,
-	// 		total_volume:x.total_volume 
-	// 	})));
-	// },[]);
-	
+	const endpoints = []
+	const url_string = "https://www.nft-stats.com/collection/"
+    for (const x of obj) {
+        const y = x.replace(url_string, "https://api.opensea.io/api/v1/collection/")
+        // const z = y.concat("/stats")
+        endpoints.push(y)
+    }
+	// console.log("endpoints:",endpoints);
+	  
 //merge collectionData objs with rapidapi objs into 'both' arr
 //merge openseaStats data with 'both' array into 'all' array
 	const both = collectionData.map((item, i) => Object.assign({}, item, rowDataSales1[i]));
-	// const all = both.map((item, i) => Object.assign({}, item, statData[i]));
+	const all = both.map((item, i) => Object.assign({}, item, statData[i]));
 
 // console.log("all:", all);
+
+const floorPrice = all.map(function(stat){
+	if (stat.floor_price){
+	return stat.floor_price.toFixed(3)
+	} else {
+		return stat.floor_price
+	}
+})
+// const floorPrice = all.map(function(stat){
+// 	return `${stat.floor_price.toFixed(2)}`
+// })
 
   return (
     <>
@@ -245,18 +172,16 @@ function UserList() {
 					<Col style={{ maxWidth: 200, marginRight:10 }}> Floor </Col>
 				</Row>
 
-				{both.map(row => {
+				{all.map(row => {
 					return(
 						<Row className="row-stripe" style={{ height: '50px', margin:5, paddingBottom:30 }} key={row.id}>
-							{/* <Col style={{ minWidth: 50, maxWidth: 50, marginTop:27 }}> {row.id} </Col> */}
 							<Col style={{ minHeight:75, maxWidth:100, paddingLeft:15 }}> <img src={row.image_url} style={{height:80, maxWidth:75}} alt="pfp"></img>  </Col>
 							<Col style={{ minWidth: 250, maxWidth: 500, marginTop:15 }}>
 							<a href={row.collection_url} target="_blank" rel="noreferrer">{row.collection} </a>
 							</Col>
 							<Col style={{ minWidth: 50, maxWidth: 200, marginTop:27 }}> {row.trades} </Col>
 							<Col style={{ maxWidth: 200, marginTop:27 }}> {row.volume} </Col>
-							<Col style={{ maxWidth: 200, marginTop:27 }}> {row.stats.one_day_volume.toFixed(2)} </Col>
-							<Col style={{ maxWidth: 200, marginTop:27 }}> Ξ{row.stats.floor_price? row.stats.floor_price.toFixed(2):"N/D"} </Col>
+							<Col style={{ maxWidth: 200, marginTop:27 }}> Ξ{row.floor_price? row.floor_price.toFixed(2):"N/D"} </Col>
 						</Row>
 						)
 					})}

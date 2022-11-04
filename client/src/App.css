@@ -60,12 +60,6 @@ input {
 
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
-{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 html {
     font-family: 'Nunito', sans-serif;
     font-size: 15px;
@@ -89,6 +83,7 @@ body {
 }
 
 .button {
+  display: block;
   padding: 1rem;
   cursor: pointer;
   font-family: 'Nunito', sans-serif;
@@ -101,7 +96,20 @@ body {
 .button-days {
   margin-top: 1rem;
   margin-left: 10px;
-  font-size: 15px; 
+  font-size: 25px; 
+  padding: 5px;
+  color: black;
+  padding: .05rem;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+}
+
+.button-pagination {
+  margin-top: 1rem;
+  margin-left: 10px;
+  font-size: 25px; 
   padding: 5px;
   color: black;
   padding: .05rem;
@@ -112,18 +120,18 @@ body {
 }
 
 .button-days:focus{
-  color: black;
-  background-color: orange;
+  color: darkgray;  
+  background-color: gray;
 }
 
 .button-days:active{
-  color: black;  
-  background-color: orange;
+  color: darkgray;  
+  background-color: gray;
 }
 
 .button-days:hover{
   color: white;  
-  background-color: rgb(10, 13, 197);
+  background-color: rgba(29, 32, 200, 0.757);
 }
 
 login {
@@ -450,4 +458,26 @@ button {
 }
 .ag-image-header {
   margin-left: -5px
+}
+
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: white;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination a.active {
+  background-color: rgb(90, 126, 162);
+  color: white;
+  border-radius: 5px;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: rgba(29, 32, 200, 0.757);
+  border-radius: 5px;
 }

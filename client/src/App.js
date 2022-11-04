@@ -16,10 +16,16 @@ import LineChart from './components/LineChart'
 import SalesMonth from './components/SalesMonth'
 import SalesWeek from './components/SalesWeek'
 import SalesDay from './components/SalesDay'
-import CollectionsDay from './components/CollectionsDay'
-import CollectionsWeek from './components/CollectionsWeek'
-import CollectionsMonth from './components/CollectionsMonth'
-import RapidApiOpensea from './components/RapidApiOpensea'
+import RapidApiCollectionDay from './components/RapidApiDay_Collection'
+import RapidApiCollectionWeek from './components//RapidApiWeek_Collection'
+import RapidApiCollectionMonth from './components//RapidApiMonth_Collection'
+import CryptoSlamDay from './components/CollectionsDayCS'
+import CryptoSlamWeek from './components/CollectionsWeekCS'
+import CryptoSlamMonth from './components/CollectionsMonthCS'
+import Pagination from './components/Pagination';
+import Passengers from './components/Passengers';
+import DataTable from './components/DataTable';
+import { composeFunctions } from 'rsuite/esm/utils';
 
 function App() {
 
@@ -46,9 +52,16 @@ function App() {
             <Route exact path="/SalesMonth" element={<SalesMonth />} />
             <Route exact path="/SalesWeek" element={<SalesWeek />} />
             <Route exact path="/SalesDay" element={<SalesDay />} />
-            <Route exact path="/CollectionsDay" element={<CollectionsDay />} />
-            <Route exact path="/CollectionsWeek" element={<CollectionsWeek />} />
-            <Route exact path="/CollectionsMonth" element={<CollectionsMonth />} />
+            <Route exact path="/RapidAPICollectionsDay" element={<RapidApiCollectionDay />} />
+            <Route exact path="/RapidAPICollectionsWeek" element={<RapidApiCollectionWeek />} />
+            <Route exact path="/RapidAPICollectionsMonth" element={<RapidApiCollectionMonth />} />
+            <Route exact path="/CryptoSlamDay" element={<CryptoSlamDay />} />
+            <Route exact path="/CryptoSlamWeek" element={<CryptoSlamWeek />} />
+            <Route exact path="/CryptoSlamMonth" element={<CryptoSlamMonth />} />
+            <Route exact path="/DataTable" element={<DataTable />} />
+
+            <Route exact path="/pages" element={<Pagination />} />
+            <Route exact path="/passengers" element={<Passengers />} />
             {/* <Route exact path="/register" element={<Registration/>}/> */}
             {/* <Route exact path="/main" element={<Main/>}/> */}
           </Routes>
