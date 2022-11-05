@@ -1,15 +1,15 @@
 // index.js for App.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom';
 import './App.css';
 import App from './App';
-import {GoogleOAuthProvider} from '@react-oauth/google';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 // import { AuthProvider } from './components/context/AuthProvider';
 
-const clientId ="1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
-
+const clientId =
+    '1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com';
 
 // const root = ReactDOM.createRoot(
 //   );
@@ -23,13 +23,13 @@ const clientId ="1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleuserc
 // );
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // <React.StrictMode>
-    <GoogleOAuthProvider clientId={clientId}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-     </GoogleOAuthProvider>
-  //  </React.StrictMode>,
+    <React.StrictMode>
+        <GoogleOAuthProvider clientId={clientId}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </GoogleOAuthProvider>
+    </React.StrictMode>
 );
 
 // # ReactDOM.render(

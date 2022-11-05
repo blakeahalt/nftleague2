@@ -41,7 +41,7 @@ function App() {
 	}
 	useEffect(() => {
 		/* global google */
-		google.accounts.id.initialize ({
+		google.accounts.id.initialize({
 			client_id: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
 			callback: handleCallbackResponse
 		})
@@ -64,14 +64,14 @@ function App() {
 
 	window.gapi.load('client:auth2', () => {
 		window.gapi.client.init({
-		    clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
-		    scope: "email"
+			clientId: "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com",
+			scope: "email"
 		})
 	})
 
 	useEffect((req, res) => {
 		axios.get("http://localhost:3001/working")  //"http://localhost:3001/login"
-		// axios.get("/GoogleApp")  //"http://localhost:3001/login"
+			// axios.get("/GoogleApp")  //"http://localhost:3001/login"
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -90,18 +90,18 @@ function App() {
 	const [pwd, setPwd] = useState('');
 	const [errMsg, setErrMsg] = useState('');
 	const [success, setSuccess] = useState(false);
-	
+
 	const navigate = useNavigate();
-	
-	
+
+
 	useEffect(() => {
 		userRef.current.focus();
 	}, [])
-	
+
 	useEffect(() => {
 		setErrMsg('');
 	}, [user, pwd])
-	
+
 	useEffect(() => {
 		if (localStorage.getItem('user-info')) {
 			navigate.push("/added")
@@ -154,41 +154,41 @@ function App() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-	// 	axios.post('http://localhost:3001/checkPassword', {    // Development
-	// 		// axios.post('/login', {			     // Heroku
-	// 		user: user,
-	// 		pwd: pwd,
-	// 	}).then((response) => {
-	// 		if (!response.data.message) {
-	// 		setLoginStatus(response.data.message);
-	// 		} else {
-	// 		setLoginStatus (response.data[0].message);
-	// 		}
-	// 		// console.log(JSON.stringify(response?.data));
-	// 		//console.log(JSON.stringify(response));
-	// 		// const accessToken = response?.data?.accessToken;
-	// 		// const roles = response?.data?.roles;
-	// 		// setAuth({ user, pwd, accessToken });
-	// 		setUser('');
-	// 		setPwd('');
-	// 		setSuccess(true);
-	// 	}).catch((err)=> {
-	// 		if (!err?.response) {
-	// 			setErrMsg('No Server Response');
-	// 		} else if (err.response?.status === 400) {
-	// 			setErrMsg('Missing Username or Password');
-	// 		} else if (err.response?.status === 401) {
-	// 			setErrMsg('Unauthorized');
-	// 		} else {
-	// 			setErrMsg('Login Failed');
-	// 		}
-	// 		// errRef.current.focus(); //don't use...was causing an error
-	// 	})
-	// 	console.log(user, pwd);
-	// };	
-	// ============================
+		// 	axios.post('http://localhost:3001/checkPassword', {    // Development
+		// 		// axios.post('/login', {			     // Heroku
+		// 		user: user,
+		// 		pwd: pwd,
+		// 	}).then((response) => {
+		// 		if (!response.data.message) {
+		// 		setLoginStatus(response.data.message);
+		// 		} else {
+		// 		setLoginStatus (response.data[0].message);
+		// 		}
+		// 		// console.log(JSON.stringify(response?.data));
+		// 		//console.log(JSON.stringify(response));
+		// 		// const accessToken = response?.data?.accessToken;
+		// 		// const roles = response?.data?.roles;
+		// 		// setAuth({ user, pwd, accessToken });
+		// 		setUser('');
+		// 		setPwd('');
+		// 		setSuccess(true);
+		// 	}).catch((err)=> {
+		// 		if (!err?.response) {
+		// 			setErrMsg('No Server Response');
+		// 		} else if (err.response?.status === 400) {
+		// 			setErrMsg('Missing Username or Password');
+		// 		} else if (err.response?.status === 401) {
+		// 			setErrMsg('Unauthorized');
+		// 		} else {
+		// 			setErrMsg('Login Failed');
+		// 		}
+		// 		// errRef.current.focus(); //don't use...was causing an error
+		// 	})
+		// 	console.log(user, pwd);
+		// };	
+		// ============================
 
-	const checkPassword = (decryption) => {
+		const checkPassword = (decryption) => {
 			axios.get('http://localhost:3001/checkPassword', {
 				password: decryption.password,
 				user: response.data,
@@ -196,24 +196,24 @@ function App() {
 			}).then((response) => {
 				setPasswordList(
 					passwordList.map((val) => {
-						return val.password === decryption.password ? 
-						{
-							id: val.id,
-							password: val.password,
-							user: response.data,
-						} : val;
+						return val.password === decryption.password ?
+							{
+								id: val.id,
+								password: val.password,
+								user: response.data,
+							} : val;
 					})
-					);
-				}).catch((err)=> {
-						if (!err?.response) {
-							setErrMsg('No Server Response');
-						} else if (err.response?.status === 400) {
-							setErrMsg('Missing Username or Password');
-						} else if (err.response?.status === 401) {
-							setErrMsg('Unauthorized');
-						} else {
-							setErrMsg('Login Failed');
-						};
+				);
+			}).catch((err) => {
+				if (!err?.response) {
+					setErrMsg('No Server Response');
+				} else if (err.response?.status === 400) {
+					setErrMsg('Missing Username or Password');
+				} else if (err.response?.status === 401) {
+					setErrMsg('Unauthorized');
+				} else {
+					setErrMsg('Login Failed');
+				};
 			});
 		}
 	}
@@ -237,144 +237,144 @@ function App() {
 	// 				);
 	// 			});
 	// 		};
-// ======================
+	// ======================
 
-		// try {
-		// 	const response = await axios.post(LOGIN_URL,
-		// 		JSON.stringify({ user, pwd }),
-		// 		{
-		// 			headers: { 'Content-Type': 'application/json' },
-		// 			// withCredentials: true
-		// 		}
-		// 	);
-		// 	console.log(JSON.stringify(response?.data));
-		// 	//console.log(JSON.stringify(response));
-		// 	const accessToken = response?.data?.accessToken;
-		// 	const roles = response?.data?.roles;
-		// 	setAuth({ user, pwd, roles, accessToken });
-		// 	setUser('');
-		// 	setPwd('');
-		// 	setSuccess(true);
-		// } catch (err) {
-		// 	if (!err?.response) {
-		// 		setErrMsg('No Server Response');
-		// 	} else if (err.response?.status === 400) {
-		// 		setErrMsg('Missing Username or Password');
-		// 	} else if (err.response?.status === 401) {
-		// 		setErrMsg('Unauthorized');
-		// 	} else {
-		// 		setErrMsg('Login Failed');
-		// 	}
-		// 	// errRef.current.focus(); //don't use...was causing an error
-		// }
-// }
+	// try {
+	// 	const response = await axios.post(LOGIN_URL,
+	// 		JSON.stringify({ user, pwd }),
+	// 		{
+	// 			headers: { 'Content-Type': 'application/json' },
+	// 			// withCredentials: true
+	// 		}
+	// 	);
+	// 	console.log(JSON.stringify(response?.data));
+	// 	//console.log(JSON.stringify(response));
+	// 	const accessToken = response?.data?.accessToken;
+	// 	const roles = response?.data?.roles;
+	// 	setAuth({ user, pwd, roles, accessToken });
+	// 	setUser('');
+	// 	setPwd('');
+	// 	setSuccess(true);
+	// } catch (err) {
+	// 	if (!err?.response) {
+	// 		setErrMsg('No Server Response');
+	// 	} else if (err.response?.status === 400) {
+	// 		setErrMsg('Missing Username or Password');
+	// 	} else if (err.response?.status === 401) {
+	// 		setErrMsg('Unauthorized');
+	// 	} else {
+	// 		setErrMsg('Login Failed');
+	// 	}
+	// 	// errRef.current.focus(); //don't use...was causing an error
+	// }
+	// }
 	// From Login.js ========================================================================================
 
-return (
-	<>
-		{success ? (
-			// <Routes>
-			// 	<Route exact path="/success" element={<RegisterSuccess/>}/>
-			// </Routes>
-			<section>
-				<h1>You are logged in!</h1>
-				<br />
-				<p>
-				  <Link to='/Profile'>Go to your Profile</Link>
-				</p>
-				<h2>Login Status: {loginStatus}</h2>
+	return (
+		<>
+			{success ? (
+				// <Routes>
+				// 	<Route exact path="/success" element={<RegisterSuccess/>}/>
+				// </Routes>
+				<section>
+					<h1>You are logged in!</h1>
+					<br />
+					<p>
+						<Link to='/Profile'>Go to your Profile</Link>
+					</p>
+					<h2>Login Status: {loginStatus}</h2>
 
-			</section>
-		) : (
-			<section>
-				<p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-				<h1>Sign In</h1>
-				<form onSubmit={() => handleSubmit}>
-					<label htmlFor="username">Username:</label>
-					<input
-						type="text"
-						id="username"
-						ref={userRef}
-						autoComplete="off"
-						// onChange={(e) => setUserReg(e.target.value)}
-						onChange={(e) => setUser(e.target.value)}
-						value={user}
-						required
-					/>
+				</section>
+			) : (
+				<section>
+					<p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+					<h1>Sign In</h1>
+					<form onSubmit={() => handleSubmit}>
+						<label htmlFor="username">Username:</label>
+						<input
+							type="text"
+							id="username"
+							ref={userRef}
+							autoComplete="off"
+							// onChange={(e) => setUserReg(e.target.value)}
+							onChange={(e) => setUser(e.target.value)}
+							value={user}
+							required
+						/>
 
-					<label htmlFor="password">Password:</label>
-					<input
-						type="password"
-						id="password"
-						// onChange={(e) => setPwdReg(e.target.value)}
-						onChange={(e) => setPwd(e.target.value)}
-						value={pwd}
-						required
-					/>
-					
-					<button>Sign In</button>
-					
-					<div className="Passwords">
-					{passwordList.map((val, key) => {
-						return (
-							<div className="checkPassword"
-								// onClick={() => {
-								// 	decryptPassword({ 
-								// 		password: val.password, 
-								// 		iv: val.iv, 
-								// 		id: val.id })
-								// 	}}
-								// 	key={key} > 
-								// <ul> {val.user} </ul>
-								
-								// onClick={() => {
-								// 	decryptPassword({ 
-								// 		password: val.password, 
-								// 		iv: val.iv, 
-								// 		id: val.id })
-								// 	}}
-									key={key} 
-									> 
-								<ul> {val.user} </ul>
-							</div>
-						)
-					})}
+						<label htmlFor="password">Password:</label>
+						<input
+							type="password"
+							id="password"
+							// onChange={(e) => setPwdReg(e.target.value)}
+							onChange={(e) => setPwd(e.target.value)}
+							value={pwd}
+							required
+						/>
+
+						<button>Sign In</button>
+
+						<div className="Passwords">
+							{passwordList.map((val, key) => {
+								return (
+									<div className="checkPassword"
+										// onClick={() => {
+										// 	decryptPassword({ 
+										// 		password: val.password, 
+										// 		iv: val.iv, 
+										// 		id: val.id })
+										// 	}}
+										// 	key={key} > 
+										// <ul> {val.user} </ul>
+
+										// onClick={() => {
+										// 	decryptPassword({ 
+										// 		password: val.password, 
+										// 		iv: val.iv, 
+										// 		id: val.id })
+										// 	}}
+										key={key}
+									>
+										<ul> {val.user} </ul>
+									</div>
+								)
+							})}
+						</div>
+					</form>
+
+					<br />
+
+					<div>
+						{/* <Link to='/googleapp'>Google Login</Link> */}
+						Log in with your Google Account
+						{/* <div id="signInDiv"></div> */}
+						<LoginButton />
+						<LogoutButton />
+						<br />
 					</div>
-				</form>
-
-				<br />
-				
-				<div>
-					{/* <Link to='/googleapp'>Google Login</Link> */}
-					Log in with your Google Account
-					{/* <div id="signInDiv"></div> */}
-					<LoginButton />
-					<LogoutButton />
-					<br />
-				</div>
-				<p>
-					Need an Account?
-					<br />
-					<span className="line">
-						{/*put router link here*/}
-						{/* <a href="/register">Sign Up</a> */}
-						<Link to='/register'>Sign Up</Link>
-					</span>
-					{/* <span>Your new SALT: {salt}</span> */}
-					<br />
-					{/* <span>
+					<p>
+						Need an Account?
+						<br />
+						<span className="line">
+							{/*put router link here*/}
+							{/* <a href="/register">Sign Up</a> */}
+							<Link to='/register'>Sign Up</Link>
+						</span>
+						{/* <span>Your new SALT: {salt}</span> */}
+						<br />
+						{/* <span>
 						Save this Salt, UPON sign up <br /> if you refresh it will generate a new SALT!!!
 					</span> */}
-				</p>
-				<p>axios.get('/googleapp') status: <i>{notification}</i></p>
-				<br />
-				<h2>Login Status: {loginStatus}</h2>
-				
+					</p>
+					<p>axios.get('/googleapp') status: <i>{notification}</i></p>
+					<br />
+					<h2>Login Status: {loginStatus}</h2>
 
-			</section>
-		)}
-	</>
-)
+
+				</section>
+			)}
+		</>
+	)
 }
 
 
@@ -396,7 +396,7 @@ const Notification = () => {
 
 	useEffect((req, res) => {
 		axios.get("http://localhost:3001/working")  //"http://localhost:3001/register"
-		// axios.get("/working")  //"http://localhost:3001/register"
+			// axios.get("/working")  //"http://localhost:3001/register"
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -412,13 +412,13 @@ const Notification = () => {
 			<Link to="/googleapp">
 				<button className="primary-button" id="reg_btn"><span>Back to Login</span></button>
 			</Link>
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
-		<p>axios.get('/notification') status: <i>{notification}</i></p>
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<p>axios.get('/notification') status: <i>{notification}</i></p>
 
 		</div >
 	)
@@ -439,11 +439,11 @@ import LogoutButton from "./GoogleLogout"
 
 const Profile = () => {
 
-       const [notification, setNotification] = useState("")
+	const [notification, setNotification] = useState("")
 
 	useEffect((req, res) => {
 		axios.get("http://localhost:3001/profile")  //"http://localhost:3001/register"
-		// axios.get("/working")  //"http://localhost:3001/register"
+			// axios.get("/working")  //"http://localhost:3001/register"
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -451,18 +451,18 @@ const Profile = () => {
 	}, [])
 
 
-       return (
-              <>
-              You've registered!...Profile page coming soon
+	return (
+		<>
+			You've registered!...Profile page coming soon
 
-              <p>axios.get('/profile') status: <i>{notification}</i></p>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <LogoutButton />
-              </>
-       )
+			<p>axios.get('/profile') status: <i>{notification}</i></p>
+			<br />
+			<br />
+			<br />
+			<br />
+			<LogoutButton />
+		</>
+	)
 }
 
 export default Profile
@@ -511,7 +511,7 @@ const Register = () => {
 
 	useEffect((req, res) => {
 		axios.get("http://localhost:3001/working")  //"http://localhost:3001/register"
-		// axios.get("/register")  //"http://localhost:3001/register"
+			// axios.get("/register")  //"http://localhost:3001/register"
 			.then(res => {
 				console.log(res)
 				setNotification(res.data.message)
@@ -548,7 +548,7 @@ const Register = () => {
 	// 			setNotification(res.data.message)
 	// 		})
 	// }, [])
-	
+
 	// HANDLESUBMIT USING PROMISE
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -560,33 +560,33 @@ const Register = () => {
 			return;
 		}
 		axios.post('http://localhost:3001/addPassword', {  //remove URL when deploying a build to heroku
-		// axios.post('/addPassword', {  //remove URL when deploying a build to heroku
+			// axios.post('/addPassword', {  //remove URL when deploying a build to heroku
 			user: user,
 			pwd: pwd
 		})
-		.then((response)=> {
-			console.log("1", response.config.data);
-			console.log("2", response?.data); //prints {response: 'WORKING'} from server index.js
-			// console.log(response?.accessToken);
-			console.log("3", JSON.stringify(response))
-			setSuccess(true)
-			setCatchUser(user)
-			setUser('');
-			setPwd('');
-			setMatchPwd('');
-		}).catch((err)=> {
-			if (!err?.response) {
-				setErrMsg('No Server Response');
-			} else if (err.response?.status === 409) {
-				setErrMsg('Username Taken');
-			} else {
-				setErrMsg('Registration Failed')
-			}
-			// errRef.current.focus();
-		})
+			.then((response) => {
+				console.log("1", response.config.data);
+				console.log("2", response?.data); //prints {response: 'WORKING'} from server index.js
+				// console.log(response?.accessToken);
+				console.log("3", JSON.stringify(response))
+				setSuccess(true)
+				setCatchUser(user)
+				setUser('');
+				setPwd('');
+				setMatchPwd('');
+			}).catch((err) => {
+				if (!err?.response) {
+					setErrMsg('No Server Response');
+				} else if (err.response?.status === 409) {
+					setErrMsg('Username Taken');
+				} else {
+					setErrMsg('Registration Failed')
+				}
+				// errRef.current.focus();
+			})
 		console.log(user, pwd);
 	}
-	
+
 	// HANDLESUBMIT USING ASYNC/AWAIT 
 	// const handleSubmit = async (e) => {
 	// 	e.preventDefault();
@@ -638,27 +638,27 @@ const Register = () => {
 	// 		// errRef.current.focus();
 	// 	}
 	// }
-		
-		// const decryptPassword = (encryption) => {
-		// 	axios.post('http://localhost:3001/decryptPassword', {
-		// 		password: encryption.password,
-		// 		iv: encryption.iv,
-		// 	}).then((response) => {
-		// 		setPasswordList(
-		// 			passwordList.map((val) => {
-		// 				return val.id === encryption.id
-		// 				? {
-		// 					id: val.id,
-		// 					password: val.password,
-		// 					user: response.data,
-		// 					iv: val.iv,
-		// 				}
-		// 				: val;
-		// 			})
-		// 			);
-		// 		});
-		// 	};
-			
+
+	// const decryptPassword = (encryption) => {
+	// 	axios.post('http://localhost:3001/decryptPassword', {
+	// 		password: encryption.password,
+	// 		iv: encryption.iv,
+	// 	}).then((response) => {
+	// 		setPasswordList(
+	// 			passwordList.map((val) => {
+	// 				return val.id === encryption.id
+	// 				? {
+	// 					id: val.id,
+	// 					password: val.password,
+	// 					user: response.data,
+	// 					iv: val.iv,
+	// 				}
+	// 				: val;
+	// 			})
+	// 			);
+	// 		});
+	// 	};
+
 	return (
 		<>
 			{success ? (
@@ -814,28 +814,28 @@ app.use(express.json());
 const cors = require("cors");
 // app.use(cors());
 app.use(
-  cors({
-  origin: ['http://localhost:3000'],
-  methods: ['GET', 'POST'],
-  credentials: true,
-  })
- );
+	cors({
+		origin: ['http://localhost:3000'],
+		methods: ['GET', 'POST'],
+		credentials: true,
+	})
+);
 // const proxy = require('http-proxy-middleware')
 
 // module.exports = function(app) {
-  //     // add other server routes to path array
-  //     app.use(proxy(['/api' ], { target: 'http://localhost:5000' }));
-  // } 
-  
-const {encrypt, decrypt} = require('./EncryptionHandler')
+//     // add other server routes to path array
+//     app.use(proxy(['/api' ], { target: 'http://localhost:5000' }));
+// } 
+
+const { encrypt, decrypt } = require('./EncryptionHandler')
 // =======================================
 // mysql that works in development
 const mysql = require('mysql2')
 const db = mysql.createConnection({
-  user: 'hu6etanlnbizgzv5' ,
-  host: 'cwe1u6tjijexv3r6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-  password:'g9clxpcv1kdf5jqj',
-  database: 'hzgtrybfzcvlvstf'
+	user: 'hu6etanlnbizgzv5',
+	host: 'cwe1u6tjijexv3r6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+	password: 'g9clxpcv1kdf5jqj',
+	database: 'hzgtrybfzcvlvstf'
 })
 
 // ========================================
@@ -864,36 +864,36 @@ app.use(express.static(path.join(__dirname, "public")));
 // });
 
 app.get("/test", (req, res) => {
-  res.json({ message:"WORKING" });
+	res.json({ message: "WORKING" });
 });
 
 app.post("/test", (req, res) => {
-  res.json({ message:"WORKING" });
+	res.json({ message: "WORKING" });
 });
 
 app.get("/GoogleApp", (req, res) => {
-  res.json({ message:"WORKING" });
+	res.json({ message: "WORKING" });
 });
 
 app.get("/notification", (req, res) => {
-  res.json({ message:"WORKING" });
+	res.json({ message: "WORKING" });
 });
 
 app.get("/register", (req, res) => {
-  res.json({ message:"WORKING" });
+	res.json({ message: "WORKING" });
 });
 
 app.get("/profile", (req, res) => {
-  res.json({ message:"WORKING" });
+	res.json({ message: "WORKING" });
 });
 
 app.get("/working", (req, res) => {
-  res.json({ message:"WORKING" });
+	res.json({ message: "WORKING" });
 });
 
 app.get("/added", (req, res) => {
-  res.send(res.data.user)
-  res.json({ message: "WORKING" });
+	res.send(res.data.user)
+	res.json({ message: "WORKING" });
 });
 
 // app.get('*', (req, res) => {
@@ -950,37 +950,37 @@ app.get("/added", (req, res) => {
 // ===================================
 
 app.get("/checkPassword", (req, res) => {
-  // res.send(decrypt(req.body));
-  // const user = req.body.user;
-  // const pwd = req.body.pwd;
-  // const {user, pwd} = req.body 
+	// res.send(decrypt(req.body));
+	// const user = req.body.user;
+	// const pwd = req.body.pwd;
+	// const {user, pwd} = req.body 
 
-  const {pwd, user} = req.body 
-  const decryptedPassword = decrypt(pwd)
+	const { pwd, user } = req.body
+	const decryptedPassword = decrypt(pwd)
 
-  db.query(
-      "SELECT * FROM passwords WHERE user = ? AND password = ?",
-      [user, decryptedPassword.password],
-      (err, result)=> {
-          if (err) {
-              res.send({err: err});
-          } else {
-            res.send("Success")
-          }
+	db.query(
+		"SELECT * FROM passwords WHERE user = ? AND password = ?",
+		[user, decryptedPassword.password],
+		(err, result) => {
+			if (err) {
+				res.send({ err: err });
+			} else {
+				res.send("Success")
+			}
 
-        })
-  
-          // if (result.length > 0) {
-          //     res.send(result);
-          //     } else {
-          //       res.send({message: 'Wut'});
-          //     }
-                // else({message: "Wrong username/password comination!"});
-            })
+		})
+
+	// if (result.length > 0) {
+	//     res.send(result);
+	//     } else {
+	//       res.send({message: 'Wut'});
+	//     }
+	// else({message: "Wrong username/password comination!"});
+})
 
 // app.post('/googleapp', (req, res)=> {
 //   const {user, pwd} = req.body 
-  
+
 //   db.execute('INSERT INTO passwords (user, password) VALUES (?,?)',
 //       [user, pwd],
 //     (err, result)=> {
@@ -1004,29 +1004,29 @@ app.get("/checkPassword", (req, res) => {
 // });
 
 app.post("/addPassword", (req, res) => {
-  const {pwd, user} = req.body 
-  const hashedPassword = encrypt(pwd)
+	const { pwd, user } = req.body
+	const hashedPassword = encrypt(pwd)
 
-  db.query("INSERT INTO passwords (password, user, iv) VALUES (?,?,?)", [hashedPassword.password, user, hashedPassword.iv],
-  (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send("Success")
-    }
-  })
+	db.query("INSERT INTO passwords (password, user, iv) VALUES (?,?,?)", [hashedPassword.password, user, hashedPassword.iv],
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send("Success")
+			}
+		})
 });
 
-  
+
 app.get("/showPasswords", (req, res) => {
-  db.query("SELECT * FROM passwords;", 
-  (err, result) => {
-    if(err) {
-      console.log(err);
-    } else {
-      res.send(result)
-    }
-  })
+	db.query("SELECT * FROM passwords;",
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(result)
+			}
+		})
 })
 
 // app.post("/decryptpassword", (req, res) => {
@@ -1040,7 +1040,7 @@ app.get("/showPasswords", (req, res) => {
 
 // if (process.env.NODE_ENV === "production") {
 //   app.use(express.static(path.join(__dirname, "/client/build")));
-  
+
 
 // This route serves the React app
 app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, "public", "index.html")));

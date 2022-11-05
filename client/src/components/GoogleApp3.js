@@ -138,7 +138,7 @@ function App() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		axios.post('http://localhost:3001/checkPassword', {				// dev				
+		axios.post('http://localhost:3001/login', {				// dev				
 		// axios.post('/checkPassword', {  							// heroku	
 			user: user,
 			pwd: pwd,
@@ -251,9 +251,9 @@ function App() {
 						<br/>
 						<Link to='/register'> Register Here </Link>
 					</div>
-					{/* <p>axios.get('/googleapp') status: <i>{notification}</i></p>
+					<p>axios.get('/googleapp') status: <i>{notification}</i></p>
 					<br />
-					<Link to='/nftlist'>NFTList</Link> */}
+					<Link to='/nftlist'>NFTList</Link>
 
 				</section>
 				)}

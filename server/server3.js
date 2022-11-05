@@ -79,8 +79,7 @@ const db = mysql.createConnection({
   user: 'hu6etanlnbizgzv5' ,
   host: 'cwe1u6tjijexv3r6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
   password:'g9clxpcv1kdf5jqj',
-  database: 'hzgtrybfzcvlvstf',
-  multipleStatements: true
+  database: 'hzgtrybfzcvlvstf'
 })
 
 // ========================================
@@ -152,9 +151,9 @@ app.get("/added", (req, res) => {
 //   res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 // });
 
-// app.get("/login", (req, res) => {
-//   res.json({ res });
-// });
+app.get("/login", (req, res) => {
+  res.json({ res });
+});
 
 
 
@@ -165,64 +164,45 @@ app.get("/added", (req, res) => {
 // });
 
 // ========================================
-const {verifyPasswordWithHash, hashPassword } = require('./Argon2');
-const { PolarAreaController } = require("chart.js");
 
-app.post("/addPassword", async (req, res) => {
+const hashingConfig = { // based on OWASP cheat sheet recommendations (as of March, 2022)
+  parallelism: 1,
+  memoryCost: 64000, // 64 mb
+  timeCost: 3 // number of iterations
+}
+
+async function hashPassword(password) {
+  let salt = crypto.randomBytes(16);
+  return await argon2.hash({
+      password: password, 
+      iv: {...hashingConfig, salt,}
+  })
+}
+
+async function verifyPasswordWithHash(password, hash) {
+  return await argon2.verify(hash, password, hashingConfig);
+}
+
+// hashPassword("somePassword").then(async (hash) => {
+//     console.log("Hash + salt of the password:", hash)
+//     console.log("Password verification success:", await verifyPasswordWithHash("somePassword", hash));
+// });
+
+// ========================================
+
+app.post("/addPassword", (req, res) => {
   const {pwd, user} = req.body 
+  const hashedPassword = hashPassword(pwd)
 
-  const hashedPassword = await hashPassword(pwd)
-
-  
-   
-  db.query("INSERT INTO passwords (arg2pw, user) VALUES (?,?)", [hashedPassword.password, user],
+  db.query("INSERT INTO passwords (password, user, iv) VALUES (?,?,?)", [hashedPassword.password, user, hashedPassword.iv],
   (err, result) => {
     if (err) {
-      console.log(err)
-      console.log("pwd", pwd);
-      console.log("user", user);
-      console.log("server - hashPassword??:", hashedPassword.password);
-      console.log("server - iv:", hashedPassword.iv);;
+      console.log(err);
     } else {
       res.send("Success")
     }
   })
 });
-
-// ========================================
-
-app.post("/login", async (req, res) => {
-  console.log(req.body);
-  const user = req.body.user
-  const password = req.body.pwd
-  try{
-    const query = 
-    "SELECT password from users WHERE user = ? AND password = ? "
-    const result = await db.query(query, [user])
-    if (result.rowCount == 1) {
-      if (await argon2.verify(result.rows[0].password, password)){
-        res.json("Login Successful");
-      } else {
-        res.json("Password incorrect");
-      }
-    } else {
-      res.json("Username Not Found");
-    }
-  } catch (err) {
-    console.log("ErRor" + err);
-  }
-})
-
-  //  hashedPassword ? (
-
-  //   async function waitForit() {
-  //     await getHashed()=
-  //       db.query("INSERT INTO passwords (arg2pw, user, iv) VALUES (?,?,?)", ['$hashedPassword', null, null])
-  //   }
-  //   ) : (
-  //     console.log("wut")
-  //     )
-  //   })
 
   
 app.get("/showPasswords", (req, res) => {
@@ -235,7 +215,6 @@ app.get("/showPasswords", (req, res) => {
     }
   })
 })
-
 
 // app.get("/getUser", (req, res) => {
 //   // const {user} = req.body 
