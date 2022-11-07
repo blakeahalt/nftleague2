@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { GoogleLogin, googleLogout } from '@react-oauth/google';
 import { GoogleLogout } from 'react-google-login';
 import jwt_decode from 'jwt-decode';

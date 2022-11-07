@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // import { useRef, useState, useEffect } from "react";
 // import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -671,7 +672,7 @@ const Register = () => {
                             <Link to="/googleapp">Sign In</Link>
                         </span>
                     </p>
-                    <br />
+                    {/* <br />
                     <p>
                         Notification Test
                         <br />
@@ -687,15 +688,13 @@ const Register = () => {
                         axios.get('/register') status: <i>{notification}</i>
                     </p>
                     <div>
-                        {/* {userList.length >=1 ? userList.map((user, idx) => {
-                                                 return <p key={idx}>{user.user}</p>
-                                                 }
-                                          ):(
-                                          ''
-                                          )
-                                          }  */}
+                        {userList.length >= 1
+                            ? userList.map((user, idx) => {
+                                  return <p key={idx}>{user.user}</p>;
+                              })
+                            : ''}
                     </div>
-                    <li>{userName.slice().join(',  ')}</li>
+                    <li>{userName.slice().join(',  ')}</li> */}
                 </section>
             )}
         </>

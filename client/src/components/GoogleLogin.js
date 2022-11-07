@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // import { GoogleLogin, GoogleLogout } from 'react-google-login'
 // import { React, useState, useEffect } from "react";
 // import { useGoogleLogin } from '@react-oauth/google';
@@ -6,8 +7,6 @@
 // // import { useAuth0 } from "@auth0/auth0-react";
 // // import LoginButton from "./GoogleLogin"
 
-
-
 // const clientId = "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
 
 // function Login() {
@@ -15,7 +14,6 @@
 // 	const [success, setSuccess] = useState(false);
 // 	const [isSignedIn, setIsSignedIn] = useState(false);
 // 	const [user, setUser] = useState({});
-
 
 // 	const login = useGoogleLogin({
 // 		onSuccess: async respose => {
@@ -73,7 +71,7 @@
 // 				isSignedIn={true}
 // 				// onError={() => {
 // 				// 	console.log('Login Failed');
-// 				// }} 
+// 				// }}
 // 			/>
 // 		</div>
 // 	)
@@ -81,22 +79,11 @@
 
 // export default Login
 
-
-
-
-
 // // =================================================
-
-
-
-
-
 
 // import { GoogleLogin } from 'react-google-login'
 // import { Link } from 'react-router-dom';
 // import jwt_decode from "jwt-decode"
-
-
 
 // const clientId = "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
 
@@ -140,8 +127,7 @@
 // 			</div>
 //        )
 
-
-// 	// return( 
+// 	// return(
 // 	// 	<>
 // 	// 	<div id="g_id_onload"
 // 	// 		data-client_id="1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
@@ -174,11 +160,6 @@
 
 // export default GLogin
 
-
-
-
-
-
 // // <div id="g_id_onload"
 // //      data-client_id="1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
 // //      data-context="signin"
@@ -196,66 +177,61 @@
 // //      data-logo_alignment="left">
 // // </div>
 
-
-
-
-
 // import { GoogleLogin } from 'react-google-login'
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
-import axios from 'axios'
-import jwt_decode from "jwt-decode";
-import { React, useState, useEffect } from "react";
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
+import { React, useState, useEffect } from 'react';
 
-
-
-const clientId = "1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
+const clientId =
+    '1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com';
 
 function GLogin() {
-	const [success, setSuccess] = useState(false);
-	const [isSignedIn, setIsSignedIn] = useState(false);
-	const [user, setUser] = useState({});
+    const [success, setSuccess] = useState(false);
+    const [isSignedIn, setIsSignedIn] = useState(false);
+    const [user, setUser] = useState({});
 
-       const onSuccess = (res) => {
-              // console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
-		// axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
-		// 			headers: {
-		// 				"Authorization": `Bearer ${res.access_token}`
-		// 			}
-		// 		})
-		console.log("LOGIN SUCCESS! Current user: ",
-		jwt_decode(res.credential).name)
-		console.log(jwt_decode(res.credential));
-		// console.log(res.profileObj);
-		setUser(jwt_decode(res.credential).name)
+    const onSuccess = (res) => {
+        // console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
+        // axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+        // 			headers: {
+        // 				"Authorization": `Bearer ${res.access_token}`
+        // 			}
+        // 		})
+        console.log(
+            'LOGIN SUCCESS! Current user: ',
+            jwt_decode(res.credential).name
+        );
+        console.log(jwt_decode(res.credential));
+        // console.log(res.profileObj);
+        setUser(jwt_decode(res.credential).name);
+    };
 
-       }
+    const onFailure = (response) => {
+        console.log('LOGIN FAILED! Current user: ', response.credential);
+    };
 
-       const onFailure = (response) => {
-              console.log("LOGIN FAILED! Current user: ", response.credential);
-       }
-
-       return (
-              // <div id="signInButton">
-                     <GoogleLogin
-
-                            clientId={clientId}
-                            buttonText="Login"
-                            onSuccess={onSuccess}
-				cookiePolicy={'single_host_origin'}
-				isSignedIn={true}
-				setSuccess={setSuccess}
-				// onSuccess={credentialResponse => {
-				// 	console.log(credentialResponse.credential);
-				// 	var decoded = jwt_decode(credentialResponse.credential);
-				// 	console.log(decoded);
-				// 	setSuccess(true);
-				// 	setUser(decoded)
-				// 	console.log("Login Success!")
-				//  }}
-                            onFailure={onFailure}
-                     />
-              // </div>
-       )
+    return (
+        // <div id="signInButton">
+        <GoogleLogin
+            clientId={clientId}
+            buttonText="Login"
+            onSuccess={onSuccess}
+            cookiePolicy={'single_host_origin'}
+            isSignedIn={true}
+            setSuccess={setSuccess}
+            // onSuccess={credentialResponse => {
+            // 	console.log(credentialResponse.credential);
+            // 	var decoded = jwt_decode(credentialResponse.credential);
+            // 	console.log(decoded);
+            // 	setSuccess(true);
+            // 	setUser(decoded)
+            // 	console.log("Login Success!")
+            //  }}
+            onFailure={onFailure}
+        />
+        // </div>
+    );
 }
 
-export default GLogin
+export default GLogin;

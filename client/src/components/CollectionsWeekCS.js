@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { useState, useEffect } from 'react';
 import CryptoSlamRows from './CryptoSlamRows';
@@ -96,16 +98,16 @@ function UserList() {
                     <a
                         className="nav-link active"
                         aria-current="page"
-                        href="/salesweek"
+                        href="/cryptoslamday"
                     >
-                        Top Sales
+                        CryptoSlam
                     </a>
                     <a
                         className="nav-link active"
                         aria-current="page"
-                        href="/collectionsday"
+                        href="/RapidAPICollectionsDay"
                     >
-                        Top Collections
+                        NFT Stats
                     </a>
                     <a
                         className="nav-link active"
@@ -132,14 +134,13 @@ function UserList() {
                 <h2
                     style={{
                         textAlign: 'center',
-                        fontSize: 42,
+                        fontSize: 55,
                         marginTop: 20,
                         marginBottom: 30,
                     }}
                 >
                     {' '}
-                    CRYPTO SLAM: Top of the Week
-                    {/* <div style={{ position: 'relative', marginTop: -10, marginBottom: 20}}> */}
+                    CRYPTO SLAM: Top of the Week <br />
                     <Link
                         to="/CryptoSlamDay"
                         style={{ color: 'black' }}
@@ -177,7 +178,6 @@ function UserList() {
                     >
                         <button className="button-days"> 30DAY </button>
                     </Link>
-                    {/* </div> */}
                 </h2>
 
                 <CryptoSlamRows both={currentPosts} />

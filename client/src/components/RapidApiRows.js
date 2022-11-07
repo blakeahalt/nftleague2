@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react'
 import { Row, Col } from 'react-grid-system';
 
@@ -25,13 +26,13 @@ const RapidAPIRow = ({both}) => {
                       <br/>
                       <a href={row.OSLink} target="_blank" rel="noreferrer" style={{fontSize:14, marginRight:12}}>OpenSea</a>
                       <a href={row.NFTstatsLink} target="_blank" rel="noreferrer" style={{fontSize:14, marginRight:12}}>NFTStats</a>
-                      <a href={row.IcyToolsLink} target="_blank" rel="noreferrer" style={{fontSize:14, marginRight:12}}>IcyTools</a>
-                      <a href={row.RaribleLink} target="_blank" rel="noreferrer" style={{fontSize:14, marginRight:12, marginRight:12}}>Rarible</a>
+                      {/* <a href={row.IcyToolsLink} target="_blank" rel="noreferrer" style={{fontSize:14, marginRight:12}}>IcyTools</a> */}
+                      {/* <a href={row.RaribleLink} target="_blank" rel="noreferrer" style={{fontSize:14, marginRight:12}}>Rarible</a> */}
                        </Col>
                   <Col style={{ minWidth: 100, maxWidth: 200, marginTop:27, textAlign:'right', fontSize:18 }}> {row.stats.seven_day_sales?row.stats.seven_day_sales.toFixed(0):"N/D"} </Col>
                   <Col style={{ minWidth:102, maxWidth: 400, marginTop:27, textAlign:'right', fontSize:18 }}> {row.collection_url?row.collection_url.volume:null} </Col>
                   <Col style={{ minWidth:102, maxWidth: 400, marginTop:27, textAlign:'right', fontSize:18 }}> Ξ{row.stats.floor_price? row.stats.floor_price.toFixed(3):"N/D"} </Col>
-                  <Col style={{ minWidth:102, maxWidth: 400, marginTop:27, textAlign:'right', fontSize:18 }}> {row.stats.seven_day_average_price?row.stats.seven_day_average_price.toFixed(3):"N/D"}</Col>
+                  <Col style={{ minWidth:102, maxWidth: 400, marginTop:27, textAlign:'right', fontSize:18 }}> Ξ{row.stats.seven_day_average_price?row.stats.seven_day_average_price.toFixed(3):"N/D"}</Col>
                   <Col style={{ minWidth: 160, maxWidth: 400, marginTop:27, textAlign:'right', fontSize:18, marginRight:10, flexWrap: 'wrap' }}> {row.stats.num_owners?row.stats.num_owners:"N/D"} / {row.stats.count?row.stats.count:"N/D"} </Col>
                   {/* <Col style={{ minWidth: 160, maxWidth: 400, marginTop:27, textAlign:'right', fontSize:18, marginRight:10 }}> {row.stats.market_cap?row.stats.market_cap.toFixed(3):"N/D"}</Col> */}
                 </Row>

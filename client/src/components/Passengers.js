@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useState, useEffect } from 'react';
 import Pagination from './Pagination';
-import axios from 'axios'
+import axios from 'axios';
 
 function Passengers() {
     const pageNumberLimit = 5;
@@ -9,8 +10,8 @@ function Passengers() {
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPageLimit, setMaxPageLimit] = useState(5);
     const [minPageLimit, setMinPageLimit] = useState(0);
-    const [rowDataSales, setRowDataSales] = useState([])
-    const [stats, setStats] = useState([])
+    const [rowDataSales, setRowDataSales] = useState([]);
+    const [stats, setStats] = useState([]);
 
     // const options = {
     //     method: 'GET',
@@ -20,16 +21,16 @@ function Passengers() {
     //       'X-RapidAPI-Host': 'top-nft-sales.p.rapidapi.com'
     //     }
     //   };
-      
+
     //   useEffect(() => {
     //     setLoading(true);
     //     fetch(`https://top-nft-sales.p.rapidapi.com/collections/7d`, options)
     //       .then(response => response.json())
     //       .then((json) => { setData(json); setLoading(false);});
-    
+
     //     }, [currentPage]);
     //     // console.log("passengersData",passengersData );
-        
+
     // const options = {method: 'GET', headers: {accept: 'application/json'}};
 
     // async function getStats() {
@@ -43,51 +44,57 @@ function Passengers() {
     //     getStats()
     // }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         setLoading(true);
         fetch(`https://api.opensea.io/api/v1/collection/boredapeyachtclub`)
-        .then((response) => response.json())
-        .then((json) => { setData(json); setLoading(false);})
-    },[]);
-    console.log("data:", passengersData)
+            .then((response) => response.json())
+            .then((json) => {
+                setData(json);
+                setLoading(false);
+            });
+    }, []);
+    console.log('data:', passengersData);
 
-    const onPageChange= (pageNumber)=>{
+    const onPageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
-    }
-    const onPrevClick = ()=>{
-      if((currentPage-1) % pageNumberLimit === 0){
-          setMaxPageLimit(maxPageLimit - pageNumberLimit);
-          setMinPageLimit(minPageLimit - pageNumberLimit);
-      }
-      setCurrentPage(prev=> prev-1);
-    }
+    };
+    const onPrevClick = () => {
+        if ((currentPage - 1) % pageNumberLimit === 0) {
+            setMaxPageLimit(maxPageLimit - pageNumberLimit);
+            setMinPageLimit(minPageLimit - pageNumberLimit);
+        }
+        setCurrentPage((prev) => prev - 1);
+    };
 
-    const onNextClick = ()=>{
-       if(currentPage+1 > maxPageLimit){
-           setMaxPageLimit(maxPageLimit + pageNumberLimit);
-           setMinPageLimit(minPageLimit + pageNumberLimit);
-       }
-       setCurrentPage(prev=>prev+1);
-    }
+    const onNextClick = () => {
+        if (currentPage + 1 > maxPageLimit) {
+            setMaxPageLimit(maxPageLimit + pageNumberLimit);
+            setMinPageLimit(minPageLimit + pageNumberLimit);
+        }
+        setCurrentPage((prev) => prev + 1);
+    };
 
     const paginationAttributes = {
         currentPage,
         maxPageLimit,
         minPageLimit,
         response: passengersData,
-    }
+    };
 
-    return(
+    return (
         <div>
             <h2>Passenger List</h2>
-            {!loading ? <Pagination {...paginationAttributes} 
-                onPrevClick={onPrevClick} 
-                onNextClick={onNextClick}
-                onPageChange={onPageChange}/>
-            : <div> Loading... </div>
-            }
+            {!loading ? (
+                <Pagination
+                    {...paginationAttributes}
+                    onPrevClick={onPrevClick}
+                    onNextClick={onNextClick}
+                    onPageChange={onPageChange}
+                />
+            ) : (
+                <div> Loading... </div>
+            )}
         </div>
-    )
-
+    );
 }
-export default Passengers
+export default Passengers;

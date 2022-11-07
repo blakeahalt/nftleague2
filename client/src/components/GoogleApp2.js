@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 import { GoogleLogout } from 'react-google-login';
 import jwt_decode from 'jwt-decode';
@@ -60,7 +61,7 @@ function App() {
             .get('http://localhost:3001/working') // dev
             // axios.get("/working")						//heroku
             .then((res) => {
-                console.log(res);
+                // console.log(res);
                 setNotification(res.data.message);
             });
     }, []);
@@ -73,7 +74,7 @@ function App() {
     function handleCallbackResponse(response) {
         // console.log("Encoded JWT ID token: " + response.credential)
         var userObject = jwt_decode(response.credential);
-        console.log(userObject);
+        // console.log(userObject);
         setUser(userObject);
         document.getElementById('signInDiv').hidden = true;
     }
@@ -188,9 +189,9 @@ function App() {
                 pwd: pwd,
             })
             .then((response) => {
-                console.log('1', response);
-                console.log('2', response?.data);
-                console.log('3', response?.data.arg2pw);
+                // console.log('1', response);
+                // console.log('2', response?.data);
+                // console.log('3', response?.data.arg2pw);
                 if (response.status === 200) {
                     setSuccess(true);
                     setCatchUser(user);
@@ -312,7 +313,7 @@ function App() {
                             onSuccess={(res) => {
                                 // console.log(credentialResponse.credential);
                                 var decoded = jwt_decode(res.credential);
-                                console.log(decoded);
+                                // console.log(decoded);
                                 setSuccess(true);
                                 setGoogleSuccess(true);
                                 setUser(decoded);
