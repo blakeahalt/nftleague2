@@ -1,15 +1,15 @@
-const express = require("express");
+import express, { json } from "express";
 const app = express();
-const path = require("path");
+import { join, resolve } from "path";
 const port = process.env.PORT || 3001;
-const cors = require("cors");
-const argon2 = require('argon2');
-const crypto = require('crypto');
+import cors from "cors";
+import { verify } from 'argon2';
+import crypto from 'crypto';
 
 // app.use(cors());
 app.use(cors({ credentials: true }))
 
-app.use(express.json());
+app.use(json());
 
 // NEW SERVER========================================
 // const corsOptions = require('./config/corsOptions');
@@ -75,13 +75,12 @@ app.use(express.json());
   
 // =======================================
 // mysql that works in development
-const mysql = require('mysql')
-const db = mysql.createConnection({
+import { createConnection } from 'mysql';
+const db = createConnection({
   user: 'hu6etanlnbizgzv5' ,
   host: 'cwe1u6tjijexv3r6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
   password:'g9clxpcv1kdf5jqj',
-  database: 'hzgtrybfzcvlvstf',
-  multipleStatements: true
+  database: 'hzgtrybfzcvlvstf'
 })
 
 // ========================================
@@ -109,7 +108,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(static(join(__dirname, "public")));
 // app.use(express.static(path.resolve(__dirname, '/public')));
 
 // app.get("/api", (req, res) => {
@@ -150,7 +149,7 @@ app.get("/working", (req, res) => {
 // });
 
 // ========================================
-const {verifyArg2pw, hashPassword } = require('./Argon2');
+import { verifyArg2pw, hashPassword } from './Argon2';
 
 app.post("/addPassword", async (req, res) => {
   const {pwd, user} = req.body 
@@ -197,7 +196,7 @@ app.post("/login", async (req, res) => {
           // parses result and stores in useable variable 'storedHash':
           const storedHash = JSON.parse(JSON.stringify(results[0].arg2pw)) 
           // argon2 verification method
-          if (await argon2.verify(storedHash, pwd)){
+          if (await verify(storedHash, pwd)){
             res.send("Successful Login")
             res.status(200)
           } else {
@@ -244,7 +243,7 @@ app.post("/login", async (req, res) => {
   
 
 // This route serves the React app
-app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, "public", "index.html")));
+app.get('*', (req, res) => res.sendFile(resolve(__dirname, "public", "index.html")));
 // }
 
 app.listen(port, () => console.log(`Server listening on port ${port}`));
