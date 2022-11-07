@@ -38,9 +38,10 @@ function App() {
     const [isSignedIn, setIsSignedIn] = useState(false);
 
     useEffect((req, res) => {
+        // axios
+        // .get('http://localhost:3001/working') // dev
         axios
-            .get('http://localhost:3001/working') // dev
-            // axios.get("/working")                                                        //heroku
+            .get('/working') //heroku
             .then((res) => {
                 console.log(res);
                 setNotification(res.data.message);

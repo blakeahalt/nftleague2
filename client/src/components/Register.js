@@ -419,8 +419,13 @@ const Register = () => {
             return;
         }
 
+        // axios
+        //     .post('http://localhost:3001/addPassword', {
+        //         pwd: pwd,
+        //         user: user,
+        //     })
         axios
-            .post('http://localhost:3001/addPassword', {
+            .post('/addPassword', {
                 pwd: pwd,
                 user: user,
             })

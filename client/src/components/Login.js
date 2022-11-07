@@ -49,7 +49,8 @@ const Login = () => {
 
     useEffect((req, res) => {
         axios
-            .get('http://localhost:3001/login' || '/login') //"http://localhost:3001/login"
+            // .get('http://localhost:3001/login')
+            .get('/login')
             .then((res) => {
                 console.log(res);
                 setNotification(res.data.message);
