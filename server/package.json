@@ -52,7 +52,7 @@
     "server": "nodemon --quiet server",
     "client": "npm start --prefix client",
     "dev": "concurrently \"cd server && npm start\" \"cd client && npm start\"",
-    "start": "node server3.js"
+    "start": "node cd server server.js"
   },
   "eslintConfig": {
     "extends": [
