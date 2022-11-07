@@ -3,8 +3,6 @@ const app = express();
 const path = require("path");
 const port = process.env.PORT || 3001;
 const cors = require("cors");
-const argon2 = require('argon2');
-const crypto = require('crypto');
 
 // app.use(cors());
 app.use(cors({ credentials: true }))
