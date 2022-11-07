@@ -8,7 +8,7 @@ const hashingConfig = { // based on OWASP cheat sheet recommendations (as of Mar
     timeCost: 3 // number of iterations
 }
 
-async function hashPassword(password) {
+const hashPassword = async function (password) {
   let salt = crypto.randomBytes(16);
   const encryptedPass = await argon2.hash(password)
 
@@ -106,12 +106,12 @@ async function hashPassword(password) {
 // });
 
  
-async function verifyPasswordWithHash(password, hash) {
-    return await argon2.verify(hash, password, hashingConfig);
+const verifyArg2pw = async function (hashedPW, password) {
+    return argon2.verify(hashedPW, password);
 }
 // hashPassword("somePassword").then(async (hash) => {
 //     console.log("Hash + salt of the password:", hash)
 //     console.log("Password verification success:", await verifyPasswordWithHash("somePassword", hash));
 // });
 
-module.exports = { hashPassword, verifyPasswordWithHash, hashingConfig }
+module.exports = { hashPassword, verifyArg2pw, hashingConfig }

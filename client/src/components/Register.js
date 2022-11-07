@@ -378,6 +378,10 @@ const Register = () => {
     }, []);
 
     useEffect(() => {
+        setErrMsg('');
+    }, [user, pwd, matchPwd]);
+
+    useEffect(() => {
         setValidName(USER_REGEX.test(user));
     }, [user]);
 
@@ -386,53 +390,22 @@ const Register = () => {
         setValidMatch(pwd === matchPwd);
     }, [pwd, matchPwd]);
 
-    useEffect(() => {
-        setErrMsg('');
-    }, [user, pwd, matchPwd]);
+    // const loadData = async () => {
+    //     const response = await axios.get('http://localhost:3001/getUser'); // dev
+    //     // const response = await axios.get("/getUser")                                        // heroku
+    //     setUserList(response.data);
+    //     console.log(response.data);
+    // };
 
-    const loadData = async () => {
-        const response = await axios.get('http://localhost:3001/getUser'); // dev
-        // const response = await axios.get("/getUser")                                        // heroku
-        setUserList(response.data);
-        console.log(response.data);
-    };
-
-    useEffect(() => {
-        loadData();
-        console.log(userList);
-    }, []);
+    // useEffect(() => {
+    //     loadData();
+    //     console.log(userList);
+    // }, []);
 
     const userName = userList.map(function (user) {
         return [`${user.user}`].join('');
     });
-    console.log(userName);
-
-    // let indexes = [0]
-    // const res = indexes.map(e => userName[e])
-
-    // const res = userName.slice()
-    // console.log(res);
-
-    // // const { hashPassword, verifyPasswordWithHash } = require('./Argon2');
-    // const hashingConfig = {
-    //     // based on OWASP cheat sheet recommendations (as of March, 2022)
-    //     parallelism: 1,
-    //     memoryCost: 64000, // 64 mb
-    //     timeCost: 3, // number of iterations
-    // };
-
-    // async function hashPassword(password) {
-    //     try {
-    //         const salt = crypto.randomBytes(16);
-    //         const hash = await argon2.hash(password, {
-    //             ...hashingConfig,
-    //             salt,
-    //         });
-    //         return { password: hash, iv: salt };
-    //     } catch {
-    //         console.log('Error');
-    //     }
-    // }
+    // console.log(userName);
 
     // HANDLESUBMIT USING PROMISE
     const handleSubmit = (e) => {
@@ -468,7 +441,6 @@ const Register = () => {
                 } else {
                     setErrMsg('Registration Failed');
                 }
-                // errRef.current.focus();
                 console.log(user, pwd);
             });
     };
@@ -529,18 +501,16 @@ const Register = () => {
         <>
             {success ? (
                 <section>
-                    <h1>Success!</h1>
-                    <p>
-                        <Link to="/">Login</Link>
-                    </p>
-                    <p>
-                        <Link to="/profile">Visit Your Profile</Link>
-                    </p>
-                    <p>Added User: {catchUser}</p>
-
-                    <p>
-                        axios.get('/register') status: <i>{notification}</i>
-                    </p>
+                    <div className="App">
+                        <div style={{ textAlign: 'center' }}>
+                            <h1>Successful Registration:</h1>
+                            <h1>{catchUser}</h1>
+                            <br />
+                        </div>
+                        <p>
+                            <Link to="/Profile">Go to your Profile</Link>
+                        </p>
+                    </div>
                 </section>
             ) : (
                 <section>
@@ -684,6 +654,7 @@ const Register = () => {
                         </p>
 
                         <button
+                            className="button"
                             disabled={
                                 !validName || !validPwd || !validMatch
                                     ? true

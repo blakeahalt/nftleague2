@@ -5,6 +5,7 @@ const port = process.env.PORT || 3001;
 const cors = require("cors");
 const argon2 = require('argon2');
 const crypto = require('crypto');
+
 // app.use(cors());
 app.use(cors({ credentials: true }))
 
@@ -143,99 +144,86 @@ app.get("/working", (req, res) => {
   res.json({ message:"WORKING" });
 });
 
-app.get("/added", (req, res) => {
-  res.send(res.data.user)
-  res.json({ message: "WORKING" });
-});
-
-// app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-// });
-
-// app.get("/login", (req, res) => {
-//   res.json({ res });
-// });
-
-
-
-// app.post("/register", (req, res) => {
-//   // console.log("user: ", req.body.user);   //prints to the terminal not console
-//   // console.log("pwd: ", req.body.pwd); 
-//   res.json({ message: 'WORKING' });
+// app.get("/added", (req, res) => {
+//   res.send(res.data.user)
+//   res.json({ message: "WORKING" });
 // });
 
 // ========================================
-const {verifyPasswordWithHash, hashPassword } = require('./Argon2');
-const { PolarAreaController } = require("chart.js");
+const {verifyArg2pw, hashPassword } = require('./Argon2');
 
 app.post("/addPassword", async (req, res) => {
   const {pwd, user} = req.body 
-
   const hashedPassword = await hashPassword(pwd)
-
-  
-   
-  db.query("INSERT INTO passwords (arg2pw, user) VALUES (?,?)", [hashedPassword.password, user],
-  (err, result) => {
-    if (err) {
-      console.log(err)
-      console.log("pwd", pwd);
-      console.log("user", user);
-      console.log("server - hashPassword??:", hashedPassword.password);
-      console.log("server - iv:", hashedPassword.iv);;
-    } else {
-      res.send("Success")
+  try {
+    const querySelect = "SELECT user FROM passwords WHERE user = ? "
+    db.query(querySelect,user, async function (error, results) {
+        if (error) throw error;
+        // If an account exists
+        if (results.length > 0) {
+          // parses result and stores in useable variable 'storedHash':
+            const storedUser = JSON.parse(JSON.stringify(results[0].user)) 
+            if (storedUser == user) {
+              console.log("storedUser Already Exists:", storedUser)
+              res.status(409)
+              res.send('Username Already Exists')
+              }
+        } else { 
+            const queryInsert = "INSERT INTO passwords (arg2pw, user) VALUES (?,?)"
+            db.query(queryInsert, [hashedPassword.password, user], (error, result) => {
+              if (error) {
+                console.log(error)
+              } else {
+                res.send("Successful Registration")
+              }
+            })
+        }
+      })
+    } catch (err) {
+        console.log("ErRor" + err);
     }
   })
-});
 
 // ========================================
 
 app.post("/login", async (req, res) => {
-  console.log(req.body);
-  const user = req.body.user
-  const password = req.body.pwd
-  try{
-    const query = 
-    "SELECT password from users WHERE user = ? AND password = ? "
-    const result = await db.query(query, [user])
-    if (result.rowCount == 1) {
-      if (await argon2.verify(result.rows[0].password, password)){
-        res.json("Login Successful");
-      } else {
-        res.json("Password incorrect");
-      }
-    } else {
-      res.json("Username Not Found");
-    }
-  } catch (err) {
-    console.log("ErRor" + err);
-  }
-})
-
-  //  hashedPassword ? (
-
-  //   async function waitForit() {
-  //     await getHashed()=
-  //       db.query("INSERT INTO passwords (arg2pw, user, iv) VALUES (?,?,?)", ['$hashedPassword', null, null])
-  //   }
-  //   ) : (
-  //     console.log("wut")
-  //     )
-  //   })
-
-  
-app.get("/showPasswords", (req, res) => {
-  db.query("SELECT * FROM passwords;", 
-  (err, result) => {
-    if(err) {
-      console.log(err);
-    } else {
-      res.send(result)
+  const {pwd, user} = req.body 
+  try {
+    const query = "SELECT arg2pw FROM passwords WHERE user = ? "
+    db.query(query,user, async function (error, results) {
+        if (error) throw error;
+        // If an account exists
+        if (results.length > 0) {
+          // parses result and stores in useable variable 'storedHash':
+          const storedHash = JSON.parse(JSON.stringify(results[0].arg2pw)) 
+          // argon2 verification method
+          if (await argon2.verify(storedHash, pwd)){
+            res.send("Successful Login")
+            res.status(200)
+          } else {
+            res.status(401)  
+            res.send("Incorrect Password")
+          }
+        } else {
+          res.status(409)
+          res.send("Username Not Found")
+        }
+      });
+    } catch (err) {
+      console.log("ErRor" + err);
     }
   })
-})
-
+  
+// app.get("/showPasswords", (req, res) => {
+//   db.query("SELECT * FROM passwords;", 
+//   (err, result) => {
+//     if(err) {
+//       console.log(err);
+//     } else {
+//       res.send(result)
+//     }
+//   })
+// })
 
 // app.get("/getUser", (req, res) => {
 //   // const {user} = req.body 
@@ -250,54 +238,6 @@ app.get("/showPasswords", (req, res) => {
 
 // });
 // });
-
-app.get("/getUser", (req, res) => {
-  db.query("SELECT * FROM passwords", (err, result) => {
-    if(err) {
-      console.log(err);
-    } else {
-      res.send(result)
-      console.log(result);
-      console.log('Connected!');
-    }
-  })
-})
-
-// app.post("/decryptpassword", (req, res) => {
-//   res.send(decrypt(req.body));
-// });
-
-app.get("/checkPassword", (req, res) => {
-  // res.send(decrypt(req.body));
-  // const user = req.body.user;
-  // const pwd = req.body.pwd;
-  // const {user, pwd} = req.body 
-
-  const {pwd, user} = req.body 
-  const decryptedPassword = verifyPasswordWithHash(pwd)
-
-  db.query(
-      "SELECT * FROM passwords WHERE user = ? AND password = ?",
-      [user, decryptedPassword.password],
-      (err, result)=> {
-          if (err) {
-              res.send({err: err});
-          } else {
-            res.send("Success")
-          }
-        })
-          // if (result.length > 0) {
-          //     res.send(result);
-          //     } else {
-          //       res.send({message: 'Wut'});
-          //     }
-                // else({message: "Wrong username/password comination!"});
-})
-
-// app.get("/register", (req, res) => {
-//   res.json({ user: {} });
-// });
-// app.get('/', (req, res) => res.sendFile(path.resolve(__dirname, "build", "index.html")));
 
 // if (process.env.NODE_ENV === "production") {
 //   app.use(express.static(path.join(__dirname, "/client/build")));

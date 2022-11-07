@@ -140,8 +140,7 @@ login {
 
 section {
     width: 100%;
-    max-width: 420px;
-    min-height: 400px;
+    max-width: 1000px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
