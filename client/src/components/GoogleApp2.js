@@ -57,9 +57,10 @@ function App() {
     // }
 
     useEffect((req, res) => {
+        // axios
+        // .get('http://localhost:3001/working') // dev
         axios
-            .get('http://localhost:3001/working') // dev
-            // axios.get("/working")						//heroku
+            .get('/working') //heroku
             .then((res) => {
                 // console.log(res);
                 setNotification(res.data.message);
@@ -181,10 +182,12 @@ function App() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        // axios
+        //     .post('http://localhost:3001/login', {
+        // dev
         axios
-            .post('http://localhost:3001/login', {
-                // dev
-                // axios.post('/checkPassword', {  							// heroku
+            .post('/login', {
+                // heroku
                 user: user,
                 pwd: pwd,
             })
