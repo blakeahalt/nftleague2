@@ -151,7 +151,7 @@ app.get('/working', (req, res) => {
 // });
 
 // ========================================
-const { verifyArg2pw, hashPassword } = require('./Argon2');
+const { verifyArg2pw, hashPassword } = require('./server2/Argon2');
 
 app.post('/addPassword', async (req, res) => {
     const { pwd, user } = req.body;
