@@ -113,9 +113,9 @@ app.use(function (req, res, next) {
 app.use(express.static(path.join(__dirname, 'public')));
 // app.use(express.static(path.resolve(__dirname, '/public')));
 
-app.get('/api', (req, res) => {
-    res.json({ message: 'Hello from server!' });
-});
+// app.get("/api", (req, res) => {
+//   res.json({ message: "Hello from server!" });
+// });
 
 app.get('/test', (req, res) => {
     res.json({ message: 'WORKING' });
@@ -151,7 +151,7 @@ app.get('/working', (req, res) => {
 // });
 
 // ========================================
-const { verifyArg2pw, hashPassword } = require('../server2/Argon2');
+const { verifyArg2pw, hashPassword } = require('./Argon2');
 
 app.post('/addPassword', async (req, res) => {
     const { pwd, user } = req.body;
