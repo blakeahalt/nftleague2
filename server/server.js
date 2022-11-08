@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const port = process.env.PORT || 3001;
+const port = process.env.NODE_ENV || 3001;
 const cors = require('cors');
 const argon2 = require('argon2');
 // const crypto = require('crypto');
