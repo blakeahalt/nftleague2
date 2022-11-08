@@ -4,7 +4,7 @@ const path = require('path');
 const port = process.env.PORT || 3001;
 const cors = require('cors');
 const argon2 = require('argon2');
-const crypto = require('crypto');
+// const crypto = require('crypto');
 
 // app.use(cors());
 app.use(cors({ credentials: true }));
@@ -151,7 +151,7 @@ app.get('/working', (req, res) => {
 // });
 
 // ========================================
-const { verifyArg2pw, hashPassword } = require('./Argon2');
+const { hashPassword } = require('./Argon2');
 
 app.post('/addPassword', async (req, res) => {
     const { pwd, user } = req.body;
@@ -164,6 +164,7 @@ app.post('/addPassword', async (req, res) => {
             if (results.length > 0) {
                 // parses result and stores in useable variable 'storedHash':
                 const storedUser = JSON.parse(JSON.stringify(results[0].user));
+                // eslint-disable-next-line eqeqeq
                 if (storedUser == user) {
                     console.log('storedUser Already Exists:', storedUser);
                     res.status(409);

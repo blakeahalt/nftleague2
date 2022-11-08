@@ -2,7 +2,7 @@
   "name": "nft_league2",
   "version": "1.0.0",
   "description": "",
-  "main": "./lib/express.js",
+  "main": "index.js",
   "scripts": {
     "start": "cd server && npm start",
     "test": "echo \"Error: no test specified\" && exit 1",
