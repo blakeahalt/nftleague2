@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { useState, useEffect } from 'react';
 import RapidApiRows from './RapidApiRows';

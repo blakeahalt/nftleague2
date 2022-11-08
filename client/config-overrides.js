@@ -27,8 +27,8 @@
 
 /* config-overrides.js */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const webpack = require('webpack');
-// import webpack from 'webpack';
+// const webpack = require('webpack');
+import webpack from 'webpack';
 module.exports = function override(config, env) {
     //do stuff with the webpack config...
 
@@ -41,24 +41,6 @@ module.exports = function override(config, env) {
         os: require.resolve('os-browserify/browser'),
         buffer: require.resolve('buffer'),
         stream: require.resolve('stream-browserify'),
-    };
-    config.module = {
-        ...config.module,
-        noParse: [/\.wasm$/],
-        rules: [
-            ...config.module.rules,
-            {
-                test: /\.wasm$/,
-                type: 'javascript/auto',
-                loaders: ['base64-loader'],
-            },
-        ],
-    };
-    config.node = {
-        ...config.node,
-        __dirname: false,
-        fs: 'empty',
-        Buffer: false,
     };
     config.plugins.push(
         new webpack.ProvidePlugin({
