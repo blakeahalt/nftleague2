@@ -27,7 +27,7 @@
 
 /* config-overrides.js */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const webpack = require('webpack');
+const webpack = require('webpack-browser');
 // import webpack from 'webpack';
 module.exports = function override(config, env) {
     //do stuff with the webpack config...

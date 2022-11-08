@@ -17,6 +17,7 @@
     "auth-context": "^1.0.6",
     "auth-provider": "^0.6.2",
     "axios": "^0.27.2",
+    "base64-loader": "^1.0.0",
     "bcryptjs": "^2.4.3",
     "chart.js": "^3.9.1",
     "cjs-module": "^1.5.0",
@@ -75,6 +76,7 @@
   },
   "devDependencies": {
     "@angular/cli": "^14.1.2",
+    "@types/argon2-browser": "^1.18.1",
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.12",
     "@types/mysql": "^2.15.21",
