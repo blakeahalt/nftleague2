@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const argon2 = require('argon2');
+const argon2 = require('argon2-browser');
 
  
 const hashingConfig = { // based on OWASP cheat sheet recommendations (as of March, 2022)
