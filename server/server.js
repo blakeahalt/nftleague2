@@ -1,15 +1,15 @@
-import express, { json } from 'express';
+const express = require('express');
 const app = express();
-import { join, resolve } from 'path';
+const path = require('path');
 const port = process.env.PORT || 3001;
-import cors from 'cors';
-import { verify } from 'argon2';
-import crypto from 'crypto';
+const cors = require('cors');
+const argon2 = require('argon2');
+const crypto = require('crypto');
 
 // app.use(cors());
 app.use(cors({ credentials: true }));
 
-app.use(json());
+app.use(express.json());
 
 // NEW SERVER========================================
 // const corsOptions = require('./config/corsOptions');
@@ -74,8 +74,8 @@ app.use(json());
 
 // =======================================
 // mysql that works in development
-import { createConnection } from 'mysql';
-const db = createConnection({
+const mysql = require('mysql');
+const db = mysql.createConnection({
     user: 'hu6etanlnbizgzv5',
     host: 'cwe1u6tjijexv3r6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
     password: 'g9clxpcv1kdf5jqj',
@@ -110,7 +110,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use(static(join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 // app.use(express.static(path.resolve(__dirname, '/public')));
 
 // app.get("/api", (req, res) => {
@@ -151,7 +151,7 @@ app.get('/working', (req, res) => {
 // });
 
 // ========================================
-import { verifyArg2pw, hashPassword } from './Argon2';
+const { verifyArg2pw, hashPassword } = require('./Argon2');
 
 app.post('/addPassword', async (req, res) => {
     const { pwd, user } = req.body;
@@ -205,7 +205,7 @@ app.post('/login', async (req, res) => {
                     JSON.stringify(results[0].arg2pw)
                 );
                 // argon2 verification method
-                if (await verify(storedHash, pwd)) {
+                if (await argon2.verify(storedHash, pwd)) {
                     res.send('Successful Login');
                     res.status(200);
                 } else {
@@ -252,7 +252,7 @@ app.post('/login', async (req, res) => {
 
 // This route serves the React app
 app.get('*', (req, res) =>
-    res.sendFile(resolve(__dirname, 'public', 'index.html'))
+    res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
 );
 // }
 
