@@ -1,4 +1,4 @@
-const express = require('./lib/express');
+const express = require('../..');
 const app = express();
 const path = require('path');
 const port = process.env.PORT || 3001;
