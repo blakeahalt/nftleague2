@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useRef, useState, useEffect, useContext } from 'react';
 // import Register from './components/Register.js'
 // import Notification from './components/Notification.js';
 // import bcrypt from 'bcryptjs'
-import { Link, useNavigate } from 'react-router-dom';
-import AuthContext from "../context/AuthProvider";
+import { Link } from 'react-router-dom';
+import AuthContext from '../context/AuthProvider';
 import axios from 'axios';
 // import GoogleApp from './components/GoogleApp'
 // import LoginButton from "./GoogleLogin"
@@ -14,11 +15,8 @@ import axios from 'axios';
 
 const LOGIN_URL = 'http://localhost:3001/login';
 
-
 // const REGISTER_URL = '/register'
 // const salt = bcrypt.genSaltSync(10)
-
-
 
 const Login = () => {
     const { setAuth } = useContext(AuthContext);
@@ -30,22 +28,34 @@ const Login = () => {
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
-    
-    const navigate = useNavigate();
+
+    const [notification, setNotification] = useState('');
+
+    // const navigate = useNavigate();
 
     useEffect(() => {
         userRef.current.focus();
-    }, [])
+    }, []);
 
     useEffect(() => {
         setErrMsg('');
-    }, [user, pwd])
-    
-    useEffect(() => {
-        if(localStorage.getItem('user-info')) {
-            navigate.push("http://localhost:3001/add")
-        }
-    })
+    }, [user, pwd]);
+
+    // useEffect(() => {
+    //     if(localStorage.getItem('user-info')) {
+    //         navigate.push("http://localhost:3001/add")
+    //     }
+    // })
+
+    useEffect((req, res) => {
+        axios
+            // .get('http://localhost:3001/login')
+            .get('/login')
+            .then((res) => {
+                console.log(res);
+                setNotification(res.data.message);
+            });
+    }, []);
 
     // function App() {
 
@@ -56,56 +66,55 @@ const Login = () => {
     //                 scope: ""
     //             })
     //         }
-    
+
     //         gapi.load('client:auth2', start)
     //     })
-	// }
+    // }
 
-
-	// var accessToken = gapi.auth.getToken().access_token
+    // var accessToken = gapi.auth.getToken().access_token
 
     function handleLoginForm() {
-        const email = userRef.current.value
-        const password = pwdRef.current.value
+        const email = userRef.current.value;
+        const password = pwdRef.current.value;
         // const hashedPassword = bcrypt.hashSync(password, '$2a$10$CwTycUXWue0Thq9StjUM0u') // hash created previously created upon sign up
-    
-        fetch('/login', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: email,
-            // password: hashedPassword,
-            password: password,
-          }),
-        })
-      }
-    
-// async function login(){
 
-//     let item={user, pwd}
-//     let result = await fetch("http://localhost:3001/login", {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json",
-//             "Accept": "application/json"
-//         },
-//         body: JSON.stringify(item)
-//     })
-//     result = await result.json();
-//     localStorage.setItem("user-info", JSON.stringify(result))
-//     navigate.push("/add")
-// }
-     
-    
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                // password: hashedPassword,
+                password: password,
+            }),
+        });
+    }
+
+    // async function login(){
+
+    //     let item={user, pwd}
+    //     let result = await fetch("http://localhost:3001/login", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "Accept": "application/json"
+    //         },
+    //         body: JSON.stringify(item)
+    //     })
+    //     result = await result.json();
+    //     localStorage.setItem("user-info", JSON.stringify(result))
+    //     navigate.push("/add")
+    // }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(user, pwd);
-        
+
         try {
-            const response = await axios.post(LOGIN_URL,
+            const response = await axios.post(
+                LOGIN_URL,
                 JSON.stringify({ user, pwd }),
                 {
                     headers: { 'Content-Type': 'application/json' },
@@ -132,7 +141,7 @@ const Login = () => {
             }
             // errRef.current.focus();
         }
-    }
+    };
 
     return (
         <>
@@ -141,14 +150,20 @@ const Login = () => {
                     <h1>You are logged in!</h1>
                     <br />
                     <p>
-                    <Link to='/notification'>Go to Home</Link>
+                        <Link to="/notification">Go to Home</Link>
                     </p>
                 </section>
             ) : (
                 <section>
-                    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                    <p
+                        ref={errRef}
+                        className={errMsg ? 'errmsg' : 'offscreen'}
+                        aria-live="assertive"
+                    >
+                        {errMsg}
+                    </p>
                     {/* <h1>Sign In</h1> */}
-                    <form onSubmit={()=> handleSubmit & handleLoginForm}>
+                    <form onSubmit={() => handleSubmit & handleLoginForm}>
                         <label htmlFor="username">Username:</label>
                         <input
                             type="text"
@@ -158,7 +173,7 @@ const Login = () => {
                             onChange={(e) => setUser(e.target.value)}
                             value={user}
                             required
-                            />
+                        />
 
                         <label htmlFor="password">Password:</label>
                         <input
@@ -167,7 +182,7 @@ const Login = () => {
                             onChange={(e) => setPwd(e.target.value)}
                             value={pwd}
                             required
-                            />
+                        />
                         <button>Sign In</button>
                     </form>
                     {/* <div className="App">
@@ -176,29 +191,33 @@ const Login = () => {
                     <LogoutButton />
                 </div> */}
                     <p>
-                        Need an Account?<br />
+                        Need an Account?
+                        <br />
                         <span className="line">
                             {/*put router link here*/}
                             {/* <a href="/register">Sign Up</a> */}
-                            <Link to='/register'>Sign Up</Link>
+                            <Link to="/register">Sign Up</Link>
                         </span>
                         {/* <span>Your new SALT: {salt}</span> */}
                         <br />
                         <span>
-                        Save this Salt, UPON sign up <br /> if you refresh it will generate a new SALT!!!
+                            Save this Salt, UPON sign up <br /> if you refresh
+                            it will generate a new SALT!!!
                         </span>
                     </p>
-                <div>
-                <Link to='/googleapp'>Google Login</Link>
-                </div>
+                    <div>
+                        <Link to="/googleapp">Google Login</Link>
+                    </div>
+                    <p>
+                        axios.get('/login') status: <i>{notification}</i>
+                    </p>
                 </section>
             )}
         </>
-    )
-}
+    );
+};
 
-export default Login
-
+export default Login;
 
 // import { useState } from 'react';
 // import axios from "axios";
@@ -236,7 +255,7 @@ export default Login
 //       event.preventDefault()
 //     }
 
-//     function handleChange(event) { 
+//     function handleChange(event) {
 //       const {value, name} = event.target
 //       setloginForm(prevNote => ({
 //           ...prevNote, [name]: value})
@@ -255,17 +274,17 @@ export default Login
 //             <button className="btn btn-primary" type="submit">Log In</button>
 //           </form>
 //           {/* <form className="login">
-//             <input onChange={handleChange} 
+//             <input onChange={handleChange}
 //                   type="email"
-//                   text={loginForm.email} 
-//                   name="email" 
-//                   placeholder="Email" 
+//                   text={loginForm.email}
+//                   name="email"
+//                   placeholder="Email"
 //                   value={loginForm.email} />
-//             <input onChange={handleChange} 
+//             <input onChange={handleChange}
 //                   type="password"
-//                   text={loginForm.password} 
-//                   name="password" 
-//                   placeholder="Password" 
+//                   text={loginForm.password}
+//                   name="password"
+//                   placeholder="Password"
 //                   value={loginForm.password} />
 
 //           <button onClick={logMeIn}>Submit</button>
