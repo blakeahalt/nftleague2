@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { useState, useEffect } from 'react';
-import CryptoSlamRows from './CryptoSlamRows';
+import CryptoSlamRows from './CryptoSlamCollectionRows';
 import { Link } from 'react-router-dom';
 import Pagination from './Pagination2';
 
@@ -14,7 +14,7 @@ function UserList() {
     const CSoptions = {
         method: 'GET',
         headers: {
-            'X-BLOBR-KEY': 'e6CjQuVjiVsugMjtPuONz3C9EkAzXpFj',
+            'X-BLOBR-KEY': 'lrxYcsDoLR80hcY9PfQ34BeFTQnnSVej',
         },
     };
 
@@ -95,38 +95,46 @@ function UserList() {
                 id="mainNav"
             >
                 <div className="navbar-title">
-                    <a
-                        className="nav-link active"
-                        aria-current="page"
-                        href="/cryptoslamday"
-                    >
-                        CryptoSlam
-                    </a>
-                    <a
-                        className="nav-link active"
-                        aria-current="page"
-                        href="/RapidAPICollectionsDay"
-                    >
-                        NFT Stats
-                    </a>
-                    <a
-                        className="nav-link active"
-                        href="/profile"
-                    >
-                        Profile
-                    </a>
-                    <a
-                        className="nav-link active"
-                        href="nftlist"
-                    >
-                        Browse
-                    </a>
-                    <a
-                        className="nav-link active"
-                        href="/GoogleApp"
-                    >
-                        Sign Out
-                    </a>
+                    <div className="dropdown">
+                        <button className="dropbtn">CryptoSlam</button>
+                        <div className="dropdown-content">
+                            <a href="/cryptoslamCollectionsday">Collections</a>
+                            <a href="/cryptoslamSalesday">Indiv. Sales</a>
+                        </div>
+                    </div>
+                    <div className="dropdown">
+                        <a
+                            className="dropbtn"
+                            aria-current="page"
+                            href="/RapidAPICollectionsDay"
+                        >
+                            NFT Stats
+                        </a>
+                    </div>
+                    <div className="dropdown">
+                        <a
+                            className="dropbtn"
+                            href="/profile"
+                        >
+                            Profile
+                        </a>
+                    </div>
+                    <div className="dropdown">
+                        <a
+                            className="dropbtn"
+                            href="nftlist"
+                        >
+                            Browse
+                        </a>
+                    </div>
+                    <div className="dropdown">
+                        <a
+                            className="dropbtn"
+                            href="/GoogleApp"
+                        >
+                            Sign Out
+                        </a>
+                    </div>
                 </div>
             </nav>
             <br />
@@ -139,11 +147,14 @@ function UserList() {
                         marginBottom: 30,
                     }}
                 >
-                    {' '}
-                    CRYPTO SLAM: Top of the Month <br />
-                    {/* <div style={{ position: 'relative', marginTop: -10, marginBottom: 20}}> */}
+                    Collections of the Month
+                    <br />
+                    <div style={{ fontSize: 20 }}>
+                        Follow the top collections trending on
+                        <em> CryptoSlam</em>
+                    </div>
                     <Link
-                        to="/CryptoSlamDay"
+                        to="/CryptoSlamCollectionsDay"
                         style={{ color: 'black' }}
                     >
                         <button
@@ -159,13 +170,13 @@ function UserList() {
                         </button>
                     </Link>
                     <Link
-                        to="/CryptoSlamWeek"
+                        to="/CryptoSlamCollectionsWeek"
                         style={{ color: 'black' }}
                     >
                         <button className="button-days"> 7DAY </button>
                     </Link>
                     <Link
-                        to="/CryptoSlamMonth"
+                        to="/CryptoSlamCollectionsMonth"
                         style={{ color: 'black' }}
                     >
                         <button

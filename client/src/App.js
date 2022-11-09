@@ -20,9 +20,12 @@ import SalesDay from './components/SalesDay';
 import RapidApiCollectionDay from './components/RapidApiDay_Collection';
 import RapidApiCollectionWeek from './components//RapidApiWeek_Collection';
 import RapidApiCollectionMonth from './components//RapidApiMonth_Collection';
-import CryptoSlamDay from './components/CollectionsDayCS';
-import CryptoSlamWeek from './components/CollectionsWeekCS';
-import CryptoSlamMonth from './components/CollectionsMonthCS';
+import CryptoSlamCollectionDay from './components/CollectionsDayCS';
+import CryptoSlamCollectionWeek from './components/CollectionsWeekCS';
+import CryptoSlamCollectionMonth from './components/CollectionsMonthCS';
+import CryptoSlamSalesDay from './components/SalesDay';
+import CryptoSlamSalesWeek from './components/SalesWeek';
+import CryptoSlamSalesMonth from './components/SalesMonth';
 import Pagination from './components/Pagination';
 import Passengers from './components/Passengers';
 import DataTable from './components/DataTable';
@@ -91,17 +94,17 @@ function App() {
                         />
                         <Route
                             exact
-                            path="/SalesMonth"
+                            path="/CryptoSlamSalesMonth"
                             element={<SalesMonth />}
                         />
                         <Route
                             exact
-                            path="/SalesWeek"
+                            path="/CryptoSlamSalesWeek"
                             element={<SalesWeek />}
                         />
                         <Route
                             exact
-                            path="/SalesDay"
+                            path="/CryptoSlamSalesDay"
                             element={<SalesDay />}
                         />
                         <Route
@@ -121,18 +124,18 @@ function App() {
                         />
                         <Route
                             exact
-                            path="/CryptoSlamDay"
-                            element={<CryptoSlamDay />}
+                            path="/CryptoSlamCollectionsDay"
+                            element={<CryptoSlamCollectionDay />}
                         />
                         <Route
                             exact
-                            path="/CryptoSlamWeek"
-                            element={<CryptoSlamWeek />}
+                            path="/CryptoSlamCollectionsWeek"
+                            element={<CryptoSlamCollectionWeek />}
                         />
                         <Route
                             exact
-                            path="/CryptoSlamMonth"
-                            element={<CryptoSlamMonth />}
+                            path="/CryptoSlamCollectionsMonth"
+                            element={<CryptoSlamCollectionMonth />}
                         />
                         <Route
                             exact

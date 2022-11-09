@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
@@ -9,6 +10,7 @@ import axios from 'axios';
 import { GrCommand, GrNext } from 'react-icons/gr';
 import { AiOutlineMinus } from 'react-icons/ai';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { TbLetterR } from 'react-icons/tb';
 
 function UserList() {
     const [rowDataSales, setRowDataSales] = useState([]);
@@ -171,38 +173,46 @@ function UserList() {
                 id="mainNav"
             >
                 <div className="navbar-title">
-                    <a
-                        className="nav-link active"
-                        aria-current="page"
-                        href="/cryptoslamday"
-                    >
-                        CryptoSlam
-                    </a>
-                    <a
-                        className="nav-link active"
-                        aria-current="page"
-                        href="/RapidAPICollectionsDay"
-                    >
-                        NFT Stats
-                    </a>
-                    <a
-                        className="nav-link active"
-                        href="/profile"
-                    >
-                        Profile
-                    </a>
-                    <a
-                        className="nav-link active"
-                        href="nftlist"
-                    >
-                        Browse
-                    </a>
-                    <a
-                        className="nav-link active"
-                        href="/GoogleApp"
-                    >
-                        Sign Out
-                    </a>
+                    <div className="dropdown">
+                        <button className="dropbtn">CryptoSlam</button>
+                        <div className="dropdown-content">
+                            <a href="/cryptoslamCollectionsday">Collections</a>
+                            <a href="/cryptoslamSalesday">Indiv. Sales</a>
+                        </div>
+                    </div>
+                    <div className="dropdown">
+                        <a
+                            className="dropbtn"
+                            aria-current="page"
+                            href="/RapidAPICollectionsDay"
+                        >
+                            NFT Stats
+                        </a>
+                    </div>
+                    <div className="dropdown">
+                        <a
+                            className="dropbtn"
+                            href="/profile"
+                        >
+                            Profile
+                        </a>
+                    </div>
+                    <div className="dropdown">
+                        <a
+                            className="dropbtn"
+                            href="nftlist"
+                        >
+                            Browse
+                        </a>
+                    </div>
+                    <div className="dropdown">
+                        <a
+                            className="dropbtn"
+                            href="/GoogleApp"
+                        >
+                            Sign Out
+                        </a>
+                    </div>
                 </div>
             </nav>
 
@@ -217,7 +227,11 @@ function UserList() {
                     }}
                 >
                     {' '}
-                    NFT Stats: Top of the Week <br />
+                    Collections of the Week <br />
+                    <div style={{ fontSize: 20 }}>
+                        Follow the top collections trending on
+                        <em> NFT Stats</em>
+                    </div>
                     <Link
                         to="/RapidAPICollectionsDay"
                         style={{ color: 'black' }}
@@ -264,12 +278,54 @@ function UserList() {
                     setCurrentPage={setCurrentPage}
                 />
             </div>
-            <br />
             <div className="hideLoad">
-                <h1>For optimal web view</h1>
                 <div
                     style={{
-                        fontSize: 25,
+                        fontSize: 22,
+                        color: 'black',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginLeft: 35,
+                        marginBottom: -10,
+                    }}
+                >
+                    <h1
+                        style={{
+                            marginLeft: -180,
+                            fontSize: 32,
+                            color: 'white',
+                            marginBottom: 20,
+                        }}
+                    >
+                        Desktop Tips:
+                    </h1>
+                    <button
+                        style={{
+                            fontSize: 25,
+                            borderRadius: 10,
+                            marginLeft: 10,
+                            marginRight: 10,
+                        }}
+                    >
+                        <GrCommand style={{ fontColor: 'white', marginTop: 7 }} />
+                    </button>
+                    {'+'}
+                    <button
+                        style={{
+                            fontSize: 25,
+                            borderRadius: 10,
+                            marginLeft: 10,
+                            marginRight: 10,
+                        }}
+                    >
+                        <TbLetterR style={{ fontColor: 'white', marginTop: 7 }} />
+                    </button>
+                    : Refresh Page
+                </div>
+                <div
+                    style={{
+                        fontSize: 22,
                         color: 'black',
                         display: 'flex',
                         alignItems: 'center',
@@ -278,29 +334,30 @@ function UserList() {
                 >
                     <button
                         style={{
-                            fontSize: 30,
+                            fontSize: 25,
                             borderRadius: 10,
-                            margin: 10,
-                            marginLeft: -12,
+                            marginLeft: 10,
+                            marginRight: 10,
                         }}
                     >
-                        <GrCommand
-                            style={{ fontColor: 'white', marginTop: 7 }}
-                        />
+                        <GrCommand style={{ fontColor: 'white', marginTop: 7 }} />
                     </button>
                     {'+'}
                     <button
-                        style={{ fontSize: 30, borderRadius: 10, margin: 10 }}
+                        style={{
+                            fontSize: 25,
+                            borderRadius: 10,
+                            marginLeft: 11,
+                            marginRight: 10,
+                        }}
                     >
-                        <AiOutlineMinus
-                            style={{ fontColor: 'white', marginTop: 7 }}
-                        />
+                        <AiOutlineMinus style={{ fontColor: 'white', marginTop: 7 }} />
                     </button>
-                    {''}: Zoom In
+                    : Zoom In
                 </div>
                 <div
                     style={{
-                        fontSize: 25,
+                        fontSize: 22,
                         color: 'black',
                         display: 'flex',
                         alignItems: 'center',
@@ -308,24 +365,24 @@ function UserList() {
                     }}
                 >
                     <button
-                        style={{ fontSize: 30, borderRadius: 10, margin: 10 }}
+                        style={{
+                            fontSize: 25,
+                            borderRadius: 10,
+                            marginLeft: 30,
+                            marginRight: 10,
+                        }}
                     >
-                        <GrCommand
-                            style={{ fontColor: 'white', marginTop: 7 }}
-                        />
+                        <GrCommand style={{ fontColor: 'white', marginTop: 7 }} />
                     </button>
                     {'+'}
                     <button
-                        style={{ fontSize: 30, borderRadius: 10, margin: 10 }}
+                        style={{ fontSize: 25, borderRadius: 10, margin: 10 }}
                     >
-                        <AiOutlinePlus
-                            style={{ fontColor: 'white', marginTop: 7 }}
-                        />
+                        <AiOutlinePlus style={{ fontColor: 'white', marginTop: 7 }} />
                     </button>
-                    {''}: Zoom Out
+                    : Zoom Out
                 </div>
             </div>
-            <br />
             <button
                 className="hideLoad"
                 style={{
