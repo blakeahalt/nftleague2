@@ -57,10 +57,10 @@ function App() {
     // }
 
     useEffect((req, res) => {
-        // axios
-        //     .get('http://localhost:3001/working') // dev
         axios
-            .get('/working') //heroku
+            .get('http://localhost:3001/working') // dev
+            // axios
+            //     .get('/working') //heroku
             .then((res) => {
                 console.log(res);
                 setNotification(res.data.message);
@@ -182,11 +182,11 @@ function App() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // axios
-        //     .post('http://localhost:3001/login', {
-        // dev
         axios
-            .post('/login', {
+            .post('http://localhost:3001/login', {
+                // dev
+                // axios
+                //     .post('/login', {
                 // heroku
                 user: user,
                 pwd: pwd,
@@ -308,9 +308,7 @@ function App() {
                             textAlign: 'center',
                             marginBottom: -20,
                         }}
-                    >
-                        Log in with your Google Account
-                    </div>
+                    ></div>
                     <div className="App">
                         <GoogleLogin
                             onSuccess={(res) => {
