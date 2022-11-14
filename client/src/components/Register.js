@@ -364,19 +364,19 @@ const Register = () => {
 
     const [JWTToken, setJWTToken] = useState();
 
-    useEffect((req, res) => {
-        axios.get('http://localhost:3001/working').then((res) => {
-            console.log(res);
-            setNotification(res.data.message);
-        });
-    }, []);
-
     // useEffect((req, res) => {
-    //     axios.get('/working').then((res) => {
+    //     axios.get('http://localhost:3001/working').then((res) => {
     //         console.log(res);
     //         setNotification(res.data.message);
     //     });
     // }, []);
+
+    useEffect((req, res) => {
+        axios.get('/working').then((res) => {
+            console.log(res);
+            setNotification(res.data.message);
+        });
+    }, []);
 
     useEffect(() => {
         userRef.current.focus();
@@ -423,16 +423,16 @@ const Register = () => {
             return;
         }
 
+        // axios
+        //     .post('http://localhost:3001/addPassword', {
+        //         pwd: pwd,
+        //         user: user,
+        //     })
         axios
-            .post('http://localhost:3001/addPassword', {
+            .post('/addPassword', {
                 pwd: pwd,
                 user: user,
             })
-            // axios
-            //     .post('/addPassword', {
-            //         pwd: pwd,
-            //         user: user,
-            //     })
             .then((response) => {
                 console.log('1', JSON.stringify(response));
                 console.log('2', response?.data);
