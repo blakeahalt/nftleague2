@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col } from 'react-grid-system';
 
 const CryptoSlamRow = ({ both }) => {
-    console.log(both);
+    // console.log(both);
     return (
         <div>
             <Row

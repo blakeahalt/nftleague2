@@ -4,17 +4,20 @@ import { useState, useEffect } from 'react';
 import CryptoSlamSalesRows from './CryptoSlamSalesRows';
 import { Link } from 'react-router-dom';
 import Pagination from './Pagination2';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 function UserList() {
     const [rowDataSales, setRowDataSales] = useState([]);
+    const [user, setUser] = useState();
     const [currentPage, setCurrentPage] = useState(1);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [postsPerPage, setPostsPerPage] = useState(20);
+    const [err, setErr] = useState('');
 
     const CSoptions = {
         method: 'GET',
         headers: {
-            'X-BLOBR-KEY': 'lrxYcsDoLR80hcY9PfQ34BeFTQnnSVej',
+            'X-BLOBR-KEY': 'PyrEzHn6DlTKGU3mEfyQhboTFBUMzt4Y',
         },
     };
 
@@ -26,7 +29,101 @@ function UserList() {
             .then((response) => response.json())
             .then((rowDataSales) => setRowDataSales(rowDataSales.data));
     }, []);
-    console.log('rowDataSales:', rowDataSales);
+    // console.log('rowDataSales:', rowDataSales);
+
+    useEffect(() => {
+        protect();
+    }, []);
+
+    const refresh = (refreshToken) => {
+        console.log('Refreshing token!');
+
+        return new Promise((resolve, reject) => {
+            axios
+                .post('http://localhost:3001/refresh', { token: refreshToken })
+                .then((data) => {
+                    if (data.data.success === false) {
+                        setErr('Login again');
+                        console.log('2 (refresh): Please Log In Again');
+                        resolve(false);
+                    } else {
+                        const { accessToken } = data.data;
+                        Cookies.set('access', accessToken);
+                        resolve(accessToken);
+                        console.log('1 (refresh): All good bruh');
+                    }
+                });
+        });
+    };
+
+    const requestLogin = async (accessToken, refreshToken) => {
+        return new Promise((resolve, reject) => {
+            axios
+                .post(
+                    'http://localhost:3001/protected',
+                    {},
+                    { headers: { Authorization: `Bearer ${accessToken}` } }
+                )
+                .then(async (data) => {
+                    if (data.data.success === false) {
+                        if (data.data.message === 'User not authenticated') {
+                            setErr('Login again');
+                            console.log(
+                                '2 (requestLogin): Please Log In Again'
+                            );
+                        } else if (
+                            data.data.message === 'Access token expired'
+                        ) {
+                            console.log(
+                                '(3 requestLogin): AccessToken Expired - Generating New Tokens'
+                            );
+                            const accessToken = await refresh(refreshToken);
+                            return await requestLogin(
+                                accessToken,
+                                refreshToken
+                            );
+                        }
+                        resolve(false);
+                    } else {
+                        console.log('1 (requestLogin): You in Brah');
+                        console.log(data.data.message);
+                        setErr('Protected route accessed!');
+                        resolve(true);
+                    }
+                });
+        });
+    };
+
+    const hasAccess = async (accessToken, refreshToken) => {
+        // console.log('1 (hasAccess) - refreshToken Check:', refreshToken);
+        // console.log('2 (hasAccess) - accessToken Check:', accessToken);
+        if (!refreshToken) {
+            console.log('3 (hasAccess): No refreshToken. Please Log In Again.');
+        }
+
+        if (accessToken === undefined) {
+            console.log('4 (hasAccess): Generating New Token');
+            accessToken = await refresh(refreshToken);
+            return accessToken;
+        }
+        // console.log('1.1 (hasAccess) - refreshToken Check:', refreshToken);
+        // console.log('2.2 (hasAccess) - accessToken Check:', accessToken);
+        return accessToken;
+    };
+
+    const protect = async (e) => {
+        let accessToken = Cookies.get('access');
+        let refreshToken = Cookies.get('refresh');
+
+        accessToken = await hasAccess(accessToken, refreshToken);
+
+        if (!accessToken) {
+            console.log('2 (protect): No Access Token - Please Sign in again.');
+        } else {
+            await requestLogin(accessToken, refreshToken);
+            // console.log('1 protect(accessToken):', accessToken);
+        }
+    };
 
     // //Output: array of urls to each collection
     const endpoints = [];
@@ -164,7 +261,7 @@ function UserList() {
 
         timeElapsed.push(z);
     }
-    console.log('timeElapsed:', timeElapsed);
+    // console.log('timeElapsed:', timeElapsed);
 
     const both = rowDataSales.map((item, i) =>
         Object.assign(
@@ -173,13 +270,16 @@ function UserList() {
             { collection_url: endpoints[i] },
             { index: indexArray[i] },
             { quotes: quotes[i] },
-            { endpoint: endpoints[i] },
             { collection_id: collectionId[i] },
             { collectionIdName: collectionIdName[i] },
             { timeElapsed: timeElapsed[i] }
         )
     );
-    console.log('both', both);
+    // console.log('both', both);
+
+    const CSSignOut = () => {
+        localStorage.clear();
+    };
 
     const lastPostIndex = currentPage * postsPerPage;
     const firstPostIndex = lastPostIndex - postsPerPage;
@@ -229,6 +329,7 @@ function UserList() {
                             className="dropbtn"
                             href="/GoogleApp"
                         >
+                            <CSSignOut />
                             Sign Out
                         </a>
                     </div>

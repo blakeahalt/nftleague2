@@ -9,7 +9,8 @@ const hashingConfig = { // based on OWASP cheat sheet recommendations (as of Mar
 }
 
 const hashPassword = async function (password) {
-  let salt = crypto.randomBytes(16);
+  let salt = crypto.randomBytes(16).toString('hex');
+  console.log(salt);
   const encryptedPass = await argon2.hash(password)
 
   return {

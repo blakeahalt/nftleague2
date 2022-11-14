@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import CryptoSlamSalesRows from './CryptoSlamSalesRows';
 import { Link } from 'react-router-dom';
 import Pagination from './Pagination2';
+import axios from 'axios';
 
 function UserList() {
     const [rowDataSales, setRowDataSales] = useState([]);
@@ -27,6 +28,25 @@ function UserList() {
             .then((rowDataSales) => setRowDataSales(rowDataSales.data));
     }, []);
     // console.log('rowDataSales:', rowDataSales);
+
+    const JWTtoken = localStorage.getItem('token');
+
+    useEffect(() => {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${JWTtoken}`;
+        // console.log('JWTtoken', JWTtoken);
+        ////Dev
+        axios
+            .get('http://localhost:3001/verifyJWT')
+            ////Heroku
+            // axios
+            //     .get('/verifyJWT')
+            .then((res) => {
+                console.log('verifyJWT res:', res);
+            })
+            .catch((err) => {
+                console.log('ErRor', err);
+            });
+    }, []);
 
     // //Output: array of urls to each collection
     const endpoints = [];

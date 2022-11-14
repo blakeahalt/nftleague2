@@ -138,6 +138,7 @@ const Profile = () => {
             <br />
             <br />
             <br />
+            <Link to="/cryptoslamSalesday">Sales</Link>
             <br />
             <br />
             <p>{/* axios.get('/profile') status: <i>{notification}</i> */}</p>

@@ -10,17 +10,17 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef, useContext } from 'react';
 import { gapi } from 'gapi-script';
 import AuthContext from '../context/AuthProvider';
-import jwtDecode from 'jwt-decode';
+// import jwt from 'jsonwebtoken';
+
 // import argon2 from 'argon2';
 // const argon2 = require('argon2');
-// const crypto = require('crypto');
 // import EncryptionHandler from './EncryptionHandler'
 // const {encrypt, decrypt} = require('./EncryptionHandler')
 // import GoogleLogin from "react-google-login";
 
-const clientId =
-    '1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const LOGIN_URL = 'http://localhost:3001/GoogleApp'; //'http://localhost:3001/GoogleApp'
+const clientId = process.env.REACT_APP_CLIENTID;
 
 function App() {
     const [notification, setNotification] = useState('');
@@ -37,6 +37,7 @@ function App() {
     const [loginStatus, setLoginStatus] = useState('');
     const [catchUser, setCatchUser] = useState('');
     const [isSignedIn, setIsSignedIn] = useState(false);
+    const [JETToken, setJWTToken] = useState();
 
     // 	const crypto = require('crypto')
     // 	const secret = 'pppppppppppppppppppppppppppppppp'
@@ -66,6 +67,24 @@ function App() {
                 setNotification(res.data.message);
             });
     }, []);
+
+    // useEffect((req, res) => {
+    //     axios
+    //         .get('http://localhost:3001/verifyJWT')
+    //         // dev
+    //         // axios
+    //         //     .get('/verifyJWT') //heroku
+    //         .then((res) => {
+    //             console.log(res);
+    //             setNotification(res.data.message);
+    //         })
+    //         .catch((err) => {
+    //             if (!err?.response) {
+    //                 setErrMsg('No Server Response');
+    //                 console.log('ErRor', err);
+    //             }
+    //         });
+    // }, []);
 
     function handleSignOut(e) {
         setUser({});
@@ -178,24 +197,87 @@ function App() {
     //         });
     //     console.log(user, pwd);
     // };
+    // axios.interceptors.request.use((req, config) => {
+    //     config.headers['Authorization'] = `Bearer` + { accessToken: {} };
+    //     return config;
+    // });
+    const requestLogin = async (accessToken, refreshToken) => {
+        console.log(accessToken, refreshToken);
+        return new Promise((resolve, reject) => {
+            axios
+                .post(
+                    'http://localhost:3001/protected',
+                    {},
+                    { headers: { authorization: `Bearer ${accessToken}` } }
+                )
+                .then(async (data) => {
+                    if (data.data.success === false) {
+                        if (data.data.message === 'User not authenticated') {
+                            setErr('Login again');
+                            // set err message to login again.
+                        } else if (
+                            data.data.message === 'Access token expired'
+                        ) {
+                            const accessToken = await refresh(refreshToken);
+                            return await requestLogin(
+                                accessToken,
+                                refreshToken
+                            );
+                        }
 
-    const handleSubmit = (e) => {
+                        resolve(false);
+                    } else {
+                        // protected route has been accessed, response can be used.
+                        setErr('Protected route accessed!');
+                        resolve(true);
+                    }
+                });
+        });
+    };
+    
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        axios
-            .post('http://localhost:3001/login', {
-                // dev
-                // axios
-                //     .post('/login', {
-                // heroku
-                user: user,
-                pwd: pwd,
-            })
+        // axios
+        //     .post('http://localhost:3001/login', {
+        //         // dev
+        //         // axios
+        //         //     .post('/login', {
+        //         // heroku
+        //         user: user,
+        //         pwd: pwd,
+        //     })
+        await axios
+            .post(
+                'http://localhost:3001/login',
+                {
+                    user,
+                    pwd,
+                }
+                // { withCredentials: true }
+            )
+
             .then((response) => {
-                // console.log('1', response);
+                console.log('1', response);
                 // console.log('2', response?.data);
                 // console.log('3', response?.data.arg2pw);
                 if (response.status === 200) {
+                    console.log(
+                        `/googleapp response status 200 accessToken: ${response.data.accessToken}`
+                    );
+                    // setJWTToken(response.data.token);
+                    // const accessToken = jwt.sign(
+                    //     `${user}`,
+                    //     process.env.REACT_APP_JWTSECRET,
+                    //     { expiresIn: '1h' }
+                    // );
+                    // const refreshToken = jwt.sign(
+                    //     `${user}`,
+                    //     process.env.REACT_APP_REFRESH_TOKEN_SECRET,
+                    //     { expiresIn: '1h' }
+                    // );
+                    // localStorage.setItem('token', response.data.token);
+                    // response.json(`${accessToken}`);
                     setSuccess(true);
                     setCatchUser(user);
                     setUser('');
@@ -314,10 +396,16 @@ function App() {
                             onSuccess={(res) => {
                                 // console.log(credentialResponse.credential);
                                 var decoded = jwt_decode(res.credential);
-                                // console.log(decoded);
+                                console.log('res', res);
+                                console.log('jwt-decoded', decoded);
+                                window.localStorage.setItem(
+                                    'token',
+                                    decoded.exp
+                                );
+                                console.log(decoded.aud);
                                 setSuccess(true);
                                 setGoogleSuccess(true);
-                                setUser(decoded);
+                                // setUser(decoded);
                                 // setUser(jwt_decode(res.credential).name)
                                 console.log(
                                     `Login Success! User: ${decoded.name}`

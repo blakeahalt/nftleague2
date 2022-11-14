@@ -320,6 +320,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import axios from './api/axios.js';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
+// import jwt from 'jsonwebtoken';
 
 // import Notification from "./components/Notification";
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
@@ -360,19 +362,21 @@ const Register = () => {
 
     const [userList, setUserList] = useState([]);
 
-    // useEffect((req, res) => {
-    //     axios.get('http://localhost:3001/working').then((res) => {
-    //         console.log(res);
-    //         setNotification(res.data.message);
-    //     });
-    // }, []);
+    const [JWTToken, setJWTToken] = useState();
 
     useEffect((req, res) => {
-        axios.get('/working').then((res) => {
+        axios.get('http://localhost:3001/working').then((res) => {
             console.log(res);
             setNotification(res.data.message);
         });
     }, []);
+
+    // useEffect((req, res) => {
+    //     axios.get('/working').then((res) => {
+    //         console.log(res);
+    //         setNotification(res.data.message);
+    //     });
+    // }, []);
 
     useEffect(() => {
         userRef.current.focus();
@@ -419,20 +423,28 @@ const Register = () => {
             return;
         }
 
-        // axios
-        //     .post('http://localhost:3001/addPassword', {
-        //         pwd: pwd,
-        //         user: user,
-        //     })
         axios
-            .post('/addPassword', {
+            .post('http://localhost:3001/addPassword', {
                 pwd: pwd,
                 user: user,
             })
+            // axios
+            //     .post('/addPassword', {
+            //         pwd: pwd,
+            //         user: user,
+            //     })
             .then((response) => {
-                console.log('1', response.config.data);
+                console.log('1', JSON.stringify(response));
                 console.log('2', response?.data);
-                console.log('3', JSON.stringify(response));
+                console.log('3', response?.data.token);
+                console.log('4', response.config.data);
+                localStorage.setItem('token', response.data.token);
+                // const accessToken = jwt.sign(
+                //     `${user}`,
+                //     process.env.REACT_APP_JWTSECRET,
+                //     { expiresIn: '1h' }
+                // );
+                // setJWTToken(response?.data.accessToken);
                 setSuccess(true);
                 setCatchUser(user);
                 setUser('');

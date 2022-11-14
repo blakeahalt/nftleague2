@@ -21,30 +21,47 @@
   "dependencies": {
     "@typescript-eslint/parser": "^5.42.1",
     "argon2": "^0.30.1",
+    "assert": "^2.0.0",
+    "body-parser": "^1.20.1",
     "concurrently": "^7.4.0",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "crypto-browserify": "^3.12.0",
     "eslint-config-react-app": "^7.0.1",
     "express": "^4.18.2",
+    "google-auth-library": "^8.7.0",
     "https-browserify": "^1.0.0",
+    "js-cookie": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "jwa": "^2.0.0",
     "mysql": "^2.18.1",
+    "node-polyfill-webpack-plugin": "^2.0.1",
     "os-browserify": "^0.3.0",
     "prettier": "^2.6.2",
     "react": "^18.2.0",
+    "stream": "^0.0.2",
     "stream-browserify": "^3.0.0",
-    "stream-http": "^3.2.0",
-    "webpack": "^5.74.0"
+    "stream-http": "^3.2.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.42.0",
+    "@webpack-cli/generators": "^2.5.0",
     "crypto-browserify": "^3.12.0",
+    "dotenv": "^16.0.3",
+    "dotenv-webpack": "^8.0.1",
     "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1",
+    "workbox-webpack-plugin": "^6.5.4"
   },
   "browser": {
-    "crypto": false
+    "crypto": false,
+    "fs": false,
+    "path": false,
+    "os": false
   },
   "proxy": "http://localhost:3001",
   "engines": {

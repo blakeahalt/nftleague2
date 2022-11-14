@@ -1,15 +1,31 @@
+// import dotenv from "dotenv";
 const express = require('express');
 const app = express();
 const path = require('path');
 const port = process.env.PORT || 3001;
 const cors = require('cors');
-const argon2 = require('argon2');
-// const crypto = require('crypto');
-
 // app.use(cors());
-app.use(cors({ credentials: true }));
+const argon2 = require('argon2');
 
+const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+// const dotenv = require("dotenv")
+// dotenv.config()
+
+
+app.use(bodyParser.json())
+app.use(cookieParser())
+
+app.use(cors({ credentials: true }));
 app.use(express.json());
+
+
+const jwtAccessKey = process.env.REACT_APP_JWTSECRET;
+const jwtRefreshKey = process.env.REACT_APP_REFRESH_TOKEN_SECRET;
+const {OAuth2Client} = require('google-auth-library');
+const metadata = require('gcp-metadata');
 
 // NEW SERVER========================================
 // const corsOptions = require('./config/corsOptions');
@@ -102,7 +118,7 @@ const db = mysql.createConnection({
 app.use(function (req, res, next) {
     // res.header("Cross-Origin-Embedder-Policy", "require-corp");
     res.header('Cross-Origin-Embedder-Policy: unsafe-none || require-corp');
-    // res.header("Cross-Origin-Opener-Policy", "same-origin");
+    res.header("Cross-Origin-Opener-Policy", "same-origin");
     res.header(
         'Cross-Origin-Opener-Policy',
         'same-origin-allow-popups' || 'same-origin'
@@ -145,11 +161,6 @@ app.get('/working', (req, res) => {
     res.json({ message: 'WORKING' });
 });
 
-// app.get("/added", (req, res) => {
-//   res.send(res.data.user)
-//   res.json({ message: "WORKING" });
-// });
-
 // ========================================
 const { hashPassword } = require('./Argon2');
 
@@ -162,25 +173,24 @@ app.post('/addPassword', async (req, res) => {
             if (error) throw error;
             // If an account exists
             if (results.length > 0) {
-                // parses result and stores in useable variable 'storedHash':
+                // parses result and store in useable variable 'storedUser':
                 const storedUser = JSON.parse(JSON.stringify(results[0].user));
-                // eslint-disable-next-line eqeqeq
                 if (storedUser == user) {
-                    console.log('storedUser Already Exists:', storedUser);
                     res.status(409);
                     res.send('Username Already Exists');
                 }
             } else {
                 const queryInsert =
                     'INSERT INTO passwords (arg2pw, user) VALUES (?,?)';
-                db.query(
-                    queryInsert,
-                    [hashedPassword.password, user],
-                    (error, result) => {
+                db.query( queryInsert,[hashedPassword.password, user], (error, result) => {
                         if (error) {
                             console.log(error);
                         } else {
-                            res.send('Successful Registration');
+                            const accessToken = jwt.sign(JSON.stringify({ user: user }), jwtAccessKey )
+                            user.token = accessToken
+                            console.log("token:", accessToken)
+                            res.cookie("cookieToken", accessToken)
+                            return res.status(200).json({ success: true, token: accessToken });
                         }
                     }
                 );
@@ -192,6 +202,7 @@ app.post('/addPassword', async (req, res) => {
 });
 
 // ========================================
+let refreshTokens = []
 
 app.post('/login', async (req, res) => {
     const { pwd, user } = req.body;
@@ -202,13 +213,25 @@ app.post('/login', async (req, res) => {
             // If an account exists
             if (results.length > 0) {
                 // parses result and stores in useable variable 'storedHash':
-                const storedHash = JSON.parse(
-                    JSON.stringify(results[0].arg2pw)
-                );
+                const storedHash = JSON.parse(JSON.stringify(results[0].arg2pw));
                 // argon2 verification method
                 if (await argon2.verify(storedHash, pwd)) {
-                    res.send('Successful Login');
-                    res.status(200);
+                        const accessToken = jwt.sign(
+                            { user: user },
+                            jwtAccessKey,
+                            { expiresIn: '30m' }
+                        );
+                        const refreshToken = jwt.sign(
+                            { user: user },
+                            jwtAccessKey,
+                            { expiresIn: '1d' }
+                        );
+
+                        refreshTokens.push(refreshToken);
+                        console.log("/login accessToken:", accessToken)
+                        console.log("/login refreshToken:", refreshToken)
+                        // res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24*60*60*1000 });
+                        return res.status(200).json({accessToken: accessToken, refreshToken: refreshToken})
                 } else {
                     res.status(401);
                     res.send('Incorrect Password');
@@ -221,7 +244,76 @@ app.post('/login', async (req, res) => {
     } catch (err) {
         console.log('ErRor' + err);
     }
+})
+
+app.post("/refresh", (req, res, next) => {
+    const refreshToken = req.body.token;
+    if (!refreshToken || !refreshTokens.includes(refreshToken)) {
+        return res.json({ message: "Refresh token not found, login again" });
+    }
+
+    // If the refresh token is valid, create a new accessToken and return it.
+    jwt.verify(refreshToken, process.env.REACT_APP_REFRESH_TOKEN_SECRET, (err, decoded) => {
+        if (!err) {
+            const accessToken = jwt.sign({ user: decoded.user }, process.env.REACT_APP_REFRESH_TOKEN_SECRET, {
+                expiresIn: "1d"
+            });
+            return res.json({ success: true, accessToken });
+        } else {
+            return res.json({
+                success: false,
+                message: "Invalid refresh token"
+            });
+        }
+    });
 });
+
+// Middleware to authenticate user by verifying his/her jwt-token.
+async function auth(req, res, next) {
+    if (!req.headers.authorization) {
+        return res.status(401).send('/protected(auth): Unauthorized request');
+      }
+    let token = req.headers["authorization"];
+    token = token.split(" ")[1]; //Access token
+    // console.log('BearerToken:', token);
+
+    jwt.verify(token, process.env.REACT_APP_JWTSECRET, async (err, user) => {
+        if (user) {
+            req.user = user;
+            // console.log('BearerToken:', token);
+            next();
+        } else if (err.message === "jwt expired") {
+            return res.json({
+                success: false,
+                message: "Access token expired"
+            });
+        } else {
+            console.log(err);
+            return res
+                .status(403)
+                .json({ err, message: "(auth): User not authenticated" });
+        }
+    });
+}
+
+// Protected route, can only be accessed when user is logged-in
+app.post("/protected", auth, (req, res) => {
+    return res.json({ message: "Protected content: Accessed" });
+});
+
+app.post('/posttest', (req, res) => {
+    // res.send("Posted")
+    const user = req.body.user;
+    const pwd = req.body.pwd;
+
+    db.query('INSERT INTO posttest VALUES (?,?,?)',[1, user, pwd], (err,result) => {
+        if(err) {
+            console.log(err);
+        } else {  
+            res.send("Posted")
+        }
+    })
+})
 
 // app.get("/showPasswords", (req, res) => {
 //   db.query("SELECT * FROM passwords;",
