@@ -38,6 +38,7 @@ function App() {
     const [catchUser, setCatchUser] = useState('');
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [JETToken, setJWTToken] = useState();
+    const [err, setErr] = useState('');
 
     // 	const crypto = require('crypto')
     // 	const secret = 'pppppppppppppppppppppppppppppppp'
@@ -58,38 +59,20 @@ function App() {
     // }
 
     useEffect((req, res) => {
+        // axios
+        //     .get('http://localhost:3001/working') // dev
         axios
-            .get('http://localhost:3001/working') // dev
-            // axios
-            //     .get('/working') //heroku
+            .get('/working') //heroku
             .then((res) => {
                 console.log(res);
                 setNotification(res.data.message);
             });
     }, []);
 
-    // useEffect((req, res) => {
-    //     axios
-    //         .get('http://localhost:3001/verifyJWT')
-    //         // dev
-    //         // axios
-    //         //     .get('/verifyJWT') //heroku
-    //         .then((res) => {
-    //             console.log(res);
-    //             setNotification(res.data.message);
-    //         })
-    //         .catch((err) => {
-    //             if (!err?.response) {
-    //                 setErrMsg('No Server Response');
-    //                 console.log('ErRor', err);
-    //             }
-    //         });
-    // }, []);
-
-    function handleSignOut(e) {
-        setUser({});
-        document.getElementById('signInDiv').hidden = false;
-    }
+    // function handleSignOut(e) {
+    //     setUser({});
+    //     document.getElementById('signInDiv').hidden = false;
+    // }
 
     function handleCallbackResponse(response) {
         // console.log("Encoded JWT ID token: " + response.credential)
@@ -111,24 +94,6 @@ function App() {
         // 	{ theme: "outline", size: "large"}
         // )
     }, []);
-
-    // const login = useGoogleLogin({
-    // 	onSuccess: async response => {
-    // 		try {
-    // 			const res = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
-    // 				headers: {
-    // 					"Authorization": `Bearer ${response.access_token}`
-    // 				}
-    // 			})
-    // 			// console.log("Login Success!");
-    // 			// setSuccess(true);
-    // 			// setCatchUser(user)
-    // 			// console.log(res.data)
-    // 		} catch (err) {
-    // 			console.log(err)
-    // 		}
-    // 	}
-    // });
 
     // useEffect(() => {
     //     function start() {
@@ -158,105 +123,47 @@ function App() {
         setErrMsg('');
     }, [user, pwd]);
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
+    // const requestLogin = async (accessToken, refreshToken) => {
+    //     console.log(accessToken, refreshToken);
+    //     return new Promise((resolve, reject) => {
+    //         axios
+    //             .post(
+    //                 'http://localhost:3001/protected',
+    //                 {},
+    //                 { headers: { authorization: `Bearer ${accessToken}` } }
+    //             )
+    //             .then(async (data) => {
+    //                 if (data.data.success === false) {
+    //                     if (data.data.message === 'User not authenticated') {
+    //                         setErr('Login again');
+    //                         // set err message to login again.
+    //                     } else if (
+    //                         data.data.message === 'Access token expired'
+    //                     ) {
+    //                         const accessToken = await refresh(refreshToken);
+    //                         return await requestLogin(
+    //                             accessToken,
+    //                             refreshToken
+    //                         );
+    //                     }
 
-    //     // axios.post('http://localhost:3001/checkPassword', {				// dev
-    //     axios
-    //         .post('/checkPassword', {
-    //             // heroku
-    //             user: user,
-    //             pwd: pwd,
-    //         })
-    //         .then((response) => {
-    //             if (!response.data.message) {
-    //                 setLoginStatus(response.data.message);
-    //             } else {
-    //                 setLoginStatus(response.data[0].message);
-    //             }
-    //             console.log(JSON.stringify(response?.data));
-    //             console.log(JSON.stringify(response));
-    //             const accessToken = response?.data?.accessToken;
-    //             // const roles = response?.data?.roles;
-    //             setAuth({ user, pwd, accessToken });
-    //             setUser('');
-    //             setPwd('');
-    //             setSuccess(true);
-    //         })
-    //         .catch((err) => {
-    //             if (!err?.response) {
-    //                 setErrMsg('No Server Response');
-    //             } else if (err.response?.status === 400) {
-    //                 setErrMsg('Missing Username or Password');
-    //             } else if (err.response?.status === 401) {
-    //                 setErrMsg('Unauthorized');
-    //             } else {
-    //                 setErrMsg('Login Failed');
-    //             }
-    //             // errRef.current.focus(); //don't use...was causing an error
-    //         });
-    //     console.log(user, pwd);
+    //                     resolve(false);
+    //                 } else {
+    //                     // protected route has been accessed, response can be used.
+    //                     setErr('Protected route accessed!');
+    //                     resolve(true);
+    //                 }
+    //             });
+    //     });
     // };
-    // axios.interceptors.request.use((req, config) => {
-    //     config.headers['Authorization'] = `Bearer` + { accessToken: {} };
-    //     return config;
-    // });
-    const requestLogin = async (accessToken, refreshToken) => {
-        console.log(accessToken, refreshToken);
-        return new Promise((resolve, reject) => {
-            axios
-                .post(
-                    'http://localhost:3001/protected',
-                    {},
-                    { headers: { authorization: `Bearer ${accessToken}` } }
-                )
-                .then(async (data) => {
-                    if (data.data.success === false) {
-                        if (data.data.message === 'User not authenticated') {
-                            setErr('Login again');
-                            // set err message to login again.
-                        } else if (
-                            data.data.message === 'Access token expired'
-                        ) {
-                            const accessToken = await refresh(refreshToken);
-                            return await requestLogin(
-                                accessToken,
-                                refreshToken
-                            );
-                        }
 
-                        resolve(false);
-                    } else {
-                        // protected route has been accessed, response can be used.
-                        setErr('Protected route accessed!');
-                        resolve(true);
-                    }
-                });
-        });
-    };
-    
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // axios
-        //     .post('http://localhost:3001/login', {
-        //         // dev
-        //         // axios
-        //         //     .post('/login', {
-        //         // heroku
-        //         user: user,
-        //         pwd: pwd,
-        //     })
+        // await axios
+        // .post('http://localhost:3001/login', { user, pwd }) //dev
         await axios
-            .post(
-                'http://localhost:3001/login',
-                {
-                    user,
-                    pwd,
-                }
-                // { withCredentials: true }
-            )
-
+            .post('/login', { user, pwd }) //heroku
             .then((response) => {
                 console.log('1', response);
                 // console.log('2', response?.data);
@@ -265,19 +172,6 @@ function App() {
                     console.log(
                         `/googleapp response status 200 accessToken: ${response.data.accessToken}`
                     );
-                    // setJWTToken(response.data.token);
-                    // const accessToken = jwt.sign(
-                    //     `${user}`,
-                    //     process.env.REACT_APP_JWTSECRET,
-                    //     { expiresIn: '1h' }
-                    // );
-                    // const refreshToken = jwt.sign(
-                    //     `${user}`,
-                    //     process.env.REACT_APP_REFRESH_TOKEN_SECRET,
-                    //     { expiresIn: '1h' }
-                    // );
-                    // localStorage.setItem('token', response.data.token);
-                    // response.json(`${accessToken}`);
                     setSuccess(true);
                     setCatchUser(user);
                     setUser('');
@@ -296,7 +190,6 @@ function App() {
                 } else {
                     setErrMsg('Login Failed');
                 }
-                // errRef.current.focus(); //don't use...was causing an error
                 console.log('ErRor', err);
             });
     };

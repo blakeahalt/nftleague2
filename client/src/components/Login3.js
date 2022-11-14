@@ -34,10 +34,10 @@ function App() {
     const [err, setErr] = useState('');
 
     useEffect((req, res) => {
+        // axios
+        //     .get('http://localhost:3001/working') // dev
         axios
-            .get('http://localhost:3001/working') // dev
-            // axios
-            //     .get('/working') //heroku
+            .get('/working') //heroku
             .then((res) => {
                 console.log(res);
                 setNotification(res.data.message);
@@ -133,43 +133,13 @@ function App() {
     //     });
     // };
 
-    // const handleChange = (e) => {
-    //     setUser({ ...user, [e.target.name]: e.target.value });
-    //     console.log(user);
-    // };
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-
-    //     axios.post('http://localhost:5000/login', { user }).then((data) => {
-    //         const { accessToken, refreshToken } = data.data;
-
-    //         Cookies.set('access', accessToken);
-    //         Cookies.set('refresh', refreshToken);
-    //     });
-    // };
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // axios
-        //     .post('http://localhost:3001/login', {
-        //         // dev
-        //         // axios
-        //         //     .post('/login', {
-        //         // heroku
-        //         user: user,
-        //         pwd: pwd,
-        //     })
+        // await axios
+        // .post('http://localhost:3001/login', { user, pwd }) //dev
         await axios
-            .post(
-                'http://localhost:3001/login',
-                {
-                    user,
-                    pwd,
-                }
-                // { withCredentials: true }
-            )
-
+            .post('/login', { user, pwd }) //heroku
             .then((data) => {
                 const accessToken = data.data.accessToken;
                 const refreshToken = data.data.refreshToken;
@@ -315,22 +285,6 @@ function App() {
                     </div>
                 </section>
             ) : (
-                // {success ? (
-                //     <section>
-                //         <h1>Success!</h1>
-                //         <p>
-                //             <Link to="/">Login</Link>
-                //         </p>
-                //         <p>
-                //             <Link to="/profile">Visit Your Profile</Link>
-                //         </p>
-                //         <p>Added User: {catchUser}</p>
-
-                //         <p>
-                //             axios.get('/register') status: <i>{notification}</i>
-                //         </p>
-                //     </section>
-                // ) : (
                 <section>
                     <p
                         ref={errRef}
@@ -418,40 +372,3 @@ function App() {
 }
 
 export default App;
-
-//     return (
-//         <div className="App">
-//             <form
-//                 action=""
-//                 onChange={handleChange}
-//                 onSubmit={handleSubmit}
-//             >
-//                 <input
-//                     name="email"
-//                     type="email"
-//                     placeholder="Email address"
-//                 />
-//                 <br />
-//                 <br />
-
-//                 <input
-//                     name="password"
-//                     type="password"
-//                     placeholder="Password"
-//                 />
-//                 <br />
-//                 <br />
-//                 <input
-//                     type="submit"
-//                     value="Login"
-//                 />
-//                 <br />
-//                 <br />
-//             </form>
-//             {err}
-//             <button onClick={protect}>Access Protected Content</button>
-//         </div>
-//     );
-// }
-
-// export default App;
