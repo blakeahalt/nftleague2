@@ -34,10 +34,10 @@ function App() {
     const [err, setErr] = useState('');
 
     useEffect((req, res) => {
-        // axios
-        // .get('http://localhost:3001/working') // dev
         axios
-            .get('/working') //heroku
+            .get('http://localhost:3001/working') // dev
+            // axios
+            //     .get('/working') //heroku
             .then((res) => {
                 console.log(res);
                 setNotification(res.data.message);
@@ -82,10 +82,10 @@ function App() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // await axios
-        // .post('http://localhost:3001/login', { user, pwd })
         await axios
-            .post('/login', { user, pwd })
+            .post('http://localhost:3001/login', { user, pwd })
+            // await axios
+            //     .post('/login', { user, pwd })
             .then((data) => {
                 const accessToken = data.data.accessToken;
                 const refreshToken = data.data.refreshToken;
