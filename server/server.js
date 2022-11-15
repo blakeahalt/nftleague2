@@ -1,4 +1,6 @@
 // import dotenv from "dotenv";
+require("dotenv").config();
+// import 'dotenv/config'
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -10,7 +12,7 @@ const argon2 = require('argon2');
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
+
 // const dotenv = require("dotenv")
 // dotenv.config()
 
