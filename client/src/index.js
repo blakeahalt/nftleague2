@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import './App.css';
 import App from './App';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import 'dotenv/config';
 
 // import { AuthProvider } from './components/context/AuthProvider';
 
