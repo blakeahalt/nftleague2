@@ -70,7 +70,7 @@ function App() {
                         <Route
                             exact
                             path="/login"
-                            element={<GLogin />}
+                            element={<GoogleApp />}
                         />
                         <Route
                             exact

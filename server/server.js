@@ -164,6 +164,8 @@ app.get('/working', (req, res) => {
 
 // ========================================
 const { hashPassword } = require('./Argon2');
+// const DotenvWebpackPlugin = require('dotenv-webpack');
+const dotenv = require('dotenv-webpack')
 
 app.post('/addPassword', async (req, res) => {
     const { pwd, user } = req.body;
