@@ -15,8 +15,7 @@ const config = {
     host: "localhost",
   },
   plugins: [
-    // Add your plugins here
-    // Learn more about plugins from https://webpack.js.org/configuration/plugins/
+    new Dotenv({ systemvars: true }),
   ],
   module: {
     rules: [

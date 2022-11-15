@@ -1,7 +1,7 @@
 // import dotenv from "dotenv";
 // require("dotenv").config();
 // import 'dotenv/config'
-require('dotenv').config()
+require('dotenv-webpack').config()
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -164,6 +164,7 @@ app.get('/working', (req, res) => {
 
 // ========================================
 const { hashPassword } = require('./Argon2');
+const DotenvWebpackPlugin = require('dotenv-webpack');
 
 app.post('/addPassword', async (req, res) => {
     const { pwd, user } = req.body;
