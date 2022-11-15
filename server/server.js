@@ -1,7 +1,7 @@
 // import dotenv from "dotenv";
 // require("dotenv").config();
 // import 'dotenv/config'
-require('dotenv-webpack').config()
+// require('dotenv-webpack').config()
 const express = require('express');
 const app = express();
 const path = require('path');
