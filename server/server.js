@@ -1,4 +1,4 @@
-// import dotenv from "dotenv";
+// import { Redirect } from 'react-router-dom';
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -288,7 +288,7 @@ async function auth(req, res, next) {
                 message: "Access token expired"
             });
         } else {
-            console.log(err);
+            // console.log(err);
             return res
                 .status(403)
                 .json({ err, message: "(auth): User not authenticated" });

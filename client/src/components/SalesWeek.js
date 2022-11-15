@@ -5,6 +5,7 @@ import CryptoSlamSalesRows from './CryptoSlamSalesRows';
 import { Link } from 'react-router-dom';
 import Pagination from './Pagination2';
 import axios from 'axios';
+import ProtectRoutes from './ProtectRoutes';
 
 function UserList() {
     const [rowDataSales, setRowDataSales] = useState([]);
@@ -15,7 +16,7 @@ function UserList() {
     const CSoptions = {
         method: 'GET',
         headers: {
-            'X-BLOBR-KEY': 'lrxYcsDoLR80hcY9PfQ34BeFTQnnSVej',
+            'X-BLOBR-KEY': '3Q5omwBMURG6qbahoT3MVBa7RjOkNpbg',
         },
     };
 
@@ -29,24 +30,7 @@ function UserList() {
     }, []);
     // console.log('rowDataSales:', rowDataSales);
 
-    const JWTtoken = localStorage.getItem('token');
-
-    useEffect(() => {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${JWTtoken}`;
-        // console.log('JWTtoken', JWTtoken);
-        ////Dev
-        axios
-            .get('http://localhost:3001/verifyJWT')
-            ////Heroku
-            // axios
-            //     .get('/verifyJWT')
-            .then((res) => {
-                console.log('verifyJWT res:', res);
-            })
-            .catch((err) => {
-                console.log('ErRor', err);
-            });
-    }, []);
+    ProtectRoutes();
 
     // //Output: array of urls to each collection
     const endpoints = [];
@@ -184,7 +168,7 @@ function UserList() {
 
         timeElapsed.push(z);
     }
-    console.log('timeElapsed:', timeElapsed);
+    // console.log('timeElapsed:', timeElapsed);
 
     const both = rowDataSales.map((item, i) =>
         Object.assign(
@@ -199,7 +183,7 @@ function UserList() {
             { timeElapsed: timeElapsed[i] }
         )
     );
-    console.log('both', both);
+    // console.log('both', both);
 
     const lastPostIndex = currentPage * postsPerPage;
     const firstPostIndex = lastPostIndex - postsPerPage;

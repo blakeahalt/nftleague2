@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import CryptoSlamSalesRows from './CryptoSlamSalesRows';
 import { Link } from 'react-router-dom';
 import Pagination from './Pagination2';
+import ProtectRoutes from './ProtectRoutes';
 
 function UserList() {
     const [rowDataSales, setRowDataSales] = useState([]);
@@ -14,7 +15,7 @@ function UserList() {
     const CSoptions = {
         method: 'GET',
         headers: {
-            'X-BLOBR-KEY': 'lrxYcsDoLR80hcY9PfQ34BeFTQnnSVej',
+            'X-BLOBR-KEY': '3Q5omwBMURG6qbahoT3MVBa7RjOkNpbg',
         },
     };
 

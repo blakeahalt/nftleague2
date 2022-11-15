@@ -89,7 +89,6 @@ function App() {
             .then((data) => {
                 const accessToken = data.data.accessToken;
                 const refreshToken = data.data.refreshToken;
-                console.log('/login data:', accessToken, refreshToken);
                 Cookies.set('access', accessToken);
                 Cookies.set('refresh', refreshToken);
                 if (data.status === 200) {
