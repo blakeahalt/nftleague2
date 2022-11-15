@@ -22,8 +22,8 @@ app.use(cors({ credentials: true }));
 app.use(express.json());
 
 
-// const jwtAccessKey = process.env.REACT_APP_JWTSECRET;
-// const jwtRefreshKey = process.env.REACT_APP_REFRESH_TOKEN_SECRET;
+const jwtAccessKey = process.env.REACT_APP_JWTSECRET;
+const jwtRefreshKey = process.env.REACT_APP_REFRESH_TOKEN_SECRET;
 // const {OAuth2Client} = require('google-auth-library');
 // const metadata = require('gcp-metadata');
 
@@ -117,8 +117,8 @@ const db = mysql.createConnection({
 
 app.use(function (req, res, next) {
     // res.header("Cross-Origin-Embedder-Policy", "require-corp");
-    // res.header('Cross-Origin-Embedder-Policy: unsafe-none || require-corp');
-    res.header("Cross-Origin-Opener-Policy", "same-origin");
+    res.header('Cross-Origin-Embedder-Policy: unsafe-none || require-corp');
+    // res.header("Cross-Origin-Opener-Policy", "same-origin");
     res.header(
         'Cross-Origin-Opener-Policy',
         'same-origin-allow-popups' || 'same-origin'
