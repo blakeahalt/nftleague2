@@ -136,8 +136,8 @@ function App() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // await axios
-        // .post('http://localhost:3001/login', { user, pwd }) //dev
+        // await axios(CSSignOut) =>
+        // window.location.replace('/')lhost:3001/login', { user, pwd }) //dev
         await axios
             .post('/login', { user, pwd }) //heroku
             .then((data) => {

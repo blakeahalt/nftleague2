@@ -282,9 +282,12 @@ function UserList() {
     );
     // console.log('both', both);
 
-    const CSSignOut = () => {
-        localStorage.clear();
-    };
+    function CSSignOut(e) {
+        e.preventDefault();
+        Cookies.set('access', null);
+        Cookies.set('refresh', null);
+        window.location.replace('/');
+    }
 
     const lastPostIndex = currentPage * postsPerPage;
     const firstPostIndex = lastPostIndex - postsPerPage;
@@ -333,8 +336,8 @@ function UserList() {
                         <a
                             className="dropbtn"
                             href="/GoogleApp"
+                            onClick={CSSignOut}
                         >
-                            <CSSignOut />
                             Sign Out
                         </a>
                     </div>
