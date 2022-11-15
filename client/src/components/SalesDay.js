@@ -280,7 +280,7 @@ function UserList() {
     function CSSignOut() {
         Cookies.set('access', null);
         Cookies.set('refresh', null);
-        Navigate('/');
+        Navigate('/login');
     }
 
     const lastPostIndex = currentPage * postsPerPage;

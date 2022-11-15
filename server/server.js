@@ -133,29 +133,29 @@ app.use(express.static(path.join(__dirname, 'public')));
 //   res.json({ message: "Hello from server!" });
 // });
 
-app.get('/test', (req, res) => {
-    res.json({ message: 'WORKING' });
-});
+// app.get('/test', (req, res) => {
+//     res.json({ message: 'WORKING' });
+// });
 
-app.post('/test', (req, res) => {
-    res.json({ message: 'WORKING' });
-});
+// app.post('/test', (req, res) => {
+//     res.json({ message: 'WORKING' });
+// });
 
-app.get('/GoogleApp', (req, res) => {
-    res.json({ message: 'WORKING' });
-});
+// app.get('/GoogleApp', (req, res) => {
+//     res.json({ message: 'WORKING' });
+// });
 
-app.get('/notification', (req, res) => {
-    res.json({ message: 'WORKING' });
-});
+// app.get('/notification', (req, res) => {
+//     res.json({ message: 'WORKING' });
+// });
 
-app.get('/register', (req, res) => {
-    res.json({ message: 'WORKING' });
-});
+// app.get('/register', (req, res) => {
+//     res.json({ message: 'WORKING' });
+// });
 
-app.get('/profile', (req, res) => {
-    res.json({ message: 'WORKING' });
-});
+// app.get('/profile', (req, res) => {
+//     res.json({ message: 'WORKING' });
+// });
 
 app.get('/working', (req, res) => {
     res.json({ message: 'WORKING' });
