@@ -2,31 +2,31 @@
 // require("dotenv").config();
 // import 'dotenv/config'
 // require('dotenv-webpack').config()
-const express = require('express');
+import express, { json, static } from 'express';
 const app = express();
-const path = require('path');
+import { join, resolve } from 'path';
 const port = process.env.PORT || 3001;
-const cors = require('cors');
+import cors from 'cors';
 // app.use(cors());
-const argon2 = require('argon2');
+import { verify } from 'argon2';
 
-const bodyParser = require("body-parser")
-const cookieParser = require("cookie-parser")
-const jwt = require("jsonwebtoken");
+import { json as _json } from "body-parser";
+import cookieParser from "cookie-parser";
+import { sign, verify as _verify } from "jsonwebtoken";
 
 
 
-app.use(bodyParser.json())
+app.use(_json())
 app.use(cookieParser())
 
 app.use(cors({ credentials: true }));
-app.use(express.json());
+app.use(json());
 
 
 const jwtAccessKey = process.env.REACT_APP_JWTSECRET;
 const jwtRefreshKey = process.env.REACT_APP_REFRESH_TOKEN_SECRET;
-const {OAuth2Client} = require('google-auth-library');
-const metadata = require('gcp-metadata');
+import { OAuth2Client } from 'google-auth-library';
+import metadata from 'gcp-metadata';
 
 // NEW SERVER========================================
 // const corsOptions = require('./config/corsOptions');
@@ -91,8 +91,8 @@ const metadata = require('gcp-metadata');
 
 // =======================================
 // mysql that works in development
-const mysql = require('mysql');
-const db = mysql.createConnection({
+import { createConnection } from 'mysql';
+const db = createConnection({
     user: 'hu6etanlnbizgzv5',
     host: 'cwe1u6tjijexv3r6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
     password: 'g9clxpcv1kdf5jqj',
@@ -127,7 +127,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(static(join(__dirname, 'public')));
 // app.use(express.static(path.resolve(__dirname, '/public')));
 
 // app.get("/api", (req, res) => {
@@ -163,7 +163,7 @@ app.get('/working', (req, res) => {
 });
 
 // ========================================
-const { hashPassword } = require('./Argon2');
+import { hashPassword } from './Argon2';
 // const DotenvWebpackPlugin = require('dotenv-webpack');
 // const dotenv = require('dotenv-webpack')
 
@@ -189,7 +189,7 @@ app.post('/addPassword', async (req, res) => {
                         if (error) {
                             console.log(error);
                         } else {
-                            const accessToken = jwt.sign(JSON.stringify({ user: user }), jwtAccessKey )
+                            const accessToken = sign(JSON.stringify({ user: user }), jwtAccessKey )
                             user.token = accessToken
                             console.log("token:", accessToken)
                             res.cookie("cookieToken", accessToken)
@@ -218,13 +218,13 @@ app.post('/login', async (req, res) => {
                 // parses result and stores in useable variable 'storedHash':
                 const storedHash = JSON.parse(JSON.stringify(results[0].arg2pw));
                 // argon2 verification method
-                if (await argon2.verify(storedHash, pwd)) {
-                        const accessToken = jwt.sign(
+                if (await verify(storedHash, pwd)) {
+                        const accessToken = sign(
                             { user: user },
                             jwtAccessKey,
                             { expiresIn: '30m' }
                         );
-                        const refreshToken = jwt.sign(
+                        const refreshToken = sign(
                             { user: user },
                             jwtRefreshKey,
                             { expiresIn: '1d' }
@@ -256,9 +256,9 @@ app.post("/refresh", (req, res, next) => {
     }
 
     // If the refresh token is valid, create a new accessToken and return it.
-    jwt.verify(refreshToken, jwtRefreshKey, (err, decoded) => {
+    _verify(refreshToken, jwtRefreshKey, (err, decoded) => {
         if (!err) {
-            const accessToken = jwt.sign({ user: decoded.user }, jwtRefreshKey, {
+            const accessToken = sign({ user: decoded.user }, jwtRefreshKey, {
                 expiresIn: "1d"
             });
             return res.json({ success: true, accessToken });
@@ -280,7 +280,7 @@ async function auth(req, res, next) {
     token = token.split(" ")[1]; //Access token
     // console.log('BearerToken:', token);
 
-    jwt.verify(token, jwtAccessKey, async (err, user) => {
+    _verify(token, jwtAccessKey, async (err, user) => {
         if (user) {
             req.user = user;
             // console.log('BearerToken:', token);
@@ -348,7 +348,7 @@ app.post('/posttest', (req, res) => {
 
 // This route serves the React app
 app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
+    res.sendFile(resolve(__dirname, 'public', 'index.html'))
 );
 // }
 

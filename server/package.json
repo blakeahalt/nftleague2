@@ -21,7 +21,10 @@
     "yup": "^0.32.11"
   },
   "browser": {
-    "crypto": false
+    "crypto": false,
+    "fs": false,
+    "path": false,
+    "os": false
   },
   "scripts": {
     "server": "nodemon --quiet server",

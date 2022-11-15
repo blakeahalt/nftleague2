@@ -39,10 +39,10 @@ function UserList() {
         console.log('Refreshing token!');
 
         return new Promise((resolve, reject) => {
-            // axios
-            //     .post('http://localhost:3001/refresh', { token: refreshToken }) //dev
             axios
-                .post('/refresh', { token: refreshToken }) //heroku
+                .post('http://localhost:3001/refresh', { token: refreshToken }) //dev
+                // axios
+                //     .post('/refresh', { token: refreshToken }) //heroku
                 .then((data) => {
                     if (data.data.success === false) {
                         setErr('Login again');
@@ -60,12 +60,12 @@ function UserList() {
 
     const requestLogin = async (accessToken, refreshToken) => {
         return new Promise((resolve, reject) => {
-            // axios
-            //     .post(
-            //         'http://localhost:3001/protected', //dev
             axios
                 .post(
-                    '/protected', //heroku
+                    'http://localhost:3001/protected', //dev
+                    // axios
+                    //     .post(
+                    //         '/protected', //heroku
                     {},
                     { headers: { Authorization: `Bearer ${accessToken}` } }
                 )
