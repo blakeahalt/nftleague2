@@ -22,10 +22,10 @@ app.use(cors({ credentials: true }));
 app.use(express.json());
 
 
-const jwtAccessKey = process.env.REACT_APP_JWTSECRET;
-const jwtRefreshKey = process.env.REACT_APP_REFRESH_TOKEN_SECRET;
-const {OAuth2Client} = require('google-auth-library');
-const metadata = require('gcp-metadata');
+// const jwtAccessKey = process.env.REACT_APP_JWTSECRET;
+// const jwtRefreshKey = process.env.REACT_APP_REFRESH_TOKEN_SECRET;
+// const {OAuth2Client} = require('google-auth-library');
+// const metadata = require('gcp-metadata');
 
 // NEW SERVER========================================
 // const corsOptions = require('./config/corsOptions');
@@ -253,9 +253,9 @@ app.post("/refresh", (req, res, next) => {
     }
 
     // If the refresh token is valid, create a new accessToken and return it.
-    jwt.verify(refreshToken, process.env.REACT_APP_REFRESH_TOKEN_SECRET, (err, decoded) => {
+    jwt.verify(refreshToken, jwtRefreshKey, (err, decoded) => {
         if (!err) {
-            const accessToken = jwt.sign({ user: decoded.user }, process.env.REACT_APP_REFRESH_TOKEN_SECRET, {
+            const accessToken = jwt.sign({ user: decoded.user }, jwtRefreshKey, {
                 expiresIn: "1d"
             });
             return res.json({ success: true, accessToken });
@@ -277,7 +277,7 @@ async function auth(req, res, next) {
     token = token.split(" ")[1]; //Access token
     // console.log('BearerToken:', token);
 
-    jwt.verify(token, process.env.REACT_APP_JWTSECRET, async (err, user) => {
+    jwt.verify(token, jwtAccessKey, async (err, user) => {
         if (user) {
             req.user = user;
             // console.log('BearerToken:', token);

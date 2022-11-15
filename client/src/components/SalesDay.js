@@ -2,7 +2,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import CryptoSlamSalesRows from './CryptoSlamSalesRows';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import Pagination from './Pagination2';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -40,7 +40,8 @@ function UserList() {
 
         return new Promise((resolve, reject) => {
             axios
-                .post('http://localhost:3001/refresh', { token: refreshToken })
+                // .post('http://localhost:3001/refresh', { token: refreshToken })
+                .post('/refresh', { token: refreshToken })
                 .then((data) => {
                     if (data.data.success === false) {
                         setErr('Login again');
@@ -60,7 +61,8 @@ function UserList() {
         return new Promise((resolve, reject) => {
             axios
                 .post(
-                    'http://localhost:3001/protected',
+                    // 'http://localhost:3001/protected',
+                    '/protected',
                     {},
                     { headers: { Authorization: `Bearer ${accessToken}` } }
                 )
@@ -277,9 +279,11 @@ function UserList() {
     );
     // console.log('both', both);
 
-    const CSSignOut = () => {
-        localStorage.clear();
-    };
+    function CSSignOut() {
+        Cookies.set('access', null);
+        Cookies.set('refresh', null);
+        Navigate('/');
+    }
 
     const lastPostIndex = currentPage * postsPerPage;
     const firstPostIndex = lastPostIndex - postsPerPage;
@@ -328,8 +332,8 @@ function UserList() {
                         <a
                             className="dropbtn"
                             href="/GoogleApp"
+                            onClick={CSSignOut}
                         >
-                            <CSSignOut />
                             Sign Out
                         </a>
                     </div>

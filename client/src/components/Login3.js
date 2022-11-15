@@ -35,9 +35,8 @@ function App() {
 
     useEffect((req, res) => {
         axios
-            .get('http://localhost:3001/working') // dev
-            // axios
-            //     .get('/working') //heroku
+            // .get('http://localhost:3001/working') // dev
+            .get('/working') //heroku
             .then((res) => {
                 console.log(res);
                 setNotification(res.data.message);
@@ -79,97 +78,12 @@ function App() {
         setErrMsg('');
     }, [user, pwd]);
 
-    // const refresh = (refreshToken) => {
-    //     console.log('Refreshing token!');
-
-    //     return new Promise((resolve, reject) => {
-    //         axios
-    //             .post('http://localhost:3001/refresh', { token: refreshToken })
-    //             .then((res) => {
-    //                 if (res.data.success === false) {
-    //                     setErr('Login again');
-    //                     // set message and return.
-    //                     resolve(false);
-    //                 } else {
-    //                     const { accessToken } = res.data;
-    //                     Cookies.set('access', accessToken);
-    //                     resolve(accessToken);
-    //                 }
-    //             });
-    //     });
-    // };
-
-    // const requestLogin = async (accessToken, refreshToken) => {
-    //     console.log(accessToken, refreshToken);
-    //     return new Promise((resolve, reject) => {
-    //         axios
-    //             .post(
-    //                 'http://localhost:3001/protected',
-    //                 {},
-    //                 { headers: { authorization: `Bearer ${accessToken}` } }
-    //             )
-    //             .then(async (data) => {
-    //                 if (data.data.success === false) {
-    //                     if (data.data.message === 'User not authenticated') {
-    //                         setErr('Login again');
-    //                         // set err message to login again.
-    //                     } else if (
-    //                         data.data.message === 'Access token expired'
-    //                     ) {
-    //                         const accessToken = await refresh(refreshToken);
-    //                         return await requestLogin(
-    //                             accessToken,
-    //                             refreshToken
-    //                         );
-    //                     }
-
-    //                     resolve(false);
-    //                 } else {
-    //                     // protected route has been accessed, response can be used.
-    //                     setErr('Protected route accessed!');
-    //                     resolve(true);
-    //                 }
-    //             });
-    //     });
-    // };
-
-    // const handleChange = (e) => {
-    //     setUser({ ...user, [e.target.name]: e.target.value });
-    //     console.log(user);
-    // };
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-
-    //     axios.post('http://localhost:5000/login', { user }).then((data) => {
-    //         const { accessToken, refreshToken } = data.data;
-
-    //         Cookies.set('access', accessToken);
-    //         Cookies.set('refresh', refreshToken);
-    //     });
-    // };
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // axios
-        //     .post('http://localhost:3001/login', {
-        //         // dev
-        //         // axios
-        //         //     .post('/login', {
-        //         // heroku
-        //         user: user,
-        //         pwd: pwd,
-        //     })
         await axios
-            .post(
-                'http://localhost:3001/login',
-                {
-                    user,
-                    pwd,
-                }
-                // { withCredentials: true }
-            )
-
+            // .post('http://localhost:3001/login', { user, pwd })
+            .post('/login', { user, pwd })
             .then((data) => {
                 const accessToken = data.data.accessToken;
                 const refreshToken = data.data.refreshToken;
@@ -180,19 +94,6 @@ function App() {
                     console.log(
                         `/googleapp response status 200 accessToken: ${data.data.accessToken}`
                     );
-                    // setJWTToken(response.data.token);
-                    // const accessToken = jwt.sign(
-                    //     `${user}`,
-                    //     process.env.REACT_APP_JWTSECRET,
-                    //     { expiresIn: '1h' }
-                    // );
-                    // const refreshToken = jwt.sign(
-                    //     `${user}`,
-                    //     process.env.REACT_APP_REFRESH_TOKEN_SECRET,
-                    //     { expiresIn: '1h' }
-                    // );
-                    // localStorage.setItem('token', response.data.token);
-                    // response.json(`${accessToken}`);
                     setSuccess(true);
                     setCatchUser(user);
                     setUser('');
@@ -216,73 +117,6 @@ function App() {
             });
     };
 
-    //             console.log('1', response);
-    //             // console.log('2', response?.data);
-    //             // console.log('3', response?.data.arg2pw);
-    //             if (response.status === 200) {
-    //                 console.log(
-    //                     `/googleapp response status 200 accessToken: ${response.data.accessToken}`
-    //                 );
-    //                 // setJWTToken(response.data.token);
-    //                 // const accessToken = jwt.sign(
-    //                 //     `${user}`,
-    //                 //     process.env.REACT_APP_JWTSECRET,
-    //                 //     { expiresIn: '1h' }
-    //                 // );
-    //                 // const refreshToken = jwt.sign(
-    //                 //     `${user}`,
-    //                 //     process.env.REACT_APP_REFRESH_TOKEN_SECRET,
-    //                 //     { expiresIn: '1h' }
-    //                 // );
-    //                 // localStorage.setItem('token', response.data.token);
-    //                 // response.json(`${accessToken}`);
-    //                 setSuccess(true);
-    //                 setCatchUser(user);
-    //                 setUser('');
-    //                 setPwd('');
-    //             }
-    //         })
-    //         .catch((err) => {
-    //             if (!err?.response) {
-    //                 setErrMsg('No Server Response');
-    //             } else if (err.response?.status === 400) {
-    //                 setErrMsg('Missing Username or Password');
-    //             } else if (err.response?.status === 409) {
-    //                 setErrMsg('Username Not Found');
-    //             } else if (err.response?.status === 401) {
-    //                 setErrMsg('Incorrect Password');
-    //             } else {
-    //                 setErrMsg('Login Failed');
-    //             }
-    //             // errRef.current.focus(); //don't use...was causing an error
-    //             console.log('ErRor', err);
-    //         });
-    // };
-
-    // const hasAccess = async (accessToken, refreshToken) => {
-    //     if (!refreshToken) return null;
-
-    //     if (accessToken === undefined) {
-    //         // generate new accessToken
-    //         accessToken = await refresh(refreshToken);
-    //         return accessToken;
-    //     }
-
-    //     return accessToken;
-    // };
-
-    // const protect = async (e) => {
-    //     let accessToken = Cookies.get('access');
-    //     let refreshToken = Cookies.get('refresh');
-
-    //     accessToken = await hasAccess(accessToken, refreshToken);
-
-    //     if (!accessToken) {
-    //         // Set message saying login again.
-    //     } else {
-    //         await requestLogin(accessToken, refreshToken);
-    //     }
-    // };
     return (
         <>
             {success ? (
@@ -315,22 +149,6 @@ function App() {
                     </div>
                 </section>
             ) : (
-                // {success ? (
-                //     <section>
-                //         <h1>Success!</h1>
-                //         <p>
-                //             <Link to="/">Login</Link>
-                //         </p>
-                //         <p>
-                //             <Link to="/profile">Visit Your Profile</Link>
-                //         </p>
-                //         <p>Added User: {catchUser}</p>
-
-                //         <p>
-                //             axios.get('/register') status: <i>{notification}</i>
-                //         </p>
-                //     </section>
-                // ) : (
                 <section>
                     <p
                         ref={errRef}
@@ -418,40 +236,3 @@ function App() {
 }
 
 export default App;
-
-//     return (
-//         <div className="App">
-//             <form
-//                 action=""
-//                 onChange={handleChange}
-//                 onSubmit={handleSubmit}
-//             >
-//                 <input
-//                     name="email"
-//                     type="email"
-//                     placeholder="Email address"
-//                 />
-//                 <br />
-//                 <br />
-
-//                 <input
-//                     name="password"
-//                     type="password"
-//                     placeholder="Password"
-//                 />
-//                 <br />
-//                 <br />
-//                 <input
-//                     type="submit"
-//                     value="Login"
-//                 />
-//                 <br />
-//                 <br />
-//             </form>
-//             {err}
-//             <button onClick={protect}>Access Protected Content</button>
-//         </div>
-//     );
-// }
-
-// export default App;
