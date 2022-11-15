@@ -85,7 +85,7 @@ function App() {
         // await axios
         // .post('http://localhost:3001/login', { user, pwd })
         await axios
-            .post('/login', { user, pwd }, { withCredentials: true })
+            .post('/login', { user, pwd })
             .then((data) => {
                 const accessToken = data.data.accessToken;
                 const refreshToken = data.data.refreshToken;
