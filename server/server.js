@@ -117,7 +117,7 @@ const db = mysql.createConnection({
 
 app.use(function (req, res, next) {
     // res.header("Cross-Origin-Embedder-Policy", "require-corp");
-    res.header('Cross-Origin-Embedder-Policy: unsafe-none || require-corp');
+    // res.header('Cross-Origin-Embedder-Policy: unsafe-none || require-corp');
     res.header("Cross-Origin-Opener-Policy", "same-origin");
     res.header(
         'Cross-Origin-Opener-Policy',
