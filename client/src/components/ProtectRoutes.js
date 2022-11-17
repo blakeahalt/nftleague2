@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, redirect } from 'react-router-dom';
+import AuthContext from './AuthProvider';
 
 function ProtectRoutes() {
     useEffect(() => {
@@ -9,12 +10,12 @@ function ProtectRoutes() {
     }, []);
 
     const [err, setErr] = useState('');
-    const [authStatus, setAuthStatus] = useState(true);
+    // const [auth, setAuth] = useState(true);
 
     const navigate = useNavigate();
 
     // useEffect(() => {
-    //     if (Cookies.get('access', null) && Cookies.get('refresh', null)) {
+    //     if (Cookies.get('refresh', null)) {
     //         setTimeout(function () {
     //             // window.location.href = 'http://localhost:3001/login';
     //             navigate('/login');
@@ -23,10 +24,11 @@ function ProtectRoutes() {
     //     }
     // });
 
-    const protect = async () => {
-        let accessToken = Cookies.get('access');
-        let refreshToken = Cookies.get('refresh');
+    let accessToken = Cookies.get('access');
+    let refreshToken = Cookies.get('refresh');
+    console.log('refreshToken', refreshToken);
 
+    const protect = async () => {
         accessToken = await hasAccess(accessToken, refreshToken);
 
         if (!accessToken) {
@@ -42,23 +44,23 @@ function ProtectRoutes() {
         console.log('Refreshing token!');
 
         return new Promise((resolve, reject) => {
-            // axios
-            //     .post('http://localhost:3001/refresh', { token: refreshToken })
-            //     .then((data) => {
-            axios.post('/refresh', { token: refreshToken }).then((data) => {
-                if (data.data.success === false) {
-                    // setAuthStatus(false);
-                    setErr('Login again');
-                    console.log('2 (refresh): Please Log In Again');
-                    resolve(false);
-                } else {
-                    const { accessToken } = data.data;
-                    Cookies.set('access', accessToken);
-                    resolve(accessToken);
-                    console.log('1 (refresh): All good bruh');
-                }
-            });
-    });
+            axios
+                .post('http://localhost:3001/refresh', { token: refreshToken })
+                .then((data) => {
+                    // axios.post('/refresh', { token: refreshToken }).then((data) => {
+                    if (data.data.success === false) {
+                        // setAuthStatus(false);
+                        setErr('Login again');
+                        console.log('2 (refresh): Please Log In Again');
+                        resolve(false);
+                    } else {
+                        const { accessToken } = data.data;
+                        Cookies.set('access', accessToken);
+                        resolve(accessToken);
+                        console.log('1 (refresh): All good bruh');
+                    }
+                });
+        });
     };
 
     const hasAccess = async (accessToken, refreshToken) => {
@@ -80,18 +82,18 @@ function ProtectRoutes() {
 
     const requestLogin = async (accessToken, refreshToken) => {
         return new Promise((resolve, reject) => {
-            // axios
-            //     .post(
-            //         'http://localhost:3001/protected',
-            //         {},
-            //         { headers: { Authorization: `Bearer ${accessToken}` } }
-            //     )
             axios
                 .post(
-                    '/protected',
+                    'http://localhost:3001/protected',
                     {},
                     { headers: { Authorization: `Bearer ${accessToken}` } }
                 )
+                // axios
+                //     .post(
+                //         '/protected',
+                //         {},
+                //         { headers: { Authorization: `Bearer ${accessToken}` } }
+                //     )
                 .then(async (data) => {
                     if (data.data.success === false) {
                         if (
@@ -99,7 +101,7 @@ function ProtectRoutes() {
                             '(auth): User not authenticated'
                         ) {
                             // setAuthStatus(false);
-                            navigate('/login');
+                            <Navigate to="/login" />;
                             console.log(
                                 '2 (requestLogin): Please Log In Again'
                             );

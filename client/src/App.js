@@ -29,6 +29,8 @@ import Pagination from './components/Pagination';
 import Passengers from './components/Passengers';
 import DataTable from './components/DataTable';
 import { composeFunctions } from 'rsuite/esm/utils';
+import ProtectRoutes from './components/ProtectRoutes2';
+import Cookies from 'js-cookie';
 
 function App() {
     return (
@@ -36,8 +38,6 @@ function App() {
             <div>
                 <main className="App">
                     <Routes>
-                        {/* <Route exact path="/" element={<Login/>}/> */}
-                        {/* <Route exact path="/api" element={<Api/>}/> */}
                         <Route
                             exact
                             path="/register/"
@@ -45,17 +45,9 @@ function App() {
                         />
                         <Route
                             exact
-                            path="/notification"
-                            element={<Notification />}
-                        />
-                        {/* <Route exact path="/test" element={<Test/>}/> */}
-                        <Route
-                            exact
                             path="/profile"
                             element={<Profile />}
                         />
-                        {/* <Route exact path="/GoogleLogin" element={<GoogleLogin/>}/>
-            <Route exact path="/GoogleLogout" element={<GoogleLogout/>}/> */}
                         <Route
                             exact
                             path="/"
@@ -78,80 +70,54 @@ function App() {
                         />
                         <Route
                             exact
-                            path="/add"
-                            element={<Added />}
-                        />
-                        <Route
-                            exact
                             path="/NFTList"
                             element={<NFTList />}
                         />
                         <Route
-                            exact
-                            path="/LineChart"
-                            element={<LineChart />}
-                        />
-                        <Route
-                            exact
-                            path="/CryptoSlamSalesMonth"
-                            element={<SalesMonth />}
-                        />
-                        <Route
-                            exact
-                            path="/CryptoSlamSalesWeek"
-                            element={<SalesWeek />}
-                        />
-                        <Route
-                            exact
-                            path="/CryptoSlamSalesDay"
-                            element={<SalesDay />}
-                        />
-                        <Route
-                            exact
-                            path="/RapidAPICollectionsDay"
-                            element={<RapidApiCollectionDay />}
-                        />
-                        <Route
-                            exact
-                            path="/RapidAPICollectionsWeek"
-                            element={<RapidApiCollectionWeek />}
-                        />
-                        <Route
-                            exact
-                            path="/RapidAPICollectionsMonth"
-                            element={<RapidApiCollectionMonth />}
-                        />
-                        <Route
-                            exact
-                            path="/CryptoSlamCollectionsDay"
-                            element={<CryptoSlamCollectionDay />}
-                        />
-                        <Route
-                            exact
-                            path="/CryptoSlamCollectionsWeek"
-                            element={<CryptoSlamCollectionWeek />}
-                        />
-                        <Route
-                            exact
-                            path="/CryptoSlamCollectionsMonth"
-                            element={<CryptoSlamCollectionMonth />}
-                        />
-                        <Route
-                            exact
-                            path="/DataTable"
-                            element={<DataTable />}
-                        />
-
-                        <Route
-                            exact
-                            path="/pages"
-                            element={<Pagination />}
-                        />
-                        <Route
-                            exact
-                            path="/passengers"
-                            element={<Passengers />}
-                        />
+                            path="/"
+                            element={
+                                <ProtectRoutes
+                                    accessToken={Cookies.get('access')}
+                                />
+                            }
+                        >
+                            <Route
+                                path="/CryptoSlamSalesMonth"
+                                element={<SalesMonth />}
+                            />
+                            <Route
+                                path="/CryptoSlamSalesWeek"
+                                element={<SalesWeek />}
+                            />
+                            <Route
+                                path="/CryptoSlamSalesDay"
+                                element={<SalesDay />}
+                            />
+                            <Route
+                                path="/RapidAPICollectionsDay"
+                                element={<RapidApiCollectionDay />}
+                            />
+                            <Route
+                                path="/RapidAPICollectionsWeek"
+                                element={<RapidApiCollectionWeek />}
+                            />
+                            <Route
+                                path="/RapidAPICollectionsMonth"
+                                element={<RapidApiCollectionMonth />}
+                            />
+                            <Route
+                                path="/CryptoSlamCollectionsDay"
+                                element={<CryptoSlamCollectionDay />}
+                            />
+                            <Route
+                                path="/CryptoSlamCollectionsWeek"
+                                element={<CryptoSlamCollectionWeek />}
+                            />
+                            <Route
+                                path="/CryptoSlamCollectionsMonth"
+                                element={<CryptoSlamCollectionMonth />}
+                            />
+                        </Route>
                         {/* <Route exact path="/register" element={<Registration/>}/> */}
                         {/* <Route exact path="/main" element={<Main/>}/> */}
                     </Routes>

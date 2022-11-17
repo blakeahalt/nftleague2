@@ -10,7 +10,7 @@ const argon2 = require('argon2');
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 const jwt = require("jsonwebtoken");
-// require("dotenv").config(); //MUST HAVE to run Dev : COMMENT OUT for Heroku
+require("dotenv").config(); //MUST HAVE to run Dev : COMMENT OUT for Heroku
 // const dotenv = require("dotenv")
 // dotenv.config()
 
@@ -219,12 +219,12 @@ app.post('/login', async (req, res) => {
                         const accessToken = jwt.sign(
                             { user: user },
                             jwtAccessKey,
-                            { expiresIn: '30m' }
+                            { expiresIn: '2m' }
                         );
                         const refreshToken = jwt.sign(
                             { user: user },
-                            jwtAccessKey,
-                            { expiresIn: '1d' }
+                            jwtRefreshKey,
+                            { expiresIn: '90d' }
                         );
 
                         refreshTokens.push(refreshToken);

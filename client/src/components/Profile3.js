@@ -10,6 +10,8 @@ import { useGoogleLogout } from '@react-oauth/google';
 import { gapi } from 'gapi-script';
 import jwt_decode from 'jwt-decode';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const clientId =
     '1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com';
@@ -19,23 +21,28 @@ const Profile = () => {
     const [notification, setNotification] = useState('');
     //    const [stateAuth, setStateAuth] = useState()
 
-    // useEffect((req, res) => {
-    //     axios
-    //         .get('http://localhost:3001/working') //dev
-    //         .then((res) => {
-    //             console.log(res);
-    //             setNotification(res.data.message);
-    //         });
-    // }, []);
-
     useEffect((req, res) => {
         axios
-            .get('/working') //heroku
+            .get('http://localhost:3001/working') //dev
             .then((res) => {
                 console.log(res);
                 setNotification(res.data.message);
             });
     }, []);
+
+    useEffect(() => {
+        console.log('Cookies access', Cookies.get('access'));
+        console.log('Cookies refresh', Cookies.get('refresh'));
+    }, []);
+
+    // useEffect((req, res) => {
+    //     axios
+    //         .get('/working') //heroku
+    //         .then((res) => {
+    //             console.log(res);
+    //             setNotification(res.data.message);
+    //         });
+    // }, []);
 
     // function handleSignOut(e) {
     // 	setUser({})

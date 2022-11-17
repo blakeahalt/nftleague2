@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import CryptoSlamSalesRows from './CryptoSlamSalesRows';
 import { Link } from 'react-router-dom';
 import Pagination from './Pagination2';
-import ProtectRoutes from './ProtectRoutes';
+// import ProtectRoutes from './ProtectRoutes';
 
 function UserList() {
     const [rowDataSales, setRowDataSales] = useState([]);

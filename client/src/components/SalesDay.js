@@ -2,13 +2,14 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import CryptoSlamSalesRows from './CryptoSlamSalesRows';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import Pagination from './Pagination2';
 // import axios from 'axios';
 import Cookies from 'js-cookie';
 import ProtectRoutes from './ProtectRoutes';
 
 function UserList() {
+    const navigate = useNavigate();
     const [rowDataSales, setRowDataSales] = useState([]);
     const [user, setUser] = useState();
     const [currentPage, setCurrentPage] = useState(1);

@@ -5,7 +5,7 @@ import CryptoSlamSalesRows from './CryptoSlamSalesRows';
 import { Link } from 'react-router-dom';
 import Pagination from './Pagination2';
 import axios from 'axios';
-import ProtectRoutes from './ProtectRoutes';
+// import ProtectRoutes from './ProtectRoutes';
 
 function UserList() {
     const [rowDataSales, setRowDataSales] = useState([]);
@@ -30,7 +30,7 @@ function UserList() {
     }, []);
     // console.log('rowDataSales:', rowDataSales);
 
-    ProtectRoutes();
+    // ProtectRoutes();
 
     // //Output: array of urls to each collection
     const endpoints = [];

@@ -9,7 +9,7 @@ import LogoutButton from './GoogleLogout';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef, useContext } from 'react';
 import { gapi } from 'gapi-script';
-import AuthContext from '../context/AuthProvider';
+import AuthContext from './AuthProvider';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const LOGIN_URL = 'http://localhost:3001/GoogleApp'; //'http://localhost:3001/GoogleApp'
@@ -34,10 +34,10 @@ function App() {
     const [err, setErr] = useState('');
 
     useEffect((req, res) => {
-        // axios
-        //     .get('http://localhost:3001/working') // dev
         axios
-            .get('/working') //heroku
+            .get('http://localhost:3001/working') // dev
+            // axios
+            //     .get('/working') //heroku
             .then((res) => {
                 console.log(res);
                 setNotification(res.data.message);
@@ -73,6 +73,7 @@ function App() {
     useEffect(() => {
         userRef.current.focus();
         setUser('');
+        setPwd('');
     }, []);
 
     useEffect(() => {
@@ -82,19 +83,19 @@ function App() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // await axios
-        //     .post('http://localhost:3001/login', { user, pwd })
         await axios
-            .post('/login', { user, pwd })
+            .post('http://localhost:3001/login', { user, pwd })
+            // await axios
+            //     .post('/login', { user, pwd })
             .then((data) => {
-                const accessToken = data.data.accessToken;
-                const refreshToken = data.data.refreshToken;
-                Cookies.set('access', accessToken);
-                Cookies.set('refresh', refreshToken);
                 if (data.status === 200) {
-                    console.log(
-                        `/googleapp response status 200 accessToken: ${data.data.accessToken}`
-                    );
+                    const accessToken = data.data.accessToken;
+                    const refreshToken = data.data.refreshToken;
+                    Cookies.set('access', accessToken);
+                    Cookies.set('refresh', refreshToken);
+                    console.log(`accessToken: ${data.data.accessToken}`);
+                    console.log(`refreshToken: ${data.data.refreshToken}`);
+                    // setAuth(data.data.refreshToken);
                     setSuccess(true);
                     setCatchUser(user);
                     setUser('');
