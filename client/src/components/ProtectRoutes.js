@@ -58,7 +58,7 @@ function ProtectRoutes() {
                     console.log('1 (refresh): All good bruh');
                 }
             });
-        });
+    });
     };
 
     const hasAccess = async (accessToken, refreshToken) => {
