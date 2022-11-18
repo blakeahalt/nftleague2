@@ -70,7 +70,7 @@ function UserList() {
                                 </a>
                                 <a
                                     className="nav-link active"
-                                    href="/GoogleApp"
+                                    href="/"
                                 >
                                     {' '}
                                     Sign Out{' '}

@@ -131,22 +131,21 @@ function App() {
                     }}
                 >
                     <div
-                        className="App"
+                        className="Container"
                         style={{
                             minWidth: 350,
                             minHeight: 350,
-                            marginLeft: 50,
-                            marginRight: 50,
-                            marginTop: 50,
-                            marginBottom: 150,
-                            fontSize: 35,
+                            marginTop: 25,
+                            marginBottom: 25,
+                            fontSize: 25,
+                            contentAlign: 'center',
+                            textAlign: 'center',
                         }}
                     >
                         {googleSuccess ? (
                             <>
                                 <h1>Logged in with Google Account:</h1>
                                 <h1>{user.name}</h1>
-                                <br />
                                 <div>
                                     <img
                                         src={user.picture || user.imageUrl}
@@ -219,14 +218,35 @@ function App() {
                                 var decoded = jwt_decode(res.credential);
                                 console.log('res', res);
                                 console.log('jwt-decoded', decoded);
-                                window.localStorage.setItem(
-                                    'token',
-                                    decoded.exp
-                                );
-                                console.log(decoded.aud);
+                                // window.localStorage.setItem(
+                                //     'token',
+                                //     decoded.exp
+                                // );
+                                const user = decoded.name;
+                                const pwd = decoded.jti;
+                                console.log('decoded.jti', decoded.jti);
+                                axios
+                                    .post('http://localhost:3001/googlelogin', {
+                                        user,
+                                        pwd,
+                                    })
+                                    .then((data) => {
+                                        const accessToken =
+                                            data.data.accessToken;
+                                        const refreshToken =
+                                            data.data.refreshToken;
+                                        Cookies.set('access', accessToken);
+                                        Cookies.set('refresh', refreshToken);
+                                        console.log(
+                                            `accessToken: ${data.data.accessToken}`
+                                        );
+                                        console.log(
+                                            `refreshToken: ${data.data.refreshToken}`
+                                        );
+                                    });
                                 setSuccess(true);
                                 setGoogleSuccess(true);
-                                // setUser(decoded);
+                                setUser(decoded);
                                 // setUser(jwt_decode(res.credential).name)
                                 console.log(
                                     `Login Success! User: ${decoded.name}`

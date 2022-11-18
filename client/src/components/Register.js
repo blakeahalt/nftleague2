@@ -690,7 +690,7 @@ const Register = () => {
                         Already registered?
                         <br />
                         <span className="line">
-                            <Link to="/googleapp">Sign In</Link>
+                            <Link to="/login">Sign In</Link>
                         </span>
                     </p>
                     {/* <br />

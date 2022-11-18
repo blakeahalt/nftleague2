@@ -246,6 +246,28 @@ app.post('/login', async (req, res) => {
     }
 })
 
+app.post('/googlelogin', async (req, res) => {
+    const { pwd, user } = req.body;
+    try {
+        const accessToken = jwt.sign(
+            { user: user },
+            jwtAccessKey,
+            { expiresIn: '5m' }
+        );
+        const refreshToken = jwt.sign(
+            { user: user },
+            jwtRefreshKey,
+            { expiresIn: '90d' }
+        );
+        refreshTokens.push(refreshToken);
+        console.log("/googlelogin accessToken:", accessToken)
+        console.log("/googlelogin refreshToken:", refreshToken)
+        return res.json({accessToken: accessToken, refreshToken: refreshToken})
+    } catch (err) {
+    console.log('ErRor' + err);
+    }
+})
+
 app.post("/refresh", (req, res, next) => {
     const refreshToken = req.body.token;
     if (!refreshToken || !refreshTokens.includes(refreshToken)) {

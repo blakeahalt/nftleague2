@@ -30,7 +30,7 @@ const Notification = () => {
                     <span>Back to Registration</span>
                 </button>
             </Link>
-            <Link to="/googleapp">
+            <Link to="/login">
                 <button
                     className="primary-button"
                     id="reg_btn"

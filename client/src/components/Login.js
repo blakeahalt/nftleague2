@@ -206,7 +206,7 @@ const Login = () => {
                         </span>
                     </p>
                     <div>
-                        <Link to="/googleapp">Google Login</Link>
+                        <Link to="/login">Google Login</Link>
                     </div>
                     <p>
                         axios.get('/login') status: <i>{notification}</i>

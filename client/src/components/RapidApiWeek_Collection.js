@@ -211,15 +211,7 @@ function UserList() {
                     <div className="dropdown">
                         <a
                             className="dropbtn"
-                            href="nftlist"
-                        >
-                            Browse
-                        </a>
-                    </div>
-                    <div className="dropdown">
-                        <a
-                            className="dropbtn"
-                            href="/GoogleApp"
+                            href="/"
                             onClick={CSSignOut}
 
                         >

@@ -30,7 +30,7 @@ const Profile = () => {
             // </button>
             <button
                 onClick={() =>
-                    logout({ returnTo: 'http://localhost:3000/googleapp' })
+                    logout({ returnTo: 'http://localhost:3000/login' })
                 }
             >
                 Sign Out

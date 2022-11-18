@@ -32,7 +32,7 @@ function UserList() {
             .then((response) => response.json())
             .then((rowDataSales) => setRowDataSales(rowDataSales.data));
     }, []);
-    console.log('rowDataSales:', rowDataSales);
+    // console.log('rowDataSales:', rowDataSales);
 
     // //Output: array of urls to each collection
     const endpoints = [];
@@ -272,15 +272,7 @@ function UserList() {
                     <div className="dropdown">
                         <a
                             className="dropbtn"
-                            href="nftlist"
-                        >
-                            Browse
-                        </a>
-                    </div>
-                    <div className="dropdown">
-                        <a
-                            className="dropbtn"
-                            href="/GoogleApp"
+                            href="/"
                             onClick={CSSignOut}
                         >
                             Sign Out

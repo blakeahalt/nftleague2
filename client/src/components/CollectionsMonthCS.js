@@ -104,7 +104,6 @@ function UserList() {
             <nav
                 className="navbar navbar-dark bg-primary"
                 id="mainNav"
-                style={{ minWidth: 720 }}
             >
                 <div className="navbar-title">
                     <div className="dropdown">
@@ -134,15 +133,7 @@ function UserList() {
                     <div className="dropdown">
                         <a
                             className="dropbtn"
-                            href="nftlist"
-                        >
-                            Browse
-                        </a>
-                    </div>
-                    <div className="dropdown">
-                        <a
-                            className="dropbtn"
-                            href="/GoogleApp"
+                            href="/"
                             onClick={CSSignOut}
                         >
                             Sign Out

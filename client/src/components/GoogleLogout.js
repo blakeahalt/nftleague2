@@ -13,9 +13,9 @@ import { useGoogleLogin } from '@react-oauth/google';
 import LoginButton from './GoogleLogin';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import Cookies from 'js-cookie';
 
-const clientId =
-    '1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com';
+const clientId = process.env.clientId;
 
 function Logout() {
     // const [success, setSuccess] = useState(false);
@@ -42,6 +42,8 @@ function Logout() {
         // window.sessionStorage.removeItem("access_token");
         // window.sessionStorage.removeItem("nama");
         console.log('successfully logged out!');
+        Cookies.set('access', null);
+        Cookies.set('refresh', null);
         //  this.setState(state => ({
         //      isLogined: false,
         //      token: ''

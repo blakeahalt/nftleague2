@@ -107,7 +107,7 @@ const Profile = () => {
             <br />
             <br />
             <br />
-            <Link to="/googleapp">
+            <Link to="/login">
                 <Logout
                     clientId={clientId}
                     buttonText="Logout"

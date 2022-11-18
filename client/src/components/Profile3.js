@@ -104,6 +104,8 @@ const Profile = () => {
 
     const onLogoutSuccess = () => {
         console.log('SUCCESSFUL LOG OUT');
+        Cookies.set('access', null);
+        Cookies.set('refresh', null);
     };
     //                  // return (
     //   <div className="App">
@@ -117,20 +119,14 @@ const Profile = () => {
             style={{ fontSize: 35 }}
         >
             <br />
+            <p style={{ textAlign: 'center' }}>
+                Registered! <br /> Profile page coming soon
+            </p>
             <br />
-            You've registered!...Profile page coming soon
-            <br />
-            <br />
-            <br />
-            <Link to="/cryptoslamSalesday">Sales</Link>
-            <br />
+            <Link to="/cryptoslamSalesday">See the Data</Link>
             <br />
             <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <Link to="/googleapp">
+            <Link to="/">
                 <GoogleLogout
                     clientId={clientId}
                     buttonText="Logout"

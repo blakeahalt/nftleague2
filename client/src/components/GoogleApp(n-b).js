@@ -31,7 +31,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const clientId =
     '1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com';
-const LOGIN_URL = 'http://localhost:3001/GoogleApp'; //'http://localhost:3001/GoogleApp'
+const LOGIN_URL = 'http://localhost:3001/login'; //'http://localhost:3001/GoogleApp'
 
 function App() {
     const [notification, setNotification] = useState('');

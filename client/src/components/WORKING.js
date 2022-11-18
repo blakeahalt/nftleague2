@@ -14,13 +14,13 @@ import Profile from './Profile3';
 
 // const clientId = "1077671935526-e6mu705tptsm57l6p1ajpom0umt43a1p.apps.googleusercontent.com"
 
-const LOGIN_URL = 'http://localhost:3001/GoogleApp'; //'http://localhost:3001/GoogleApp'
+const LOGIN_URL = 'http://localhost:3001/login'; //'http://localhost:3001/GoogleApp'
 
 function App() {
     const [notification, setNotification] = useState('');
 
     useEffect((req, res) => {
-        axios.get('/GoogleApp').then((res) => {
+        axios.get('/working').then((res) => {
             console.log(res);
             setNotification(res.data.message);
         });
@@ -69,7 +69,7 @@ function App() {
     useEffect((req, res) => {
         // axios.get("http://localhost:3001/working")  //"http://localhost:3001/login"
         axios
-            .get('/GoogleApp') //"http://localhost:3001/login"
+            .get('/working') //"http://localhost:3001/login"
             .then((res) => {
                 console.log(res);
                 setNotification(res.data.message);

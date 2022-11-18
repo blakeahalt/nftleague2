@@ -324,6 +324,30 @@ button {
   margin-top: 5px;
 }
 
+#containerTop {
+  display:flex;
+  align-content: center;
+  flex-direction: column;
+  z-index: 3;
+  background-color: rgba(0,0,0,0.5);
+  align-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 500px;
+}
+
+#containerBlur {
+  display: flex;
+  position:static;
+  filter: blur(4px);
+  z-index: 2;
+}
+
+#containerNav {
+  position:relative;
+  z-index: 4;
+}
+
 .row-stripe:nth-child(odd) {
   background-color:rgba(7, 40, 74, 0.233);
 }
@@ -339,7 +363,7 @@ button {
   padding: .5rem;
   flex-wrap: nowrap; 
 }
- 
+
 .navbar-title {
   display:contents;
   justify-content: space-between;

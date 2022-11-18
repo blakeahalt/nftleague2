@@ -10,8 +10,7 @@ import Register from './components/Register';
 import GoogleApp from './components/Login3';
 import GLogout from './components/GoogleLogout';
 import Added from './components/Added';
-import Profile from './components/Profile3';
-import NFTList from './components/NFTList';
+import Profile from './components/NFTList';
 import LineChart from './components/LineChart';
 import SalesMonth from './components/SalesMonth';
 import SalesWeek from './components/SalesWeek';
@@ -45,8 +44,8 @@ function App() {
                         />
                         <Route
                             exact
-                            path="/profile"
-                            element={<Profile />}
+                            path="/logout"
+                            element={<GLogout />}
                         />
                         <Route
                             exact
@@ -55,23 +54,8 @@ function App() {
                         />
                         <Route
                             exact
-                            path="/googleapp"
-                            element={<GoogleApp />}
-                        />
-                        <Route
-                            exact
                             path="/login"
                             element={<GoogleApp />}
-                        />
-                        <Route
-                            exact
-                            path="/logout"
-                            element={<GLogout />}
-                        />
-                        <Route
-                            exact
-                            path="/NFTList"
-                            element={<NFTList />}
                         />
                         <Route
                             path="/"
@@ -82,16 +66,21 @@ function App() {
                             }
                         >
                             <Route
-                                path="/CryptoSlamSalesMonth"
-                                element={<SalesMonth />}
+                                exact
+                                path="/profile"
+                                element={<Profile />}
+                            />
+                            <Route
+                                path="/CryptoSlamSalesDay"
+                                element={<SalesDay />}
                             />
                             <Route
                                 path="/CryptoSlamSalesWeek"
                                 element={<SalesWeek />}
                             />
                             <Route
-                                path="/CryptoSlamSalesDay"
-                                element={<SalesDay />}
+                                path="/CryptoSlamSalesMonth"
+                                element={<SalesMonth />}
                             />
                             <Route
                                 path="/RapidAPICollectionsDay"
@@ -118,8 +107,6 @@ function App() {
                                 element={<CryptoSlamCollectionMonth />}
                             />
                         </Route>
-                        {/* <Route exact path="/register" element={<Registration/>}/> */}
-                        {/* <Route exact path="/main" element={<Main/>}/> */}
                     </Routes>
                 </main>
             </div>

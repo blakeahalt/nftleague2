@@ -18,12 +18,12 @@ export const UserProvider = ({ children }) => {
         Cookies.set('token', res.data.token); // your token
         // setCookies('name', res.data.name); // optional data
 
-        navigate('/home');
+        navigate('/profile');
     };
 
     const logout = () => {
         ['token'].forEach((obj) => Cookies.remove(obj)); // remove data save in cookies
-        navigate('/login');
+        navigate('/');
     };
 
     const value = useMemo(
