@@ -230,20 +230,21 @@ function NFTList() {
     // }, [])
 
     return (
-        <>
-            <nav
-                className="navbar navbar-dark bg-primary"
-                id="mainNav"
-            >
-                <div className="navbar-title">
-                    <div className="dropdown">
+        <div>
+            <div className="App">
+                <nav
+                    className="navbar navbar-dark bg-primary"
+                    id="mainNav"
+                    style={{ minWidth: 720 }}
+                >
+                    <div className="navbar-title">
                         <div className="dropdown">
                             <button className="dropbtn">CryptoSlam</button>
                             <div className="dropdown-content">
                                 <a href="/cryptoslamCollectionsday">
                                     Collections
                                 </a>
-                                <a href="/cryptoslamSalesday">Indiv. Sales</a>
+                                <a href="/cryptoslamSalesDay">Indiv. Sales</a>
                             </div>
                         </div>
                         <div className="dropdown">
@@ -281,11 +282,13 @@ function NFTList() {
                             </a>
                         </div>
                     </div>
-                </div>
-            </nav>
-            <br />
+                </nav>
+                <br />
+            </div>
+
             <br />
             <div className="container">
+                {/* <div className="row g-2"> */}
                 <div className="col-6">
                     <Profile
                         class="p-4 bg-light"
@@ -336,9 +339,121 @@ function NFTList() {
                         newCS="art-blocks"
                     />
                 </div>
+                <div></div>
             </div>
-        </>
+        </div>
     );
 }
 
 export default NFTList;
+
+// return (
+//     <>
+//         <nav
+//             className="navbar navbar-dark bg-primary"
+//             id="mainNav"
+//         >
+//             <div className="navbar-title">
+//                 <div className="dropdown">
+//                     <div className="dropdown">
+//                         <button className="dropbtn">CryptoSlam</button>
+//                         <div className="dropdown-content">
+//                             <a href="/cryptoslamCollectionsday">
+//                                 Collections
+//                             </a>
+//                             <a href="/cryptoslamSalesday">Indiv. Sales</a>
+//                         </div>
+//                     </div>
+//                     <div className="dropdown">
+//                         <a
+//                             className="dropbtn"
+//                             aria-current="page"
+//                             href="/RapidAPICollectionsDay"
+//                         >
+//                             NFT Stats
+//                         </a>
+//                     </div>
+//                     <div className="dropdown">
+//                         <a
+//                             className="dropbtn"
+//                             href="/profile"
+//                         >
+//                             Profile
+//                         </a>
+//                     </div>
+//                     <div className="dropdown">
+//                         <a
+//                             className="dropbtn"
+//                             href="nftlist"
+//                         >
+//                             Browse
+//                         </a>
+//                     </div>
+//                     <div className="dropdown">
+//                         <a
+//                             className="dropbtn"
+//                             href="/GoogleApp"
+//                             onClick={CSSignOut}
+//                         >
+//                             Sign Out
+//                         </a>
+//                     </div>
+//                 </div>
+//             </div>
+//         </nav>
+//         <br />
+//         <br />
+//         <div className="container">
+//             <div className="col-6">
+//                 <Profile
+//                     class="p-4 bg-light"
+//                     newCS="renga"
+//                     className="col"
+//                 />
+//             </div>
+//             <div className="col-6">
+//                 <Profile
+//                     class="p-4 bg-light"
+//                     newCS="boredapeyachtclub"
+//                     className="col"
+//                 />
+//             </div>
+//             <div className="col-6">
+//                 <Profile
+//                     class="p-4 bg-light"
+//                     newCS="proof-moonbirds"
+//                 />
+//             </div>
+//             <div className="col-6">
+//                 <Profile
+//                     class="p-4 bg-light"
+//                     newCS="cryptopunks"
+//                 />
+//             </div>
+//             <div className="col-6">
+//                 <Profile
+//                     class="p-4 bg-light"
+//                     newCS="terraforms"
+//                 />
+//             </div>
+//             <div className="col-6">
+//                 <Profile
+//                     class="p-4 bg-light"
+//                     newCS="doodles-official"
+//                 />
+//             </div>
+//             <div className="col-6">
+//                 <Profile
+//                     class="p-4 bg-light"
+//                     newCS="clonex"
+//                 />
+//             </div>
+//             <div className="col-6">
+//                 <Profile
+//                     class="p-4 bg-light"
+//                     newCS="art-blocks"
+//                 />
+//             </div>
+//         </div>
+//     </>
+// );

@@ -104,6 +104,7 @@ function UserList() {
             <nav
                 className="navbar navbar-dark bg-primary"
                 id="mainNav"
+                style={{ minWidth: 720 }}
             >
                 <div className="navbar-title">
                     <div className="dropdown">
