@@ -34,10 +34,10 @@ function App() {
     const [err, setErr] = useState('');
 
     useEffect((req, res) => {
+        // axios
+        //     .get('http://localhost:3001/working') // dev
         axios
-            .get('http://localhost:3001/working') // dev
-            // axios
-            //     .get('/working') //heroku
+            .get('/working') //heroku
             .then((res) => {
                 console.log(res);
                 setNotification(res.data.message);
@@ -83,10 +83,10 @@ function App() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // await axios
+        //     .post('http://localhost:3001/login', { user, pwd })
         await axios
-            .post('http://localhost:3001/login', { user, pwd })
-            // await axios
-            //     .post('/login', { user, pwd })
+            .post('/login', { user, pwd })
             .then((data) => {
                 if (data.status === 200) {
                     const accessToken = data.data.accessToken;
@@ -225,10 +225,15 @@ function App() {
                                 const user = decoded.name;
                                 const pwd = decoded.jti;
                                 console.log('decoded.jti', decoded.jti);
+                                // axios
+                                //     .post('http://localhost:3001/googlelogin', {
+                                //         user,
+                                //         pwd,
+                                //     })
                                 axios
-                                    .post('http://localhost:3001/googlelogin', {
-                                        user,
-                                        pwd,
+                                    .post('/googlelogin', {
+                                        pwd: pwd,
+                                        user: user,
                                     })
                                     .then((data) => {
                                         const accessToken =

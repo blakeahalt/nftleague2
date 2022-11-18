@@ -10,7 +10,7 @@ const argon2 = require('argon2');
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 const jwt = require("jsonwebtoken");
-require("dotenv").config(); //MUST HAVE to run Dev : COMMENT OUT for Heroku
+// require("dotenv").config(); //MUST HAVE to run Dev : COMMENT OUT for Heroku
 // const dotenv = require("dotenv")
 // dotenv.config()
 
@@ -24,69 +24,6 @@ app.use(express.json());
 
 const jwtAccessKey = process.env.REACT_APP_JWTSECRET;
 const jwtRefreshKey = process.env.REACT_APP_REFRESH_TOKEN_SECRET;
-// const {OAuth2Client} = require('google-auth-library');
-// const metadata = require('gcp-metadata');
-
-// NEW SERVER========================================
-// const corsOptions = require('./config/corsOptions');
-// const { logger } = require('./middleware/logEvents');
-// const errorHandler = require('./middleware/errorHandler');
-// const verifyJWT = require('./middleware/verifyJWT');
-// const cookieParser = require('cookie-parser');
-// const credentials = require('./middleware/credentials');
-
-// // custom middleware logger
-// app.use(logger);
-
-// // Handle options credentials check - before CORS!
-// // and fetch cookies credentials requirement
-// app.use(credentials);
-
-// // Cross Origin Resource Sharing
-// app.use(cors(corsOptions));
-
-// // built-in middleware to handle urlencoded form data
-// app.use(express.urlencoded({ extended: false }));
-
-// // // built-in middleware for json
-// // app.use(express.json());
-
-// //middleware for cookies
-// app.use(cookieParser());
-
-// // //serve static files
-// // app.use('/', express.static(path.join(__dirname, '/public')));
-
-// // routes
-// app.use('/', require('./routes/root'));
-// app.use('/register', require('./routes/register'));
-// app.use('/auth', require('./routes/auth'));
-// app.use('/refresh', require('./routes/refresh'));
-// app.use('/logout', require('./routes/logout'));
-
-// app.use(verifyJWT);
-// app.use('/employees', require('./routes/api/employees'));
-
-// app.all('*', (req, res) => {
-//     res.status(404);
-//     if (req.accepts('html')) {
-//         res.sendFile(path.join(__dirname, 'views', '404.html'));
-//     } else if (req.accepts('json')) {
-//         res.json({ "error": "404 Not Found" });
-//     } else {
-//         res.type('txt').send("404 Not Found");
-//     }
-// });
-
-// app.use(errorHandler);
-
-// NEW SERVER ================================================
-// const proxy = require('http-proxy-middleware')
-
-// module.exports = function(app) {
-//     // add other server routes to path array
-//     app.use(proxy(['/api' ], { target: 'http://localhost:5000' }));
-// }
 
 // =======================================
 // mysql that works in development
@@ -129,34 +66,6 @@ app.use(function (req, res, next) {
 app.use(express.static(path.join(__dirname, 'public')));
 // app.use(express.static(path.resolve(__dirname, '/public')));
 
-// app.get("/api", (req, res) => {
-//   res.json({ message: "Hello from server!" });
-// });
-
-// app.get('/test', (req, res) => {
-//     res.json({ message: 'WORKING' });
-// });
-
-// app.post('/test', (req, res) => {
-//     res.json({ message: 'WORKING' });
-// });
-
-// app.get('/GoogleApp', (req, res) => {
-//     res.json({ message: 'WORKING' });
-// });
-
-// app.get('/notification', (req, res) => {
-//     res.json({ message: 'WORKING' });
-// });
-
-// app.get('/register', (req, res) => {
-//     res.json({ message: 'WORKING' });
-// });
-
-// app.get('/profile', (req, res) => {
-//     res.json({ message: 'WORKING' });
-// });
-
 app.get('/working', (req, res) => {
     res.json({ message: 'WORKING' });
 });
@@ -186,11 +95,22 @@ app.post('/addPassword', async (req, res) => {
                         if (error) {
                             console.log(error);
                         } else {
-                            const accessToken = jwt.sign(JSON.stringify({ user: user }), jwtAccessKey )
-                            user.token = accessToken
-                            console.log("token:", accessToken)
-                            res.cookie("cookieToken", accessToken)
-                            return res.status(200).json({ success: true, token: accessToken });
+                            const accessToken = jwt.sign(
+                                { user: user },
+                                jwtAccessKey,
+                                { expiresIn: '5m' }
+                            );
+                            const refreshToken = jwt.sign(
+                                { user: user },
+                                jwtRefreshKey,
+                                { expiresIn: '90d' }
+                            );
+    
+                            refreshTokens.push(refreshToken);
+                            console.log("/login accessToken:", accessToken)
+                            console.log("/login refreshToken:", refreshToken)
+                            // res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24*60*60*1000 });
+                            return res.status(200).json({accessToken: accessToken, refreshToken: refreshToken})
                         }
                     }
                 );
@@ -322,20 +242,6 @@ async function auth(req, res, next) {
 app.post("/protected", auth, (req, res) => {
     return res.json({ message: "Protected content: Accessed" });
 });
-
-app.post('/posttest', (req, res) => {
-    // res.send("Posted")
-    const user = req.body.user;
-    const pwd = req.body.pwd;
-
-    db.query('INSERT INTO posttest VALUES (?,?,?)',[1, user, pwd], (err,result) => {
-        if(err) {
-            console.log(err);
-        } else {  
-            res.send("Posted")
-        }
-    })
-})
 
 // app.get("/showPasswords", (req, res) => {
 //   db.query("SELECT * FROM passwords;",

@@ -320,6 +320,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import axios from './api/axios.js';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
 // import jwt from 'jsonwebtoken';
 
@@ -423,28 +424,40 @@ const Register = () => {
             return;
         }
 
+        // axios
+        //     .post('http://localhost:3001/addPassword', {
+        //         pwd: pwd,
+        //         user: user,
+        //     })
         axios
-            .post('http://localhost:3001/addPassword', {
+            .post('/addPassword', {
                 pwd: pwd,
                 user: user,
             })
-            // axios
-            //     .post('/addPassword', {
-            //         pwd: pwd,
-            //         user: user,
-            //     })
-            .then((response) => {
-                console.log('1', JSON.stringify(response));
-                console.log('2', response?.data);
-                console.log('3', response?.data.token);
-                console.log('4', response.config.data);
-                localStorage.setItem('token', response.data.token);
-                // const accessToken = jwt.sign(
-                //     `${user}`,
-                //     process.env.REACT_APP_JWTSECRET,
-                //     { expiresIn: '1h' }
-                // );
-                // setJWTToken(response?.data.accessToken);
+            .then((data) => {
+                // console.log('1', JSON.stringify(response));
+                // console.log('2', response?.data);
+                // console.log('3', response?.data.token);
+                // console.log('4', response.config.data);
+                // localStorage.setItem('token', response.data.token);
+                // axios
+                //     .post('http://localhost:3001/googlelogin', {
+                //         user,
+                //         pwd,
+                //     })
+                axios
+                    .post('/googlelogin', {
+                        pwd: pwd,
+                        user: user,
+                    })
+                    .then((data) => {
+                        const accessToken = data.data.accessToken;
+                        const refreshToken = data.data.refreshToken;
+                        Cookies.set('access', accessToken);
+                        Cookies.set('refresh', refreshToken);
+                        console.log(`accessToken: ${data.data.accessToken}`);
+                        console.log(`refreshToken: ${data.data.refreshToken}`);
+                    });
                 setSuccess(true);
                 setCatchUser(user);
                 setUser('');
