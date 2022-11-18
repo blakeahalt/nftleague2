@@ -26,7 +26,7 @@ function ProtectRoutes() {
 
     let accessToken = Cookies.get('access');
     let refreshToken = Cookies.get('refresh');
-    console.log('refreshToken', refreshToken);
+    // console.log('refreshToken', refreshToken);
 
     const protect = async () => {
         accessToken = await hasAccess(accessToken, refreshToken);

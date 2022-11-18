@@ -219,7 +219,7 @@ app.post('/login', async (req, res) => {
                         const accessToken = jwt.sign(
                             { user: user },
                             jwtAccessKey,
-                            { expiresIn: '2m' }
+                            { expiresIn: '5m' }
                         );
                         const refreshToken = jwt.sign(
                             { user: user },

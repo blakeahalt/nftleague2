@@ -3,18 +3,23 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import CryptoSlamRows from './CryptoSlamCollectionRows';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Pagination from './Pagination2';
+import Cookies from 'js-cookie';
+import ProtectRoutes from './ProtectRoutes';
 
 function UserList() {
     const [rowDataSales, setRowDataSales] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(20);
+    const navigate = useNavigate();
+
+    ProtectRoutes();
 
     const CSoptions = {
         method: 'GET',
         headers: {
-            'X-BLOBR-KEY': 'lrxYcsDoLR80hcY9PfQ34BeFTQnnSVej',
+            'X-BLOBR-KEY': '3Q5omwBMURG6qbahoT3MVBa7RjOkNpbg',
         },
     };
 
@@ -82,7 +87,13 @@ function UserList() {
             { endpoint: endpoints[i] }
         )
     );
-    console.log('both', both);
+    // console.log('both', both);
+
+    function CSSignOut() {
+        Cookies.set('access', null);
+        Cookies.set('refresh', null);
+        navigate('/');
+    }
 
     const lastPostIndex = currentPage * postsPerPage;
     const firstPostIndex = lastPostIndex - postsPerPage;
@@ -131,6 +142,7 @@ function UserList() {
                         <a
                             className="dropbtn"
                             href="/GoogleApp"
+                            onClick={CSSignOut}
                         >
                             Sign Out
                         </a>

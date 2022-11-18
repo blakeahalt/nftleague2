@@ -30,10 +30,10 @@ const Profile = () => {
             });
     }, []);
 
-    useEffect(() => {
-        console.log('Cookies access', Cookies.get('access'));
-        console.log('Cookies refresh', Cookies.get('refresh'));
-    }, []);
+    // useEffect(() => {
+    //     console.log('Cookies access', Cookies.get('access'));
+    //     console.log('Cookies refresh', Cookies.get('refresh'));
+    // }, []);
 
     // useEffect((req, res) => {
     //     axios
@@ -112,23 +112,22 @@ const Profile = () => {
     //   </div>
 
     return (
-        <div className="App">
+        <div
+            className="App"
+            style={{ fontSize: 35 }}
+        >
+            <br />
+            <br />
             You've registered!...Profile page coming soon
             <br />
             <br />
             <br />
+            <Link to="/cryptoslamSalesday">Sales</Link>
             <br />
             <br />
             <br />
-            <div className="profile-card">
-                <img
-                    src={user.imageUrl}
-                    alt=""
-                />
-                <h1>{user.name}</h1>
-                <span>{user.email}</span>
-                {/* <p>Id: {props.user.googleId}</p> */}
-            </div>
+            <br />
+            <br />
             <br />
             <br />
             <Link to="/googleapp">
@@ -139,13 +138,6 @@ const Profile = () => {
                     // onClick={(e) => handleSignOut(e)}
                 ></GoogleLogout>
             </Link>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <Link to="/cryptoslamSalesday">Sales</Link>
             <br />
             <br />
             <p>{/* axios.get('/profile') status: <i>{notification}</i> */}</p>

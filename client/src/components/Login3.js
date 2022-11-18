@@ -12,7 +12,7 @@ import { gapi } from 'gapi-script';
 import AuthContext from './AuthProvider';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-const LOGIN_URL = 'http://localhost:3001/GoogleApp'; //'http://localhost:3001/GoogleApp'
+const LOGIN_URL = 'http://localhost:3001'; //'http://localhost:3001/GoogleApp'
 const clientId = process.env.REACT_APP_CLIENTID;
 
 function App() {
@@ -122,8 +122,26 @@ function App() {
     return (
         <>
             {success ? (
-                <section>
-                    <div className="App">
+                <section
+                    style={{
+                        minWidth: 325,
+                        minHeight: 350,
+                        marginTop: 50,
+                        contentAlign: 'center',
+                    }}
+                >
+                    <div
+                        className="App"
+                        style={{
+                            minWidth: 350,
+                            minHeight: 350,
+                            marginLeft: 50,
+                            marginRight: 50,
+                            marginTop: 50,
+                            marginBottom: 150,
+                            fontSize: 35,
+                        }}
+                    >
                         {googleSuccess ? (
                             <>
                                 <h1>Logged in with Google Account:</h1>

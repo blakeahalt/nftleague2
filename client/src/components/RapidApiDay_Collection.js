@@ -5,13 +5,15 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import RapidApiRows from './RapidApiRows';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Pagination from './Pagination2';
 import axios from 'axios';
 import { GrCommand } from 'react-icons/gr';
 import { AiOutlineMinus } from 'react-icons/ai';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { TbLetterR } from 'react-icons/tb';
+import Cookies from 'js-cookie';
+import ProtectRoutes from './ProtectRoutes';
 
 function UserList() {
     const [rowDataSales, setRowDataSales] = useState([]);
@@ -19,6 +21,9 @@ function UserList() {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(20);
     const [load, setLoad] = useState(false);
+    const navigate = useNavigate();
+
+    ProtectRoutes();
 
     const OSoptions = {
         method: 'GET',
@@ -150,6 +155,11 @@ function UserList() {
     // const both1 = openSeaData.map((item, i) => Object.assign({}, item, {index:indexArray[i]}, {collection_url:collection_url[i]}));
     // }
     // console.log('both', both);
+    function CSSignOut() {
+        Cookies.set('access', null);
+        Cookies.set('refresh', null);
+        navigate('/');
+    }
 
     const lastPostIndex = currentPage * postsPerPage;
     const firstPostIndex = lastPostIndex - postsPerPage;
@@ -205,6 +215,8 @@ function UserList() {
                         <a
                             className="dropbtn"
                             href="/GoogleApp"
+                            onClick={CSSignOut}
+
                         >
                             Sign Out
                         </a>

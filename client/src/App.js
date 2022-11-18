@@ -40,7 +40,7 @@ function App() {
                     <Routes>
                         <Route
                             exact
-                            path="/register/"
+                            path="/register"
                             element={<Register />}
                         />
                         <Route
@@ -77,7 +77,7 @@ function App() {
                             path="/"
                             element={
                                 <ProtectRoutes
-                                    accessToken={Cookies.get('access')}
+                                // accessToken={Cookies.get('refresh')}
                                 />
                             }
                         >

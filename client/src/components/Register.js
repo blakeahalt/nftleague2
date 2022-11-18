@@ -610,12 +610,17 @@ const Register = () => {
                             onBlur={() => setPwdFocus(false)}
                         />
                         <p
-                            id="pwdnote"
+                            id="confirmnote"
                             className={
                                 pwdFocus && !validPwd
                                     ? 'instructions'
                                     : 'offscreen'
                             }
+                            style={{
+                                maxWidth: 240,
+                                contentAlign: 'center',
+                                marginLeft: 20,
+                            }}
                         >
                             <FontAwesomeIcon icon={faInfoCircle} />
                             <br />
@@ -632,7 +637,6 @@ const Register = () => {
                             <span aria-label="percent">%</span>
                             <span aria-label="asterisk">*</span>
                         </p>
-
                         <label htmlFor="confirm_pwd">
                             Confirm Password:
                             <FontAwesomeIcon

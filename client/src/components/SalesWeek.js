@@ -2,16 +2,19 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import CryptoSlamSalesRows from './CryptoSlamSalesRows';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import Pagination from './Pagination2';
 import axios from 'axios';
-// import ProtectRoutes from './ProtectRoutes';
+import ProtectRoutes from './ProtectRoutes';
+import Cookies from 'js-cookie';
 
 function UserList() {
     const [rowDataSales, setRowDataSales] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [postsPerPage, setPostsPerPage] = useState(20);
+    const navigate = useNavigate();
+    ProtectRoutes();
 
     const CSoptions = {
         method: 'GET',
@@ -29,8 +32,6 @@ function UserList() {
             .then((rowDataSales) => setRowDataSales(rowDataSales.data));
     }, []);
     // console.log('rowDataSales:', rowDataSales);
-
-    // ProtectRoutes();
 
     // //Output: array of urls to each collection
     const endpoints = [];
@@ -75,21 +76,62 @@ function UserList() {
             : null,
     }));
 
-    const collectionId = [];
+    const collectionNumber = [];
     for (const x of rowDataSales) {
-        const y = url_string.concat(
-            `${x.collectionId}/mint/${x.tokens[0].tokenId}`
-        );
-        collectionId.push(y);
+        const y = `${x.tokens[0].tokenId}`;
+        collectionNumber.push(y);
     }
+    // console.log('collectionNumber', collectionNumber);
+
+    const collectionNumtoFixed = [];
+    for (const x of collectionNumber) {
+        if (x.length > 5) {
+            const y = `${x.slice(0, 5)}...`;
+            collectionNumtoFixed.push(y);
+        } else {
+            const y = x.slice(0, 5);
+            collectionNumtoFixed.push(y);
+        }
+    }
+    // console.log('collectionNumtoFixed', collectionNumtoFixed);
+    // const collectionId = [];
+    // for (const x of rowDataSales) {
+    //     const y = url_string.concat(`${x.collectionIdName}/mint/d`);
+    //     collectionId.push(y);
+    // }
     // console.log('collectionId', collectionId);
 
     const collectionIdName = [];
     for (const x of rowDataSales) {
-        const y = `${x.tokens[0].name}`;
+        const y = `${x.collectionName}`;
         collectionIdName.push(y);
     }
     // console.log('collectionIdName', collectionIdName);
+
+    const collectionSaleName = collectionIdName.map((x, index) =>
+        x.concat(` #${collectionNumtoFixed[index]}`)
+    );
+    // console.log('collectionSaleName', collectionSaleName);
+
+    const collection_Id_Name = [];
+    for (const x of rowDataSales) {
+        const y = x.collectionName.replaceAll(' ', '-').toLowerCase();
+        collection_Id_Name.push(y);
+    }
+    // console.log('collection_Id_Name', collection_Id_Name);
+
+    const collectionUrlName = collection_Id_Name.map((x, index) =>
+        x.concat(`/mint/${collectionNumber[index]}`)
+    );
+    const fullUrl = collectionUrlName.map((x, index) =>
+        url_string.concat(`${x}`)
+    );
+    // console.log('fullUrl', fullUrl);
+
+    const collectionUrl = collection_Id_Name.map((x, index) =>
+        url_string.concat(`${x}`)
+    );
+    // console.log('collectionUrl', collectionUrl);
 
     const timeElapsed = [];
     for (const x of rowDataSales) {
@@ -174,16 +216,22 @@ function UserList() {
         Object.assign(
             {},
             item,
-            { collection_url: endpoints[i] },
+            { collectionUrl: collectionUrl[i] },
             { index: indexArray[i] },
             { quotes: quotes[i] },
-            { endpoint: endpoints[i] },
-            { collection_id: collectionId[i] },
+            { fullUrl: fullUrl[i] },
             { collectionIdName: collectionIdName[i] },
+            { collectionSaleName: collectionSaleName[i] },
             { timeElapsed: timeElapsed[i] }
         )
     );
     // console.log('both', both);
+
+    function CSSignOut() {
+        Cookies.set('access', null);
+        Cookies.set('refresh', null);
+        navigate('/');
+    }
 
     const lastPostIndex = currentPage * postsPerPage;
     const firstPostIndex = lastPostIndex - postsPerPage;
@@ -232,6 +280,7 @@ function UserList() {
                         <a
                             className="dropbtn"
                             href="/GoogleApp"
+                            onClick={CSSignOut}
                         >
                             Sign Out
                         </a>

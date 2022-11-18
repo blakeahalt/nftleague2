@@ -3,7 +3,10 @@ import '../App.css';
 import { ethers } from 'ethers';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import Profile from './NFTProfile';
+import Cookies from 'js-cookie';
+import ProtectRoutes from './ProtectRoutes';
 
 function NFTList() {
     const [account, setAccount] = useState('');
@@ -16,6 +19,9 @@ function NFTList() {
     const errRef = useRef();
     const userRef = useRef();
     const inputRef = useRef(null);
+    const navigate = useNavigate();
+
+    ProtectRoutes();
 
     const options = { method: 'GET', headers: { accept: 'application/json' } };
 
@@ -158,6 +164,12 @@ function NFTList() {
         connect();
     }, []);
 
+    function CSSignOut() {
+        Cookies.set('access', null);
+        Cookies.set('refresh', null);
+        navigate('/');
+    }
+
     // function callFunctions(){
     //   getStats();
     //   getCollection();
@@ -218,150 +230,113 @@ function NFTList() {
     // }, [])
 
     return (
-        <div>
-            <div className="navbar-link">
-                <nav
-                    className="navbar navbar-dark bg-primary"
-                    id="mainNav"
-                >
-                    <div className="navbar-brand">
-                        <div
-                            className="nav-link"
-                            id="navbarNavAltMarkup"
-                        >
-                            <div className="navbar-title">
-                                <a
-                                    className="nav-link active"
-                                    aria-current="page"
-                                    href="/salesweek"
-                                >
-                                    Top Sales
+        <>
+            <nav
+                className="navbar navbar-dark bg-primary"
+                id="mainNav"
+            >
+                <div className="navbar-title">
+                    <div className="dropdown">
+                        <div className="dropdown">
+                            <button className="dropbtn">CryptoSlam</button>
+                            <div className="dropdown-content">
+                                <a href="/cryptoslamCollectionsday">
+                                    Collections
                                 </a>
-                                <a
-                                    className="nav-link active"
-                                    aria-current="page"
-                                    href="/collectionsday"
-                                >
-                                    Top Collections
-                                </a>
-                                <a
-                                    className="nav-link active"
-                                    href="/profile"
-                                >
-                                    Profile
-                                </a>
-                                <a
-                                    className="nav-link active"
-                                    href="nftlist"
-                                >
-                                    Browse
-                                </a>
-                                <a
-                                    className="nav-link active"
-                                    href="/GoogleApp"
-                                >
-                                    Sign Out
-                                </a>
+                                <a href="/cryptoslamSalesday">Indiv. Sales</a>
                             </div>
                         </div>
+                        <div className="dropdown">
+                            <a
+                                className="dropbtn"
+                                aria-current="page"
+                                href="/RapidAPICollectionsDay"
+                            >
+                                NFT Stats
+                            </a>
+                        </div>
+                        <div className="dropdown">
+                            <a
+                                className="dropbtn"
+                                href="/profile"
+                            >
+                                Profile
+                            </a>
+                        </div>
+                        <div className="dropdown">
+                            <a
+                                className="dropbtn"
+                                href="nftlist"
+                            >
+                                Browse
+                            </a>
+                        </div>
+                        <div className="dropdown">
+                            <a
+                                className="dropbtn"
+                                href="/GoogleApp"
+                                onClick={CSSignOut}
+                            >
+                                Sign Out
+                            </a>
+                        </div>
                     </div>
-                </nav>
-                <br />
-            </div>
-
+                </div>
+            </nav>
+            <br />
             <br />
             <div className="container">
-                {/* <div className="row g-2"> */}
-                <div className="col-6">
+                <div className="col-4">
                     <Profile
                         class="p-4 bg-light"
                         newCS="renga"
-                        className="col"
                     />
                 </div>
-                <div className="col-6">
+                <div className="col-4">
                     <Profile
                         class="p-4 bg-light"
                         newCS="boredapeyachtclub"
-                        className="col"
                     />
                 </div>
-                <div className="col-6">
+                <div className="col-4">
                     <Profile
                         class="p-4 bg-light"
                         newCS="proof-moonbirds"
                     />
                 </div>
-                <div className="col-6">
+                <div className="col-4">
                     <Profile
                         class="p-4 bg-light"
                         newCS="cryptopunks"
                     />
                 </div>
-                <div className="col-6">
+                <div className="col-4">
                     <Profile
                         class="p-4 bg-light"
                         newCS="terraforms"
                     />
                 </div>
-                <div className="col-6">
+                <div className="col-4">
                     <Profile
                         class="p-4 bg-light"
                         newCS="doodles-official"
                     />
                 </div>
-                <div className="col-6">
+                <div className="col-4">
                     <Profile
                         class="p-4 bg-light"
                         newCS="clonex"
                     />
                 </div>
-                <div className="col-6">
+                <div className="col-4">
                     <Profile
                         class="p-4 bg-light"
                         newCS="art-blocks"
                     />
                 </div>
-                {/* </div> */}
-                <div></div>
             </div>
-            {/* <lineChart newCS="clonex" /> */}
-            {/* </Stack> */}
-            {/* </div> */}
-            {/* </div> */}
-            {/* <DoughnutChart /> */}
-        </div>
+        </>
     );
 }
 
 export default NFTList;
-
-// <form onSubmit={() => handleSubmit }>
-// {/* <input
-//     type="text"
-//     id="collection"
-//     ref={userRef}
-//     autoComplete="off"
-//     onChange={(e) => setCollectionSearch(e.target.value)}
-//     value={collection}
-//     required
-//     // aria-invalid={validName ? "false" : "true"}
-//     // aria-describedby="uidnote"
-//     // onFocus={() => setUserFocus(true)}
-//     // onBlur={() => setUserFocus(false)}
-// /> */}
-//   <input
-//     ref={inputRef}
-//     type="text"
-//     id="collection"
-//     // ref={userRef}
-//     autoComplete="off"
-//     onChange={handleChange}
-//     value={collectionSearch}
-//     required
-//     // collectionSearch={setCollectionSearch}
-//   />
-// <button onClick={getCollectionSearch}>Search Collection</button>
-// <p>collectionSearch: {collectionSearch}</p>
-// <p>updated: {updated}</p>
-// </form>

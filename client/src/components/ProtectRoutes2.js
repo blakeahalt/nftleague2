@@ -4,14 +4,14 @@ import Cookies from 'js-cookie';
 
 const ProtectRoutes = () => {
     // const { Cookies } = useAuth();
-    let CookieAccess = Cookies.get('access');
-    console.log('Cookies access', Cookies.get('access'));
+    let CookieAccess = Cookies.get('refresh');
+    // console.log('Cookies access', Cookies.get('access'));
 
     return CookieAccess !== 'null' ? (
         <Outlet />
     ) : (
         <Navigate
-            to="/login"
+            to="/"
             exact
         />
     );

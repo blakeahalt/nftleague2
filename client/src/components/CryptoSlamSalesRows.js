@@ -51,7 +51,7 @@ const CryptoSlamRow = ({ both }) => {
                             }}
                         >
                             <a
-                                href={row.collection_id}
+                                href={row.fullUrl}
                                 target="_blank"
                                 rel="noreferrer"
                             >
@@ -63,7 +63,7 @@ const CryptoSlamRow = ({ both }) => {
                                         verticalAlign: -75,
                                         borderRadius: 15,
                                     }}
-                                    alt="pfp"
+                                    alt="No Pic Available"
                                 ></img>
                             </a>
                         </Col>
@@ -76,16 +76,16 @@ const CryptoSlamRow = ({ both }) => {
                             }}
                         >
                             <a
-                                href={row.collection_id}
+                                href={row.fullUrl}
                                 // href={row.endpoint ? row.endpoint : null}
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                {row.collectionIdName}
+                                {row.collectionSaleName}
                             </a>
                             <br />
                             <a
-                                href={row.collection_url}
+                                href={row.collectionUrl}
                                 target="_blank"
                                 rel="noreferrer"
                                 style={{ fontSize: 12, marginLeft: 5 }}

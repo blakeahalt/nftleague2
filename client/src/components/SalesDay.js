@@ -4,17 +4,16 @@ import { useState, useEffect } from 'react';
 import CryptoSlamSalesRows from './CryptoSlamSalesRows';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import Pagination from './Pagination2';
-// import axios from 'axios';
 import Cookies from 'js-cookie';
 import ProtectRoutes from './ProtectRoutes';
 
 function UserList() {
-    const navigate = useNavigate();
     const [rowDataSales, setRowDataSales] = useState([]);
     const [user, setUser] = useState();
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(20);
     const [err, setErr] = useState('');
+    const navigate = useNavigate();
 
     ProtectRoutes();
 
@@ -33,7 +32,7 @@ function UserList() {
             .then((response) => response.json())
             .then((rowDataSales) => setRowDataSales(rowDataSales.data));
     }, []);
-    // console.log('rowDataSales:', rowDataSales);
+    console.log('rowDataSales:', rowDataSales);
 
     // //Output: array of urls to each collection
     const endpoints = [];
@@ -78,21 +77,62 @@ function UserList() {
             : null,
     }));
 
-    const collectionId = [];
+    const collectionNumber = [];
     for (const x of rowDataSales) {
-        const y = url_string.concat(
-            `${x.collectionId}/mint/${x.tokens[0].tokenId}`
-        );
-        collectionId.push(y);
+        const y = `${x.tokens[0].tokenId}`;
+        collectionNumber.push(y);
     }
+    // console.log('collectionNumber', collectionNumber);
+
+    const collectionNumtoFixed = [];
+    for (const x of collectionNumber) {
+        if (x.length > 5) {
+            const y = `${x.slice(0, 5)}...`;
+            collectionNumtoFixed.push(y);
+        } else {
+            const y = x.slice(0, 5);
+            collectionNumtoFixed.push(y);
+        }
+    }
+    // console.log('collectionNumtoFixed', collectionNumtoFixed);
+    // const collectionId = [];
+    // for (const x of rowDataSales) {
+    //     const y = url_string.concat(`${x.collectionIdName}/mint/d`);
+    //     collectionId.push(y);
+    // }
     // console.log('collectionId', collectionId);
 
     const collectionIdName = [];
     for (const x of rowDataSales) {
-        const y = `${x.tokens[0].name}`;
+        const y = `${x.collectionName}`;
         collectionIdName.push(y);
     }
     // console.log('collectionIdName', collectionIdName);
+
+    const collectionSaleName = collectionIdName.map((x, index) =>
+        x.concat(` #${collectionNumtoFixed[index]}`)
+    );
+    // console.log('collectionSaleName', collectionSaleName);
+
+    const collection_Id_Name = [];
+    for (const x of rowDataSales) {
+        const y = x.collectionName.replaceAll(' ', '-').toLowerCase();
+        collection_Id_Name.push(y);
+    }
+    // console.log('collection_Id_Name', collection_Id_Name);
+
+    const collectionUrlName = collection_Id_Name.map((x, index) =>
+        x.concat(`/mint/${collectionNumber[index]}`)
+    );
+    const fullUrl = collectionUrlName.map((x, index) =>
+        url_string.concat(`${x}`)
+    );
+    // console.log('fullUrl', fullUrl);
+
+    const collectionUrl = collection_Id_Name.map((x, index) =>
+        url_string.concat(`${x}`)
+    );
+    // console.log('collectionUrl', collectionUrl);
 
     const timeElapsed = [];
     for (const x of rowDataSales) {
@@ -177,11 +217,12 @@ function UserList() {
         Object.assign(
             {},
             item,
-            { collection_url: endpoints[i] },
+            { collectionUrl: collectionUrl[i] },
             { index: indexArray[i] },
             { quotes: quotes[i] },
-            { collection_id: collectionId[i] },
+            { fullUrl: fullUrl[i] },
             { collectionIdName: collectionIdName[i] },
+            { collectionSaleName: collectionSaleName[i] },
             { timeElapsed: timeElapsed[i] }
         )
     );
@@ -190,7 +231,7 @@ function UserList() {
     function CSSignOut() {
         Cookies.set('access', null);
         Cookies.set('refresh', null);
-        Navigate('/login');
+        navigate('/');
     }
 
     const lastPostIndex = currentPage * postsPerPage;
