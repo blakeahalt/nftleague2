@@ -286,49 +286,51 @@ function NFTList() {
             <br />
             <br />
             <div className="container">
-                <div className="col-4">
+                <div className="col-6">
                     <Profile
                         class="p-4 bg-light"
                         newCS="renga"
+                        className="col"
                     />
                 </div>
-                <div className="col-4">
+                <div className="col-6">
                     <Profile
                         class="p-4 bg-light"
                         newCS="boredapeyachtclub"
+                        className="col"
                     />
                 </div>
-                <div className="col-4">
+                <div className="col-6">
                     <Profile
                         class="p-4 bg-light"
                         newCS="proof-moonbirds"
                     />
                 </div>
-                <div className="col-4">
+                <div className="col-6">
                     <Profile
                         class="p-4 bg-light"
                         newCS="cryptopunks"
                     />
                 </div>
-                <div className="col-4">
+                <div className="col-6">
                     <Profile
                         class="p-4 bg-light"
                         newCS="terraforms"
                     />
                 </div>
-                <div className="col-4">
+                <div className="col-6">
                     <Profile
                         class="p-4 bg-light"
                         newCS="doodles-official"
                     />
                 </div>
-                <div className="col-4">
+                <div className="col-6">
                     <Profile
                         class="p-4 bg-light"
                         newCS="clonex"
                     />
                 </div>
-                <div className="col-4">
+                <div className="col-6">
                     <Profile
                         class="p-4 bg-light"
                         newCS="art-blocks"
