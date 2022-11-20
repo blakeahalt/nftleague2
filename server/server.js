@@ -1,19 +1,15 @@
-// import { Redirect } from 'react-router-dom';
 const express = require('express');
 const app = express();
 const path = require('path');
 const port = process.env.PORT || 3001;
 const cors = require('cors');
-// app.use(cors());
+app.use(cors());
 const argon2 = require('argon2');
 
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 const jwt = require("jsonwebtoken");
-// require("dotenv").config(); //MUST HAVE to run Dev : COMMENT OUT for Heroku
-// const dotenv = require("dotenv")
-// dotenv.config()
-
+require("dotenv").config(); //MUST HAVE to run Dev : COMMENT OUT for Heroku
 
 app.use(bodyParser.json())
 app.use(cookieParser())
@@ -24,32 +20,20 @@ app.use(express.json());
 
 const jwtAccessKey = process.env.REACT_APP_JWTSECRET;
 const jwtRefreshKey = process.env.REACT_APP_REFRESH_TOKEN_SECRET;
+const mySQLUser = process.env.REACT_APP_MYSQLUSER;
+const mySQLHost = process.env.REACT_APP_MYSQLHOST;
+const mySQLPwd = process.env.REACT_APP_MYSQLPWD;
+const mySQLDatabase = process.env.REACT_APP_MYSQLDATABASE;
 
 // =======================================
-// mysql that works in development
 const mysql = require('mysql');
 const db = mysql.createConnection({
-    user: 'hu6etanlnbizgzv5',
-    host: 'cwe1u6tjijexv3r6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-    password: 'g9clxpcv1kdf5jqj',
-    database: 'hzgtrybfzcvlvstf',
+    user: mySQLUser,
+    host: mySQLHost,
+    password: mySQLPwd,
+    database: mySQLDatabase,
 });
 
-// ========================================
-// JawsDB with Node.js
-// const JAWSDB_URL = 'mysql://hu6etanlnbizgzv5:g9clxpcv1kdf5jqj@cwe1u6tjijexv3r6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/hzgtrybfzcvlvstf'
-// var mysql = require('mysql');
-// var connection = mysql.createConnection(JAWSDB_URL);
-
-// connection.connect();
-
-// connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
-//   if (err) throw err;
-
-//   console.log('The solution is: ', rows[0].solution);
-// });
-
-// connection.end();
 // ==========================================
 
 app.use(function (req, res, next) {
@@ -107,8 +91,8 @@ app.post('/addPassword', async (req, res) => {
                             );
     
                             refreshTokens.push(refreshToken);
-                            console.log("/login accessToken:", accessToken)
-                            console.log("/login refreshToken:", refreshToken)
+                            // console.log("/login accessToken:", accessToken)
+                            // console.log("/login refreshToken:", refreshToken)
                             // res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24*60*60*1000 });
                             return res.status(200).json({accessToken: accessToken, refreshToken: refreshToken})
                         }
@@ -148,8 +132,8 @@ app.post('/login', async (req, res) => {
                         );
 
                         refreshTokens.push(refreshToken);
-                        console.log("/login accessToken:", accessToken)
-                        console.log("/login refreshToken:", refreshToken)
+                        // console.log("/login accessToken:", accessToken)
+                        // console.log("/login refreshToken:", refreshToken)
                         // res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24*60*60*1000 });
                         return res.status(200).json({accessToken: accessToken, refreshToken: refreshToken})
                 } else {
@@ -166,6 +150,7 @@ app.post('/login', async (req, res) => {
     }
 })
 
+// creates JWT access/refresh tokens for user signing in with Google accounts
 app.post('/googlelogin', async (req, res) => {
     const { pwd, user } = req.body;
     try {
@@ -180,8 +165,8 @@ app.post('/googlelogin', async (req, res) => {
             { expiresIn: '90d' }
         );
         refreshTokens.push(refreshToken);
-        console.log("/googlelogin accessToken:", accessToken)
-        console.log("/googlelogin refreshToken:", refreshToken)
+        // console.log("/googlelogin accessToken:", accessToken)
+        // console.log("/googlelogin refreshToken:", refreshToken)
         return res.json({accessToken: accessToken, refreshToken: refreshToken})
     } catch (err) {
     console.log('ErRor' + err);
@@ -198,7 +183,7 @@ app.post("/refresh", (req, res, next) => {
     jwt.verify(refreshToken, jwtRefreshKey, (err, decoded) => {
         if (!err) {
             const accessToken = jwt.sign({ user: decoded.user }, jwtRefreshKey, {
-                expiresIn: "1d"
+                expiresIn: "5m"
             });
             return res.json({ success: true, accessToken });
         } else {
@@ -216,7 +201,7 @@ async function auth(req, res, next) {
         return res.status(401).send('/protected(auth): Unauthorized request');
       }
     let token = req.headers["authorization"];
-    token = token.split(" ")[1]; //Access token
+    token = token.split(" ")[1]; // Get access token
     // console.log('BearerToken:', token);
 
     jwt.verify(token, jwtAccessKey, async (err, user) => {
@@ -224,7 +209,7 @@ async function auth(req, res, next) {
             req.user = user;
             // console.log('BearerToken:', token);
             next();
-        } else if (err.message === "jwt expired") {
+        } else if (err.message === "jwt expired" || "invalid signature") {
             return res.json({
                 success: false,
                 message: "Access token expired"
@@ -238,35 +223,11 @@ async function auth(req, res, next) {
     });
 }
 
-// Protected route, can only be accessed when user is logged-in
+// Checks for access/refresh tokens, then allows access to protected routes
 app.post("/protected", auth, (req, res) => {
     return res.json({ message: "Protected content: Accessed" });
 });
 
-// app.get("/showPasswords", (req, res) => {
-//   db.query("SELECT * FROM passwords;",
-//   (err, result) => {
-//     if(err) {
-//       console.log(err);
-//     } else {
-//       res.send(result)
-//     }
-//   })
-// })
-
-// app.get("/getUser", (req, res) => {
-//   // const {user} = req.body
-// // const user = req.params.user;
-// db.query("SELECT * FROM passwords WHERE user = ?", (err, result) => {
-//   if(err) {
-//     console.log(err);
-//   } else {
-//     res.send(result)
-//     // res.json(result);
-//   }
-
-// });
-// });
 
 // if (process.env.NODE_ENV === "production") {
 //   app.use(express.static(path.join(__dirname, "/client/build")));

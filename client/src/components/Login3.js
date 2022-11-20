@@ -4,7 +4,6 @@ import { GoogleLogout } from 'react-google-login';
 import jwt_decode from 'jwt-decode';
 // import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
-import LoginButton from './GoogleLogin';
 import LogoutButton from './GoogleLogout';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef, useContext } from 'react';
@@ -34,10 +33,10 @@ function App() {
     const [err, setErr] = useState('');
 
     useEffect((req, res) => {
-        // axios
-        //     .get('http://localhost:3001/working') // dev
         axios
-            .get('/working') //heroku
+            .get('http://localhost:3001/working') // dev
+            // axios
+            //     .get('/working') //heroku
             .then((res) => {
                 console.log(res);
                 setNotification(res.data.message);
@@ -83,10 +82,10 @@ function App() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // await axios
-        //     .post('http://localhost:3001/login', { user, pwd })
         await axios
-            .post('/login', { user, pwd })
+            .post('http://localhost:3001/login', { user, pwd })
+            // await axios
+            //     .post('/login', { user, pwd })
             .then((data) => {
                 if (data.status === 200) {
                     const accessToken = data.data.accessToken;
@@ -225,16 +224,16 @@ function App() {
                                 const user = decoded.name;
                                 const pwd = decoded.jti;
                                 console.log('decoded.jti', decoded.jti);
-                                // axios
-                                //     .post('http://localhost:3001/googlelogin', {
-                                //         user,
-                                //         pwd,
-                                //     })
                                 axios
-                                    .post('/googlelogin', {
-                                        pwd: pwd,
-                                        user: user,
+                                    .post('http://localhost:3001/googlelogin', {
+                                        user,
+                                        pwd,
                                     })
+                                    // axios
+                                    //     .post('/googlelogin', {
+                                    //         pwd: pwd,
+                                    //         user: user,
+                                    //     })
                                     .then((data) => {
                                         const accessToken =
                                             data.data.accessToken;

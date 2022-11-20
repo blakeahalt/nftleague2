@@ -1,48 +1,102 @@
-import React from 'react';
-import { useState } from 'react';
+import { React, useState, useEffect } from 'react';
 
-function formatDate(date) {
-    const [fullYear, setFullYear] = useState();
-    const [month, setMonth] = useState();
-    const [date, setDate] = useState();
-    const [hours, setHours] = useState();
-    const [minutes, setMinutes] = useState();
-    const [seconds, setSeconds] = useState();
-    setFullYear(year, [month], [date])
-    setMonth(month, [date])
-    setDate(date)
-    setHours(hour, [min], [sec], [ms])
-    setMinutes(min, [sec], [ms])
-    setSeconds(sec, [ms])
-    setMilliseconds(ms)
-    setTime(milliseconds)
+function TimeElapsed() {
+    const [rowDataSales, setRowDataSales] = useState([]);
 
-    let dayOfMonth = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-    let hour = date.getHours();
-    let minutes = date.getMinutes();
-    let diffMs = new Date() - date;
-    let diffSec = Math.round(diffMs / 1000);
-    let diffMin = diffSec / 60;
-    let diffHour = diffMin / 60;
+    const CSoptions = {
+        method: 'GET',
+        headers: {
+            'X-BLOBR-KEY': '3Q5omwBMURG6qbahoT3MVBa7RjOkNpbg',
+        },
+    };
 
-    // formatting
-    year = year.toString().slice(-2);
-    month = month < 10 ? '0' + month : month;
-    dayOfMonth = dayOfMonth < 10 ? '0' + dayOfMonth : dayOfMonth;
-    hour = hour < 10 ? '0' + hour : hour;
-    minutes = minutes < 10 ? '0' + minutes : minutes;
+    useEffect(() => {
+        fetch(
+            'https://api.cryptoslam.io/im6pi8nxcs120nhb/v1/sales/top-100?timeRange=day',
+            CSoptions
+        )
+            .then((response) => response.json())
+            .then((rowDataSales) => setRowDataSales(rowDataSales.data));
+    }, []);
 
-    if (diffSec < 1) {
-        return 'right now';
-    } else if (diffMin < 1) {
-        return `${diffSec} sec. ago`;
-    } else if (diffHour < 1) {
-        return `${diffMin} min. ago`;
-    } else {
-        return `${dayOfMonth}.${month}.${year} ${hour}:${minutes}`;
+    const timeElapsed = [];
+    for (const x of rowDataSales) {
+        const start = new Date(`${x.saleAt}`); // milliseconds count from 1 Jan 1970
+        const end = Date.now();
+        // const y = `${end - start}`;
+        const y = `${end - start}`;
+        const z =
+            y < 3600000
+                ? `< 1 hour ago`
+                : 3600000 < y && y < 7200000
+                ? '1 hour ago'
+                : 7200000 < y && y < 10800000
+                ? '2 hours ago'
+                : 10800000 < y && y < 14400000
+                ? '3 hours ago'
+                : 14400000 < y && y < 18000000
+                ? '4 hours ago'
+                : 18000000 < y && y < 21600000
+                ? '5 hours ago'
+                : 21600000 < y && y < 25200000
+                ? '6 hours ago'
+                : 25200000 < y && y < 28800000
+                ? '7 hours ago'
+                : 28800000 < y && y < 32400000
+                ? '8 hours ago'
+                : 32400000 < y && y < 36000000
+                ? '9 hours ago'
+                : 36000000 < y && y < 39600000
+                ? '10 hours ago'
+                : 39600000 < y && y < 43200000
+                ? '11 hours ago'
+                : 43200000 < y && y < 46800000
+                ? '12 hours ago'
+                : 46800000 < y && y < 50400000
+                ? '13 hours ago'
+                : 50400000 < y && y < 54000000
+                ? '14 hours ago'
+                : 54000000 < y && y < 57600000
+                ? '15 hours ago'
+                : 57600000 < y && y < 61200000
+                ? '16 hours ago'
+                : 61200000 < y && y < 64800000
+                ? '17 hours ago'
+                : 64800000 < y && y < 68400000
+                ? '18 hours ago'
+                : 68400000 < y && y < 72000000
+                ? '19 hours ago'
+                : 72000000 < y && y < 75600000
+                ? '20 hours ago'
+                : 75600000 < y && y < 79200000
+                ? '21 hours ago'
+                : 79200000 < y && y < 82800000
+                ? '22 hours ago'
+                : 82800000 < y && y < 86400000
+                ? '23 hours ago'
+                : 86400000 < y && y < 172800000
+                ? '1 day ago'
+                : 172800000 < y && y < 259200000
+                ? '2 days ago'
+                : 259200000 < y && y < 345600000
+                ? '3 days ago'
+                : 345600000 < y && y < 432000000
+                ? '4 days ago'
+                : 432000000 < y && y < 518400000
+                ? '5 days ago'
+                : 518400000 < y && y < 604800000
+                ? '6 days ago'
+                : 604800000 < y && y < 1209600000
+                ? '1 week ago'
+                : 604800000 < y && y < 1814400000
+                ? '2 weeks ago'
+                : 1814400000 < y && y < 2419200000
+                ? '3 weeks ago'
+                : null;
+
+        timeElapsed.push(z);
     }
+    return timeElapsed;
 }
-
-export default formatDate();
+// console.log('timeElapsed:', timeElapsed);
+export default TimeElapsed;

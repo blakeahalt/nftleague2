@@ -2,8 +2,7 @@ import { React, useEffect, useState, useRef } from 'react';
 import { GoogleLogout } from 'react-google-login';
 import '../App.css';
 import { ethers } from 'ethers';
-import axios from 'axios';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Profile from './NFTProfile';
 import Cookies from 'js-cookie';
 import ProtectRoutes from './ProtectRoutes';
@@ -11,16 +10,12 @@ import ProtectRoutes from './ProtectRoutes';
 function NFTList() {
     const [account, setAccount] = useState('');
     const [signer, setSigner] = useState(null);
-    const [stats, setStats] = useState([]);
-    const [collection, setCollection] = useState([]);
-    const [collectionSearch, setCollectionSearch] = useState('');
-    const [updated, setUpdated] = useState('');
-    const [errMsg, setErrMsg] = useState('');
-    const errRef = useRef();
-    const userRef = useRef();
-    const inputRef = useRef(null);
     const navigate = useNavigate();
     const [user, setUser] = useState({});
+
+    useEffect(() => {
+        connect();
+    }, []);
 
     ProtectRoutes();
 
@@ -46,10 +41,6 @@ function NFTList() {
             console.log('Please install metamask.');
         }
     };
-
-    useEffect(() => {
-        connect();
-    }, []);
 
     function CSSignOut() {
         Cookies.set('access', null);

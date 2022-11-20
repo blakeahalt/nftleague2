@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { React, useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { Stack } from 'rsuite';
+import { FlexboxGrid, Stack } from 'rsuite';
 import '../App.css';
 import LineChart from './LineChart';
 import { Line } from 'react-chartjs-2';
@@ -86,18 +86,6 @@ function Profile({ newCS }) {
         getStats();
         getCollection();
     }
-
-    //   const [data, setData] = useState([]);
-
-    //   useEffect(() => {
-    //     fetch("http://localhost:3001/data", { method: "GET", redirect: "follow" })
-    //       .then((res) => res.json())
-    //       .then((json) => {
-    //         console.log(json);
-    //         setData(json);
-    //       })
-    //       .catch((err) => console.log(err));
-    //   }, []);
 
     // ChartJS.defaults.color = "#ff0000";
     const data = {
@@ -190,34 +178,12 @@ function Profile({ newCS }) {
 
     return (
         <>
-            {/* <input
-            type="text"
-            onChange={(e) => setCollectionSearch(e.target.value)}
-            placeholder="Collection Name"
-        ></input>  */}
-            {/* {setCollectionSearch=newCS.setCollectionSearch} */}
-            {/* <button onClick={callFunctions}>Submit</button> */}
-            {/* <Stack direction="row" spacing={2}> */}
-            {/* <div class="container" >
-          <div class="row">
-            <div class="col-1">{name}</div>
-            <div class="col-1">
-                <img src={image_url} height="100" alt="URL"/></div>
-            <div class="col-1">Floooor Price: {floor_price} ETH</div>
-            {/* <p>Average Price: {average_price}</p> */}
-            {/* <div class="col-1">7 Day Volume: {seven_day_volume} ETH</div>
-            <div class="col-1">7 Day Sales: {seven_day_sales}</div>
-            <div class="col-1">7 Day Avg Price: {seven_day_average_price} ETH</div>
-            <br/>
-            <br/>
-        </div>
-    </div> */}
-            {/* <div className="App-image">{name}</div> */}
             <div className="App-image">
                 <img
                     src={image_url}
                     height="100"
                     alt="URL"
+                    style={{ display: 'flex', flexDirection: 'column' }}
                 />
             </div>
             <div className="App-image">{name}</div>

@@ -5,11 +5,9 @@ import './App.css';
 import Notification from './components/Notification';
 import Register from './components/Register';
 // import Test from './components/Test';
-// import GoogleLogin from './components/GoogleLogin'
 // import GoogleLogout from './components/GoogleLogout'
 import GoogleApp from './components/Login3';
 import GLogout from './components/GoogleLogout';
-import Added from './components/Added';
 import Profile from './components/NFTList';
 import LineChart from './components/LineChart';
 import SalesMonth from './components/SalesMonth';
@@ -24,9 +22,6 @@ import CryptoSlamCollectionMonth from './components/CollectionsMonthCS';
 import CryptoSlamSalesDay from './components/SalesDay';
 import CryptoSlamSalesWeek from './components/SalesWeek';
 import CryptoSlamSalesMonth from './components/SalesMonth';
-import Pagination from './components/Pagination';
-import Passengers from './components/Passengers';
-import DataTable from './components/DataTable';
 import { composeFunctions } from 'rsuite/esm/utils';
 import ProtectRoutes from './components/ProtectRoutes2';
 import Cookies from 'js-cookie';

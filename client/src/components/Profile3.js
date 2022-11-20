@@ -1,20 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { React, useEffect, useState } from 'react';
 import '../App.css';
-// import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Logout from './GoogleLogout';
-import Login from './GoogleLogin';
 import { GoogleLogout } from 'react-google-login';
-import { useGoogleLogout } from '@react-oauth/google';
-import { gapi } from 'gapi-script';
-import jwt_decode from 'jwt-decode';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { Navigate, useNavigate } from 'react-router-dom';
 
-const clientId =
-    '1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com';
+const clientId = process.env.REACT_APP_CLIENTID;
 
 const Profile = () => {
     const [user, setUser] = useState({});

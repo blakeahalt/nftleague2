@@ -8,41 +8,40 @@ const CryptoSlamRow = ({ both }) => {
                 style={{
                     maxHeight: '75px',
                     fontSize: 25,
-                    flexWrap: 'wrap',
+                    flexWrap: 'nowrap',
                     margin: 5,
                 }}
             >
                 <Col
-                    style={{ minWidth: 525, maxWidth: 625, textAlign: 'left' }}
+                    style={{ minWidth: 295, maxWidth: 575, textAlign: 'left' }}
                 >
                     Collection
                 </Col>
                 <Col
                     style={{
-                        minWidth: 150,
+                        minWidth: 125,
                         maxWidth: 300,
-                        marginLeft: 40,
+                        marginLeft: 15,
                         textAlign: 'right',
                     }}
                 >
                     Trades
                 </Col>
                 <Col
-                    style={{ minWidth: 150, maxWidth: 300, textAlign: 'right' }}
+                    style={{ minWidth: 175, maxWidth: 300, textAlign: 'right' }}
                 >
                     Price
                 </Col>
                 <Col
                     style={{
                         minWidth: 160,
-                        maxWidth: 500,
+                        maxWidth: 300,
                         flexWrap: 'wrap',
                         textAlign: 'right',
-                        marginTop: -20,
                         marginBottom: 15,
                     }}
                 >
-                    Buyers / Sellers <br />
+                    Buyers / <br /> Sellers <br />
                 </Col>
             </Row>
 
@@ -83,8 +82,7 @@ const CryptoSlamRow = ({ both }) => {
                         </Col>
                         <Col
                             style={{
-                                minWidth: 375,
-                                maxWidth: 500,
+                                minWidth: 150,
                                 marginTop: 18,
                                 fontSize: 22,
                             }}
@@ -99,8 +97,7 @@ const CryptoSlamRow = ({ both }) => {
                         </Col>
                         <Col
                             style={{
-                                minWidth: 200,
-                                maxWidth: 300,
+                                minWidth: 165,
                                 marginTop: 27,
                                 textAlign: 'right',
                                 fontSize: 18,
@@ -110,7 +107,7 @@ const CryptoSlamRow = ({ both }) => {
                         </Col>
                         <Col
                             style={{
-                                minWidth: 150,
+                                minWidth: 175,
                                 marginTop: 25,
                                 marginLeft: 40,
                                 marginRight: 15,
@@ -132,7 +129,7 @@ const CryptoSlamRow = ({ both }) => {
                         <Col
                             style={{
                                 minWidth: 160,
-                                maxWidth: 500,
+                                maxWidth: 300,
                                 marginTop: 27,
                                 marginRight: 20,
                                 textAlign: 'right',

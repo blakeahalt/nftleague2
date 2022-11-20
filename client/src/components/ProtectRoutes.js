@@ -113,10 +113,10 @@ function ProtectRoutes() {
                                 '(3 requestLogin): AccessToken Expired - Generating New Tokens'
                             );
                             const accessToken = await refresh(refreshToken);
-                            return await requestLogin(
-                                accessToken,
-                                refreshToken
-                            );
+                            // return await requestLogin(
+                            //     accessToken,
+                            //     refreshToken
+                            // );
                         }
                         resolve(false);
                     } else {
