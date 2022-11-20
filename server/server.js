@@ -20,10 +20,10 @@ app.use(express.json());
 
 const jwtAccessKey = process.env.REACT_APP_JWTSECRET;
 const jwtRefreshKey = process.env.REACT_APP_REFRESH_TOKEN_SECRET;
-const mySQLUser = process.env.REACT_APP_MYSQLUSER;
-const mySQLHost = process.env.REACT_APP_MYSQLHOST;
-const mySQLPwd = process.env.REACT_APP_MYSQLPWD;
-const mySQLDatabase = process.env.REACT_APP_MYSQLDATABASE;
+const mySQLUser = process.env.REACT_APP_MYSQL_USER;
+const mySQLHost = process.env.REACT_APP_MYSQL_HOST;
+const mySQLPwd = process.env.REACT_APP_MYSQL_PWD;
+const mySQLDatabase = process.env.REACT_APP_MYSQL_DATABASE;
 
 // =======================================
 const mysql = require('mysql');
