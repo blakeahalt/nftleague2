@@ -192,7 +192,7 @@ button {
 }
 
 .instructions > svg {
-    margin-right: 0rem;
+    margin-right: 0.25rem;
 }
 
 .offscreen {
@@ -246,7 +246,7 @@ button {
   min-height: 50px;
   display:flex;
   width: 100%;
-  flex-direction:column;
+  flex-direction:row;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
@@ -313,10 +313,10 @@ button {
 
 .container {
   display:flex;
-  flex-direction:column;
+  flex-direction:inherit;
   flex-wrap: wrap;
   align-content:inherit;
-  justify-content:column;
+  justify-content:center;
   padding: 1rem;
   background-color: rgba(16, 85, 155, 0.996);
   border: 2px solid #fff;
@@ -341,11 +341,11 @@ button {
   position:static;
   filter: blur(4px);
   z-index: 2;
+  max-width: 1400px;
 }
 
 #containerNav {
   position:relative;
-  justify-content: center;
   z-index: 4;
 }
 
@@ -368,7 +368,6 @@ button {
 .navbar-title {
   display:contents;
   justify-content: space-between;
-  flex-direction: column;
   align-items:center;
   position:fixed;
   top: 0;
@@ -410,7 +409,7 @@ button {
 }
 
 .ag-right-header .ag-header-cell-label {
-   flex-direction: row;
+   flex-direction: row-reverse;
 }
 
 .ag-center-header .ag-header-cell-label {
