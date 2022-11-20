@@ -81,10 +81,10 @@ function App() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // await axios
-        //     .post('http://localhost:3001/login', { user, pwd })
         await axios
-            .post('/login', { user, pwd })
+            .post('http://localhost:3001/login', { user, pwd })
+            // await axios
+            //     .post('/login', { user, pwd })
             .then((data) => {
                 if (data.status === 200) {
                     const accessToken = data.data.accessToken;
@@ -219,16 +219,16 @@ function App() {
                                 const user = decoded.name;
                                 const pwd = decoded.jti;
                                 // console.log('decoded.jti', decoded.jti);
-                                // axios
-                                //     .post('http://localhost:3001/googlelogin', {
-                                //         user,
-                                //         pwd,
-                                //     })
                                 axios
-                                    .post('/googlelogin', {
-                                        pwd: pwd,
-                                        user: user,
+                                    .post('http://localhost:3001/googlelogin', {
+                                        user,
+                                        pwd,
                                     })
+                                    // axios
+                                    //     .post('/googlelogin', {
+                                    //         pwd: pwd,
+                                    //         user: user,
+                                    //     })
                                     .then((data) => {
                                         const accessToken =
                                             data.data.accessToken;

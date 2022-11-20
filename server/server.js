@@ -9,7 +9,7 @@ const argon2 = require('argon2');
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 const jwt = require("jsonwebtoken");
-// require("dotenv").config(); //MUST HAVE to run Dev : COMMENT OUT for Heroku
+require("dotenv").config(); //MUST HAVE to run Dev : COMMENT OUT for Heroku
 
 app.use(bodyParser.json())
 app.use(cookieParser())
