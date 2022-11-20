@@ -10,8 +10,13 @@
 
 # production
 /build
+/Bootstrap
 
 # misc
+/prettier.config.js
+.eslintrc.js
+.devcontainer
+.vscode
 .env
 .DS_Store
 .env.local
