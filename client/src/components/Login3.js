@@ -91,8 +91,8 @@ function App() {
                     const refreshToken = data.data.refreshToken;
                     Cookies.set('access', accessToken);
                     Cookies.set('refresh', refreshToken);
-                    console.log(`accessToken: ${data.data.accessToken}`);
-                    console.log(`refreshToken: ${data.data.refreshToken}`);
+                    // console.log(`accessToken: ${data.data.accessToken}`);
+                    // console.log(`refreshToken: ${data.data.refreshToken}`);
                     // setAuth(data.data.refreshToken);
                     setSuccess(true);
                     setCatchUser(user);
