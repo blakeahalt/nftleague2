@@ -2,7 +2,6 @@ import Cookies from 'js-cookie';
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 import { GoogleLogout } from 'react-google-login';
 import jwt_decode from 'jwt-decode';
-// import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import LogoutButton from './GoogleLogout';
 import { Link, useNavigate } from 'react-router-dom';
