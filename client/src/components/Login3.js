@@ -214,15 +214,15 @@ function App() {
                             onSuccess={(res) => {
                                 // console.log(credentialResponse.credential);
                                 var decoded = jwt_decode(res.credential);
-                                console.log('res', res);
-                                console.log('jwt-decoded', decoded);
+                                // console.log('res', res);
+                                // console.log('jwt-decoded', decoded);
                                 // window.localStorage.setItem(
                                 //     'token',
                                 //     decoded.exp
                                 // );
                                 const user = decoded.name;
                                 const pwd = decoded.jti;
-                                console.log('decoded.jti', decoded.jti);
+                                // console.log('decoded.jti', decoded.jti);
                                 // axios
                                 //     .post('http://localhost:3001/googlelogin', {
                                 //         user,
@@ -240,12 +240,12 @@ function App() {
                                             data.data.refreshToken;
                                         Cookies.set('access', accessToken);
                                         Cookies.set('refresh', refreshToken);
-                                        console.log(
-                                            `accessToken: ${data.data.accessToken}`
-                                        );
-                                        console.log(
-                                            `refreshToken: ${data.data.refreshToken}`
-                                        );
+                                        // console.log(
+                                        //     `accessToken: ${data.data.accessToken}`
+                                        // );
+                                        // console.log(
+                                        //     `refreshToken: ${data.data.refreshToken}`
+                                        // );
                                     });
                                 setSuccess(true);
                                 setGoogleSuccess(true);

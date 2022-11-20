@@ -21,7 +21,7 @@ function Profile({ newCS }) {
         const baseURL = `https://api.opensea.io/api/v1/collection/${newCS}/stats`;
         const response = await axios.get(baseURL, options);
         setStats([response.data]);
-        console.log('stats data:', stats);
+        // console.log('stats data:', stats);
     }
 
     useEffect(() => {
@@ -49,30 +49,30 @@ function Profile({ newCS }) {
     const seven_day_volume = stats.map(function (stat) {
         return [`${stat.stats.seven_day_volume.toFixed(2)}`].join('');
     });
-    console.log('floor price:', seven_day_volume);
+    // console.log('floor price:', seven_day_volume);
 
     const seven_day_average_price = stats.map(function (stat) {
         return [`${stat.stats.seven_day_average_price.toFixed(2)}`].join('');
     });
-    console.log('7 Day Avg Price:', seven_day_average_price);
+    // console.log('7 Day Avg Price:', seven_day_average_price);
 
     const seven_day_sales = stats.map(function (stat) {
         return [`${stat.stats.seven_day_sales}`].join('');
     });
-    console.log('7 Day Sales:', seven_day_sales);
+    // console.log('7 Day Sales:', seven_day_sales);
 
     const average_price = stats.map(function (stat) {
         return [`${stat.stats.average_price.toFixed(2)}`].join('');
     });
-    console.log('Average Price:', average_price);
+    // console.log('Average Price:', average_price);
 
     async function getCollection() {
         const baseURL = `https://api.opensea.io/api/v1/collection/${newCS}`;
         const response = await axios.get(baseURL, options);
         setCollection([response.data]);
     }
-    console.log('collection data:', collection);
-    console.log('stats data:', stats);
+    // console.log('collection data:', collection);
+    // console.log('stats data:', stats);
 
     // function onClick() {
     //     getCollection()
