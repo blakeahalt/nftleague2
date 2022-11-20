@@ -1,22 +1,35 @@
-import { GoogleLogout } from 'react-google-login'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { React } from 'react';
+import { GoogleLogout } from 'react-google-login';
+import Cookies from 'js-cookie';
 
-const clientId="1077671935526-r9547hfdu1l45omb8s10jjehbv309rki.apps.googleusercontent.com"
+const clientId = process.env.clientId;
 
-function GLogout() {
+function Logout() {
+    const logout = () => {
+        console.log('successfully logged out!');
+        Cookies.set('access', null);
+        Cookies.set('refresh', null);
+    };
 
-	const onSuccess = () => {
-		console.log("Log Out successful!");
-	}
+    const onSuccess = () => {
+        console.log('LOG OUT SUCCESS!');
+    };
 
-	return (
-		<div>
-			<GoogleLogout
-				clientId={clientId}
-				buttonText={"Logout"}
-				onLogoutSuccess={onSuccess}
-			/>
-		</div>
-	)
+    const onFailure = () => {
+        console.log('LOGIN FAILED! Current user: ');
+    };
+
+    return (
+        <div id="signOutButton">
+            <GoogleLogout
+                clientId={clientId}
+                buttonText="Logout"
+                onLogoutSuccess={logout}
+                onFailure={onFailure}
+            />
+        </div>
+    );
 }
 
-export default GLogout
+export default Logout;
