@@ -138,13 +138,14 @@ login {
 }
 
 section {
-    width: 100%;
+    width: 90%;
     max-width: 1000px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content:left;
     padding: 1rem;
     background-color: rgba(0,0,0,0.4);
+    margin-top: 25px;
 }
 
 form {

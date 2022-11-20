@@ -2,12 +2,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { React, useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { FlexboxGrid, Stack } from 'rsuite';
 import '../App.css';
-import LineChart from './LineChart';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables } from 'chart.js';
-import { Chart } from 'react-chartjs-2';
 ChartJS.register(...registerables);
 
 function Profile({ newCS }) {

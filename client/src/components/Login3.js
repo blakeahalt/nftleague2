@@ -31,16 +31,16 @@ function App() {
     const [JETToken, setJWTToken] = useState();
     const [err, setErr] = useState('');
 
-    useEffect((req, res) => {
-        // axios
-        //     .get('http://localhost:3001/working') // dev
-        axios
-            .get('/working') //heroku
-            .then((res) => {
-                console.log(res);
-                setNotification(res.data.message);
-            });
-    }, []);
+    // useEffect((req, res) => {
+    //     axios
+    //         .get('http://localhost:3001/working') // dev
+    //         // axios
+    //         //     .get('/working') //heroku
+    //         .then((res) => {
+    //             console.log(res);
+    //             setNotification(res.data.message);
+    //         });
+    // }, []);
 
     function handleSignOut(e) {
         setUser({});
@@ -122,8 +122,6 @@ function App() {
             {success ? (
                 <section
                     style={{
-                        minWidth: 325,
-                        minHeight: 350,
                         marginTop: 50,
                         contentAlign: 'center',
                     }}
@@ -131,8 +129,6 @@ function App() {
                     <div
                         className="Container"
                         style={{
-                            minWidth: 350,
-                            minHeight: 350,
                             marginTop: 25,
                             marginBottom: 25,
                             fontSize: 25,
