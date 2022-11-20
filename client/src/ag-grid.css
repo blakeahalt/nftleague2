@@ -1,0 +1,146 @@
+
+  .App-header {
+    background-color: #1c4390;
+    min-height: 50px;
+    display:flex;
+    width: 100%;
+    flex-direction:row;
+    align-items: right;
+    justify-content: right;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+
+  .App {
+    display: flex;
+    flex-wrap: wrap; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 10vh; 
+    padding: 1rem 0.5rem;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-around;
+    padding: 1rem;
+    background-color: rgba(16, 85, 155, 0.996);
+    border: 2px solid #fff;
+    color: #fff;
+    margin-top: 25px;
+  }
+
+  .navbar-title {
+    display:contents;
+    justify-content:right;
+    align-items: right;
+    text-align: right;
+    position: fixed;
+    margin-right: 15px;
+    padding-right: 15px;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: transparent;
+    width: 100%;
+    height: 80px;
+    font-size: 20px;
+  }
+
+
+.ag-center-cols-clipper {
+    min-height: unset !important;
+}
+
+.ag-theme-alpine .ag-header-cell {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.ag-right-header .ag-header-cell-label {
+     flex-direction: row-reverse;
+}
+
+.ag-center-header .ag-header-cell-label {
+    justify-content: center;
+}
+
+.ag-left-header .ag-header-cell-label {
+    flex-direction: row;
+}
+
+.ag-header-collection {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.ag-center-cell {
+    text-align: center;
+}
+
+.ag-right-cell {
+    text-align: right;
+}
+
+.ag-left-cell {
+    text-align: left;
+}
+
+.ag-font-size-cell {
+    font-size: 14px;
+}
+
+.ag-vertical-center {
+    vertical-align: center;
+}
+
+.ag-margin-top-rank {
+    margin-top: 8px
+}
+.ag-margin-top-image {
+    margin-top: 7px
+}
+
+.ag-rank-row {
+    margin-top: 8px;
+    font-size: 14px;
+    justify-content: right;
+    text-align: right;
+}
+
+.ag-image-row {
+    margin-top: 7px;
+    justify-content: left;
+    text-align: left;
+}
+
+.ag-collection-row {
+    margin-top: 8px;
+    justify-content: left;
+    text-align: left;
+}
+
+.ag-collection-header {
+    margin-left: 12px
+}
+
+.ag-rank-header {
+    margin-left: 25px
+}
+.ag-image-header {
+    margin-left: -5px
+}
+
+
+
+.ag-theme-alpine .ag-row {
+    height: 50px;
+}
+
+.ag-theme-alpine .ag-cell, .ag-theme-alpine .ag-full-width-row .ag-cell-wrapper.ag-row-group{
+    line-height: min(var(--ag-row-height, 30px), 30px);
+  }
