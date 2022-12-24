@@ -13,9 +13,9 @@ function NFTList() {
     const navigate = useNavigate();
     const [user, setUser] = useState({});
 
-    useEffect(() => {
-        connect();
-    }, []);
+    // useEffect(() => {
+    //     connect();
+    // }, []);
 
     ProtectRoutes();
 
@@ -28,19 +28,20 @@ function NFTList() {
         Cookies.set('refresh', null);
     };
 
-    const connect = async () => {
-        if (window.ethereum !== 'undefined') {
-            const accounts = await window.ethereum.request({
-                method: 'eth_requestAccounts',
-            });
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const signer = provider.getSigner();
-            setSigner(signer);
-            setAccount(accounts[0]);
-        } else {
-            console.log('Please install metamask.');
-        }
-    };
+    // CONNECT METAMASK
+    // const connect = async () => {
+    //     if (window.ethereum !== 'undefined') {
+    //         const accounts = await window.ethereum.request({
+    //             method: 'eth_requestAccounts',
+    //         });
+    //         const provider = new ethers.providers.Web3Provider(window.ethereum);
+    //         const signer = provider.getSigner();
+    //         setSigner(signer);
+    //         setAccount(accounts[0]);
+    //     } else {
+    //         console.log('Please install metamask.');
+    //     }
+    // };
 
     function CSSignOut() {
         Cookies.set('access', null);
@@ -56,6 +57,7 @@ function NFTList() {
                     style={{
                         display: 'flex',
                         position: 'relative',
+                        margin: 'auto',
                     }}
                 >
                     <nav

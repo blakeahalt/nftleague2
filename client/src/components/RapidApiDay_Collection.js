@@ -1,7 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable react/jsx-no-comment-textnodes */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { useState, useEffect } from 'react';
 import RapidApiRows from './RapidApiRows';
@@ -14,6 +10,8 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { TbLetterR } from 'react-icons/tb';
 import Cookies from 'js-cookie';
 import ProtectRoutes from './ProtectRoutes';
+import '../App.css';
+// import 'media-queries.css';
 
 function UserList() {
     const [rowDataSales, setRowDataSales] = useState([]);
@@ -22,6 +20,7 @@ function UserList() {
     const [postsPerPage, setPostsPerPage] = useState(20);
     const [load, setLoad] = useState(false);
     const navigate = useNavigate();
+    const [zoom, setZoom] = useState(1);
 
     ProtectRoutes();
 
@@ -55,10 +54,18 @@ function UserList() {
     //ToDo:DappRadarLinks = req ternaries of different blockchain types+/collection/
     //ToDo:EtherScanLinks: OS data - primary_asset_contracts[0].address
     const url_string = 'https://www.nft-stats.com/collection/';
-    const err_str =
-        'https://www.nft-stats.com/collection/galaxy-oat-tjiiovcgdq';
+    const err_str = [
+        'https://www.nft-stats.com/collection/knittables-v2',
+        'https://www.nft-stats.com/collection/claynosaurz-v2',
+        'https://www.nft-stats.com/collection/duelbots-v2',
+        'https://www.nft-stats.com/collection/0xy-utility-token-v3',
+        'https://www.nft-stats.com/collection/ovols-v3',
+        'https://www.nft-stats.com/collection/hype-pass',
+        'https://www.nft-stats.com/collection/sweet-bonanza-v3',
+    ];
     for (const x of rowDataSales) {
-        if (x.collection_url !== err_str) {
+        // if (x.collection_url !== err_str) {
+        if (!err_str.includes(x.collection_url)) {
             // x.collection_url.replace(err_str, "https://www.nft-stats.com/collection/galaxy-oat-poly")
             // } else {
             // const y = x.collection_url.replace(url_string, "https://api.opensea.io/api/v1/collection/")
@@ -93,6 +100,7 @@ function UserList() {
         }
     }
     // console.log("endpoints:",endpoints);
+    // console.log('rowDataSales:', rowDataSales);
 
     const promises = [];
 
@@ -173,7 +181,10 @@ function UserList() {
     }
 
     return (
-        <>
+        <body
+            className="App"
+            style={{ transform: `scale(${zoom})` }}
+        >
             <nav
                 className="navbar navbar-dark bg-primary"
                 id="mainNav"
@@ -208,7 +219,6 @@ function UserList() {
                             className="dropbtn"
                             href="/"
                             onClick={CSSignOut}
-
                         >
                             Sign Out
                         </a>
@@ -299,7 +309,9 @@ function UserList() {
                             marginRight: 10,
                         }}
                     >
-                        <GrCommand style={{ fontColor: 'white', marginTop: 7 }} />
+                        <GrCommand
+                            style={{ fontColor: 'white', marginTop: 7 }}
+                        />
                     </button>
                     {'+'}
                     <button
@@ -309,8 +321,12 @@ function UserList() {
                             marginLeft: 10,
                             marginRight: 10,
                         }}
+                        // eslint-disable-next-line no-restricted-globals
+                        onClick={() => location.reload()}
                     >
-                        <TbLetterR style={{ fontColor: 'white', marginTop: 7 }} />
+                        <TbLetterR
+                            style={{ fontColor: 'white', marginTop: 7 }}
+                        />
                     </button>
                     : Refresh Page
                 </div>
@@ -321,6 +337,7 @@ function UserList() {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        marginBottom: 10,
                     }}
                 >
                     <button
@@ -331,18 +348,23 @@ function UserList() {
                             marginRight: 10,
                         }}
                     >
-                        <GrCommand style={{ fontColor: 'white', marginTop: 7 }} />
+                        <GrCommand
+                            style={{ fontColor: 'white', marginTop: 7 }}
+                        />
                     </button>
                     {'+'}
                     <button
                         style={{
                             fontSize: 25,
                             borderRadius: 10,
-                            marginLeft: 11,
+                            marginLeft: 10,
                             marginRight: 10,
                         }}
+                        onClick={() => setZoom(zoom + 0.1)}
                     >
-                        <AiOutlineMinus style={{ fontColor: 'white', marginTop: 7 }} />
+                        <AiOutlinePlus
+                            style={{ fontColor: 'white', marginTop: 7 }}
+                        />
                     </button>
                     : Zoom In
                 </div>
@@ -363,13 +385,23 @@ function UserList() {
                             marginRight: 10,
                         }}
                     >
-                        <GrCommand style={{ fontColor: 'white', marginTop: 7 }} />
+                        <GrCommand
+                            style={{ fontColor: 'white', marginTop: 7 }}
+                        />
                     </button>
                     {'+'}
                     <button
-                        style={{ fontSize: 25, borderRadius: 10, margin: 10 }}
+                        style={{
+                            fontSize: 25,
+                            borderRadius: 10,
+                            marginLeft: 10,
+                            marginRight: 10,
+                        }}
+                        onClick={() => setZoom(zoom - 0.1)}
                     >
-                        <AiOutlinePlus style={{ fontColor: 'white', marginTop: 7 }} />
+                        <AiOutlineMinus
+                            style={{ fontColor: 'white', marginTop: 7 }}
+                        />
                     </button>
                     : Zoom Out
                 </div>
@@ -390,7 +422,7 @@ function UserList() {
             >
                 View the Collection
             </button>
-        </>
+        </body>
     );
 }
 

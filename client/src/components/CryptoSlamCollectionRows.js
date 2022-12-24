@@ -70,14 +70,21 @@ const CryptoSlamRow = ({ both }) => {
                         </Col>
                         <Col style={{ maxWidth: 115, paddingLeft: 15 }}>
                             <img
-                                src={row.collectionImageURL}
+                                src={
+                                    row.collectionImageURL
+                                        ? row.collectionImageURL ===
+                                          'https://cryptoslam-token-images.s3.amazonaws.com/icons/ART.jpg'
+                                            ? 'https://d35vxokfjoq7rk.cloudfront.net/metaplex:SolArcBxTW8op2Q8CHA5TEUqZ6VpT18SN9i9Kxvjj9vxmkgWrM/EjdTkPnpuEkTx9KWF4o54EYKxFrPjB3Bma7bFJeneuYa-0.png?d=60'
+                                            : row.collectionImageURL
+                                        : 'https://d35vxokfjoq7rk.cloudfront.net/metaplex:SolArcBxTW8op2Q8CHA5TEUqZ6VpT18SN9i9Kxvjj9vxmkgWrM/EjdTkPnpuEkTx9KWF4o54EYKxFrPjB3Bma7bFJeneuYa-0.png?d=60'
+                                }
                                 style={{
                                     height: 80,
                                     maxWidth: 80,
                                     verticalAlign: -75,
                                     borderRadius: 15,
                                 }}
-                                alt="pfp"
+                                alt="no pfp"
                             ></img>
                         </Col>
                         <Col

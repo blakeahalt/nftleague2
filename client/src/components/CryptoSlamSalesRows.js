@@ -56,14 +56,22 @@ const CryptoSlamRow = ({ both }) => {
                                 rel="noreferrer"
                             >
                                 <img
-                                    src={row.tokens[0].imageURL}
+                                    src={
+                                        row.tokens[0].imageURL
+                                            ? /https:\/\/cryptoslam-svgimages\.s3\.amazonaws\.com\/0x4e1f41613c9084fdb9e34e11fae9412427480e56\/\d+\.png/.test(
+                                                  row.tokens[0].imageURL
+                                              )
+                                                ? 'https://d35vxokfjoq7rk.cloudfront.net/metaplex:SolArcBxTW8op2Q8CHA5TEUqZ6VpT18SN9i9Kxvjj9vxmkgWrM/EjdTkPnpuEkTx9KWF4o54EYKxFrPjB3Bma7bFJeneuYa-0.png?d=60'
+                                                : row.tokens[0].imageURL
+                                            : 'https://d35vxokfjoq7rk.cloudfront.net/metaplex:SolArcBxTW8op2Q8CHA5TEUqZ6VpT18SN9i9Kxvjj9vxmkgWrM/EjdTkPnpuEkTx9KWF4o54EYKxFrPjB3Bma7bFJeneuYa-0.png?d=60'
+                                    }
                                     style={{
                                         height: 80,
-                                        minWidth: 80,
+                                        maxWidth: 80,
                                         verticalAlign: -75,
                                         borderRadius: 15,
                                     }}
-                                    alt="No Pic Available"
+                                    alt="no pfp"
                                 ></img>
                             </a>
                         </Col>

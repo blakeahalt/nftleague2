@@ -560,3 +560,15 @@ button {
 .dropdown:hover .dropbtn {
   background-color:rgba(7, 40, 74, 0.787);
 }
+
+@media only screen and (max-width: 600px) {
+  /* styles for screens with a width of 600px or less */
+}
+
+@media only screen and (min-width: 601px) and (max-width: 900px) {
+  /* styles for screens with a width between 601px and 900px */
+}
+
+@media only screen and (min-width: 901px) {
+  /* styles for screens with a width greater than 901px */
+}
