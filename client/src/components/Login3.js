@@ -31,17 +31,6 @@ function App() {
     const [JETToken, setJWTToken] = useState();
     const [err, setErr] = useState('');
 
-    // useEffect((req, res) => {
-    //     axios
-    //         .get('http://localhost:3001/working') // dev
-    //         // axios
-    //         //     .get('/working') //heroku
-    //         .then((res) => {
-    //             console.log(res);
-    //             setNotification(res.data.message);
-    //         });
-    // }, []);
-
     function handleSignOut(e) {
         setUser({});
         document.getElementById('signInDiv').hidden = false;
@@ -162,113 +151,126 @@ function App() {
                     </div>
                 </section>
             ) : (
-                <section>
-                    <p
-                        ref={errRef}
-                        className={errMsg ? 'errmsg' : 'offscreen'}
-                        aria-live="assertive"
-                    >
-                        {errMsg}
-                    </p>
-                    <h1>Sign In</h1>
-                    <form
-                        action=""
-                        // onChange={handleChange}
-                        onSubmit={handleSubmit}
-                    >
-                        <label htmlFor="username">Username:</label>
-                        <input
-                            type="text"
-                            id="username"
-                            ref={userRef}
-                            autoComplete="off"
-                            onChange={(e) => setUser(e.target.value)}
-                            value={user}
-                            required
-                        />
+                <>
+                    <section>
+                        <h1 style={{ textAlign: 'center' }}>
+                            NFT Collections Tracker
+                        </h1>
+                    </section>
+                    <section>
+                        <p
+                            ref={errRef}
+                            className={errMsg ? 'errmsg' : 'offscreen'}
+                            aria-live="assertive"
+                        >
+                            {errMsg}
+                        </p>
+                        <h1>Sign In</h1>
+                        <form
+                            action=""
+                            // onChange={handleChange}
+                            onSubmit={handleSubmit}
+                        >
+                            <label htmlFor="username">Username:</label>
+                            <input
+                                type="text"
+                                id="username"
+                                ref={userRef}
+                                autoComplete="off"
+                                onChange={(e) => setUser(e.target.value)}
+                                value={user}
+                                required
+                            />
 
-                        <label htmlFor="password">Password:</label>
-                        <input
-                            type="password"
-                            id="password"
-                            onChange={(e) => setPwd(e.target.value)}
-                            value={pwd}
-                            required
-                        />
-                        <button className="button">Sign In</button>
-                    </form>
-                    <br />
-                    <br />
-                    <div
-                        style={{
-                            textAlign: 'center',
-                            marginBottom: -20,
-                        }}
-                    ></div>
-                    <div className="App">
-                        <GoogleLogin
-                            onSuccess={(res) => {
-                                // console.log(credentialResponse.credential);
-                                var decoded = jwt_decode(res.credential);
-                                // console.log('res', res);
-                                // console.log('jwt-decoded', decoded);
-                                // window.localStorage.setItem(
-                                //     'token',
-                                //     decoded.exp
-                                // );
-                                const user = decoded.name;
-                                const pwd = decoded.jti;
-                                // console.log('decoded.jti', decoded.jti);
+                            <label htmlFor="password">Password:</label>
+                            <input
+                                type="password"
+                                id="password"
+                                onChange={(e) => setPwd(e.target.value)}
+                                value={pwd}
+                                required
+                            />
+                            <button className="button">Sign In</button>
+                        </form>
+                        <br />
+                        <br />
+                        <div
+                            style={{
+                                textAlign: 'center',
+                                marginBottom: -20,
+                            }}
+                        ></div>
+                        <div className="App">
+                            <GoogleLogin
+                                onSuccess={(res) => {
+                                    // console.log(credentialResponse.credential);
+                                    var decoded = jwt_decode(res.credential);
+                                    // console.log('res', res);
+                                    // console.log('jwt-decoded', decoded);
+                                    // window.localStorage.setItem(
+                                    //     'token',
+                                    //     decoded.exp
+                                    // );
+                                    const user = decoded.name;
+                                    const pwd = decoded.jti;
+                                    // console.log('decoded.jti', decoded.jti);
                                 // axios
-                                //     .post('http://localhost:3001/googlelogin', {
-                                //         user,
-                                //         pwd,
-                                //     })
-                                axios
-                                    .post('/googlelogin', {
-                                        pwd: pwd,
-                                        user: user,
-                                    })
-                                    .then((data) => {
-                                        const accessToken =
-                                            data.data.accessToken;
-                                        const refreshToken =
-                                            data.data.refreshToken;
-                                        Cookies.set('access', accessToken);
-                                        Cookies.set('refresh', refreshToken);
-                                        // console.log(
-                                        //     `accessToken: ${data.data.accessToken}`
-                                        // );
-                                        // console.log(
-                                        //     `refreshToken: ${data.data.refreshToken}`
-                                        // );
-                                    });
-                                setSuccess(true);
-                                setGoogleSuccess(true);
-                                setUser(decoded);
-                                // setUser(jwt_decode(res.credential).name)
-                                console.log(
-                                    `Login Success! User: ${decoded.name}`
-                                );
-                            }}
-                            onError={() => {
-                                console.log('Login Failed');
-                            }}
-                        />
-                    </div>
-                    <p style={{ textAlign: 'right' }}>
-                        Need an Account?
-                        <br />
-                        <span className="line">
-                            <Link to="/register">Sign Up</Link>
-                        </span>
-                        <br />
-                    </p>
-                    {/* <p>
+                                //     .post(
+                                //         'http://localhost:3001/googlelogin',
+                                //         {
+                                //             user,
+                                //             pwd,
+                                //         }
+                                //     )
+                                    axios
+                                        .post('/googlelogin', {
+                                            pwd: pwd,
+                                            user: user,
+                                        })
+                                        .then((data) => {
+                                            const accessToken =
+                                                data.data.accessToken;
+                                            const refreshToken =
+                                                data.data.refreshToken;
+                                            Cookies.set('access', accessToken);
+                                            Cookies.set(
+                                                'refresh',
+                                                refreshToken
+                                            );
+                                            // console.log(
+                                            //     `accessToken: ${data.data.accessToken}`
+                                            // );
+                                            // console.log(
+                                            //     `refreshToken: ${data.data.refreshToken}`
+                                            // );
+                                        });
+                                    setSuccess(true);
+                                    setGoogleSuccess(true);
+                                    setUser(decoded);
+                                    // setUser(jwt_decode(res.credential).name)
+                                    console.log(
+                                        `Login Success! User: ${decoded.name}`
+                                    );
+                                }}
+                                onError={() => {
+                                    console.log('Login Failed');
+                                }}
+                            />
+                        </div>
+                        <p style={{ textAlign: 'right' }}>
+                            Need an Account?
+                            <br />
+                            <span className="line">
+                                <Link to="/register">Sign Up</Link>
+                            </span>
+                            <br />
+                        </p>
+                        {/* <p>
                         axios.get('/googleapp') status: <i>{notification}</i>
                     </p>
                     <br /> */}
-                </section>
+                    </section>
+                </>
             )}
         </>
     );
