@@ -150,7 +150,7 @@ function UserList() {
             { timeElapsed: timeElapsed[i] }
         )
     );
-    console.log('both', both);
+    // console.log('both', both);
 
     function CSSignOut() {
         Cookies.set('access', null);

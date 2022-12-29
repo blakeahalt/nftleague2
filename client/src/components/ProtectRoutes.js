@@ -57,7 +57,7 @@ function ProtectRoutes() {
                     const { accessToken } = data.data;
                     Cookies.set('access', accessToken);
                     resolve(accessToken);
-                    console.log('1 (refresh): All good bruh');
+                    console.log('1 (refresh): refresh token authenticated');
                 }
             });
         });
@@ -121,7 +121,7 @@ function ProtectRoutes() {
                         resolve(false);
                     } else {
                         // setAuthStatus(true);
-                        console.log('1 (requestLogin): You in Brah');
+                        console.log('1 (requestLogin): tokens authenticated');
                         console.log(data.data.message);
                         resolve(true);
                     }
