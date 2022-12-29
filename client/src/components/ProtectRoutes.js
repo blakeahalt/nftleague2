@@ -44,22 +44,22 @@ function ProtectRoutes() {
         console.log('Refreshing token!');
 
         return new Promise((resolve, reject) => {
-            axios
-                .post('http://localhost:3001/refresh', { token: refreshToken })
-                .then((data) => {
-                    // axios.post('/refresh', { token: refreshToken }).then((data) => {
-                    if (data.data.success === false) {
-                        // setAuthStatus(false);
-                        setErr('Login again');
-                        console.log('2 (refresh): Please Log In Again');
-                        resolve(false);
-                    } else {
-                        const { accessToken } = data.data;
-                        Cookies.set('access', accessToken);
-                        resolve(accessToken);
-                        console.log('1 (refresh): All good bruh');
-                    }
-                });
+            // axios
+            //     .post('http://localhost:3001/refresh', { token: refreshToken })
+            //     .then((data) => {
+            axios.post('/refresh', { token: refreshToken }).then((data) => {
+                if (data.data.success === false) {
+                    // setAuthStatus(false);
+                    setErr('Login again');
+                    console.log('2 (refresh): Please Log In Again');
+                    resolve(false);
+                } else {
+                    const { accessToken } = data.data;
+                    Cookies.set('access', accessToken);
+                    resolve(accessToken);
+                    console.log('1 (refresh): All good bruh');
+                }
+            });
         });
     };
 
@@ -82,18 +82,18 @@ function ProtectRoutes() {
 
     const requestLogin = async (accessToken, refreshToken) => {
         return new Promise((resolve, reject) => {
+            // axios
+            //     .post(
+            //         'http://localhost:3001/protected',
+            //         {},
+            //         { headers: { Authorization: `Bearer ${accessToken}` } }
+            //     )
             axios
                 .post(
-                    'http://localhost:3001/protected',
+                    '/protected',
                     {},
                     { headers: { Authorization: `Bearer ${accessToken}` } }
                 )
-                // axios
-                //     .post(
-                //         '/protected',
-                //         {},
-                //         { headers: { Authorization: `Bearer ${accessToken}` } }
-                //     )
                 .then(async (data) => {
                     if (data.data.success === false) {
                         if (

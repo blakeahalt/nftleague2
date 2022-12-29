@@ -9,8 +9,8 @@ import { useEffect, useState, useRef, useContext } from 'react';
 import { gapi } from 'gapi-script';
 import AuthContext from './AuthProvider';
 
-// const BASE_URL = process.env.REACT_APP_BASE_URL;
-// const LOGIN_URL = 'http://localhost:3001'; //'http://localhost:3001/GoogleApp'
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+const LOGIN_URL = 'http://localhost:3001'; //'http://localhost:3001/GoogleApp'
 const clientId = process.env.REACT_APP_CLIENTID;
 
 function App() {
