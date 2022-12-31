@@ -1,4 +1,6 @@
 # NFT Tracker
+https://nftleague2.herokuapp.com/
+
 Sign-in with Google or register to follow the top 100 NFT Collections and Individual Sales sorted by day/week/month. All data is tracked using APIs from NFT Stats and CryptoSlam.
 
 ## About
