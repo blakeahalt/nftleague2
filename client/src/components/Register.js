@@ -43,6 +43,9 @@ const Register = () => {
 
     const [userList, setUserList] = useState([]);
 
+    const baseURL =
+        process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3001';
+
     // useEffect((req, res) => {
     //     axios.get('http://localhost:3001/working').then((res) => {
     //         console.log(res);
@@ -102,33 +105,44 @@ const Register = () => {
             return;
         }
 
-        // axios
-        //     .post('http://localhost:3001/addPassword', {
-        //         pwd: pwd,
-        //         user: user,
-        //     })
         axios
-            .post('/addPassword', {
+            .post(`${baseURL}/addPassword`, {
                 pwd: pwd,
                 user: user,
             })
             .then((data) => {
-                // console.log('1', JSON.stringify(response));
-                // console.log('2', response?.data);
-                // console.log('3', response?.data.token);
-                // console.log('4', response.config.data);
-                // localStorage.setItem('token', response.data.token);
-                // axios
-                //     .post('http://localhost:3001/googlelogin', {
-                //         user,
-                //         pwd,
-                //     })
                 axios
-                    .post('/googlelogin', {
-                        pwd: pwd,
-                        user: user,
+                    .post(`${baseURL}/googlelogin`, {
+                        user,
+                        pwd,
                     })
                     .then((data) => {
+                        // .post('http://localhost:3001/addPassword', {
+                        //     pwd: pwd,
+                        //     user: user,
+                        // })
+                        // // axios
+                        // //     .post('/addPassword', {
+                        // //         pwd: pwd,
+                        // //         user: user,
+                        // //     })
+                        // .then((data) => {
+                        //     // console.log('1', JSON.stringify(response));
+                        //     // console.log('2', response?.data);
+                        //     // console.log('3', response?.data.token);
+                        //     // console.log('4', response.config.data);
+                        //     // localStorage.setItem('token', response.data.token);
+                        //     axios
+                        //         .post('http://localhost:3001/googlelogin', {
+                        //             user,
+                        //             pwd,
+                        //         })
+                        //         // axios
+                        //         //     .post('/googlelogin', {
+                        //         //         pwd: pwd,
+                        //         //         user: user,
+                        //         //     })
+                        //         .then((data) => {
                         const accessToken = data.data.accessToken;
                         const refreshToken = data.data.refreshToken;
                         Cookies.set('access', accessToken);

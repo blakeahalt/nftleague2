@@ -12,6 +12,8 @@ import AuthContext from './AuthProvider';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const LOGIN_URL = 'http://localhost:3001'; //'http://localhost:3001/GoogleApp'
 const clientId = process.env.REACT_APP_CLIENTID;
+const baseURL =
+    process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3001';
 
 function App() {
     const [notification, setNotification] = useState('');
@@ -70,10 +72,11 @@ function App() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // await axios
-        //     .post('http://localhost:3001/login', { user, pwd })
         await axios
-            .post('/login', { user, pwd })
+            .post(`${baseURL}/login`, { user, pwd })
+            // .post('http://localhost:3001/login', { user, pwd })
+            // await axios
+            //     .post('/login', { user, pwd })
             .then((data) => {
                 if (data.status === 200) {
                     const accessToken = data.data.accessToken;
@@ -214,19 +217,24 @@ function App() {
                                     const user = decoded.name;
                                     const pwd = decoded.jti;
                                     // console.log('decoded.jti', decoded.jti);
-                                    // axios
-                                    //     .post(
-                                    //         'http://localhost:3001/googlelogin',
-                                    //         {
-                                    //             user,
-                                    //             pwd,
-                                    //         }
-                                    //     )
                                     axios
-                                        .post('/googlelogin', {
-                                            pwd: pwd,
-                                            user: user,
+                                        .post(`${baseURL}/googlelogin`, {
+                                            user,
+                                            pwd,
                                         })
+                                        // axios
+                                        //     .post(
+                                        //         'http://localhost:3001/googlelogin',
+                                        //         {
+                                        //             user,
+                                        //             pwd,
+                                        //         }
+                                        //     )
+                                        // axios
+                                        //     .post('/googlelogin', {
+                                        //         pwd: pwd,
+                                        //         user: user,
+                                        //     })
                                         .then((data) => {
                                             const accessToken =
                                                 data.data.accessToken;
@@ -247,7 +255,7 @@ function App() {
                                     setSuccess(true);
                                     setGoogleSuccess(true);
                                     setUser(decoded);
-                                    // setUser(jwt_decode(res.credential).name)
+                                    // setUser(jwt_decode(res.credential).name);
                                     console.log(
                                         `Login Success! User: ${decoded.name}`
                                     );
