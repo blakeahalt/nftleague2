@@ -1,5 +1,6 @@
 # NFT Sales Tracking Tool
-#### Video Demo:  <URL HERE>
+#### Video Demo:  https://youtu.be/p53ccOC10p8
+#### original github repo: https://github.com/blakeahalt/nftleague2
 
 
 ## About
@@ -19,6 +20,31 @@ One challenge occured when the CryptoSlam API data changed during the developmen
 I was forced to make design adjustments for the NFT Stats API data because it was causing loading errors. I implelemented a 'View Collection' button as well as pagination to try and mitigate the loading crashes. I was able to address the crashing issues, but the solution is not optimal and doesn't always immediately load. While I don't completely understand the nature of the cause, I suspect it has something to do with the cache.
 
 Another challenge was implementing JSON Web Tokens in order to provide users access to protected routes. This was a giant leap in terms of complexity since it involved verifying Argon2 encrypted passwords that were stored in a MySQL database, correctly assigning the JSON Web Tokens to the user, and implementing a new feature that accounted for protected routes. In addition, there needed to be a feature that assigned JSON Web Tokens to the Google account users. Even though Google OAuth comes with their own access/refresh tokens, they were not compatible with my project's verification system. In the end, the project successfully implements JSON Web Tokens to all users while protecting specific routes from non-users.
+
+## Getting Started
+Numerous `.env` passwords are used, which you will also need to set up in your own repo. Some include creating your own mySQL database. Here is a reference guide of the .env variables I've used.
+```
+REACT_APP_BASE_URL=http://localhost:3000
+REACT_APP_CLIENTID='string'
+REACT_APP_JWTSECRET='string'
+REACT_APP_REFRESH_TOKEN_SECRET='string'
+REACT_APP_MYSQL_USER='string'
+REACT_APP_MYSQL_HOST='string'
+REACT_APP_MYSQL_PWD='string'
+REACT_APP_MYSQL_DATABASE='string'
+```
+
+Unless you create these variables in your own environment, I don't believe this application will successfully start for you.
+
+To run dev mode: ./server/server.js "require("dotenv").config();" on line 12 must be toggled on to avoid runtime errors.
+
+Once running, Sign in with Google hits a cors error (blank pop-up). Navigating to 'http://localhost:3000' or 'http://localhost:3001'  will prevent this error and allow you to sign in with your Google account.
+
+## Installing
+"node": "v16.15.1",
+"npm": "7.24.2"
+
+see package.json for dependencies
 
 ## Getting Started
 Numerous `.env` passwords are used, which you will also need to set up in your own repo. Some include creating your own mySQL database. Here is a reference guide of the .env variables I've used.
