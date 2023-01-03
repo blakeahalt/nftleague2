@@ -4,7 +4,8 @@ import Cookies from 'js-cookie';
 import { Navigate, useNavigate, redirect } from 'react-router-dom';
 import AuthContext from './AuthProvider';
 
-const baseURL = process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3001';
+const baseURL =
+    process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3001';
 
 function ProtectRoutes() {
     useEffect(() => {
