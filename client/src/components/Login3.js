@@ -9,11 +9,11 @@ import { useEffect, useState, useRef, useContext } from 'react';
 import { gapi } from 'gapi-script';
 import AuthContext from './AuthProvider';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-const LOGIN_URL = 'http://localhost:3001'; //'http://localhost:3001/GoogleApp'
+// const BASE_URL = process.env.REACT_APP_BASE_URL;
+// const LOGIN_URL = 'http://localhost:3001'; //'http://localhost:3001/GoogleApp'
 const clientId = process.env.REACT_APP_CLIENTID;
 const baseURL =
-    process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3001';
+    process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3001/';
 
 function App() {
     const [notification, setNotification] = useState('');
@@ -73,7 +73,7 @@ function App() {
         e.preventDefault();
 
         await axios
-            .post(`${baseURL}/login`, { user, pwd })
+            .post(`${baseURL}login`, { user, pwd })
             // .post('http://localhost:3001/login', { user, pwd })
             // await axios
             //     .post('/login', { user, pwd })
@@ -218,7 +218,7 @@ function App() {
                                     const pwd = decoded.jti;
                                     // console.log('decoded.jti', decoded.jti);
                                     axios
-                                        .post(`${baseURL}/googlelogin`, {
+                                        .post(`${baseURL}googlelogin`, {
                                             user,
                                             pwd,
                                         })

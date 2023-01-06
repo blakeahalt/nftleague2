@@ -187,7 +187,7 @@ function NFTList() {
                     <Link to="/cryptoslamSalesday">See the Data</Link>
                 </p>
                 <br />
-                <p>
+                {/* <p>
                     <Link to="/">
                         <GoogleLogout
                             clientId={clientId}
@@ -195,7 +195,7 @@ function NFTList() {
                             onLogoutSuccess={onLogoutSuccess}
                         ></GoogleLogout>
                     </Link>
-                </p>
+                </p> */}
                 <br />
             </div>
         </>

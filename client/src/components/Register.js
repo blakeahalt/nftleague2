@@ -44,7 +44,7 @@ const Register = () => {
     const [userList, setUserList] = useState([]);
 
     const baseURL =
-        process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3001';
+        process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3001/';
 
     // useEffect((req, res) => {
     //     axios.get('http://localhost:3001/working').then((res) => {
@@ -106,13 +106,13 @@ const Register = () => {
         }
 
         axios
-            .post(`${baseURL}/addPassword`, {
+            .post(`${baseURL}addPassword`, {
                 pwd: pwd,
                 user: user,
             })
             .then((data) => {
                 axios
-                    .post(`${baseURL}/googlelogin`, {
+                    .post(`${baseURL}googlelogin`, {
                         user,
                         pwd,
                     })

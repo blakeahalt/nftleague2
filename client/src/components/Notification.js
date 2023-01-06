@@ -9,15 +9,15 @@ import axios from 'axios';
 const Notification = () => {
     const [notification, setNotification] = useState('');
 
-    useEffect((req, res) => {
-        // axios.get("http://localhost:3001/working")  			// dev
-        axios
-            .get('/working') //heroku
-            .then((res) => {
-                console.log(res);
-                setNotification(res.data.message);
-            });
-    }, []);
+    // useEffect((req, res) => {
+    //     // axios.get("http://localhost:3001/working")  			// dev
+    //     axios
+    //         .get('/working') //heroku
+    //         .then((res) => {
+    //             console.log(res);
+    //             setNotification(res.data.message);
+    //         });
+    // }, []);
     return (
         // < div className = {`message ${type}`}>{ message }</div >
         <div className="notification">

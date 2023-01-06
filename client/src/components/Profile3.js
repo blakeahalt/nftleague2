@@ -12,14 +12,14 @@ const Profile = () => {
     const [notification, setNotification] = useState('');
     //    const [stateAuth, setStateAuth] = useState()
 
-    useEffect((req, res) => {
-        axios
-            .get('http://localhost:3001/working') //dev
-            .then((res) => {
-                console.log(res);
-                setNotification(res.data.message);
-            });
-    }, []);
+    // useEffect((req, res) => {
+    //     axios
+    //         .get('http://localhost:3001/working') //dev
+    //         .then((res) => {
+    //             console.log(res);
+    //             setNotification(res.data.message);
+    //         });
+    // }, []);
 
     // useEffect(() => {
     //     console.log('Cookies access', Cookies.get('access'));

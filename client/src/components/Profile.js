@@ -19,15 +19,15 @@ const Profile = () => {
     const [notification, setNotification] = useState('');
     //    const [stateAuth, setStateAuth] = useState()
 
-    useEffect((req, res) => {
-        // axios.get("http://localhost:3001/working")  		// dev
-        axios
-            .get('/working') //heroku
-            .then((res) => {
-                console.log(res);
-                setNotification(res.data.message);
-            });
-    }, []);
+    // useEffect((req, res) => {
+    //     // axios.get("http://localhost:3001/working")  		// dev
+    //     axios
+    //         .get('/working') //heroku
+    //         .then((res) => {
+    //             console.log(res);
+    //             setNotification(res.data.message);
+    //         });
+    // }, []);
 
     function handleSignOut(e) {
         setUser({});
@@ -123,9 +123,9 @@ const Profile = () => {
             <br />
             <br />
             <br />
-            <p>
+            {/* <p>
                 axios.get('/profile') status: <i>{notification}</i>
-            </p>
+            </p> */}
         </div>
         //   </div>
     );
