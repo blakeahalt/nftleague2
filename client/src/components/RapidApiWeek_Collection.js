@@ -68,6 +68,7 @@ function UserList() {
         'https://www.nft-stats.com/collection/hype-pass',
         'https://www.nft-stats.com/collection/sweet-bonanza-v3',
         'https://www.nft-stats.com/collection/asciibirds-genesis',
+        'https://www.nft-stats.com/collection/bullvbear-access-keys',
     ];
     for (const x of rowDataSales) {
         // if (x.collection_url !== err_str) {
