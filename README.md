@@ -1,5 +1,5 @@
 # NFT Sales Tracking Tool
-[Access the application](https://nftleague2.herokuapp.com/)
+[Link to site](https://nftleague2.herokuapp.com/)
 
 ## About
 This site allows you to track the top trending Individual NFT Sales and Collections using real-time data from CryptoSlam and NFT Stat's APIs.  Users can easily sign in with their Google accounts using the Google OAuth2.0 API or register an account with a username and password. Registered passwords are encrypted with Argon2 and stored in a MySQL database. Users are given access to protected routes by assigning them JWT access/refresh tokens at login.
@@ -34,7 +34,7 @@ Unless you create these variables in your own environment, I don't believe this 
 To run dev mode: ./server/server.js "require("dotenv").config();" on line 12 must not be commented out.
 In the terminal `npm run dev` will concurrently run the server.js file and react-scripts.
 
-Once running, Sign in with Google hits a cors error (blank pop-up). Navigating to 'http://localhost:3000' or 'http://localhost:3001'  will prevent this error and allow you to sign in with your Google account.
+Once running, if Google throws a cors error (blank pop-up). Navigate to [http://localhost:3000](http://localhost:3000) which should allow you to sign in with your Google account.
 
 To run production mode: ./server/server.js "require("dotenv").config();" on line 12 must be commented out and the `.env` variables above must be set in whatever platform you're trying to deploy to.
   
