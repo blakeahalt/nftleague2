@@ -1,6 +1,5 @@
 # NFT Sales Tracking Tool
-#### Video Demo:  https://youtu.be/p53ccOC10p8
-#### original github repo: https://github.com/blakeahalt/nftleague2
+[Access the application](https://nftleague2.herokuapp.com/)
 
 ## About
 This site allows you to track the top trending Individual NFT Sales and Collections using real-time data from CryptoSlam and NFT Stat's APIs.  Users can easily sign in with their Google accounts using the Google OAuth2.0 API or register an account with a username and password. Registered passwords are encrypted with Argon2 and stored in a MySQL database. Users are given access to protected routes by assigning them JWT access/refresh tokens at login.
