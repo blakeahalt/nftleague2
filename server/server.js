@@ -3,13 +3,13 @@ const app = express();
 const path = require('path');
 const port = process.env.PORT || 3001;
 const cors = require('cors');
-app.use(cors());
+// app.use(cors());
 const argon2 = require('argon2');
 
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 const jwt = require("jsonwebtoken");
-// require("dotenv").config(); //MUST HAVE to run Dev : COMMENT OUT for Heroku
+require("dotenv").config(); //MUST HAVE to run Dev : COMMENT OUT for Heroku
 
 app.use(bodyParser.json())
 app.use(cookieParser())
