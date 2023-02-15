@@ -64,13 +64,30 @@ function UserList() {
         'https://www.nft-stats.com/collection/sweet-bonanza-v3',
         'https://www.nft-stats.com/collection/asciibirds-genesis',
         'https://www.nft-stats.com/collection/bullvbear-access-keys',
+        'https://www.nft-stats.com/collection/xore-nft',
+        'https://www.nft-stats.com/collection/checkse-ordinal-edition',
+        'https://www.nft-stats.com/collection/checks-bitcoin-edition-1',
+        'https://www.nft-stats.com/collection/pudgy-penguins-tank-equip',
+        'https://www.nft-stats.com/collection/pudgytank-equip-card-2',
+        'https://www.nft-stats.com/collection/mutant-hounds',
+        'https://www.nft-stats.com/collection/mutant-hounds-novel',
     ];
+    const os_err_str = [
+        'https://api.opensea.io/api/v1/collection/mutant-hounds-novel',
+        'https://api.opensea.io/api/v1/collection/pudgytank-equip-card-2',
+        'https://api.opensea.io/api/v1/collection/pudgy-tank-equip-card',
+        'https://api.opensea.io/api/v1/collection/something-special-box',
+        'https://api.opensea.io/api/v1/collection/vv-edition-pass',
+        'https://api.opensea.io/api/v1/collection/akcb-x-gucci',
+    ];
+
     for (const x of rowDataSales) {
         // if (x.collection_url !== err_str) {
         if (!err_str.includes(x.collection_url)) {
             // x.collection_url.replace(err_str, "https://www.nft-stats.com/collection/galaxy-oat-poly")
             // } else {
             // const y = x.collection_url.replace(url_string, "https://api.opensea.io/api/v1/collection/")
+
             endpoints.push(
                 x.collection_url.replace(
                     url_string,
@@ -107,8 +124,13 @@ function UserList() {
     const promises = [];
 
     // useEffect(()=> {
+    const filteredEndpoints = endpoints.filter((endpoint) => {
+        // Return true for endpoints that do not contain any of the strings in os_err_str
+        return !os_err_str.some((error) => endpoint.includes(error));
+    });
+
     const getCollectionData = async () => {
-        for (const url of endpoints) {
+        for (const url of filteredEndpoints) {
             const response = await axios.get(url, OSoptions);
             // .then((result) => {
             promises.push(response.data.collection);
@@ -122,6 +144,26 @@ function UserList() {
             // console.log('promises', promises);
         }
     };
+    // const getCollectionData = async () => {
+    //     const filteredEndpoints = endpoints.filter((url) => !url.includes(os_err_str));
+
+    //     const responsePromises = filteredEndpoints.map((url) => axios.get(url, OSoptions));
+
+    //     try {
+    //       const responses = await Promise.all(responsePromises);
+    //       const data = responses.map((response) => response.data.collection);
+
+    //       const formattedData = data.map((collection) => ({
+    //         name: collection.name,
+    //         image_url: collection.image_url,
+    //         stats: collection.stats,
+    //       }));
+
+    //       setopenSeaData(formattedData);
+    //     } catch (error) {
+    //       console.error(error);
+    //     }
+    //   };
 
     // }, [])
 

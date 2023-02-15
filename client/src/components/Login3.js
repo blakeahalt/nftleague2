@@ -73,8 +73,8 @@ function App() {
         e.preventDefault();
 
         await axios
-            .post(`${baseURL}login`, { user, pwd })
-            // .post('http://localhost:3001/login', { user, pwd })
+            // .post(`${baseURL}login`, { user, pwd })
+            .post('http://localhost:3001/login', { user, pwd })
             // await axios
             //     .post('/login', { user, pwd })
             .then((data) => {
@@ -217,19 +217,19 @@ function App() {
                                     const user = decoded.name;
                                     const pwd = decoded.jti;
                                     // console.log('decoded.jti', decoded.jti);
+                                    // axios
+                                    //     .post(`${baseURL}googlelogin`, {
+                                    //         user,
+                                    //         pwd,
+                                    //     })
                                     axios
-                                        .post(`${baseURL}googlelogin`, {
-                                            user,
-                                            pwd,
-                                        })
-                                        // axios
-                                        //     .post(
-                                        //         'http://localhost:3001/googlelogin',
-                                        //         {
-                                        //             user,
-                                        //             pwd,
-                                        //         }
-                                        //     )
+                                        .post(
+                                            'http://localhost:3001/googlelogin',
+                                            {
+                                                user,
+                                                pwd,
+                                            }
+                                        )
                                         // axios
                                         //     .post('/googlelogin', {
                                         //         pwd: pwd,
@@ -251,6 +251,9 @@ function App() {
                                             // console.log(
                                             //     `refreshToken: ${data.data.refreshToken}`
                                             // );
+                                        })
+                                        .catch((err) => {
+                                            console.log(err);
                                         });
                                     setSuccess(true);
                                     setGoogleSuccess(true);

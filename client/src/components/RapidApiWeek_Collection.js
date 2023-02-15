@@ -70,6 +70,16 @@ function UserList() {
         'https://www.nft-stats.com/collection/asciibirds-genesis',
         'https://www.nft-stats.com/collection/bullvbear-access-keys',
     ];
+
+    const os_err_str = [
+        'https://api.opensea.io/api/v1/collection/mutant-hounds-novel',
+        'https://api.opensea.io/api/v1/collection/pudgytank-equip-card-2',
+        'https://api.opensea.io/api/v1/collection/pudgy-tank-equip-card',
+        'https://api.opensea.io/api/v1/collection/something-special-box',
+        'https://api.opensea.io/api/v1/collection/vv-edition-pass',
+        'https://api.opensea.io/api/v1/collection/akcb-x-gucci'
+    ];
+
     for (const x of rowDataSales) {
         // if (x.collection_url !== err_str) {
         if (!err_str.includes(x.collection_url)) {
@@ -112,8 +122,13 @@ function UserList() {
     const promises = [];
 
     // useEffect(()=> {
+        const filteredEndpoints = endpoints.filter(endpoint => {
+            // Return true for endpoints that do not contain any of the strings in os_err_str
+            return !os_err_str.some(error => endpoint.includes(error));
+          });
+
     const getCollectionData = async () => {
-        for (const url of endpoints) {
+        for (const url of filteredEndpoints) {
             const response = await axios.get(url, OSoptions);
             // .then((result) => {
             promises.push(response.data.collection);
